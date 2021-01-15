@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FlaUI.UIA3;
+using FlaUI.Core;
 
 namespace DataCollectionApp2
 {
@@ -27,6 +29,8 @@ namespace DataCollectionApp2
         public DateTime startTime { get; set; }
         public List<TextBox> textBoxes_UpdSensorInfo { get; set; }
         public List<TextBox> textBoxes_LiveData { get; set; }
+        public string appAddress = @"C:\Users\JIMMY\source\repos\0DataCollectionAppNew\DataCollectionApp\bin\Release\Modbus_RTU_SensorData.EXE";
+        public FlaUI.Core.Application dataCollectionApp { get; set; }
 
         public Form1()
         {
@@ -225,6 +229,16 @@ namespace DataCollectionApp2
         
         private void b_start_Click(object sender, EventArgs e)
         {
+
+            dataCollectionApp = FlaUI.Core.Application.Launch(appAddress);
+            using (var automation = new UIA3Automation())
+            {
+                var window = dataCollectionApp.GetMainWindow(automation);
+                //MessageBox.Show("Hello, " + window.Title, window.Title);
+                
+            }
+
+            /* 
             if (!modbusClient.Connected && myConnection.State == ConnectionState.Closed)
             {
                 modbusClient.Connect();
@@ -232,6 +246,7 @@ namespace DataCollectionApp2
             }
             timer1.Enabled = true;
             timer1.Start();
+*/
         }
 
 
@@ -299,17 +314,27 @@ namespace DataCollectionApp2
 
         private void b_stop_Click(object sender, EventArgs e)
         {
+            //FlaUI.Core.Application application = FlaUI.Core.Application.Launch(appAddress);
+
+            // code to interact with the UI
+
+            //
+            dataCollectionApp.Close();
+            dataCollectionApp.Dispose();
+            MessageBox.Show("Anything happened", "Application status");
+            
+            /*
             timer1.Stop();
             myConnection.Close();
             modbusClient.Disconnect();
-            
+            */
         }
 
 
 
         private void F_Exit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+           System.Windows.Forms.Application.Exit();
         }
 
 

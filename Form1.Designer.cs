@@ -79,6 +79,14 @@ namespace DataCollectionApp2
             this.label_time = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.b_dataCollection_status = new System.Windows.Forms.Button();
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.t_hahan1 = new System.Windows.Forms.TextBox();
+            this.t_hahan2 = new System.Windows.Forms.TextBox();
+            this.t_sanghan1 = new System.Windows.Forms.TextBox();
+            this.t_sanghan2 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,7 +127,11 @@ namespace DataCollectionApp2
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
-            this.columnHeader5});
+            this.columnHeader5,
+            this.columnHeader6,
+            this.columnHeader7,
+            this.columnHeader8,
+            this.columnHeader9});
             this.listView1.FullRowSelect = true;
             this.listView1.HideSelection = false;
             resources.ApplyResources(this.listView1, "listView1");
@@ -362,10 +374,50 @@ namespace DataCollectionApp2
             this.b_dataCollection_status.Name = "b_dataCollection_status";
             this.b_dataCollection_status.UseVisualStyleBackColor = true;
             // 
+            // columnHeader6
+            // 
+            resources.ApplyResources(this.columnHeader6, "columnHeader6");
+            // 
+            // columnHeader7
+            // 
+            resources.ApplyResources(this.columnHeader7, "columnHeader7");
+            // 
+            // columnHeader8
+            // 
+            resources.ApplyResources(this.columnHeader8, "columnHeader8");
+            // 
+            // columnHeader9
+            // 
+            resources.ApplyResources(this.columnHeader9, "columnHeader9");
+            // 
+            // t_hahan1
+            // 
+            resources.ApplyResources(this.t_hahan1, "t_hahan1");
+            this.t_hahan1.Name = "t_hahan1";
+            // 
+            // t_hahan2
+            // 
+            resources.ApplyResources(this.t_hahan2, "t_hahan2");
+            this.t_hahan2.Name = "t_hahan2";
+            // 
+            // t_sanghan1
+            // 
+            resources.ApplyResources(this.t_sanghan1, "t_sanghan1");
+            this.t_sanghan1.Name = "t_sanghan1";
+            // 
+            // t_sanghan2
+            // 
+            resources.ApplyResources(this.t_sanghan2, "t_sanghan2");
+            this.t_sanghan2.Name = "t_sanghan2";
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.t_sanghan2);
+            this.Controls.Add(this.t_sanghan1);
+            this.Controls.Add(this.t_hahan2);
+            this.Controls.Add(this.t_hahan1);
             this.Controls.Add(this.b_dataCollection_status);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label_time);
@@ -453,6 +505,14 @@ namespace DataCollectionApp2
         private System.Windows.Forms.ToolStripMenuItem S_Save;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button b_dataCollection_status;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.TextBox t_hahan1;
+        private System.Windows.Forms.TextBox t_hahan2;
+        private System.Windows.Forms.TextBox t_sanghan1;
+        private System.Windows.Forms.TextBox t_sanghan2;
     }
 }
 
