@@ -31,10 +31,10 @@ namespace DataCollectionApp2
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.b_start = new System.Windows.Forms.Button();
+            this.b_stop = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.button3 = new System.Windows.Forms.Button();
+            this.b_addSensor = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -49,6 +49,11 @@ namespace DataCollectionApp2
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sensorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.S_Start = new System.Windows.Forms.ToolStripMenuItem();
+            this.S_Stop = new System.Windows.Forms.ToolStripMenuItem();
+            this.S_AddNewSensor = new System.Windows.Forms.ToolStripMenuItem();
+            this.S_Save = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,34 +63,49 @@ namespace DataCollectionApp2
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
+            this.b_save = new System.Windows.Forms.Button();
+            this.t_time = new System.Windows.Forms.TextBox();
+            this.t_part03 = new System.Windows.Forms.TextBox();
+            this.t_temp = new System.Windows.Forms.TextBox();
+            this.t_no = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label_no = new System.Windows.Forms.Label();
+            this.label_temp = new System.Windows.Forms.Label();
+            this.t_humid = new System.Windows.Forms.TextBox();
+            this.t_part05 = new System.Windows.Forms.TextBox();
+            this.label_humid = new System.Windows.Forms.Label();
+            this.label_part03 = new System.Windows.Forms.Label();
+            this.label_part05 = new System.Windows.Forms.Label();
+            this.label_time = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.b_dataCollection_status = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // b_start
             // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            resources.ApplyResources(this.b_start, "b_start");
+            this.b_start.Name = "b_start";
+            this.b_start.UseVisualStyleBackColor = true;
+            this.b_start.Click += new System.EventHandler(this.b_start_Click);
             // 
-            // button2
+            // b_stop
             // 
-            resources.ApplyResources(this.button2, "button2");
-            this.button2.Name = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            resources.ApplyResources(this.b_stop, "b_stop");
+            this.b_stop.Name = "b_stop";
+            this.b_stop.UseVisualStyleBackColor = true;
+            this.b_stop.Click += new System.EventHandler(this.b_stop_Click);
             // 
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // button3
+            // b_addSensor
             // 
-            resources.ApplyResources(this.button3, "button3");
-            this.button3.Name = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            resources.ApplyResources(this.b_addSensor, "b_addSensor");
+            this.b_addSensor.Name = "b_addSensor";
+            this.b_addSensor.UseVisualStyleBackColor = true;
+            this.b_addSensor.Click += new System.EventHandler(this.b_add_Click);
             // 
             // label1
             // 
@@ -134,6 +154,7 @@ namespace DataCollectionApp2
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
+            this.sensorToolStripMenuItem,
             this.aboutToolStripMenuItem});
             resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Name = "menuStrip1";
@@ -149,7 +170,7 @@ namespace DataCollectionApp2
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             resources.ApplyResources(this.exitToolStripMenuItem, "exitToolStripMenuItem");
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.F_Exit_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -174,6 +195,40 @@ namespace DataCollectionApp2
             // 
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
             resources.ApplyResources(this.cutToolStripMenuItem, "cutToolStripMenuItem");
+            // 
+            // sensorToolStripMenuItem
+            // 
+            this.sensorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.S_Start,
+            this.S_Stop,
+            this.S_AddNewSensor,
+            this.S_Save});
+            this.sensorToolStripMenuItem.Name = "sensorToolStripMenuItem";
+            resources.ApplyResources(this.sensorToolStripMenuItem, "sensorToolStripMenuItem");
+            // 
+            // S_Start
+            // 
+            this.S_Start.Name = "S_Start";
+            resources.ApplyResources(this.S_Start, "S_Start");
+            this.S_Start.Click += new System.EventHandler(this.b_start_Click);
+            // 
+            // S_Stop
+            // 
+            this.S_Stop.Name = "S_Stop";
+            resources.ApplyResources(this.S_Stop, "S_Stop");
+            this.S_Stop.Click += new System.EventHandler(this.b_stop_Click);
+            // 
+            // S_AddNewSensor
+            // 
+            this.S_AddNewSensor.Name = "S_AddNewSensor";
+            resources.ApplyResources(this.S_AddNewSensor, "S_AddNewSensor");
+            this.S_AddNewSensor.Click += new System.EventHandler(this.b_add_Click);
+            // 
+            // S_Save
+            // 
+            this.S_Save.Name = "S_Save";
+            resources.ApplyResources(this.S_Save, "S_Save");
+            this.S_Save.Click += new System.EventHandler(this.b_save_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -222,19 +277,111 @@ namespace DataCollectionApp2
             // 
             resources.ApplyResources(this.textBox5, "textBox5");
             this.textBox5.Name = "textBox5";
+            this.textBox5.Click += new System.EventHandler(this.textBox5_Click);
             // 
-            // button4
+            // b_save
             // 
-            resources.ApplyResources(this.button4, "button4");
-            this.button4.Name = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            resources.ApplyResources(this.b_save, "b_save");
+            this.b_save.Name = "b_save";
+            this.b_save.UseVisualStyleBackColor = true;
+            this.b_save.Click += new System.EventHandler(this.b_save_Click);
+            // 
+            // t_time
+            // 
+            resources.ApplyResources(this.t_time, "t_time");
+            this.t_time.Name = "t_time";
+            // 
+            // t_part03
+            // 
+            resources.ApplyResources(this.t_part03, "t_part03");
+            this.t_part03.Name = "t_part03";
+            // 
+            // t_temp
+            // 
+            resources.ApplyResources(this.t_temp, "t_temp");
+            this.t_temp.Name = "t_temp";
+            // 
+            // t_no
+            // 
+            resources.ApplyResources(this.t_no, "t_no");
+            this.t_no.Name = "t_no";
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            // 
+            // label_no
+            // 
+            resources.ApplyResources(this.label_no, "label_no");
+            this.label_no.Name = "label_no";
+            // 
+            // label_temp
+            // 
+            resources.ApplyResources(this.label_temp, "label_temp");
+            this.label_temp.Name = "label_temp";
+            // 
+            // t_humid
+            // 
+            resources.ApplyResources(this.t_humid, "t_humid");
+            this.t_humid.Name = "t_humid";
+            // 
+            // t_part05
+            // 
+            resources.ApplyResources(this.t_part05, "t_part05");
+            this.t_part05.Name = "t_part05";
+            // 
+            // label_humid
+            // 
+            resources.ApplyResources(this.label_humid, "label_humid");
+            this.label_humid.Name = "label_humid";
+            // 
+            // label_part03
+            // 
+            resources.ApplyResources(this.label_part03, "label_part03");
+            this.label_part03.Name = "label_part03";
+            // 
+            // label_part05
+            // 
+            resources.ApplyResources(this.label_part05, "label_part05");
+            this.label_part05.Name = "label_part05";
+            // 
+            // label_time
+            // 
+            resources.ApplyResources(this.label_time, "label_time");
+            this.label_time.Name = "label_time";
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
+            // b_dataCollection_status
+            // 
+            resources.ApplyResources(this.b_dataCollection_status, "b_dataCollection_status");
+            this.b_dataCollection_status.Name = "b_dataCollection_status";
+            this.b_dataCollection_status.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.b_dataCollection_status);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label_time);
+            this.Controls.Add(this.label_part05);
+            this.Controls.Add(this.label_part03);
+            this.Controls.Add(this.label_humid);
+            this.Controls.Add(this.t_part05);
+            this.Controls.Add(this.t_humid);
+            this.Controls.Add(this.label_temp);
+            this.Controls.Add(this.label_no);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.t_time);
+            this.Controls.Add(this.t_part03);
+            this.Controls.Add(this.t_temp);
+            this.Controls.Add(this.t_no);
+            this.Controls.Add(this.b_save);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
@@ -242,9 +389,9 @@ namespace DataCollectionApp2
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.b_addSensor);
+            this.Controls.Add(this.b_stop);
+            this.Controls.Add(this.b_start);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
@@ -258,10 +405,10 @@ namespace DataCollectionApp2
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button b_start;
+        private System.Windows.Forms.Button b_stop;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button b_addSensor;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ColumnHeader columnHeader1;
@@ -285,7 +432,27 @@ namespace DataCollectionApp2
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button b_save;
+        private System.Windows.Forms.TextBox t_time;
+        private System.Windows.Forms.TextBox t_part03;
+        private System.Windows.Forms.TextBox t_temp;
+        private System.Windows.Forms.TextBox t_no;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label_no;
+        private System.Windows.Forms.Label label_temp;
+        private System.Windows.Forms.TextBox t_humid;
+        private System.Windows.Forms.TextBox t_part05;
+        private System.Windows.Forms.Label label_humid;
+        private System.Windows.Forms.Label label_part03;
+        private System.Windows.Forms.Label label_part05;
+        private System.Windows.Forms.Label label_time;
+        private System.Windows.Forms.ToolStripMenuItem sensorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem S_Start;
+        private System.Windows.Forms.ToolStripMenuItem S_Stop;
+        private System.Windows.Forms.ToolStripMenuItem S_AddNewSensor;
+        private System.Windows.Forms.ToolStripMenuItem S_Save;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button b_dataCollection_status;
     }
 }
 

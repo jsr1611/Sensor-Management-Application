@@ -25,7 +25,8 @@ namespace DataCollectionApp2
         public List<int> S_IDs { get; set; }
         public Int64 dataCount { get; set; }
         public DateTime startTime { get; set; }
-        public List<TextBox> textBoxes { get; set; }
+        public List<TextBox> textBoxes_UpdSensorInfo { get; set; }
+        public List<TextBox> textBoxes_LiveData { get; set; }
 
         public Form1()
         {
@@ -42,7 +43,7 @@ namespace DataCollectionApp2
                 String[] sensordata = { "ID", "Temp", "Humidity", "Part03", "Part05", "DateTime" };
                 Console.WriteLine("Count\t" + string.Join("\t", sensordata) + "\t\t Run Time");
                 DataSet sensorInfoTable = GetSensorInfo();
-                S_IDs = new List<int>(sensorInfoTable.Tables[0].AsEnumerable().Where(r => r.Field<string>("Usage") == "YES").Select(r=>r.Field<int>("ID")).ToList());
+                S_IDs = new List<int>(sensorInfoTable.Tables[0].AsEnumerable().Where(r => r.Field<string>("Usage") == "YES").Select(r=>Convert.ToInt32(r.Field<string>("ID"))).ToList());
                 
                 modbusClient = new ModbusClient("COM3");
                 modbusClient.Baudrate = 115200;	// Not necessary since default baudrate = 9600
@@ -73,25 +74,26 @@ namespace DataCollectionApp2
                     listView1.Items.Add(listViewItem);
                 }
 
-                textBoxes = new List<TextBox>() { textBox1, textBox2, textBox3, textBox4, textBox5 };
+                textBoxes_UpdSensorInfo = new List<TextBox>() { textBox1, textBox2, textBox3, textBox4, textBox5 };
+                textBoxes_LiveData = new List<TextBox>() { t_no, t_temp, t_humid, t_part03, t_part05, t_time };
                 List<ColumnHeader> lvColHeaders = new List<ColumnHeader>() { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 };
-                textBoxes[0].Left = listView1.Bounds.X; //lvColHeaders[i].ListView.Bounds.X;
-                textBoxes[0].Width = listView1.Columns[0].Width;
+                textBoxes_UpdSensorInfo[0].Left = listView1.Bounds.X; //lvColHeaders[i].ListView.Bounds.X;
+                textBoxes_UpdSensorInfo[0].Width = listView1.Columns[0].Width;
                 for (int i = 0; i < listView1.Columns.Count; i++)
                 {
                     listView1.Columns[i].TextAlign = HorizontalAlignment.Center;
                     if (i != 0)
                     {
-                        textBoxes[i].Left = textBoxes[i - 1].Bounds.Right;
-                        textBoxes[i].Width = listView1.Columns[i].Width;
+                        textBoxes_UpdSensorInfo[i].Left = textBoxes_UpdSensorInfo[i - 1].Bounds.Right;
+                        textBoxes_UpdSensorInfo[i].Width = listView1.Columns[i].Width;
                     }
                     
-                        Console.WriteLine("txtBox:", textBoxes[i].Left, textBoxes[i].Width);
+                        Console.WriteLine("txtBox:", textBoxes_UpdSensorInfo[i].Left, textBoxes_UpdSensorInfo[i].Width);
                     
                 }
                 Console.WriteLine(rows);
                 
-                textBoxes.Select(r => r.TextAlign = HorizontalAlignment.Center);
+                textBoxes_UpdSensorInfo.Select(r => r.TextAlign = HorizontalAlignment.Center);
                 
                 startTime = DateTime.Now;
             }
@@ -104,10 +106,6 @@ namespace DataCollectionApp2
             
         }
 
-        private void SelectedIndexChanged(object sender, EventHandler e)
-        {
-
-        }
         private void MinimizeToTray()
         {
             try
@@ -132,6 +130,8 @@ namespace DataCollectionApp2
             }
         }
 
+
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -142,6 +142,13 @@ namespace DataCollectionApp2
             }
         }
 
+        
+
+        /// <summary>
+        /// SENSOR_INFO테이블에 있는 모든 센서에 대한 ID를 List<int> 형태로 불러오는 함수
+        /// </summary>
+        /// <param name="S_IDs"></param>
+        /// <returns></returns>
         private List<int> GetSensorIDs(List<int> S_IDs)
         {
             string IdCheckCmd = "SELECT ID FROM SensorDataDB.dbo.SENSOR_INFO WHERE Usage='YES'";
@@ -162,6 +169,44 @@ namespace DataCollectionApp2
             }
             return S_IDs;
         }
+        
+
+        
+        /// <summary>
+        /// 주어진 센서 ID가 SENSOR_INFO테이블에 있는지 확인하고 bool형태의 값을 반환해주는 함수
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private bool GetSensorID(string id)
+        {
+            bool idExists = false;
+            using (SqlConnection con = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20"))
+            {
+                string sqlStrChecker = $"SELECT ID FROM [{dbName}].[dbo].[SENSOR_INFO] WHERE ID = '{id}';";
+                using (SqlCommand sqlIdCheckerCmd = new SqlCommand(sqlStrChecker, con))
+                {
+                    con.Open();
+                    using (SqlDataReader oReader = sqlIdCheckerCmd.ExecuteReader())
+                    {
+                        while (oReader.Read())
+                        {
+                            if (Convert.ToInt32(oReader["ID"].ToString()) == Convert.ToInt32(id))
+                            {
+                                idExists = true;
+                            }
+                        }
+                    }
+                }
+            }
+            return idExists;
+        }
+
+
+
+        /// <summary>
+        /// SENSOR_INFO테이블에 있는 모든 정보를 DataSet형태로 불러오는 함수
+        /// </summary>
+        /// <returns></returns>
         private DataSet GetSensorInfo()
         {
             //List<string> sensorInfoTable = new List<string>();
@@ -176,10 +221,9 @@ namespace DataCollectionApp2
             return ds;
         }
 
-
-
-
-        private void button1_Click(object sender, EventArgs e)
+            
+        
+        private void b_start_Click(object sender, EventArgs e)
         {
             if (!modbusClient.Connected && myConnection.State == ConnectionState.Closed)
             {
@@ -189,6 +233,8 @@ namespace DataCollectionApp2
             timer1.Enabled = true;
             timer1.Start();
         }
+
+
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -218,7 +264,8 @@ namespace DataCollectionApp2
                 Int64 part03 = ModbusClient.ConvertRegistersToInt(part03_arr);
                 Int64 part05 = ModbusClient.ConvertRegistersToInt(part05_arr);
                 Console.WriteLine(dataCount + "\t" + s_id + "\t" + (temp / 100m).ToString("F", CultureInfo.InvariantCulture) + "\t" + (humid / 100m).ToString("F", CultureInfo.InvariantCulture) + "\t\t" + String.Format("{0:n0}", part03) + "\t" + String.Format("{0:n0}", part05) + "\t" + timestamp0 + "\t  {0}일 {1}시간 {2}분 {3}초", timeCount.Days, timeCount.Hours, timeCount.Minutes, timeCount.Seconds);
-
+                string[] allData = { s_id.ToString(), (temp / 100m).ToString("F", CultureInfo.InvariantCulture), (humid / 100m).ToString("F", CultureInfo.InvariantCulture), String.Format("{0:n0}", part03), String.Format("{0:n0}", part05), timestamp0 };
+                DisplayLiveData(allData);
                 string sql_str_temp = "INSERT INTO DEV_TEMP_" + s_id.ToString() + " (Temperature, DateAndTime) Values (@Temperature, @DateAndTime)";
                 string sql_str_humid = "INSERT INTO DEV_HUMID_" + s_id.ToString() + " (Humidity, DateAndTime) Values (@Humidity, @DateAndTime)";
                 string sql_str_part03 = "INSERT INTO DEV_PART03_" + s_id.ToString() + " (Particle03, DateAndTime) Values (@Particle03, @DateAndTime)";
@@ -248,7 +295,9 @@ namespace DataCollectionApp2
             
         }
 
-        private void button2_Click(object sender, EventArgs e)
+
+
+        private void b_stop_Click(object sender, EventArgs e)
         {
             timer1.Stop();
             myConnection.Close();
@@ -256,97 +305,196 @@ namespace DataCollectionApp2
             
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+
+
+        private void F_Exit_Click(object sender, EventArgs e)
         {
-            //this.Close();
             Application.Exit();
         }
+
+
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             foreach(ListViewItem item in listView1.SelectedItems)
             {
-                for(int i=0;i<textBoxes.Count; i++)
+                for(int i=0;i<textBoxes_UpdSensorInfo.Count; i++)
                 {
-                    textBoxes[i].Text = item.SubItems[i].Text;
-                    textBoxes[i].TextAlign = HorizontalAlignment.Center;
+                    textBoxes_UpdSensorInfo[i].Text = item.SubItems[i].Text;
+                    textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
                 }
             }
-            
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            if (listView1.SelectedItems.Count > 1)
-            {
-                Console.WriteLine("ID:" + listView1.SelectedItems[0].Text);
-                foreach (ListViewItem item in listView1.SelectedItems)
-                {
-                    for (int i = 0; i < textBoxes.Count; i++)
-                    {
-                        item.SubItems[i].Text = textBoxes[i].Text;
-                        //textBoxes[i].TextAlign = HorizontalAlignment.Center;
-                        //Console.WriteLine(listView1.SelectedIndices[i]);
 
+
+        private void b_save_Click(object sender, EventArgs e)
+        {
+            bool emptyColumn = false;
+            for (int i = 0; i < textBoxes_UpdSensorInfo.Count; i++)
+            {
+                if (textBoxes_UpdSensorInfo[i].Text.Length < 1)
+                {
+                    emptyColumn = true;
+                }
+            }
+            if (listView1.SelectedItems.Count > 0)
+            {
+                if (emptyColumn)
+                {
+                    MessageBox.Show($"빈칸이 있어요.");
+                }
+                else
+                {
+                    Console.WriteLine("ID:" + listView1.SelectedItems[0].Text);
+                    foreach (ListViewItem item in listView1.SelectedItems)
+                    {
+                        for (int i = 0; i < textBoxes_UpdSensorInfo.Count; i++)
+                        {
+                            item.SubItems[i].Text = textBoxes_UpdSensorInfo[i].Text;
+                        }
                     }
+
+                    UpdateDB(new List<TextBox>(textBoxes_UpdSensorInfo));
                 }
 
-                UpdateDB(new List<TextBox>(textBoxes));
             }
             else
             {
-                MessageBox.Show("New sensor info has been successfully saved", "Status");
+                if (emptyColumn)
+                {
+                    MessageBox.Show($"빈칸이 있어요.");
+                }
+                else
+                {
+                    ListViewItem listViewItem = new ListViewItem(textBoxes_UpdSensorInfo[0].Text);
+
+                    listViewItem.SubItems.Add(textBoxes_UpdSensorInfo[1].Text);
+                    listViewItem.SubItems.Add(textBoxes_UpdSensorInfo[2].Text);
+                    listViewItem.SubItems.Add(textBoxes_UpdSensorInfo[3].Text);
+                    listViewItem.SubItems.Add(textBoxes_UpdSensorInfo[4].Text);
+                    listView1.Items.Add(listViewItem);
+
+                    for (int i = 0; i < listView1.Items.Count; i++)
+                    {
+                        Console.WriteLine("listView IDs:" + listView1.Items[i].Text);
+                    }
+                    AddToDB(new List<TextBox>(textBoxes_UpdSensorInfo));
+                }
             }
         }
 
+
+
+        /// <summary>
+        /// SENSOR_INFO테이블에 있는 센서 정보를 업데이트해 주는 함수.
+        /// ID (textBoxes[0].Text) 기준으로 센서 정보가 업데이트가 됨.
+        /// </summary>
+        /// <param name="textBoxes">업데이트되는 정보를 가지고 있음.  </param>
         private void UpdateDB(List<TextBox> textBoxes)
         {
-            
-            using(SqlConnection con = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20"))
+            bool idExists = GetSensorID(textBoxes[0].Text);
+                
+            if (!idExists)
             {
-                string sqlStr = $"UPDATE {dbName}.dbo.SENSOR_INFO " +
-                                    $"SET Name = '{textBoxes[1].Text}', " +
-                                        $"Location = '{textBoxes[2].Text}', " +
-                                        $"Description = '{textBoxes[3].Text}', " +
-                                        $"Usage = '{textBoxes[4].Text}' " +
-                                    $"WHERE ID = {textBoxes[0].Text}; ";
-                using (SqlCommand sqlCommand = con.CreateCommand())
+                MessageBox.Show("DB에 존재하지 않는 ID입니다.", "Status info");
+            }
+            else
+            {
+                using (SqlConnection con = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20"))
+                {
+                    string sqlStr = $"UPDATE {dbName}.dbo.SENSOR_INFO " +
+                                        $"SET Name = '{textBoxes[1].Text}', " +
+                                            $"Location = '{textBoxes[2].Text}', " +
+                                            $"Description = '{textBoxes[3].Text}', " +
+                                            $"Usage = '{textBoxes[4].Text}' " +
+                                        $"WHERE ID = '{textBoxes[0].Text}'; ";
+                    using (SqlCommand sqlCommand = con.CreateCommand())
+                    {
+                        sqlCommand.CommandText = sqlStr;
+                        con.Open();
+                        sqlCommand.ExecuteNonQuery();
+                        MessageBox.Show("DB Update Successful.", "Status info");
+                        con.Close();
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 새로운 센서 정보를 SENSOR_INFO테이블에 추가해주는 함수.
+        /// </summary>
+        /// <param name="textBoxes">센서 정보를 가지고 있음.</param>
+        private void AddToDB(List<TextBox> textBoxes)
+        {
+            using (SqlConnection con = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20"))
+            {
+                string sqlStr = $"INSERT INTO {dbName}.dbo.SENSOR_INFO (ID, Name, Location, Description, Usage) " +
+                    $"VALUES ('{textBoxes[0].Text}', '{textBoxes[1].Text}', '{textBoxes[2].Text}', '{textBoxes[3].Text}', '{textBoxes[4].Text}');";
+                using(SqlCommand sqlCommand = con.CreateCommand())
                 {
                     sqlCommand.CommandText = sqlStr;
                     con.Open();
                     sqlCommand.ExecuteNonQuery();
-                    MessageBox.Show("DB Update Successful.", "Status");
+                    MessageBox.Show("New sensor info has been successfully saved", "Status info");
                     con.Close();
                 }
             }
             
         }
 
-        private void button3_Click(object sender, EventArgs e)
+
+        
+        private void b_add_Click(object sender, EventArgs e)
         {
-            ListViewItem item = listView1.SelectedItems[0];
-            //Do whatever you need to with item
-            item.Selected = false;
-            for (int i=0; i<textBoxes.Count; i++)
+            if (listView1.SelectedItems.Count > 0)
+            {
+                ListViewItem item = listView1.SelectedItems[0];
+                item.Selected = false;
+            }
+            for (int i=0; i<textBoxes_UpdSensorInfo.Count; i++)
             {
                 if (i == 0)
                 {
-                    textBoxes[i].Text = (listView1.Items.Count + 1).ToString();
+                    textBoxes_UpdSensorInfo[i].Text = (listView1.Items.Count + 1).ToString();
+                }
+                else if(i == textBoxes_UpdSensorInfo.Count - 1)
+                {
+                    textBoxes_UpdSensorInfo[i].Text = "NO";
+                    textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
                 }
                 else
                 {
-                    textBoxes[i].Text = "";
+                    textBoxes_UpdSensorInfo[i].Text = "";
                 }
             }
-            
-            ListViewItem listViewItem = new ListViewItem(textBoxes[0].Text);
-
-            listViewItem.SubItems.Add(textBoxes[1].Text);
-            listViewItem.SubItems.Add(textBoxes[2].Text);
-            listViewItem.SubItems.Add(textBoxes[3].Text);
-            listViewItem.SubItems.Add(textBoxes[4].Text);
-            listView1.Items.Add(listViewItem);
-
         }
+
+
+
+        private void textBox5_Click(object sender, EventArgs e)
+        {
+            if(textBox5.Text == "NO")
+            {
+                textBox5.Text = "YES";
+            }
+            else
+            {
+                textBox5.Text = "NO";
+            }
+        }
+        
+
+
+        private void DisplayLiveData(string[] data)
+        {
+            for(int i=0; i<data.Length; i++)
+            {
+                textBoxes_LiveData[i].Text = data[i];
+            }
+        }
+
+        
     }
 }
