@@ -520,6 +520,45 @@ namespace DataCollectionApp2
             }
         }
 
-        
+        private void b_deleteSensor_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                DelFromDB(textBoxes_UpdSensorInfo);
+                
+                ListViewItem item = listView1.SelectedItems[0];
+                item.Remove();
+                
+                for (int i = 0; i < textBoxes_UpdSensorInfo.Count; i++)
+                {
+                    textBoxes_UpdSensorInfo[i].Text = "";
+                }
+            }
+        }
+        private void DelFromDB(List<TextBox> textBoxes)
+        {
+            bool idExists = GetSensorID(textBoxes[0].Text);
+
+            if (!idExists)
+            {
+                MessageBox.Show("DB에 존재하지 않는 ID입니다.", "Status info");
+            }
+            else
+            {
+                using (SqlConnection con = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20"))
+                {
+                    string sqlStr = $"DELETE FROM {dbName}.dbo.SENSOR_INFO " +
+                                        $"WHERE ID = '{textBoxes[0].Text}';";
+                    using (SqlCommand sqlCommand = con.CreateCommand())
+                    {
+                        sqlCommand.CommandText = sqlStr;
+                        con.Open();
+                        sqlCommand.ExecuteNonQuery();
+                        MessageBox.Show("Sensor Deletion Successful.", "Status info");
+                        con.Close();
+                    }
+                }
+            }
+        }
     }
 }

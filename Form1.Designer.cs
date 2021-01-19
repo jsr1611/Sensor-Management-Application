@@ -42,6 +42,10 @@ namespace DataCollectionApp2
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,14 +83,11 @@ namespace DataCollectionApp2
             this.label_time = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.b_dataCollection_status = new System.Windows.Forms.Button();
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.t_hahan1 = new System.Windows.Forms.TextBox();
             this.t_hahan2 = new System.Windows.Forms.TextBox();
             this.t_sanghan1 = new System.Windows.Forms.TextBox();
             this.t_sanghan2 = new System.Windows.Forms.TextBox();
+            this.b_deleteSensor = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -160,6 +161,22 @@ namespace DataCollectionApp2
             // columnHeader5
             // 
             resources.ApplyResources(this.columnHeader5, "columnHeader5");
+            // 
+            // columnHeader6
+            // 
+            resources.ApplyResources(this.columnHeader6, "columnHeader6");
+            // 
+            // columnHeader7
+            // 
+            resources.ApplyResources(this.columnHeader7, "columnHeader7");
+            // 
+            // columnHeader8
+            // 
+            resources.ApplyResources(this.columnHeader8, "columnHeader8");
+            // 
+            // columnHeader9
+            // 
+            resources.ApplyResources(this.columnHeader9, "columnHeader9");
             // 
             // menuStrip1
             // 
@@ -374,22 +391,6 @@ namespace DataCollectionApp2
             this.b_dataCollection_status.Name = "b_dataCollection_status";
             this.b_dataCollection_status.UseVisualStyleBackColor = true;
             // 
-            // columnHeader6
-            // 
-            resources.ApplyResources(this.columnHeader6, "columnHeader6");
-            // 
-            // columnHeader7
-            // 
-            resources.ApplyResources(this.columnHeader7, "columnHeader7");
-            // 
-            // columnHeader8
-            // 
-            resources.ApplyResources(this.columnHeader8, "columnHeader8");
-            // 
-            // columnHeader9
-            // 
-            resources.ApplyResources(this.columnHeader9, "columnHeader9");
-            // 
             // t_hahan1
             // 
             resources.ApplyResources(this.t_hahan1, "t_hahan1");
@@ -410,10 +411,18 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.t_sanghan2, "t_sanghan2");
             this.t_sanghan2.Name = "t_sanghan2";
             // 
+            // b_deleteSensor
+            // 
+            resources.ApplyResources(this.b_deleteSensor, "b_deleteSensor");
+            this.b_deleteSensor.Name = "b_deleteSensor";
+            this.b_deleteSensor.UseVisualStyleBackColor = true;
+            this.b_deleteSensor.Click += new System.EventHandler(this.b_deleteSensor_Click);
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.b_deleteSensor);
             this.Controls.Add(this.t_sanghan2);
             this.Controls.Add(this.t_sanghan1);
             this.Controls.Add(this.t_hahan2);
@@ -513,6 +522,7 @@ namespace DataCollectionApp2
         private System.Windows.Forms.TextBox t_hahan2;
         private System.Windows.Forms.TextBox t_sanghan1;
         private System.Windows.Forms.TextBox t_sanghan2;
+        private System.Windows.Forms.Button b_deleteSensor;
     }
 }
 
