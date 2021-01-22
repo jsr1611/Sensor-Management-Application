@@ -112,6 +112,7 @@ namespace DataCollectionApp2
             
         }
 
+
         private void MinimizeToTray()
         {
             try
