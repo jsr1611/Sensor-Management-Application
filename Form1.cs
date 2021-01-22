@@ -81,18 +81,20 @@ namespace DataCollectionApp2
                 textBoxes_UpdSensorInfo = new List<TextBox>() { textBox1, textBox2, textBox3, textBox4, textBox5 };
                 textBoxes_LiveData = new List<TextBox>() { t_no, t_temp, t_humid, t_part03, t_part05, t_time };
                 List<ColumnHeader> lvColHeaders = new List<ColumnHeader>() { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 };
-                textBoxes_UpdSensorInfo[0].Left = listView1.Bounds.X; //lvColHeaders[i].ListView.Bounds.X;
-                textBoxes_UpdSensorInfo[0].Width = listView1.Columns[0].Width;
+                
+                /*textBoxes_UpdSensorInfo[0].Left = listView1.Bounds.X; //lvColHeaders[i].ListView.Bounds.X;
+                textBoxes_UpdSensorInfo[0].Width = listView1.Columns[0].Width;*/
+
                 for (int i = 0; i < listView1.Columns.Count; i++)
                 {
                     listView1.Columns[i].TextAlign = HorizontalAlignment.Center;
-                    if (i != 0)
+                    /*if (i != 0)
                     {
                         textBoxes_UpdSensorInfo[i].Left = textBoxes_UpdSensorInfo[i - 1].Bounds.Right;
                         textBoxes_UpdSensorInfo[i].Width = listView1.Columns[i].Width;
                     }
                     
-                        Console.WriteLine("txtBox:", textBoxes_UpdSensorInfo[i].Left, textBoxes_UpdSensorInfo[i].Width);
+                        Console.WriteLine("txtBox:", textBoxes_UpdSensorInfo[i].Left, textBoxes_UpdSensorInfo[i].Width);*/
                     
                 }
                 Console.WriteLine(rows);
@@ -381,6 +383,7 @@ namespace DataCollectionApp2
                     }
 
                     UpdateDB(new List<TextBox>(textBoxes_UpdSensorInfo));
+                    clearFields(new List<TextBox>(textBoxes_UpdSensorInfo));
                 }
 
             }
@@ -405,10 +408,20 @@ namespace DataCollectionApp2
                         Console.WriteLine("listView IDs:" + listView1.Items[i].Text);
                     }
                     AddToDB(new List<TextBox>(textBoxes_UpdSensorInfo));
+                    clearFields(new List<TextBox>(textBoxes_UpdSensorInfo));
                 }
             }
         }
 
+
+
+        private void clearFields(List<TextBox> textBoxes)
+        {
+            for(int i=0; i<textBoxes.Count; i++)
+            {
+                textBoxes[i].Text = "";
+            }
+        }
 
 
         /// <summary>
@@ -520,6 +533,8 @@ namespace DataCollectionApp2
             }
         }
 
+        
+        
         private void b_deleteSensor_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
@@ -528,13 +543,18 @@ namespace DataCollectionApp2
                 
                 ListViewItem item = listView1.SelectedItems[0];
                 item.Remove();
-                
-                for (int i = 0; i < textBoxes_UpdSensorInfo.Count; i++)
-                {
-                    textBoxes_UpdSensorInfo[i].Text = "";
-                }
+
+                clearFields(textBoxes_UpdSensorInfo);
+            }
+            else
+            {
+                MessageBox.Show("선택된 센서가 없습니다!", "Warning Message");
             }
         }
+        
+        
+        
+        
         private void DelFromDB(List<TextBox> textBoxes)
         {
             bool idExists = GetSensorID(textBoxes[0].Text);
@@ -560,5 +580,6 @@ namespace DataCollectionApp2
                 }
             }
         }
+
     }
 }
