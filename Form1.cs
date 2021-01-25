@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FlaUI.UIA3;
 using FlaUI.Core;
+using DataCollectionApp2.Properties;
 
 namespace DataCollectionApp2
 {
@@ -240,6 +241,7 @@ namespace DataCollectionApp2
                 //MessageBox.Show("Hello, " + window.Title, window.Title);
                 
             }
+            b_dataCollection_status.Image = Resources.light_on_26_color;
 
             /* 
             if (!modbusClient.Connected && myConnection.State == ConnectionState.Closed)

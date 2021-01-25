@@ -173,6 +173,16 @@ namespace DataCollectionApp2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap light_on_26_color {
+            get {
+                object obj = ResourceManager.GetObject("light_on_26_color", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap notification_26 {
             get {
                 object obj = ResourceManager.GetObject("notification_26", resourceCulture);
