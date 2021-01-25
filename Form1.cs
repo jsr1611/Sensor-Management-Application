@@ -37,35 +37,44 @@ namespace DataCollectionApp2
         {
             InitializeComponent();
 
+            listView1.Scrollable = true;
+            listView2.Scrollable = true;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.Columns[1].Width = tableLayoutPanel1.Right - dataGridView1.Columns[0].Width - dataGridView1.RowHeadersWidth;
+            //dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            //dataGridView1.ColumnHeadersHeight = 60;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                //dataGridView1.RowTemplate.Height = 30;
+                dataGridView1.Rows[i].Resizable = DataGridViewTriState.False;
+            }
+            dataGridView1.Columns[0].ReadOnly = true;
+            
+            //dataGridView1.RowCount = 5;
+
             MyFunc();
+
 
         }
         private void MyFunc()
         {
-            try
-            {
+           /* try
+            {*/
 
                 String[] sensordata = { "ID", "Temp", "Humidity", "Part03", "Part05", "DateTime" };
                 Console.WriteLine("Count\t" + string.Join("\t", sensordata) + "\t\t Run Time");
                 DataSet sensorInfoTable = GetSensorInfo();
                 S_IDs = new List<int>(sensorInfoTable.Tables[0].AsEnumerable().Where(r => r.Field<string>("Usage") == "YES").Select(r=>Convert.ToInt32(r.Field<string>("ID"))).ToList());
+
+                //ModBus and myConnection initialization
+                ConnectionSettings(false);
                 
-                modbusClient = new ModbusClient("COM3");
-                modbusClient.Baudrate = 115200;	// Not necessary since default baudrate = 9600
-                modbusClient.Parity = System.IO.Ports.Parity.None;
-                modbusClient.StopBits = System.IO.Ports.StopBits.Two;
-                modbusClient.ConnectionTimeout = 5000;
-                //modbusClient.Connect();
-                Console.WriteLine("Device Connection Successful");
-                myConnection = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
-                //myConnection.Open();
                 dataCount = 0;
-                
-                listView1.Scrollable = true;
-                
-                //listView1.Columns[0].TextAlign = HorizontalAlignment.Center;
 
                 string[] rows = new string[sensorInfoTable.Tables[0].Columns.Count];
+                
                 foreach(DataRow row in sensorInfoTable.Tables[0].Rows)
                 {
                     Console.WriteLine(row["ID"]);
@@ -73,11 +82,17 @@ namespace DataCollectionApp2
                     ListViewItem listViewItem = new ListViewItem(row.ItemArray[0].ToString());
                     for (int i=1; i<row.ItemArray.Length; i++)
                     {
+                        //if(row.ItemArray[i].ToString())
                         //rows[i] = row.ItemArray[i].ToString();
                         listViewItem.SubItems.Add(row.ItemArray[i].ToString());
                     }
                     listView1.Items.Add(listViewItem);
                 }
+
+
+                //display listView1 sensor info in listView2
+                //Display_listView2();
+                Display_GridView();
 
                 textBoxes_UpdSensorInfo = new List<TextBox>() { textBox1, textBox2, textBox3, textBox4, textBox5 };
                 textBoxes_LiveData = new List<TextBox>() { t_no, t_temp, t_humid, t_part03, t_part05, t_time };
@@ -103,15 +118,52 @@ namespace DataCollectionApp2
                 textBoxes_UpdSensorInfo.Select(r => r.TextAlign = HorizontalAlignment.Center);
                 
                 startTime = DateTime.Now;
-            }
+            /*}
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
-            }
+                MessageBox.Show(ex.Message, "에러 메시지");
+            }*/
                 
                     
             
         }
+
+
+
+
+       private void Display_GridView()
+        {
+            for(int i=0; i<listView1.Columns.Count; i++)
+            {
+                string[] row = { listView1.Columns[i].Text, "" };
+                dataGridView1.Rows.Add(row);
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// ModBus Connection settings and initialization of myConnection SQLConnection object
+        /// </summary>
+        /// <param name="modbusClient"></param>
+        private void ConnectionSettings(bool flag)
+        {
+            if (flag)
+            {
+                modbusClient = new ModbusClient("COM3");
+                modbusClient.Baudrate = 115200; // Not necessary since default baudrate = 9600
+                modbusClient.Parity = System.IO.Ports.Parity.None;
+                modbusClient.StopBits = System.IO.Ports.StopBits.Two;
+                modbusClient.ConnectionTimeout = 5000;
+                //modbusClient.Connect();
+                Console.WriteLine("Device Connection Successful");
+
+                myConnection = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
+            }                                                                                                                              //myConnection.Open();
+        }
+
+
 
 
         private void MinimizeToTray()
@@ -344,6 +396,31 @@ namespace DataCollectionApp2
 
 
 
+        /// <summary>
+        /// Display listView1 Column headers and sensor info in the below listView2
+        /// </summary>
+        private void Display_listView2()
+        {
+            int itemHight = 20;
+            ImageList imgList = new ImageList();
+            imgList.ImageSize = new Size(1, itemHight);
+            
+            for(int i=0; i<listView1.Columns.Count; i++)
+            {
+                ListViewItem listViewItem = new ListViewItem(listView1.Columns[i].Text);
+                listViewItem.SubItems.Add("");
+                listView2.Items.Add(listViewItem);
+            }
+            listView2.SmallImageList = imgList;
+        }
+
+
+
+
+
+
+
+
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             foreach(ListViewItem item in listView1.SelectedItems)
@@ -353,6 +430,20 @@ namespace DataCollectionApp2
                     textBoxes_UpdSensorInfo[i].Text = item.SubItems[i].Text;
                     textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
                 }
+
+                for (int i = 0; i < listView2.Items.Count; i++)
+                {
+                    listView2.Items[i].SubItems[1].Text = item.SubItems[i].Text;
+                }
+                
+                for(int i=0; i<dataGridView1.Rows.Count; i++)
+                {
+                    dataGridView1.Rows[i].Cells[1].Value = item.SubItems[i].Text;
+                }
+
+                //Copy elements to the 2nd listView for modification and preview
+
+
             }
         }
 
