@@ -409,6 +409,7 @@ namespace DataCollectionApp2
             this.b_stop.Image = global::DataCollectionApp2.Properties.Resources.pause_button_26;
             this.b_stop.Name = "b_stop";
             this.b_stop.UseVisualStyleBackColor = true;
+            this.b_stop.Click += new System.EventHandler(this.b_stop_Click);
             // 
             // b_start
             // 
@@ -432,6 +433,7 @@ namespace DataCollectionApp2
             this.b_save.Image = global::DataCollectionApp2.Properties.Resources.save_26;
             this.b_save.Name = "b_save";
             this.b_save.UseVisualStyleBackColor = false;
+            this.b_save.Click += new System.EventHandler(this.b_save_Click);
             // 
             // b_addSensor
             // 
@@ -439,6 +441,7 @@ namespace DataCollectionApp2
             this.b_addSensor.Image = global::DataCollectionApp2.Properties.Resources.add_26;
             this.b_addSensor.Name = "b_addSensor";
             this.b_addSensor.UseVisualStyleBackColor = true;
+            this.b_addSensor.Click += new System.EventHandler(this.b_add_Click);
             // 
             // panel6
             // 

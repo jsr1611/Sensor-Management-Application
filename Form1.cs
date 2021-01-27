@@ -50,7 +50,7 @@ namespace DataCollectionApp2
                 String[] sensordata = { "ID", "Temp", "Humidity", "Part03", "Part05", "DateTime" };
                 Console.WriteLine("Count\t" + string.Join("\t", sensordata) + "\t\t Run Time");
                 DataSet sensorInfoTable = GetSensorInfo();
-                S_IDs = new List<int>(sensorInfoTable.Tables[0].AsEnumerable().Where(r => r.Field<string>("Usage") == "YES").Select(r=>Convert.ToInt32(r.Field<string>("ID"))).ToList());
+                S_IDs = new List<int>(sensorInfoTable.Tables[0].AsEnumerable().Where(r => r.Field<string>("sUsage") == "YES").Select(r=>r.Field<int>("sID")).ToList());
 
                 //ModBus and myConnection initialization
                 ConnectionSettings(false);
@@ -61,7 +61,7 @@ namespace DataCollectionApp2
                 
                 foreach(DataRow row in sensorInfoTable.Tables[0].Rows)
                 {
-                    Console.WriteLine(row["ID"]);
+                    Console.WriteLine(row["sID"]);
 
                     ListViewItem listViewItem = new ListViewItem(row.ItemArray[0].ToString());
                     for (int i=1; i<row.ItemArray.Length; i++)
@@ -414,19 +414,6 @@ namespace DataCollectionApp2
                     textBoxes_UpdSensorInfo[i].Text = item.SubItems[i].Text;
                     textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
                 }
-
-                /*for (int i = 0; i < listView2.Items.Count; i++)
-                {
-                    listView2.Items[i].SubItems[1].Text = item.SubItems[i].Text;
-                }
-                
-                for(int i=0; i<dataGridView1.Rows.Count; i++)
-                {
-                    dataGridView1.Rows[i].Cells[1].Value = item.SubItems[i].Text;
-                }*/
-
-                //Copy elements to the 2nd listView for modification and preview
-
 
             }
         }
