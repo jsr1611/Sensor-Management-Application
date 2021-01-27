@@ -966,24 +966,28 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.c_p100Usage, "c_p100Usage");
             this.c_p100Usage.Name = "c_p100Usage";
             this.c_p100Usage.UseVisualStyleBackColor = true;
+            this.c_p100Usage.CheckedChanged += new System.EventHandler(this.c_p100Usage_CheckedChanged);
             // 
             // c_p50Usage
             // 
             resources.ApplyResources(this.c_p50Usage, "c_p50Usage");
             this.c_p50Usage.Name = "c_p50Usage";
             this.c_p50Usage.UseVisualStyleBackColor = true;
+            this.c_p50Usage.CheckedChanged += new System.EventHandler(this.c_p50Usage_CheckedChanged);
             // 
             // c_p25Usage
             // 
             resources.ApplyResources(this.c_p25Usage, "c_p25Usage");
             this.c_p25Usage.Name = "c_p25Usage";
             this.c_p25Usage.UseVisualStyleBackColor = true;
+            this.c_p25Usage.CheckedChanged += new System.EventHandler(this.c_p25Usage_CheckedChanged);
             // 
             // c_p10Usage
             // 
             resources.ApplyResources(this.c_p10Usage, "c_p10Usage");
             this.c_p10Usage.Name = "c_p10Usage";
             this.c_p10Usage.UseVisualStyleBackColor = true;
+            this.c_p10Usage.CheckedChanged += new System.EventHandler(this.c_p10Usage_CheckedChanged);
             // 
             // l_p100Usage
             // 
@@ -1020,6 +1024,7 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.c_p05Usage, "c_p05Usage");
             this.c_p05Usage.Name = "c_p05Usage";
             this.c_p05Usage.UseVisualStyleBackColor = true;
+            this.c_p05Usage.CheckedChanged += new System.EventHandler(this.c_p05Usage_CheckedChanged);
             // 
             // l_p03Usage
             // 
@@ -1032,6 +1037,7 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.c_p03Usage, "c_p03Usage");
             this.c_p03Usage.Name = "c_p03Usage";
             this.c_p03Usage.UseVisualStyleBackColor = true;
+            this.c_p03Usage.CheckedChanged += new System.EventHandler(this.c_p03Usage_CheckedChanged);
             // 
             // l_hUsage
             // 

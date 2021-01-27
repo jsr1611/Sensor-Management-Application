@@ -664,7 +664,10 @@ namespace DataCollectionApp2
                 {
                     textBoxes_UpdSensorInfo[i].Text = "";
                 }
+
             }
+            RangeSetNew();
+
         }
 
 
@@ -739,32 +742,70 @@ namespace DataCollectionApp2
             }
         }
 
+       
+
+
         private void c_tUsage_CheckedChanged(object sender, EventArgs e)
         {
-            if (c_tUsage.Checked)
-            {
-                foreach(var item in t_Ranges)
-                {
-                    item.Enabled = true;
-                }
-            }
-            else if(c_tUsage.Checked == false || NullOrNotChecker(t_Ranges) == false)
-            {
-                foreach(var item in t_Ranges)
-                {
-                    item.Enabled = false;
-                }
-            }
+            c_xUsage_Checker(c_tUsage, t_Ranges);
+        }
+
+
+        private void c_hUsage_CheckedChanged(object sender, EventArgs e)
+        {
+            c_xUsage_Checker(c_hUsage, h_Ranges);
+        }
+
+
+        private void c_p03Usage_CheckedChanged(object sender, EventArgs e)
+        {
+            c_xUsage_Checker(c_p03Usage, p03_Ranges);
+        }
+
+
+        private void c_p05Usage_CheckedChanged(object sender, EventArgs e)
+        {
+            c_xUsage_Checker(c_p05Usage, p05_Ranges);
+
+        }
+
+        private void c_p10Usage_CheckedChanged(object sender, EventArgs e)
+        {
+            c_xUsage_Checker(c_p10Usage, p10_Ranges);
+
+        }
+
+        private void c_p25Usage_CheckedChanged(object sender, EventArgs e)
+        {
+            c_xUsage_Checker(c_p25Usage, p25_Ranges);
+
+        }
+
+        private void c_p50Usage_CheckedChanged(object sender, EventArgs e)
+        {
+            c_xUsage_Checker(c_p50Usage, p50_Ranges);
+
+        }
+
+        private void c_p100Usage_CheckedChanged(object sender, EventArgs e)
+        {
+            c_xUsage_Checker(c_p100Usage, p100_Ranges);
+
         }
 
 
 
+        /// <summary>
+        /// "사용안함"이 선텍되거나 어느 하나 센서의 모든 범위 설정이 0으로 되어있을 때 사용됨.
+        /// </summary>
+        /// <param name="x_Ranges"></param>
+        /// <returns></returns>
         private bool NullOrNotChecker(List<NumericUpDown> x_Ranges)
         {
             bool res = false;
-            foreach(var item in x_Ranges)
+            foreach (var item in x_Ranges)
             {
-                if(item.Value > 0)
+                if (item.Value > 0)
                 {
                     res = true;
                 }
@@ -772,22 +813,54 @@ namespace DataCollectionApp2
             return res;
         }
 
-        private void c_hUsage_CheckedChanged(object sender, EventArgs e)
+
+
+        /// <summary>
+        /// 체크 버튼 눌을 때 실행되는 코드
+        /// </summary>
+        /// <param name="c_xUsage"></param>
+        /// <param name="x_Ranges"></param>
+        private void c_xUsage_Checker(CheckBox c_xUsage, List<NumericUpDown> x_Ranges)
         {
-            if (c_hUsage.Checked)
+            if (c_xUsage.Checked)
             {
-                foreach (var item in h_Ranges)
+                foreach (var item in x_Ranges)
                 {
                     item.Enabled = true;
                 }
             }
-            else if (c_hUsage.Checked == false || NullOrNotChecker(h_Ranges) == false)
+            else if (c_xUsage.Checked == false || NullOrNotChecker(x_Ranges) == false)
             {
-                foreach (var item in h_Ranges)
+                foreach (var item in x_Ranges)
                 {
                     item.Enabled = false;
                 }
             }
         }
+      
+        
+
+        /// <summary>
+        /// 센서 추가 시 범위 설정 컨트롤러를 재세팅 해줌
+        /// </summary>
+        private void RangeSetNew()
+        {
+            for(int i=0; i < S_UsageCheckers.Count;i++)
+            {
+                S_UsageCheckers[i].Checked = false;
+            }
+            for(int i=0; i<4; i++)
+            {
+                t_Ranges[i].Enabled = false;
+                h_Ranges[i].Enabled = false;
+                p03_Ranges[i].Enabled = false;
+                p05_Ranges[i].Enabled = false;
+                p10_Ranges[i].Enabled = false;
+                p25_Ranges[i].Enabled = false;
+                p50_Ranges[i].Enabled = false;
+                p100_Ranges[i].Enabled = false;
+            }
+        }
+
     }
 }
