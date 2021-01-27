@@ -659,7 +659,5 @@ namespace DataCollectionApp2
             }
         }
 
-
-
     }
 }
