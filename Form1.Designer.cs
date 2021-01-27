@@ -857,32 +857,12 @@ namespace DataCollectionApp2
             this.s_hLowerLimit2.AllowDrop = true;
             this.s_hLowerLimit2.DecimalPlaces = 2;
             resources.ApplyResources(this.s_hLowerLimit2, "s_hLowerLimit2");
-            this.s_hLowerLimit2.Maximum = new decimal(new int[] {
-            40,
-            0,
-            0,
-            0});
-            this.s_hLowerLimit2.Minimum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            -2147483648});
             this.s_hLowerLimit2.Name = "s_hLowerLimit2";
             // 
             // s_hLowerLimit1
             // 
             this.s_hLowerLimit1.DecimalPlaces = 2;
             resources.ApplyResources(this.s_hLowerLimit1, "s_hLowerLimit1");
-            this.s_hLowerLimit1.Maximum = new decimal(new int[] {
-            40,
-            0,
-            0,
-            0});
-            this.s_hLowerLimit1.Minimum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            -2147483648});
             this.s_hLowerLimit1.Name = "s_hLowerLimit1";
             // 
             // s_hHigherLimit2
@@ -890,16 +870,6 @@ namespace DataCollectionApp2
             this.s_hHigherLimit2.AllowDrop = true;
             this.s_hHigherLimit2.DecimalPlaces = 2;
             resources.ApplyResources(this.s_hHigherLimit2, "s_hHigherLimit2");
-            this.s_hHigherLimit2.Maximum = new decimal(new int[] {
-            40,
-            0,
-            0,
-            0});
-            this.s_hHigherLimit2.Minimum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            -2147483648});
             this.s_hHigherLimit2.Name = "s_hHigherLimit2";
             // 
             // s_hHigherLimit1
@@ -907,16 +877,6 @@ namespace DataCollectionApp2
             this.s_hHigherLimit1.AllowDrop = true;
             this.s_hHigherLimit1.DecimalPlaces = 2;
             resources.ApplyResources(this.s_hHigherLimit1, "s_hHigherLimit1");
-            this.s_hHigherLimit1.Maximum = new decimal(new int[] {
-            40,
-            0,
-            0,
-            0});
-            this.s_hHigherLimit1.Minimum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            -2147483648});
             this.s_hHigherLimit1.Name = "s_hHigherLimit1";
             // 
             // s_tLowerLimit2
@@ -925,12 +885,12 @@ namespace DataCollectionApp2
             this.s_tLowerLimit2.DecimalPlaces = 2;
             resources.ApplyResources(this.s_tLowerLimit2, "s_tLowerLimit2");
             this.s_tLowerLimit2.Maximum = new decimal(new int[] {
-            40,
+            60,
             0,
             0,
             0});
             this.s_tLowerLimit2.Minimum = new decimal(new int[] {
-            15,
+            40,
             0,
             0,
             -2147483648});
@@ -941,12 +901,12 @@ namespace DataCollectionApp2
             this.s_tLowerLimit1.DecimalPlaces = 2;
             resources.ApplyResources(this.s_tLowerLimit1, "s_tLowerLimit1");
             this.s_tLowerLimit1.Maximum = new decimal(new int[] {
-            40,
+            60,
             0,
             0,
             0});
             this.s_tLowerLimit1.Minimum = new decimal(new int[] {
-            15,
+            40,
             0,
             0,
             -2147483648});
@@ -958,12 +918,12 @@ namespace DataCollectionApp2
             this.s_tHigherLimit2.DecimalPlaces = 2;
             resources.ApplyResources(this.s_tHigherLimit2, "s_tHigherLimit2");
             this.s_tHigherLimit2.Maximum = new decimal(new int[] {
-            40,
+            60,
             0,
             0,
             0});
             this.s_tHigherLimit2.Minimum = new decimal(new int[] {
-            15,
+            40,
             0,
             0,
             -2147483648});
@@ -975,12 +935,12 @@ namespace DataCollectionApp2
             this.s_tHigherLimit1.DecimalPlaces = 2;
             resources.ApplyResources(this.s_tHigherLimit1, "s_tHigherLimit1");
             this.s_tHigherLimit1.Maximum = new decimal(new int[] {
-            40,
+            60,
             0,
             0,
             0});
             this.s_tHigherLimit1.Minimum = new decimal(new int[] {
-            15,
+            40,
             0,
             0,
             -2147483648});
@@ -990,7 +950,7 @@ namespace DataCollectionApp2
             // 
             resources.ApplyResources(this.sID, "sID");
             this.sID.Maximum = new decimal(new int[] {
-            500,
+            250,
             0,
             0,
             0});
