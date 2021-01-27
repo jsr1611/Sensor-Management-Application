@@ -1044,6 +1044,7 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.c_hUsage, "c_hUsage");
             this.c_hUsage.Name = "c_hUsage";
             this.c_hUsage.UseVisualStyleBackColor = true;
+            this.c_hUsage.CheckedChanged += new System.EventHandler(this.c_hUsage_CheckedChanged);
             // 
             // l_tUsage
             // 
@@ -1056,6 +1057,7 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.c_tUsage, "c_tUsage");
             this.c_tUsage.Name = "c_tUsage";
             this.c_tUsage.UseVisualStyleBackColor = true;
+            this.c_tUsage.CheckedChanged += new System.EventHandler(this.c_tUsage_CheckedChanged);
             // 
             // l_sHigherLimit2
             // 

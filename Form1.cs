@@ -440,7 +440,17 @@ namespace DataCollectionApp2
                     for(int i = 0; i<S_UsageCheckers.Count; i++)
                     {
                         S_UsageCheckers[i].Checked = false;
-                        S_Ranges[i].Enabled = false;
+                    }
+                    for(int i=0; i<4; i++)
+                    {
+                        t_Ranges[i].Enabled = false;
+                        h_Ranges[i].Enabled = false;
+                        p03_Ranges[i].Enabled = false;
+                        p05_Ranges[i].Enabled = false;
+                        p10_Ranges[i].Enabled = false;
+                        p25_Ranges[i].Enabled = false;
+                        p50_Ranges[i].Enabled = false;
+                        p100_Ranges[i].Enabled = false;
                     }
                 }
                 else
@@ -729,5 +739,55 @@ namespace DataCollectionApp2
             }
         }
 
+        private void c_tUsage_CheckedChanged(object sender, EventArgs e)
+        {
+            if (c_tUsage.Checked)
+            {
+                foreach(var item in t_Ranges)
+                {
+                    item.Enabled = true;
+                }
+            }
+            else if(c_tUsage.Checked == false || NullOrNotChecker(t_Ranges) == false)
+            {
+                foreach(var item in t_Ranges)
+                {
+                    item.Enabled = false;
+                }
+            }
+        }
+
+
+
+        private bool NullOrNotChecker(List<NumericUpDown> x_Ranges)
+        {
+            bool res = false;
+            foreach(var item in x_Ranges)
+            {
+                if(item.Value > 0)
+                {
+                    res = true;
+                }
+            }
+            return res;
+        }
+
+        private void c_hUsage_CheckedChanged(object sender, EventArgs e)
+        {
+            if (c_hUsage.Checked)
+            {
+                foreach (var item in h_Ranges)
+                {
+                    item.Enabled = true;
+                }
+            }
+            else if (c_hUsage.Checked == false || NullOrNotChecker(h_Ranges) == false)
+            {
+                foreach (var item in h_Ranges)
+                {
+                    item.Enabled = false;
+                }
+            }
+        }
     }
 }
