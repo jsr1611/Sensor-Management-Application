@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using FlaUI.UIA3;
 using FlaUI.Core;
 using DataCollectionApp2.Properties;
+using System.Data.Odbc;
 
 namespace DataCollectionApp2
 {
@@ -30,6 +31,10 @@ namespace DataCollectionApp2
         public DateTime startTime { get; set; }
         public List<TextBox> textBoxes_UpdSensorInfo { get; set; }
         public List<TextBox> textBoxes_LiveData { get; set; }
+
+        public List<CheckBox> S_UsageCheckers { get; set; }
+        public List<NumericUpDown> S_Ranges { get; set; }
+
         public string appAddress = @"C:\Users\JIMMY\source\repos\0DataCollectionAppNew\DataCollectionApp\bin\Release\Modbus_RTU_SensorData.EXE";
         public FlaUI.Core.Application dataCollectionApp { get; set; }
 
@@ -58,19 +63,22 @@ namespace DataCollectionApp2
                 dataCount = 0;
 
                 string[] rows = new string[sensorInfoTable.Tables[0].Columns.Count];
-                
+
+            int num = 1;
                 foreach(DataRow row in sensorInfoTable.Tables[0].Rows)
                 {
                     Console.WriteLine(row["sID"]);
 
-                    ListViewItem listViewItem = new ListViewItem(row.ItemArray[0].ToString());
-                    for (int i=1; i<row.ItemArray.Length; i++)
+                    ListViewItem listViewItem = new ListViewItem(num.ToString());
+                    for (int i=0; i<row.ItemArray.Length; i++)
                     {
                         //if(row.ItemArray[i].ToString())
                         //rows[i] = row.ItemArray[i].ToString();
                         listViewItem.SubItems.Add(row.ItemArray[i].ToString());
+                        listView1.Columns[i].TextAlign = HorizontalAlignment.Center;
                     }
                     listView1.Items.Add(listViewItem);
+                num += 1;
                 }
 
 
@@ -78,29 +86,16 @@ namespace DataCollectionApp2
                 //Display_listView2();
                 //Display_GridView();
 
-                textBoxes_UpdSensorInfo = new List<TextBox>() { sName, sLocation, sDescription,  }; 
+                textBoxes_UpdSensorInfo = new List<TextBox>() { sName, sLocation, sDescription  }; 
                 textBoxes_LiveData = new List<TextBox>() { t_no, t_temp, t_humid, t_part03, t_part05, t_time };
                 List<ColumnHeader> lvColHeaders = new List<ColumnHeader>() { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 };
-                
-                /*textBoxes_UpdSensorInfo[0].Left = listView1.Bounds.X; //lvColHeaders[i].ListView.Bounds.X;
-                textBoxes_UpdSensorInfo[0].Width = listView1.Columns[0].Width;*/
-
-                for (int i = 0; i < listView1.Columns.Count; i++)
-                {
-                    listView1.Columns[i].TextAlign = HorizontalAlignment.Center;
-                    /*if (i != 0)
-                    {
-                        textBoxes_UpdSensorInfo[i].Left = textBoxes_UpdSensorInfo[i - 1].Bounds.Right;
-                        textBoxes_UpdSensorInfo[i].Width = listView1.Columns[i].Width;
-                    }
-                    
-                        Console.WriteLine("txtBox:", textBoxes_UpdSensorInfo[i].Left, textBoxes_UpdSensorInfo[i].Width);*/
-                    
-                }
-                Console.WriteLine(rows);
-                
-                textBoxes_UpdSensorInfo.Select(r => r.TextAlign = HorizontalAlignment.Center);
-                
+                S_UsageCheckers = new List<CheckBox>() { c_tUsage, c_hUsage, c_p03Usage, c_p05Usage, c_p10Usage, c_p25Usage, c_p50Usage, c_p100Usage };
+            S_Ranges = new List<NumericUpDown>();
+            DataSet rangesWithUsage = GetRangesWithUsage(Convert.ToInt32(sID.Value));
+            /*S_Ranges.AddRange((IEnumerable<NumericUpDown>)rangesWithUsage.Tables[0].Columns.Cast<DataColumn>()
+                .Select(x=>x.ColumnName)
+                .ToList());
+            textBoxes_UpdSensorInfo.Select(r => r.TextAlign = HorizontalAlignment.Center);*/
                 startTime = DateTime.Now;
             /*}
             catch (Exception ex)
@@ -195,7 +190,7 @@ namespace DataCollectionApp2
         /// <returns></returns>
         private List<int> GetSensorIDs(List<int> S_IDs)
         {
-            string IdCheckCmd = "SELECT ID FROM SensorDataDB.dbo.SENSOR_INFO WHERE Usage='YES'";
+            string IdCheckCmd = "SELECT sID FROM SensorDataDB.dbo.SENSOR_INFO WHERE sUsage='YES'";
             using (SqlConnection conn = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20")) // ; Integrated Security=True
             {
                 Console.WriteLine("Usable sensor IDs:");
@@ -205,8 +200,8 @@ namespace DataCollectionApp2
                 {
                     while (sqlDataReader.Read())
                     {
-                        S_IDs.Add(Convert.ToInt32(sqlDataReader["ID"]));
-                        Console.WriteLine(Convert.ToInt32(sqlDataReader["ID"]));
+                        S_IDs.Add(Convert.ToInt32(sqlDataReader["sID"]));
+                        Console.WriteLine(Convert.ToInt32(sqlDataReader["sID"]));
                     }
                 }
                 conn.Close();
@@ -221,12 +216,12 @@ namespace DataCollectionApp2
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private bool GetSensorID(string id)
+        private bool GetSensorID(int id)
         {
             bool idExists = false;
             using (SqlConnection con = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20"))
             {
-                string sqlStrChecker = $"SELECT ID FROM [{dbName}].[dbo].[SENSOR_INFO] WHERE ID = '{id}';";
+                string sqlStrChecker = $"SELECT sID FROM [{dbName}].[dbo].[SENSOR_INFO] WHERE sID = {id};";
                 using (SqlCommand sqlIdCheckerCmd = new SqlCommand(sqlStrChecker, con))
                 {
                     con.Open();
@@ -234,7 +229,7 @@ namespace DataCollectionApp2
                     {
                         while (oReader.Read())
                         {
-                            if (Convert.ToInt32(oReader["ID"].ToString()) == Convert.ToInt32(id))
+                            if (Convert.ToInt32(oReader["sID"].ToString()) == Convert.ToInt32(id))
                             {
                                 idExists = true;
                             }
@@ -409,16 +404,82 @@ namespace DataCollectionApp2
         {
             foreach(ListViewItem item in listView1.SelectedItems)
             {
+                sID.Value = Convert.ToInt32(item.SubItems[1].Text);
                 for(int i=0;i<textBoxes_UpdSensorInfo.Count; i++)
                 {
-                    textBoxes_UpdSensorInfo[i].Text = item.SubItems[i].Text;
+                    textBoxes_UpdSensorInfo[i].Text = item.SubItems[i+2].Text;
                     textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
                 }
+                DataSet rangesWithUsage = GetRangesWithUsage(Convert.ToInt32(sID.Value));
 
+                // first time use
+                if(rangesWithUsage.Tables[0].Rows.Count == 0)
+                {
+                    for(int i = 0; i<S_UsageCheckers.Count; i++)
+                    {
+                        S_UsageCheckers[i].Checked = false;
+                        S_Ranges[i].Enabled = false;
+                    }
+                }
+                else
+                {
+                    //do smth else;
+                }
             }
         }
 
+        private DataSet GetRangesWithUsage(int s_Id)
+        {
+            DataSet ds = new DataSet(); 
+            bool idExists = GetSensorID(s_Id);
 
+            if (!idExists)
+            {
+                MessageBox.Show("DB에 존재하지 않는 ID입니다.", "Status info");
+            }
+            else
+            {
+                bool sUsageInfoExists = CheckUsageInfoAll();
+                if (sUsageInfoExists)
+                {
+                    string sqlStr = $"SELECT * FROM [dbo].[sUsageInfoAll]; ";
+                    using (SqlConnection con = new SqlConnection($@"Data Source = {dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20"))
+                    { //Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20")) // ; Integrated Security=True
+                      //con.Open();
+                        SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlStr, con);
+                        sqlDataAdapter.Fill(ds);
+                    }
+
+                }
+            }
+            return ds;
+        }
+
+        private bool CheckUsageInfoAll()
+        {
+            bool exists = false;
+            using (SqlConnection con = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20"))
+            {
+                string sqlStr = "SELECT COUNT(*) " +
+                "FROM INFORMATION_SCHEMA.TABLES " +
+                "WHERE TABLE_NAME = 'sUsageInfoAll'";
+                using(SqlCommand cmd = new SqlCommand(sqlStr, con))
+                {
+                    con.Open();
+                    using(SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            exists = Convert.ToInt32(reader.GetValue(0)) == 1;
+                        }
+                    }
+                }
+                con.Close();
+
+            }
+
+            return exists;
+        }
 
         private void b_save_Click(object sender, EventArgs e)
         {
@@ -496,7 +557,7 @@ namespace DataCollectionApp2
         /// <param name="textBoxes">업데이트되는 정보를 가지고 있음.  </param>
         private void UpdateDB(List<TextBox> textBoxes)
         {
-            bool idExists = GetSensorID(textBoxes[0].Text);
+            bool idExists = GetSensorID(Convert.ToInt32(textBoxes[0].Text));
                 
             if (!idExists)
             {
@@ -622,7 +683,7 @@ namespace DataCollectionApp2
         
         private void DelFromDB(List<TextBox> textBoxes)
         {
-            bool idExists = GetSensorID(textBoxes[0].Text);
+            bool idExists = GetSensorID(Convert.ToInt32(textBoxes[0].Text));
 
             if (!idExists)
             {

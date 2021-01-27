@@ -82,7 +82,7 @@ namespace DataCollectionApp2
             this.panel_right = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -577,7 +577,7 @@ namespace DataCollectionApp2
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader6,
+            this.columnHeader0,
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
@@ -586,14 +586,16 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.listView1, "listView1");
             this.listView1.FullRowSelect = true;
             this.listView1.HideSelection = false;
+            this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
             this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
-            // columnHeader6
+            // columnHeader0
             // 
-            resources.ApplyResources(this.columnHeader6, "columnHeader6");
+            resources.ApplyResources(this.columnHeader0, "columnHeader0");
             // 
             // columnHeader1
             // 
@@ -1250,7 +1252,7 @@ namespace DataCollectionApp2
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.Splitter splitter2;
         private System.Windows.Forms.Splitter splitter1;
-        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.ColumnHeader columnHeader0;
         private System.Windows.Forms.CheckBox c_tUsage;
         private System.Windows.Forms.Label l_sHigherLimit2;
         private System.Windows.Forms.Label l_sHigherLimit1;
