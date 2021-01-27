@@ -34,6 +34,14 @@ namespace DataCollectionApp2
 
         public List<CheckBox> S_UsageCheckers { get; set; }
         public List<NumericUpDown> S_Ranges { get; set; }
+        public List<NumericUpDown> t_Ranges { get; set; }
+        public List<NumericUpDown> h_Ranges { get; set; }
+        public List<NumericUpDown> p03_Ranges { get; set; }
+        public List<NumericUpDown> p05_Ranges { get; set; }
+        public List<NumericUpDown> p10_Ranges { get; set; }
+        public List<NumericUpDown> p25_Ranges { get; set; }
+        public List<NumericUpDown> p50_Ranges { get; set; }
+        public List<NumericUpDown> p100_Ranges { get; set; }
 
         public string appAddress = @"C:\Users\JIMMY\source\repos\0DataCollectionAppNew\DataCollectionApp\bin\Release\Modbus_RTU_SensorData.EXE";
         public FlaUI.Core.Application dataCollectionApp { get; set; }
@@ -90,13 +98,27 @@ namespace DataCollectionApp2
                 textBoxes_LiveData = new List<TextBox>() { t_no, t_temp, t_humid, t_part03, t_part05, t_time };
                 List<ColumnHeader> lvColHeaders = new List<ColumnHeader>() { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 };
                 S_UsageCheckers = new List<CheckBox>() { c_tUsage, c_hUsage, c_p03Usage, c_p05Usage, c_p10Usage, c_p25Usage, c_p50Usage, c_p100Usage };
+            t_Ranges = new List<NumericUpDown>() { s_tLowerLimit1, s_tLowerLimit2, s_tHigherLimit1, s_tHigherLimit2 };
+            h_Ranges = new List<NumericUpDown>() { s_hLowerLimit1, s_hLowerLimit2, s_hHigherLimit1, s_hHigherLimit2 };
+            p03_Ranges = new List<NumericUpDown>() { s_p03LowerLimit1, s_p03LowerLimit2, s_p03HigherLimit1, s_p03HigherLimit2 };
+            p05_Ranges = new List<NumericUpDown>() { s_p05LowerLimit1, s_p05LowerLimit2, s_p05HigherLimit1, s_p05HigherLimit2 };
+            p10_Ranges = new List<NumericUpDown>() { s_p10LowerLimit1, s_p10LowerLimit2, s_p10HigherLimit1, s_p10HigherLimit2 };
+            p25_Ranges = new List<NumericUpDown>() { s_p25LowerLimit1, s_p25LowerLimit2, s_p25HigherLimit1, s_p25HigherLimit2 };
+            p50_Ranges = new List<NumericUpDown>() { s_p50LowerLimit1, s_p50LowerLimit2, s_p50HigherLimit1, s_p50HigherLimit2 };
+            p100_Ranges = new List<NumericUpDown>() { s_p100LowerLimit1, s_p100LowerLimit2, s_p100HigherLimit1, s_p100HigherLimit2 };
+
+
+
+
+
             S_Ranges = new List<NumericUpDown>();
-            DataSet rangesWithUsage = GetRangesWithUsage(Convert.ToInt32(sID.Value));
-            /*S_Ranges.AddRange((IEnumerable<NumericUpDown>)rangesWithUsage.Tables[0].Columns.Cast<DataColumn>()
+            
+                /*DataSet rangesWithUsage = GetRangesWithUsage(Convert.ToInt32(sID.Value));
+                S_Ranges.AddRange((IEnumerable<NumericUpDown>)rangesWithUsage.Tables[0].Columns.Cast<DataColumn>()
                 .Select(x=>x.ColumnName)
                 .ToList());
             textBoxes_UpdSensorInfo.Select(r => r.TextAlign = HorizontalAlignment.Center);*/
-                startTime = DateTime.Now;
+            startTime = DateTime.Now;
             /*}
             catch (Exception ex)
             {
