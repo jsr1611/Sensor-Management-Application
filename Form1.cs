@@ -38,22 +38,6 @@ namespace DataCollectionApp2
             InitializeComponent();
 
             listView1.Scrollable = true;
-            listView2.Scrollable = true;
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.Columns[1].Width = tableLayoutPanel1.Right - dataGridView1.Columns[0].Width - dataGridView1.RowHeadersWidth;
-            //dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            //dataGridView1.ColumnHeadersHeight = 60;
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            {
-                //dataGridView1.RowTemplate.Height = 30;
-                dataGridView1.Rows[i].Resizable = DataGridViewTriState.False;
-            }
-            dataGridView1.Columns[0].ReadOnly = true;
-            
-            //dataGridView1.RowCount = 5;
-
             MyFunc();
 
 
@@ -92,9 +76,9 @@ namespace DataCollectionApp2
 
                 //display listView1 sensor info in listView2
                 //Display_listView2();
-                Display_GridView();
+                //Display_GridView();
 
-                textBoxes_UpdSensorInfo = new List<TextBox>() { textBox1, textBox2, textBox3, textBox4, textBox5 };
+                textBoxes_UpdSensorInfo = new List<TextBox>() { textBox2, textBox3, textBox4,  }; 
                 textBoxes_LiveData = new List<TextBox>() { t_no, t_temp, t_humid, t_part03, t_part05, t_time };
                 List<ColumnHeader> lvColHeaders = new List<ColumnHeader>() { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 };
                 
@@ -131,14 +115,14 @@ namespace DataCollectionApp2
 
 
 
-       private void Display_GridView()
+       /*private void Display_GridView()
         {
             for(int i=0; i<listView1.Columns.Count; i++)
             {
                 string[] row = { listView1.Columns[i].Text, "" };
                 dataGridView1.Rows.Add(row);
             }
-        }
+        }*/
 
 
 
@@ -409,9 +393,9 @@ namespace DataCollectionApp2
             {
                 ListViewItem listViewItem = new ListViewItem(listView1.Columns[i].Text);
                 listViewItem.SubItems.Add("");
-                listView2.Items.Add(listViewItem);
+                //listView2.Items.Add(listViewItem);
             }
-            listView2.SmallImageList = imgList;
+            //listView2.SmallImageList = imgList;
         }
 
 
@@ -431,7 +415,7 @@ namespace DataCollectionApp2
                     textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
                 }
 
-                for (int i = 0; i < listView2.Items.Count; i++)
+                /*for (int i = 0; i < listView2.Items.Count; i++)
                 {
                     listView2.Items[i].SubItems[1].Text = item.SubItems[i].Text;
                 }
@@ -439,7 +423,7 @@ namespace DataCollectionApp2
                 for(int i=0; i<dataGridView1.Rows.Count; i++)
                 {
                     dataGridView1.Rows[i].Cells[1].Value = item.SubItems[i].Text;
-                }
+                }*/
 
                 //Copy elements to the 2nd listView for modification and preview
 
@@ -607,14 +591,14 @@ namespace DataCollectionApp2
 
         private void textBox5_Click(object sender, EventArgs e)
         {
-            if(textBox5.Text == "NO")
+            /*if(textBox5.Text == "NO")
             {
                 textBox5.Text = "YES";
             }
             else
             {
                 textBox5.Text = "NO";
-            }
+            }*/
         }
         
 
@@ -674,6 +658,8 @@ namespace DataCollectionApp2
                 }
             }
         }
+
+
 
     }
 }
