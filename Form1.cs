@@ -78,7 +78,7 @@ namespace DataCollectionApp2
                 //Display_listView2();
                 //Display_GridView();
 
-                textBoxes_UpdSensorInfo = new List<TextBox>() { textBox2, textBox3, textBox4,  }; 
+                textBoxes_UpdSensorInfo = new List<TextBox>() { sName, sLocation, sDescription,  }; 
                 textBoxes_LiveData = new List<TextBox>() { t_no, t_temp, t_humid, t_part03, t_part05, t_time };
                 List<ColumnHeader> lvColHeaders = new List<ColumnHeader>() { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 };
                 

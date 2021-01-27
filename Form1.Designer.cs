@@ -100,43 +100,43 @@ namespace DataCollectionApp2
             this.numericUpDown31 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown32 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown33 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown18 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown19 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown20 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown21 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown14 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown15 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown16 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown17 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown12 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown13 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown11 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown10 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown7 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown8 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.checkBox8 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.s_p10HigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p10HigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_p10LowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p10LowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_p05HigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p05HigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_p05LowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p05LowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_p03HigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p03HigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_p03LowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p03LowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_hLowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_hLowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_hHigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_hHigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_tLowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_tLowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_tHigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_tHigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.sID = new System.Windows.Forms.NumericUpDown();
+            this.c_p100Usage = new System.Windows.Forms.CheckBox();
+            this.c_p50Usage = new System.Windows.Forms.CheckBox();
+            this.c_p25Usage = new System.Windows.Forms.CheckBox();
+            this.c_p10Usage = new System.Windows.Forms.CheckBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.c_p05Usage = new System.Windows.Forms.CheckBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.c_p03Usage = new System.Windows.Forms.CheckBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.c_hUsage = new System.Windows.Forms.CheckBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.c_tUsage = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -146,9 +146,9 @@ namespace DataCollectionApp2
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.sDescription = new System.Windows.Forms.TextBox();
+            this.sLocation = new System.Windows.Forms.TextBox();
+            this.sName = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -172,27 +172,27 @@ namespace DataCollectionApp2
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown31)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown32)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown33)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown21)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown17)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p10HigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p10HigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p10LowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p10LowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p05HigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p05HigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p05LowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p05LowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p03HigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p03HigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p03LowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p03LowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hLowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hLowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hHigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hHigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_tLowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_tLowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_tHigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_tHigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sID)).BeginInit();
             this.SuspendLayout();
             // 
             // timer1
@@ -521,43 +521,43 @@ namespace DataCollectionApp2
             this.splitContainer1.Panel2.Controls.Add(this.numericUpDown31);
             this.splitContainer1.Panel2.Controls.Add(this.numericUpDown32);
             this.splitContainer1.Panel2.Controls.Add(this.numericUpDown33);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown18);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown19);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown20);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown21);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown14);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown15);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown16);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown17);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown12);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown13);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown11);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown10);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown6);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown7);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown8);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown9);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown4);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown5);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown3);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown2);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown1);
-            this.splitContainer1.Panel2.Controls.Add(this.checkBox7);
-            this.splitContainer1.Panel2.Controls.Add(this.checkBox8);
-            this.splitContainer1.Panel2.Controls.Add(this.checkBox5);
-            this.splitContainer1.Panel2.Controls.Add(this.checkBox6);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p10HigherLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p10HigherLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p10LowerLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p10LowerLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p05HigherLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p05HigherLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p05LowerLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p05LowerLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p03HigherLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p03HigherLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p03LowerLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p03LowerLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.s_hLowerLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_hLowerLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.s_hHigherLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_hHigherLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.s_tLowerLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_tLowerLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.s_tHigherLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_tHigherLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.sID);
+            this.splitContainer1.Panel2.Controls.Add(this.c_p100Usage);
+            this.splitContainer1.Panel2.Controls.Add(this.c_p50Usage);
+            this.splitContainer1.Panel2.Controls.Add(this.c_p25Usage);
+            this.splitContainer1.Panel2.Controls.Add(this.c_p10Usage);
             this.splitContainer1.Panel2.Controls.Add(this.label18);
             this.splitContainer1.Panel2.Controls.Add(this.label19);
             this.splitContainer1.Panel2.Controls.Add(this.label20);
             this.splitContainer1.Panel2.Controls.Add(this.label21);
             this.splitContainer1.Panel2.Controls.Add(this.label16);
-            this.splitContainer1.Panel2.Controls.Add(this.checkBox3);
+            this.splitContainer1.Panel2.Controls.Add(this.c_p05Usage);
             this.splitContainer1.Panel2.Controls.Add(this.label17);
-            this.splitContainer1.Panel2.Controls.Add(this.checkBox4);
+            this.splitContainer1.Panel2.Controls.Add(this.c_p03Usage);
             this.splitContainer1.Panel2.Controls.Add(this.label15);
-            this.splitContainer1.Panel2.Controls.Add(this.checkBox2);
+            this.splitContainer1.Panel2.Controls.Add(this.c_hUsage);
             this.splitContainer1.Panel2.Controls.Add(this.label14);
-            this.splitContainer1.Panel2.Controls.Add(this.checkBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.c_tUsage);
             this.splitContainer1.Panel2.Controls.Add(this.label12);
             this.splitContainer1.Panel2.Controls.Add(this.label8);
             this.splitContainer1.Panel2.Controls.Add(this.label9);
@@ -567,9 +567,9 @@ namespace DataCollectionApp2
             this.splitContainer1.Panel2.Controls.Add(this.label7);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.label4);
-            this.splitContainer1.Panel2.Controls.Add(this.textBox4);
-            this.splitContainer1.Panel2.Controls.Add(this.textBox3);
-            this.splitContainer1.Panel2.Controls.Add(this.textBox2);
+            this.splitContainer1.Panel2.Controls.Add(this.sDescription);
+            this.splitContainer1.Panel2.Controls.Add(this.sLocation);
+            this.splitContainer1.Panel2.Controls.Add(this.sName);
             // 
             // listView1
             // 
@@ -732,293 +732,293 @@ namespace DataCollectionApp2
             0});
             this.numericUpDown33.Name = "numericUpDown33";
             // 
-            // numericUpDown18
+            // s_p10HigherLimit2
             // 
-            resources.ApplyResources(this.numericUpDown18, "numericUpDown18");
-            this.numericUpDown18.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p10HigherLimit2, "s_p10HigherLimit2");
+            this.s_p10HigherLimit2.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.numericUpDown18.Name = "numericUpDown18";
+            this.s_p10HigherLimit2.Name = "s_p10HigherLimit2";
             // 
-            // numericUpDown19
+            // s_p10HigherLimit1
             // 
-            resources.ApplyResources(this.numericUpDown19, "numericUpDown19");
-            this.numericUpDown19.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p10HigherLimit1, "s_p10HigherLimit1");
+            this.s_p10HigherLimit1.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.numericUpDown19.Name = "numericUpDown19";
+            this.s_p10HigherLimit1.Name = "s_p10HigherLimit1";
             // 
-            // numericUpDown20
+            // s_p10LowerLimit2
             // 
-            resources.ApplyResources(this.numericUpDown20, "numericUpDown20");
-            this.numericUpDown20.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p10LowerLimit2, "s_p10LowerLimit2");
+            this.s_p10LowerLimit2.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.numericUpDown20.Name = "numericUpDown20";
+            this.s_p10LowerLimit2.Name = "s_p10LowerLimit2";
             // 
-            // numericUpDown21
+            // s_p10LowerLimit1
             // 
-            resources.ApplyResources(this.numericUpDown21, "numericUpDown21");
-            this.numericUpDown21.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p10LowerLimit1, "s_p10LowerLimit1");
+            this.s_p10LowerLimit1.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.numericUpDown21.Name = "numericUpDown21";
+            this.s_p10LowerLimit1.Name = "s_p10LowerLimit1";
             // 
-            // numericUpDown14
+            // s_p05HigherLimit2
             // 
-            resources.ApplyResources(this.numericUpDown14, "numericUpDown14");
-            this.numericUpDown14.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p05HigherLimit2, "s_p05HigherLimit2");
+            this.s_p05HigherLimit2.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.numericUpDown14.Name = "numericUpDown14";
+            this.s_p05HigherLimit2.Name = "s_p05HigherLimit2";
             // 
-            // numericUpDown15
+            // s_p05HigherLimit1
             // 
-            resources.ApplyResources(this.numericUpDown15, "numericUpDown15");
-            this.numericUpDown15.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p05HigherLimit1, "s_p05HigherLimit1");
+            this.s_p05HigherLimit1.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.numericUpDown15.Name = "numericUpDown15";
+            this.s_p05HigherLimit1.Name = "s_p05HigherLimit1";
             // 
-            // numericUpDown16
+            // s_p05LowerLimit2
             // 
-            resources.ApplyResources(this.numericUpDown16, "numericUpDown16");
-            this.numericUpDown16.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p05LowerLimit2, "s_p05LowerLimit2");
+            this.s_p05LowerLimit2.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.numericUpDown16.Name = "numericUpDown16";
+            this.s_p05LowerLimit2.Name = "s_p05LowerLimit2";
             // 
-            // numericUpDown17
+            // s_p05LowerLimit1
             // 
-            resources.ApplyResources(this.numericUpDown17, "numericUpDown17");
-            this.numericUpDown17.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p05LowerLimit1, "s_p05LowerLimit1");
+            this.s_p05LowerLimit1.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.numericUpDown17.Name = "numericUpDown17";
+            this.s_p05LowerLimit1.Name = "s_p05LowerLimit1";
             // 
-            // numericUpDown12
+            // s_p03HigherLimit2
             // 
-            resources.ApplyResources(this.numericUpDown12, "numericUpDown12");
-            this.numericUpDown12.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p03HigherLimit2, "s_p03HigherLimit2");
+            this.s_p03HigherLimit2.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.numericUpDown12.Name = "numericUpDown12";
+            this.s_p03HigherLimit2.Name = "s_p03HigherLimit2";
             // 
-            // numericUpDown13
+            // s_p03HigherLimit1
             // 
-            resources.ApplyResources(this.numericUpDown13, "numericUpDown13");
-            this.numericUpDown13.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p03HigherLimit1, "s_p03HigherLimit1");
+            this.s_p03HigherLimit1.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.numericUpDown13.Name = "numericUpDown13";
+            this.s_p03HigherLimit1.Name = "s_p03HigherLimit1";
             // 
-            // numericUpDown11
+            // s_p03LowerLimit2
             // 
-            resources.ApplyResources(this.numericUpDown11, "numericUpDown11");
-            this.numericUpDown11.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p03LowerLimit2, "s_p03LowerLimit2");
+            this.s_p03LowerLimit2.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.numericUpDown11.Name = "numericUpDown11";
+            this.s_p03LowerLimit2.Name = "s_p03LowerLimit2";
             // 
-            // numericUpDown10
+            // s_p03LowerLimit1
             // 
-            resources.ApplyResources(this.numericUpDown10, "numericUpDown10");
-            this.numericUpDown10.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p03LowerLimit1, "s_p03LowerLimit1");
+            this.s_p03LowerLimit1.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.numericUpDown10.Name = "numericUpDown10";
+            this.s_p03LowerLimit1.Name = "s_p03LowerLimit1";
             // 
-            // numericUpDown6
+            // s_hLowerLimit2
             // 
-            this.numericUpDown6.AllowDrop = true;
-            this.numericUpDown6.DecimalPlaces = 2;
-            resources.ApplyResources(this.numericUpDown6, "numericUpDown6");
-            this.numericUpDown6.Maximum = new decimal(new int[] {
+            this.s_hLowerLimit2.AllowDrop = true;
+            this.s_hLowerLimit2.DecimalPlaces = 2;
+            resources.ApplyResources(this.s_hLowerLimit2, "s_hLowerLimit2");
+            this.s_hLowerLimit2.Maximum = new decimal(new int[] {
             40,
             0,
             0,
             0});
-            this.numericUpDown6.Minimum = new decimal(new int[] {
+            this.s_hLowerLimit2.Minimum = new decimal(new int[] {
             15,
             0,
             0,
             -2147483648});
-            this.numericUpDown6.Name = "numericUpDown6";
+            this.s_hLowerLimit2.Name = "s_hLowerLimit2";
             // 
-            // numericUpDown7
+            // s_hLowerLimit1
             // 
-            this.numericUpDown7.DecimalPlaces = 2;
-            resources.ApplyResources(this.numericUpDown7, "numericUpDown7");
-            this.numericUpDown7.Maximum = new decimal(new int[] {
+            this.s_hLowerLimit1.DecimalPlaces = 2;
+            resources.ApplyResources(this.s_hLowerLimit1, "s_hLowerLimit1");
+            this.s_hLowerLimit1.Maximum = new decimal(new int[] {
             40,
             0,
             0,
             0});
-            this.numericUpDown7.Minimum = new decimal(new int[] {
+            this.s_hLowerLimit1.Minimum = new decimal(new int[] {
             15,
             0,
             0,
             -2147483648});
-            this.numericUpDown7.Name = "numericUpDown7";
+            this.s_hLowerLimit1.Name = "s_hLowerLimit1";
             // 
-            // numericUpDown8
+            // s_hHigherLimit2
             // 
-            this.numericUpDown8.AllowDrop = true;
-            this.numericUpDown8.DecimalPlaces = 2;
-            resources.ApplyResources(this.numericUpDown8, "numericUpDown8");
-            this.numericUpDown8.Maximum = new decimal(new int[] {
+            this.s_hHigherLimit2.AllowDrop = true;
+            this.s_hHigherLimit2.DecimalPlaces = 2;
+            resources.ApplyResources(this.s_hHigherLimit2, "s_hHigherLimit2");
+            this.s_hHigherLimit2.Maximum = new decimal(new int[] {
             40,
             0,
             0,
             0});
-            this.numericUpDown8.Minimum = new decimal(new int[] {
+            this.s_hHigherLimit2.Minimum = new decimal(new int[] {
             15,
             0,
             0,
             -2147483648});
-            this.numericUpDown8.Name = "numericUpDown8";
+            this.s_hHigherLimit2.Name = "s_hHigherLimit2";
             // 
-            // numericUpDown9
+            // s_hHigherLimit1
             // 
-            this.numericUpDown9.AllowDrop = true;
-            this.numericUpDown9.DecimalPlaces = 2;
-            resources.ApplyResources(this.numericUpDown9, "numericUpDown9");
-            this.numericUpDown9.Maximum = new decimal(new int[] {
+            this.s_hHigherLimit1.AllowDrop = true;
+            this.s_hHigherLimit1.DecimalPlaces = 2;
+            resources.ApplyResources(this.s_hHigherLimit1, "s_hHigherLimit1");
+            this.s_hHigherLimit1.Maximum = new decimal(new int[] {
             40,
             0,
             0,
             0});
-            this.numericUpDown9.Minimum = new decimal(new int[] {
+            this.s_hHigherLimit1.Minimum = new decimal(new int[] {
             15,
             0,
             0,
             -2147483648});
-            this.numericUpDown9.Name = "numericUpDown9";
+            this.s_hHigherLimit1.Name = "s_hHigherLimit1";
             // 
-            // numericUpDown4
+            // s_tLowerLimit2
             // 
-            this.numericUpDown4.AllowDrop = true;
-            this.numericUpDown4.DecimalPlaces = 2;
-            resources.ApplyResources(this.numericUpDown4, "numericUpDown4");
-            this.numericUpDown4.Maximum = new decimal(new int[] {
+            this.s_tLowerLimit2.AllowDrop = true;
+            this.s_tLowerLimit2.DecimalPlaces = 2;
+            resources.ApplyResources(this.s_tLowerLimit2, "s_tLowerLimit2");
+            this.s_tLowerLimit2.Maximum = new decimal(new int[] {
             40,
             0,
             0,
             0});
-            this.numericUpDown4.Minimum = new decimal(new int[] {
+            this.s_tLowerLimit2.Minimum = new decimal(new int[] {
             15,
             0,
             0,
             -2147483648});
-            this.numericUpDown4.Name = "numericUpDown4";
+            this.s_tLowerLimit2.Name = "s_tLowerLimit2";
             // 
-            // numericUpDown5
+            // s_tLowerLimit1
             // 
-            this.numericUpDown5.DecimalPlaces = 2;
-            resources.ApplyResources(this.numericUpDown5, "numericUpDown5");
-            this.numericUpDown5.Maximum = new decimal(new int[] {
+            this.s_tLowerLimit1.DecimalPlaces = 2;
+            resources.ApplyResources(this.s_tLowerLimit1, "s_tLowerLimit1");
+            this.s_tLowerLimit1.Maximum = new decimal(new int[] {
             40,
             0,
             0,
             0});
-            this.numericUpDown5.Minimum = new decimal(new int[] {
+            this.s_tLowerLimit1.Minimum = new decimal(new int[] {
             15,
             0,
             0,
             -2147483648});
-            this.numericUpDown5.Name = "numericUpDown5";
+            this.s_tLowerLimit1.Name = "s_tLowerLimit1";
             // 
-            // numericUpDown3
+            // s_tHigherLimit2
             // 
-            this.numericUpDown3.AllowDrop = true;
-            this.numericUpDown3.DecimalPlaces = 2;
-            resources.ApplyResources(this.numericUpDown3, "numericUpDown3");
-            this.numericUpDown3.Maximum = new decimal(new int[] {
+            this.s_tHigherLimit2.AllowDrop = true;
+            this.s_tHigherLimit2.DecimalPlaces = 2;
+            resources.ApplyResources(this.s_tHigherLimit2, "s_tHigherLimit2");
+            this.s_tHigherLimit2.Maximum = new decimal(new int[] {
             40,
             0,
             0,
             0});
-            this.numericUpDown3.Minimum = new decimal(new int[] {
+            this.s_tHigherLimit2.Minimum = new decimal(new int[] {
             15,
             0,
             0,
             -2147483648});
-            this.numericUpDown3.Name = "numericUpDown3";
+            this.s_tHigherLimit2.Name = "s_tHigherLimit2";
             // 
-            // numericUpDown2
+            // s_tHigherLimit1
             // 
-            this.numericUpDown2.AllowDrop = true;
-            this.numericUpDown2.DecimalPlaces = 2;
-            resources.ApplyResources(this.numericUpDown2, "numericUpDown2");
-            this.numericUpDown2.Maximum = new decimal(new int[] {
+            this.s_tHigherLimit1.AllowDrop = true;
+            this.s_tHigherLimit1.DecimalPlaces = 2;
+            resources.ApplyResources(this.s_tHigherLimit1, "s_tHigherLimit1");
+            this.s_tHigherLimit1.Maximum = new decimal(new int[] {
             40,
             0,
             0,
             0});
-            this.numericUpDown2.Minimum = new decimal(new int[] {
+            this.s_tHigherLimit1.Minimum = new decimal(new int[] {
             15,
             0,
             0,
             -2147483648});
-            this.numericUpDown2.Name = "numericUpDown2";
+            this.s_tHigherLimit1.Name = "s_tHigherLimit1";
             // 
-            // numericUpDown1
+            // sID
             // 
-            resources.ApplyResources(this.numericUpDown1, "numericUpDown1");
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.sID, "sID");
+            this.sID.Maximum = new decimal(new int[] {
             500,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
+            this.sID.Name = "sID";
             // 
-            // checkBox7
+            // c_p100Usage
             // 
-            resources.ApplyResources(this.checkBox7, "checkBox7");
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.c_p100Usage, "c_p100Usage");
+            this.c_p100Usage.Name = "c_p100Usage";
+            this.c_p100Usage.UseVisualStyleBackColor = true;
             // 
-            // checkBox8
+            // c_p50Usage
             // 
-            resources.ApplyResources(this.checkBox8, "checkBox8");
-            this.checkBox8.Name = "checkBox8";
-            this.checkBox8.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.c_p50Usage, "c_p50Usage");
+            this.c_p50Usage.Name = "c_p50Usage";
+            this.c_p50Usage.UseVisualStyleBackColor = true;
             // 
-            // checkBox5
+            // c_p25Usage
             // 
-            resources.ApplyResources(this.checkBox5, "checkBox5");
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.c_p25Usage, "c_p25Usage");
+            this.c_p25Usage.Name = "c_p25Usage";
+            this.c_p25Usage.UseVisualStyleBackColor = true;
             // 
-            // checkBox6
+            // c_p10Usage
             // 
-            resources.ApplyResources(this.checkBox6, "checkBox6");
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.c_p10Usage, "c_p10Usage");
+            this.c_p10Usage.Name = "c_p10Usage";
+            this.c_p10Usage.UseVisualStyleBackColor = true;
             // 
             // label18
             // 
@@ -1050,11 +1050,11 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.label16, "label16");
             this.label16.Name = "label16";
             // 
-            // checkBox3
+            // c_p05Usage
             // 
-            resources.ApplyResources(this.checkBox3, "checkBox3");
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.c_p05Usage, "c_p05Usage");
+            this.c_p05Usage.Name = "c_p05Usage";
+            this.c_p05Usage.UseVisualStyleBackColor = true;
             // 
             // label17
             // 
@@ -1062,11 +1062,11 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.label17, "label17");
             this.label17.Name = "label17";
             // 
-            // checkBox4
+            // c_p03Usage
             // 
-            resources.ApplyResources(this.checkBox4, "checkBox4");
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.c_p03Usage, "c_p03Usage");
+            this.c_p03Usage.Name = "c_p03Usage";
+            this.c_p03Usage.UseVisualStyleBackColor = true;
             // 
             // label15
             // 
@@ -1074,11 +1074,11 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.label15, "label15");
             this.label15.Name = "label15";
             // 
-            // checkBox2
+            // c_hUsage
             // 
-            resources.ApplyResources(this.checkBox2, "checkBox2");
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.c_hUsage, "c_hUsage");
+            this.c_hUsage.Name = "c_hUsage";
+            this.c_hUsage.UseVisualStyleBackColor = true;
             // 
             // label14
             // 
@@ -1086,11 +1086,11 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.label14, "label14");
             this.label14.Name = "label14";
             // 
-            // checkBox1
+            // c_tUsage
             // 
-            resources.ApplyResources(this.checkBox1, "checkBox1");
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.c_tUsage, "c_tUsage");
+            this.c_tUsage.Name = "c_tUsage";
+            this.c_tUsage.UseVisualStyleBackColor = true;
             // 
             // label12
             // 
@@ -1137,20 +1137,20 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
             // 
-            // textBox4
+            // sDescription
             // 
-            resources.ApplyResources(this.textBox4, "textBox4");
-            this.textBox4.Name = "textBox4";
+            resources.ApplyResources(this.sDescription, "sDescription");
+            this.sDescription.Name = "sDescription";
             // 
-            // textBox3
+            // sLocation
             // 
-            resources.ApplyResources(this.textBox3, "textBox3");
-            this.textBox3.Name = "textBox3";
+            resources.ApplyResources(this.sLocation, "sLocation");
+            this.sLocation.Name = "sLocation";
             // 
-            // textBox2
+            // sName
             // 
-            resources.ApplyResources(this.textBox2, "textBox2");
-            this.textBox2.Name = "textBox2";
+            resources.ApplyResources(this.sName, "sName");
+            this.sName.Name = "sName";
             // 
             // Form1
             // 
@@ -1204,27 +1204,27 @@ namespace DataCollectionApp2
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown31)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown32)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown33)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown21)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown17)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p10HigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p10HigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p10LowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p10LowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p05HigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p05HigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p05LowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p05LowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p03HigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p03HigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p03LowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p03LowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hLowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hLowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hHigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hHigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_tLowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_tLowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_tHigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_tHigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sID)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1288,7 +1288,7 @@ namespace DataCollectionApp2
         private System.Windows.Forms.Splitter splitter2;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.ColumnHeader columnHeader6;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox c_tUsage;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
@@ -1298,33 +1298,33 @@ namespace DataCollectionApp2
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox sDescription;
+        private System.Windows.Forms.TextBox sLocation;
+        private System.Windows.Forms.TextBox sName;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox c_p05Usage;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox c_p03Usage;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox c_hUsage;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.CheckBox checkBox7;
-        private System.Windows.Forms.CheckBox checkBox8;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox6;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown4;
-        private System.Windows.Forms.NumericUpDown numericUpDown5;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
-        private System.Windows.Forms.NumericUpDown numericUpDown6;
-        private System.Windows.Forms.NumericUpDown numericUpDown7;
-        private System.Windows.Forms.NumericUpDown numericUpDown8;
-        private System.Windows.Forms.NumericUpDown numericUpDown9;
+        private System.Windows.Forms.CheckBox c_p100Usage;
+        private System.Windows.Forms.CheckBox c_p50Usage;
+        private System.Windows.Forms.CheckBox c_p25Usage;
+        private System.Windows.Forms.CheckBox c_p10Usage;
+        private System.Windows.Forms.NumericUpDown sID;
+        private System.Windows.Forms.NumericUpDown s_tHigherLimit1;
+        private System.Windows.Forms.NumericUpDown s_tLowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_tLowerLimit1;
+        private System.Windows.Forms.NumericUpDown s_tHigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_hLowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_hLowerLimit1;
+        private System.Windows.Forms.NumericUpDown s_hHigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_hHigherLimit1;
         private System.Windows.Forms.NumericUpDown numericUpDown22;
         private System.Windows.Forms.NumericUpDown numericUpDown23;
         private System.Windows.Forms.NumericUpDown numericUpDown24;
@@ -1337,18 +1337,18 @@ namespace DataCollectionApp2
         private System.Windows.Forms.NumericUpDown numericUpDown31;
         private System.Windows.Forms.NumericUpDown numericUpDown32;
         private System.Windows.Forms.NumericUpDown numericUpDown33;
-        private System.Windows.Forms.NumericUpDown numericUpDown18;
-        private System.Windows.Forms.NumericUpDown numericUpDown19;
-        private System.Windows.Forms.NumericUpDown numericUpDown20;
-        private System.Windows.Forms.NumericUpDown numericUpDown21;
-        private System.Windows.Forms.NumericUpDown numericUpDown14;
-        private System.Windows.Forms.NumericUpDown numericUpDown15;
-        private System.Windows.Forms.NumericUpDown numericUpDown16;
-        private System.Windows.Forms.NumericUpDown numericUpDown17;
-        private System.Windows.Forms.NumericUpDown numericUpDown12;
-        private System.Windows.Forms.NumericUpDown numericUpDown13;
-        private System.Windows.Forms.NumericUpDown numericUpDown11;
-        private System.Windows.Forms.NumericUpDown numericUpDown10;
+        private System.Windows.Forms.NumericUpDown s_p10HigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_p10HigherLimit1;
+        private System.Windows.Forms.NumericUpDown s_p10LowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_p10LowerLimit1;
+        private System.Windows.Forms.NumericUpDown s_p05HigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_p05HigherLimit1;
+        private System.Windows.Forms.NumericUpDown s_p05LowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_p05LowerLimit1;
+        private System.Windows.Forms.NumericUpDown s_p03HigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_p03HigherLimit1;
+        private System.Windows.Forms.NumericUpDown s_p03LowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_p03LowerLimit1;
     }
 }
 

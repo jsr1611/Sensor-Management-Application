@@ -152,36 +152,6 @@
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>104, 17</value>
   </metadata>
-  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>624, 24</value>
-  </data>
-  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="menuStrip1.Text" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
-    <value>19</value>
-  </data>
-  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 20</value>
-  </data>
-  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
-    <value>File</value>
-  </data>
   <data name="exitToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
     <value>Alt+E</value>
   </data>
@@ -195,11 +165,11 @@
   <data name="exitToolStripMenuItem.Text" xml:space="preserve">
     <value>Exit</value>
   </data>
-  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 20</value>
+  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
   </data>
-  <data name="editToolStripMenuItem.Text" xml:space="preserve">
-    <value>Edit</value>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>File</value>
   </data>
   <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>102, 22</value>
@@ -219,11 +189,11 @@
   <data name="cutToolStripMenuItem.Text" xml:space="preserve">
     <value>Cut</value>
   </data>
-  <data name="sensorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 20</value>
+  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 20</value>
   </data>
-  <data name="sensorToolStripMenuItem.Text" xml:space="preserve">
-    <value>Sensor</value>
+  <data name="editToolStripMenuItem.Text" xml:space="preserve">
+    <value>Edit</value>
   </data>
   <data name="S_Start.Size" type="System.Drawing.Size, System.Drawing">
     <value>164, 22</value>
@@ -249,11 +219,11 @@
   <data name="S_Save.Text" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
+  <data name="sensorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 20</value>
   </data>
-  <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
-    <value>Help</value>
+  <data name="sensorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Sensor</value>
   </data>
   <data name="aboutToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>116, 22</value>
@@ -266,6 +236,36 @@
   </data>
   <data name="contactToolStripMenuItem.Text" xml:space="preserve">
     <value>Contact</value>
+  </data>
+  <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 20</value>
+  </data>
+  <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>624, 24</value>
+  </data>
+  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="menuStrip1.Text" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
+    <value>19</value>
   </data>
   <metadata name="notifyIcon1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>220, 17</value>
@@ -759,6 +759,33 @@
   <data name="&gt;&gt;panel4.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="b_save.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="b_save.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
+  </data>
+  <data name="b_save.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="b_save.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 0</value>
+  </data>
+  <data name="b_save.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="b_save.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 59</value>
+  </data>
+  <data name="b_save.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="b_save.Text" xml:space="preserve">
+    <value>저장</value>
+  </data>
+  <data name="b_save.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
   <data name="&gt;&gt;b_save.Name" xml:space="preserve">
     <value>b_save</value>
   </data>
@@ -770,6 +797,33 @@
   </data>
   <data name="&gt;&gt;b_save.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="b_addSensor.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="b_addSensor.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
+  </data>
+  <data name="b_addSensor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="b_addSensor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 0</value>
+  </data>
+  <data name="b_addSensor.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="b_addSensor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 59</value>
+  </data>
+  <data name="b_addSensor.TabIndex" type="System.Int32, mscorlib">
+    <value>42</value>
+  </data>
+  <data name="b_addSensor.Text" xml:space="preserve">
+    <value>센서 추가</value>
+  </data>
+  <data name="b_addSensor.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
   </data>
   <data name="&gt;&gt;b_addSensor.Name" xml:space="preserve">
     <value>b_addSensor</value>
@@ -810,6 +864,27 @@
   <data name="&gt;&gt;panel5.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="label3.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="label3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Gulim, 8pt</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 0</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 16</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>센서 제어</value>
+  </data>
+  <data name="label3.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
   <data name="&gt;&gt;label3.Name" xml:space="preserve">
     <value>label3</value>
   </data>
@@ -821,6 +896,18 @@
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="splitter2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="splitter2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="splitter2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>3, 16</value>
+  </data>
+  <data name="splitter2.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;splitter2.Name" xml:space="preserve">
     <value>splitter2</value>
@@ -861,9 +948,15 @@
   <data name="&gt;&gt;panel6.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <metadata name="label13.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <data name="splitter1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="splitter1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>3, 16</value>
+  </data>
+  <data name="splitter1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
   <data name="&gt;&gt;splitter1.Name" xml:space="preserve">
     <value>splitter1</value>
   </data>
@@ -875,6 +968,33 @@
   </data>
   <data name="&gt;&gt;splitter1.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <metadata name="label13.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="label13.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="label13.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Gulim, 8pt</value>
+  </data>
+  <data name="label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 16</value>
+  </data>
+  <data name="label13.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label13.Text" xml:space="preserve">
+    <value>정보 관리</value>
+  </data>
+  <data name="label13.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;label13.Name" xml:space="preserve">
     <value>label13</value>
@@ -975,201 +1095,6 @@
   <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="b_save.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Right</value>
-  </data>
-  <data name="b_save.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopCenter</value>
-  </data>
-  <data name="b_save.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="b_save.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 0</value>
-  </data>
-  <data name="b_save.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="b_save.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 59</value>
-  </data>
-  <data name="b_save.TabIndex" type="System.Int32, mscorlib">
-    <value>43</value>
-  </data>
-  <data name="b_save.Text" xml:space="preserve">
-    <value>저장</value>
-  </data>
-  <data name="b_save.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <data name="&gt;&gt;b_save.Name" xml:space="preserve">
-    <value>b_save</value>
-  </data>
-  <data name="&gt;&gt;b_save.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;b_save.Parent" xml:space="preserve">
-    <value>panel5</value>
-  </data>
-  <data name="&gt;&gt;b_save.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="b_addSensor.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Right</value>
-  </data>
-  <data name="b_addSensor.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopCenter</value>
-  </data>
-  <data name="b_addSensor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="b_addSensor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 0</value>
-  </data>
-  <data name="b_addSensor.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="b_addSensor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 59</value>
-  </data>
-  <data name="b_addSensor.TabIndex" type="System.Int32, mscorlib">
-    <value>42</value>
-  </data>
-  <data name="b_addSensor.Text" xml:space="preserve">
-    <value>센서 추가</value>
-  </data>
-  <data name="b_addSensor.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <data name="&gt;&gt;b_addSensor.Name" xml:space="preserve">
-    <value>b_addSensor</value>
-  </data>
-  <data name="&gt;&gt;b_addSensor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;b_addSensor.Parent" xml:space="preserve">
-    <value>panel5</value>
-  </data>
-  <data name="&gt;&gt;b_addSensor.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="label3.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="label3.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Gulim, 8pt</value>
-  </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 0</value>
-  </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 16</value>
-  </data>
-  <data name="label3.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>센서 제어</value>
-  </data>
-  <data name="label3.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
-    <value>panel6</value>
-  </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="splitter2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="splitter2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="splitter2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>3, 16</value>
-  </data>
-  <data name="splitter2.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;splitter2.Name" xml:space="preserve">
-    <value>splitter2</value>
-  </data>
-  <data name="&gt;&gt;splitter2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Splitter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;splitter2.Parent" xml:space="preserve">
-    <value>panel6</value>
-  </data>
-  <data name="&gt;&gt;splitter2.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="splitter1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="splitter1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>3, 16</value>
-  </data>
-  <data name="splitter1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;splitter1.Name" xml:space="preserve">
-    <value>splitter1</value>
-  </data>
-  <data name="&gt;&gt;splitter1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Splitter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;splitter1.Parent" xml:space="preserve">
-    <value>panel7</value>
-  </data>
-  <data name="&gt;&gt;splitter1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="label13.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="label13.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="label13.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Gulim, 8pt</value>
-  </data>
-  <data name="label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 16</value>
-  </data>
-  <data name="label13.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="label13.Text" xml:space="preserve">
-    <value>정보 관리</value>
-  </data>
-  <data name="label13.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="&gt;&gt;label13.Name" xml:space="preserve">
-    <value>label13</value>
-  </data>
-  <data name="&gt;&gt;label13.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label13.Parent" xml:space="preserve">
-    <value>panel7</value>
-  </data>
-  <data name="&gt;&gt;label13.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="b_deleteSensor.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>TopCenter</value>
   </data>
@@ -1262,6 +1187,48 @@
   </data>
   <data name="splitContainer1.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
     <value>Horizontal</value>
+  </data>
+  <data name="columnHeader6.Text" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="columnHeader6.Width" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="columnHeader1.Text" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="columnHeader1.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="columnHeader1.Width" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="columnHeader2.Text" xml:space="preserve">
+    <value>센서명</value>
+  </data>
+  <data name="columnHeader2.Width" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
+  <data name="columnHeader3.Text" xml:space="preserve">
+    <value>주소</value>
+  </data>
+  <data name="columnHeader3.Width" type="System.Int32, mscorlib">
+    <value>150</value>
+  </data>
+  <data name="columnHeader4.Text" xml:space="preserve">
+    <value>설명</value>
+  </data>
+  <data name="columnHeader4.Width" type="System.Int32, mscorlib">
+    <value>200</value>
+  </data>
+  <data name="columnHeader5.Text" xml:space="preserve">
+    <value>사용 여부</value>
+  </data>
+  <data name="columnHeader5.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="columnHeader5.Width" type="System.Int32, mscorlib">
+    <value>65</value>
   </data>
   <data name="listView1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1590,625 +1557,625 @@
   <data name="&gt;&gt;numericUpDown33.ZOrder" xml:space="preserve">
     <value>11</value>
   </data>
-  <data name="numericUpDown18.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_p10HigherLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>326, 236</value>
   </data>
-  <data name="numericUpDown18.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_p10HigherLimit2.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 21</value>
   </data>
-  <data name="numericUpDown18.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_p10HigherLimit2.TabIndex" type="System.Int32, mscorlib">
     <value>138</value>
   </data>
-  <data name="numericUpDown18.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_p10HigherLimit2.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="&gt;&gt;numericUpDown18.Name" xml:space="preserve">
-    <value>numericUpDown18</value>
+  <data name="&gt;&gt;s_p10HigherLimit2.Name" xml:space="preserve">
+    <value>s_p10HigherLimit2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown18.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_p10HigherLimit2.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown18.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_p10HigherLimit2.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown18.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_p10HigherLimit2.ZOrder" xml:space="preserve">
     <value>12</value>
   </data>
-  <data name="numericUpDown19.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_p10HigherLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>326, 209</value>
   </data>
-  <data name="numericUpDown19.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_p10HigherLimit1.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 21</value>
   </data>
-  <data name="numericUpDown19.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_p10HigherLimit1.TabIndex" type="System.Int32, mscorlib">
     <value>137</value>
   </data>
-  <data name="numericUpDown19.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_p10HigherLimit1.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="&gt;&gt;numericUpDown19.Name" xml:space="preserve">
-    <value>numericUpDown19</value>
+  <data name="&gt;&gt;s_p10HigherLimit1.Name" xml:space="preserve">
+    <value>s_p10HigherLimit1</value>
   </data>
-  <data name="&gt;&gt;numericUpDown19.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_p10HigherLimit1.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown19.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_p10HigherLimit1.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown19.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_p10HigherLimit1.ZOrder" xml:space="preserve">
     <value>13</value>
   </data>
-  <data name="numericUpDown20.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_p10LowerLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>326, 182</value>
   </data>
-  <data name="numericUpDown20.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_p10LowerLimit2.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 21</value>
   </data>
-  <data name="numericUpDown20.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_p10LowerLimit2.TabIndex" type="System.Int32, mscorlib">
     <value>136</value>
   </data>
-  <data name="numericUpDown20.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_p10LowerLimit2.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="&gt;&gt;numericUpDown20.Name" xml:space="preserve">
-    <value>numericUpDown20</value>
+  <data name="&gt;&gt;s_p10LowerLimit2.Name" xml:space="preserve">
+    <value>s_p10LowerLimit2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown20.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_p10LowerLimit2.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown20.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_p10LowerLimit2.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown20.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_p10LowerLimit2.ZOrder" xml:space="preserve">
     <value>14</value>
   </data>
-  <data name="numericUpDown21.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_p10LowerLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>326, 155</value>
   </data>
-  <data name="numericUpDown21.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_p10LowerLimit1.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 21</value>
   </data>
-  <data name="numericUpDown21.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_p10LowerLimit1.TabIndex" type="System.Int32, mscorlib">
     <value>135</value>
   </data>
-  <data name="numericUpDown21.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_p10LowerLimit1.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="&gt;&gt;numericUpDown21.Name" xml:space="preserve">
-    <value>numericUpDown21</value>
+  <data name="&gt;&gt;s_p10LowerLimit1.Name" xml:space="preserve">
+    <value>s_p10LowerLimit1</value>
   </data>
-  <data name="&gt;&gt;numericUpDown21.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_p10LowerLimit1.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown21.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_p10LowerLimit1.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown21.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_p10LowerLimit1.ZOrder" xml:space="preserve">
     <value>15</value>
   </data>
-  <data name="numericUpDown14.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_p05HigherLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 236</value>
   </data>
-  <data name="numericUpDown14.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_p05HigherLimit2.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 21</value>
   </data>
-  <data name="numericUpDown14.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_p05HigherLimit2.TabIndex" type="System.Int32, mscorlib">
     <value>134</value>
   </data>
-  <data name="numericUpDown14.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_p05HigherLimit2.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="&gt;&gt;numericUpDown14.Name" xml:space="preserve">
-    <value>numericUpDown14</value>
+  <data name="&gt;&gt;s_p05HigherLimit2.Name" xml:space="preserve">
+    <value>s_p05HigherLimit2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown14.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_p05HigherLimit2.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown14.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_p05HigherLimit2.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown14.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_p05HigherLimit2.ZOrder" xml:space="preserve">
     <value>16</value>
   </data>
-  <data name="numericUpDown15.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_p05HigherLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 209</value>
   </data>
-  <data name="numericUpDown15.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_p05HigherLimit1.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 21</value>
   </data>
-  <data name="numericUpDown15.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_p05HigherLimit1.TabIndex" type="System.Int32, mscorlib">
     <value>133</value>
   </data>
-  <data name="numericUpDown15.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_p05HigherLimit1.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="&gt;&gt;numericUpDown15.Name" xml:space="preserve">
-    <value>numericUpDown15</value>
+  <data name="&gt;&gt;s_p05HigherLimit1.Name" xml:space="preserve">
+    <value>s_p05HigherLimit1</value>
   </data>
-  <data name="&gt;&gt;numericUpDown15.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_p05HigherLimit1.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown15.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_p05HigherLimit1.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown15.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_p05HigherLimit1.ZOrder" xml:space="preserve">
     <value>17</value>
   </data>
-  <data name="numericUpDown16.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_p05LowerLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 182</value>
   </data>
-  <data name="numericUpDown16.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_p05LowerLimit2.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 21</value>
   </data>
-  <data name="numericUpDown16.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_p05LowerLimit2.TabIndex" type="System.Int32, mscorlib">
     <value>132</value>
   </data>
-  <data name="numericUpDown16.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_p05LowerLimit2.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="&gt;&gt;numericUpDown16.Name" xml:space="preserve">
-    <value>numericUpDown16</value>
+  <data name="&gt;&gt;s_p05LowerLimit2.Name" xml:space="preserve">
+    <value>s_p05LowerLimit2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown16.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_p05LowerLimit2.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown16.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_p05LowerLimit2.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown16.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_p05LowerLimit2.ZOrder" xml:space="preserve">
     <value>18</value>
   </data>
-  <data name="numericUpDown17.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_p05LowerLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 155</value>
   </data>
-  <data name="numericUpDown17.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_p05LowerLimit1.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 21</value>
   </data>
-  <data name="numericUpDown17.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_p05LowerLimit1.TabIndex" type="System.Int32, mscorlib">
     <value>131</value>
   </data>
-  <data name="numericUpDown17.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_p05LowerLimit1.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="&gt;&gt;numericUpDown17.Name" xml:space="preserve">
-    <value>numericUpDown17</value>
+  <data name="&gt;&gt;s_p05LowerLimit1.Name" xml:space="preserve">
+    <value>s_p05LowerLimit1</value>
   </data>
-  <data name="&gt;&gt;numericUpDown17.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_p05LowerLimit1.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown17.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_p05LowerLimit1.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown17.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_p05LowerLimit1.ZOrder" xml:space="preserve">
     <value>19</value>
   </data>
-  <data name="numericUpDown12.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_p03HigherLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>195, 236</value>
   </data>
-  <data name="numericUpDown12.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_p03HigherLimit2.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 21</value>
   </data>
-  <data name="numericUpDown12.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_p03HigherLimit2.TabIndex" type="System.Int32, mscorlib">
     <value>130</value>
   </data>
-  <data name="numericUpDown12.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_p03HigherLimit2.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="&gt;&gt;numericUpDown12.Name" xml:space="preserve">
-    <value>numericUpDown12</value>
+  <data name="&gt;&gt;s_p03HigherLimit2.Name" xml:space="preserve">
+    <value>s_p03HigherLimit2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown12.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_p03HigherLimit2.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown12.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_p03HigherLimit2.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown12.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_p03HigherLimit2.ZOrder" xml:space="preserve">
     <value>20</value>
   </data>
-  <data name="numericUpDown13.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_p03HigherLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>195, 209</value>
   </data>
-  <data name="numericUpDown13.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_p03HigherLimit1.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 21</value>
   </data>
-  <data name="numericUpDown13.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_p03HigherLimit1.TabIndex" type="System.Int32, mscorlib">
     <value>129</value>
   </data>
-  <data name="numericUpDown13.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_p03HigherLimit1.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="&gt;&gt;numericUpDown13.Name" xml:space="preserve">
-    <value>numericUpDown13</value>
+  <data name="&gt;&gt;s_p03HigherLimit1.Name" xml:space="preserve">
+    <value>s_p03HigherLimit1</value>
   </data>
-  <data name="&gt;&gt;numericUpDown13.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_p03HigherLimit1.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown13.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_p03HigherLimit1.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown13.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_p03HigherLimit1.ZOrder" xml:space="preserve">
     <value>21</value>
   </data>
-  <data name="numericUpDown11.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_p03LowerLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>195, 182</value>
   </data>
-  <data name="numericUpDown11.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_p03LowerLimit2.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 21</value>
   </data>
-  <data name="numericUpDown11.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_p03LowerLimit2.TabIndex" type="System.Int32, mscorlib">
     <value>128</value>
   </data>
-  <data name="numericUpDown11.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_p03LowerLimit2.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="&gt;&gt;numericUpDown11.Name" xml:space="preserve">
-    <value>numericUpDown11</value>
+  <data name="&gt;&gt;s_p03LowerLimit2.Name" xml:space="preserve">
+    <value>s_p03LowerLimit2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown11.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_p03LowerLimit2.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown11.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_p03LowerLimit2.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown11.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_p03LowerLimit2.ZOrder" xml:space="preserve">
     <value>22</value>
   </data>
-  <data name="numericUpDown10.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_p03LowerLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>195, 155</value>
   </data>
-  <data name="numericUpDown10.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_p03LowerLimit1.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 21</value>
   </data>
-  <data name="numericUpDown10.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_p03LowerLimit1.TabIndex" type="System.Int32, mscorlib">
     <value>127</value>
   </data>
-  <data name="numericUpDown10.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_p03LowerLimit1.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="&gt;&gt;numericUpDown10.Name" xml:space="preserve">
-    <value>numericUpDown10</value>
+  <data name="&gt;&gt;s_p03LowerLimit1.Name" xml:space="preserve">
+    <value>s_p03LowerLimit1</value>
   </data>
-  <data name="&gt;&gt;numericUpDown10.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_p03LowerLimit1.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown10.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_p03LowerLimit1.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown10.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_p03LowerLimit1.ZOrder" xml:space="preserve">
     <value>23</value>
   </data>
-  <data name="numericUpDown6.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_hLowerLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>138, 182</value>
   </data>
-  <data name="numericUpDown6.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_hLowerLimit2.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 21</value>
   </data>
-  <data name="numericUpDown6.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_hLowerLimit2.TabIndex" type="System.Int32, mscorlib">
     <value>126</value>
   </data>
-  <data name="numericUpDown6.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_hLowerLimit2.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="numericUpDown6.ThousandsSeparator" type="System.Boolean, mscorlib">
+  <data name="s_hLowerLimit2.ThousandsSeparator" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;numericUpDown6.Name" xml:space="preserve">
-    <value>numericUpDown6</value>
+  <data name="&gt;&gt;s_hLowerLimit2.Name" xml:space="preserve">
+    <value>s_hLowerLimit2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown6.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_hLowerLimit2.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown6.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_hLowerLimit2.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown6.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_hLowerLimit2.ZOrder" xml:space="preserve">
     <value>24</value>
   </data>
-  <data name="numericUpDown7.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_hLowerLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>138, 155</value>
   </data>
-  <data name="numericUpDown7.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_hLowerLimit1.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 21</value>
   </data>
-  <data name="numericUpDown7.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_hLowerLimit1.TabIndex" type="System.Int32, mscorlib">
     <value>125</value>
   </data>
-  <data name="numericUpDown7.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_hLowerLimit1.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="numericUpDown7.ThousandsSeparator" type="System.Boolean, mscorlib">
+  <data name="s_hLowerLimit1.ThousandsSeparator" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;numericUpDown7.Name" xml:space="preserve">
-    <value>numericUpDown7</value>
+  <data name="&gt;&gt;s_hLowerLimit1.Name" xml:space="preserve">
+    <value>s_hLowerLimit1</value>
   </data>
-  <data name="&gt;&gt;numericUpDown7.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_hLowerLimit1.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown7.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_hLowerLimit1.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown7.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_hLowerLimit1.ZOrder" xml:space="preserve">
     <value>25</value>
   </data>
-  <data name="numericUpDown8.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_hHigherLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>138, 236</value>
   </data>
-  <data name="numericUpDown8.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_hHigherLimit2.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 21</value>
   </data>
-  <data name="numericUpDown8.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_hHigherLimit2.TabIndex" type="System.Int32, mscorlib">
     <value>124</value>
   </data>
-  <data name="numericUpDown8.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_hHigherLimit2.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="numericUpDown8.ThousandsSeparator" type="System.Boolean, mscorlib">
+  <data name="s_hHigherLimit2.ThousandsSeparator" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;numericUpDown8.Name" xml:space="preserve">
-    <value>numericUpDown8</value>
+  <data name="&gt;&gt;s_hHigherLimit2.Name" xml:space="preserve">
+    <value>s_hHigherLimit2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown8.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_hHigherLimit2.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown8.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_hHigherLimit2.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown8.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_hHigherLimit2.ZOrder" xml:space="preserve">
     <value>26</value>
   </data>
-  <data name="numericUpDown9.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_hHigherLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>138, 209</value>
   </data>
-  <data name="numericUpDown9.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_hHigherLimit1.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 21</value>
   </data>
-  <data name="numericUpDown9.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_hHigherLimit1.TabIndex" type="System.Int32, mscorlib">
     <value>123</value>
   </data>
-  <data name="numericUpDown9.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_hHigherLimit1.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="numericUpDown9.ThousandsSeparator" type="System.Boolean, mscorlib">
+  <data name="s_hHigherLimit1.ThousandsSeparator" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;numericUpDown9.Name" xml:space="preserve">
-    <value>numericUpDown9</value>
+  <data name="&gt;&gt;s_hHigherLimit1.Name" xml:space="preserve">
+    <value>s_hHigherLimit1</value>
   </data>
-  <data name="&gt;&gt;numericUpDown9.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_hHigherLimit1.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown9.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_hHigherLimit1.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown9.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_hHigherLimit1.ZOrder" xml:space="preserve">
     <value>27</value>
   </data>
-  <data name="numericUpDown4.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_tLowerLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 182</value>
   </data>
-  <data name="numericUpDown4.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_tLowerLimit2.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 21</value>
   </data>
-  <data name="numericUpDown4.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_tLowerLimit2.TabIndex" type="System.Int32, mscorlib">
     <value>122</value>
   </data>
-  <data name="numericUpDown4.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_tLowerLimit2.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="numericUpDown4.ThousandsSeparator" type="System.Boolean, mscorlib">
+  <data name="s_tLowerLimit2.ThousandsSeparator" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;numericUpDown4.Name" xml:space="preserve">
-    <value>numericUpDown4</value>
+  <data name="&gt;&gt;s_tLowerLimit2.Name" xml:space="preserve">
+    <value>s_tLowerLimit2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown4.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_tLowerLimit2.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown4.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_tLowerLimit2.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown4.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_tLowerLimit2.ZOrder" xml:space="preserve">
     <value>28</value>
   </data>
-  <data name="numericUpDown5.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_tLowerLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 155</value>
   </data>
-  <data name="numericUpDown5.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_tLowerLimit1.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 21</value>
   </data>
-  <data name="numericUpDown5.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_tLowerLimit1.TabIndex" type="System.Int32, mscorlib">
     <value>121</value>
   </data>
-  <data name="numericUpDown5.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_tLowerLimit1.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="numericUpDown5.ThousandsSeparator" type="System.Boolean, mscorlib">
+  <data name="s_tLowerLimit1.ThousandsSeparator" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;numericUpDown5.Name" xml:space="preserve">
-    <value>numericUpDown5</value>
+  <data name="&gt;&gt;s_tLowerLimit1.Name" xml:space="preserve">
+    <value>s_tLowerLimit1</value>
   </data>
-  <data name="&gt;&gt;numericUpDown5.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_tLowerLimit1.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown5.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_tLowerLimit1.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown5.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_tLowerLimit1.ZOrder" xml:space="preserve">
     <value>29</value>
   </data>
-  <data name="numericUpDown3.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_tHigherLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 236</value>
   </data>
-  <data name="numericUpDown3.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_tHigherLimit2.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 21</value>
   </data>
-  <data name="numericUpDown3.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_tHigherLimit2.TabIndex" type="System.Int32, mscorlib">
     <value>120</value>
   </data>
-  <data name="numericUpDown3.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_tHigherLimit2.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="numericUpDown3.ThousandsSeparator" type="System.Boolean, mscorlib">
+  <data name="s_tHigherLimit2.ThousandsSeparator" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;numericUpDown3.Name" xml:space="preserve">
-    <value>numericUpDown3</value>
+  <data name="&gt;&gt;s_tHigherLimit2.Name" xml:space="preserve">
+    <value>s_tHigherLimit2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown3.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_tHigherLimit2.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown3.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_tHigherLimit2.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown3.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_tHigherLimit2.ZOrder" xml:space="preserve">
     <value>30</value>
   </data>
-  <data name="numericUpDown2.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="s_tHigherLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 209</value>
   </data>
-  <data name="numericUpDown2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="s_tHigherLimit1.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 21</value>
   </data>
-  <data name="numericUpDown2.TabIndex" type="System.Int32, mscorlib">
+  <data name="s_tHigherLimit1.TabIndex" type="System.Int32, mscorlib">
     <value>119</value>
   </data>
-  <data name="numericUpDown2.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="s_tHigherLimit1.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="numericUpDown2.ThousandsSeparator" type="System.Boolean, mscorlib">
+  <data name="s_tHigherLimit1.ThousandsSeparator" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;numericUpDown2.Name" xml:space="preserve">
-    <value>numericUpDown2</value>
+  <data name="&gt;&gt;s_tHigherLimit1.Name" xml:space="preserve">
+    <value>s_tHigherLimit1</value>
   </data>
-  <data name="&gt;&gt;numericUpDown2.Type" xml:space="preserve">
+  <data name="&gt;&gt;s_tHigherLimit1.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;s_tHigherLimit1.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;s_tHigherLimit1.ZOrder" xml:space="preserve">
     <value>31</value>
   </data>
-  <data name="numericUpDown1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="sID.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 13</value>
   </data>
-  <data name="numericUpDown1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="sID.Size" type="System.Drawing.Size, System.Drawing">
     <value>38, 21</value>
   </data>
-  <data name="numericUpDown1.TabIndex" type="System.Int32, mscorlib">
+  <data name="sID.TabIndex" type="System.Int32, mscorlib">
     <value>118</value>
   </data>
-  <data name="&gt;&gt;numericUpDown1.Name" xml:space="preserve">
-    <value>numericUpDown1</value>
+  <data name="&gt;&gt;sID.Name" xml:space="preserve">
+    <value>sID</value>
   </data>
-  <data name="&gt;&gt;numericUpDown1.Type" xml:space="preserve">
+  <data name="&gt;&gt;sID.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numericUpDown1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;sID.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;numericUpDown1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;sID.ZOrder" xml:space="preserve">
     <value>32</value>
   </data>
-  <data name="checkBox7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="c_p100Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="checkBox7.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="c_p100Usage.Location" type="System.Drawing.Point, System.Drawing">
     <value>541, 263</value>
   </data>
-  <data name="checkBox7.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="c_p100Usage.Size" type="System.Drawing.Size, System.Drawing">
     <value>18, 21</value>
   </data>
-  <data name="checkBox7.TabIndex" type="System.Int32, mscorlib">
+  <data name="c_p100Usage.TabIndex" type="System.Int32, mscorlib">
     <value>107</value>
   </data>
-  <data name="&gt;&gt;checkBox7.Name" xml:space="preserve">
-    <value>checkBox7</value>
+  <data name="&gt;&gt;c_p100Usage.Name" xml:space="preserve">
+    <value>c_p100Usage</value>
   </data>
-  <data name="&gt;&gt;checkBox7.Type" xml:space="preserve">
+  <data name="&gt;&gt;c_p100Usage.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;checkBox7.Parent" xml:space="preserve">
+  <data name="&gt;&gt;c_p100Usage.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;checkBox7.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;c_p100Usage.ZOrder" xml:space="preserve">
     <value>33</value>
   </data>
-  <data name="checkBox8.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="c_p50Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="checkBox8.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="c_p50Usage.Location" type="System.Drawing.Point, System.Drawing">
     <value>476, 263</value>
   </data>
-  <data name="checkBox8.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="c_p50Usage.Size" type="System.Drawing.Size, System.Drawing">
     <value>18, 21</value>
   </data>
-  <data name="checkBox8.TabIndex" type="System.Int32, mscorlib">
+  <data name="c_p50Usage.TabIndex" type="System.Int32, mscorlib">
     <value>106</value>
   </data>
-  <data name="&gt;&gt;checkBox8.Name" xml:space="preserve">
-    <value>checkBox8</value>
+  <data name="&gt;&gt;c_p50Usage.Name" xml:space="preserve">
+    <value>c_p50Usage</value>
   </data>
-  <data name="&gt;&gt;checkBox8.Type" xml:space="preserve">
+  <data name="&gt;&gt;c_p50Usage.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;checkBox8.Parent" xml:space="preserve">
+  <data name="&gt;&gt;c_p50Usage.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;checkBox8.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;c_p50Usage.ZOrder" xml:space="preserve">
     <value>34</value>
   </data>
-  <data name="checkBox5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="c_p25Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="checkBox5.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="c_p25Usage.Location" type="System.Drawing.Point, System.Drawing">
     <value>411, 263</value>
   </data>
-  <data name="checkBox5.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="c_p25Usage.Size" type="System.Drawing.Size, System.Drawing">
     <value>18, 21</value>
   </data>
-  <data name="checkBox5.TabIndex" type="System.Int32, mscorlib">
+  <data name="c_p25Usage.TabIndex" type="System.Int32, mscorlib">
     <value>105</value>
   </data>
-  <data name="&gt;&gt;checkBox5.Name" xml:space="preserve">
-    <value>checkBox5</value>
+  <data name="&gt;&gt;c_p25Usage.Name" xml:space="preserve">
+    <value>c_p25Usage</value>
   </data>
-  <data name="&gt;&gt;checkBox5.Type" xml:space="preserve">
+  <data name="&gt;&gt;c_p25Usage.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;checkBox5.Parent" xml:space="preserve">
+  <data name="&gt;&gt;c_p25Usage.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;checkBox5.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;c_p25Usage.ZOrder" xml:space="preserve">
     <value>35</value>
   </data>
-  <data name="checkBox6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="c_p10Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="checkBox6.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="c_p10Usage.Location" type="System.Drawing.Point, System.Drawing">
     <value>345, 263</value>
   </data>
-  <data name="checkBox6.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="c_p10Usage.Size" type="System.Drawing.Size, System.Drawing">
     <value>18, 21</value>
   </data>
-  <data name="checkBox6.TabIndex" type="System.Int32, mscorlib">
+  <data name="c_p10Usage.TabIndex" type="System.Int32, mscorlib">
     <value>104</value>
   </data>
-  <data name="&gt;&gt;checkBox6.Name" xml:space="preserve">
-    <value>checkBox6</value>
+  <data name="&gt;&gt;c_p10Usage.Name" xml:space="preserve">
+    <value>c_p10Usage</value>
   </data>
-  <data name="&gt;&gt;checkBox6.Type" xml:space="preserve">
+  <data name="&gt;&gt;c_p10Usage.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;checkBox6.Parent" xml:space="preserve">
+  <data name="&gt;&gt;c_p10Usage.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;checkBox6.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;c_p10Usage.ZOrder" xml:space="preserve">
     <value>36</value>
   </data>
   <data name="label18.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -2361,28 +2328,28 @@
   <data name="&gt;&gt;label16.ZOrder" xml:space="preserve">
     <value>41</value>
   </data>
-  <data name="checkBox3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="c_p05Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="checkBox3.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="c_p05Usage.Location" type="System.Drawing.Point, System.Drawing">
     <value>281, 263</value>
   </data>
-  <data name="checkBox3.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="c_p05Usage.Size" type="System.Drawing.Size, System.Drawing">
     <value>18, 21</value>
   </data>
-  <data name="checkBox3.TabIndex" type="System.Int32, mscorlib">
+  <data name="c_p05Usage.TabIndex" type="System.Int32, mscorlib">
     <value>78</value>
   </data>
-  <data name="&gt;&gt;checkBox3.Name" xml:space="preserve">
-    <value>checkBox3</value>
+  <data name="&gt;&gt;c_p05Usage.Name" xml:space="preserve">
+    <value>c_p05Usage</value>
   </data>
-  <data name="&gt;&gt;checkBox3.Type" xml:space="preserve">
+  <data name="&gt;&gt;c_p05Usage.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;checkBox3.Parent" xml:space="preserve">
+  <data name="&gt;&gt;c_p05Usage.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;checkBox3.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;c_p05Usage.ZOrder" xml:space="preserve">
     <value>42</value>
   </data>
   <data name="label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -2415,28 +2382,28 @@
   <data name="&gt;&gt;label17.ZOrder" xml:space="preserve">
     <value>43</value>
   </data>
-  <data name="checkBox4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="c_p03Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="checkBox4.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="c_p03Usage.Location" type="System.Drawing.Point, System.Drawing">
     <value>216, 263</value>
   </data>
-  <data name="checkBox4.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="c_p03Usage.Size" type="System.Drawing.Size, System.Drawing">
     <value>18, 21</value>
   </data>
-  <data name="checkBox4.TabIndex" type="System.Int32, mscorlib">
+  <data name="c_p03Usage.TabIndex" type="System.Int32, mscorlib">
     <value>72</value>
   </data>
-  <data name="&gt;&gt;checkBox4.Name" xml:space="preserve">
-    <value>checkBox4</value>
+  <data name="&gt;&gt;c_p03Usage.Name" xml:space="preserve">
+    <value>c_p03Usage</value>
   </data>
-  <data name="&gt;&gt;checkBox4.Type" xml:space="preserve">
+  <data name="&gt;&gt;c_p03Usage.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;checkBox4.Parent" xml:space="preserve">
+  <data name="&gt;&gt;c_p03Usage.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;checkBox4.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;c_p03Usage.ZOrder" xml:space="preserve">
     <value>44</value>
   </data>
   <data name="label15.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -2469,28 +2436,28 @@
   <data name="&gt;&gt;label15.ZOrder" xml:space="preserve">
     <value>45</value>
   </data>
-  <data name="checkBox2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="c_hUsage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="checkBox2.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="c_hUsage.Location" type="System.Drawing.Point, System.Drawing">
     <value>155, 263</value>
   </data>
-  <data name="checkBox2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="c_hUsage.Size" type="System.Drawing.Size, System.Drawing">
     <value>18, 21</value>
   </data>
-  <data name="checkBox2.TabIndex" type="System.Int32, mscorlib">
+  <data name="c_hUsage.TabIndex" type="System.Int32, mscorlib">
     <value>66</value>
   </data>
-  <data name="&gt;&gt;checkBox2.Name" xml:space="preserve">
-    <value>checkBox2</value>
+  <data name="&gt;&gt;c_hUsage.Name" xml:space="preserve">
+    <value>c_hUsage</value>
   </data>
-  <data name="&gt;&gt;checkBox2.Type" xml:space="preserve">
+  <data name="&gt;&gt;c_hUsage.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;checkBox2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;c_hUsage.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;checkBox2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;c_hUsage.ZOrder" xml:space="preserve">
     <value>46</value>
   </data>
   <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -2523,25 +2490,25 @@
   <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
     <value>47</value>
   </data>
-  <data name="checkBox1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="c_tUsage.Location" type="System.Drawing.Point, System.Drawing">
     <value>100, 263</value>
   </data>
-  <data name="checkBox1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="c_tUsage.Size" type="System.Drawing.Size, System.Drawing">
     <value>18, 21</value>
   </data>
-  <data name="checkBox1.TabIndex" type="System.Int32, mscorlib">
+  <data name="c_tUsage.TabIndex" type="System.Int32, mscorlib">
     <value>60</value>
   </data>
-  <data name="&gt;&gt;checkBox1.Name" xml:space="preserve">
-    <value>checkBox1</value>
+  <data name="&gt;&gt;c_tUsage.Name" xml:space="preserve">
+    <value>c_tUsage</value>
   </data>
-  <data name="&gt;&gt;checkBox1.Type" xml:space="preserve">
+  <data name="&gt;&gt;c_tUsage.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;checkBox1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;c_tUsage.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;checkBox1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;c_tUsage.ZOrder" xml:space="preserve">
     <value>48</value>
   </data>
   <data name="label12.AutoSize" type="System.Boolean, mscorlib">
@@ -2814,70 +2781,70 @@
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
     <value>57</value>
   </data>
-  <data name="textBox4.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="sDescription.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 94</value>
   </data>
-  <data name="textBox4.Multiline" type="System.Boolean, mscorlib">
+  <data name="sDescription.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="textBox4.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="sDescription.Size" type="System.Drawing.Size, System.Drawing">
     <value>445, 21</value>
   </data>
-  <data name="textBox4.TabIndex" type="System.Int32, mscorlib">
+  <data name="sDescription.TabIndex" type="System.Int32, mscorlib">
     <value>45</value>
   </data>
-  <data name="&gt;&gt;textBox4.Name" xml:space="preserve">
-    <value>textBox4</value>
+  <data name="&gt;&gt;sDescription.Name" xml:space="preserve">
+    <value>sDescription</value>
   </data>
-  <data name="&gt;&gt;textBox4.Type" xml:space="preserve">
+  <data name="&gt;&gt;sDescription.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;textBox4.Parent" xml:space="preserve">
+  <data name="&gt;&gt;sDescription.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;textBox4.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;sDescription.ZOrder" xml:space="preserve">
     <value>58</value>
   </data>
-  <data name="textBox3.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="sLocation.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 67</value>
   </data>
-  <data name="textBox3.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="sLocation.Size" type="System.Drawing.Size, System.Drawing">
     <value>196, 21</value>
   </data>
-  <data name="textBox3.TabIndex" type="System.Int32, mscorlib">
+  <data name="sLocation.TabIndex" type="System.Int32, mscorlib">
     <value>44</value>
   </data>
-  <data name="&gt;&gt;textBox3.Name" xml:space="preserve">
-    <value>textBox3</value>
+  <data name="&gt;&gt;sLocation.Name" xml:space="preserve">
+    <value>sLocation</value>
   </data>
-  <data name="&gt;&gt;textBox3.Type" xml:space="preserve">
+  <data name="&gt;&gt;sLocation.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;textBox3.Parent" xml:space="preserve">
+  <data name="&gt;&gt;sLocation.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;textBox3.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;sLocation.ZOrder" xml:space="preserve">
     <value>59</value>
   </data>
-  <data name="textBox2.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="sName.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 40</value>
   </data>
-  <data name="textBox2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="sName.Size" type="System.Drawing.Size, System.Drawing">
     <value>76, 21</value>
   </data>
-  <data name="textBox2.TabIndex" type="System.Int32, mscorlib">
+  <data name="sName.TabIndex" type="System.Int32, mscorlib">
     <value>43</value>
   </data>
-  <data name="&gt;&gt;textBox2.Name" xml:space="preserve">
-    <value>textBox2</value>
+  <data name="&gt;&gt;sName.Name" xml:space="preserve">
+    <value>sName</value>
   </data>
-  <data name="&gt;&gt;textBox2.Type" xml:space="preserve">
+  <data name="&gt;&gt;sName.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;textBox2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;sName.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;textBox2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;sName.ZOrder" xml:space="preserve">
     <value>60</value>
   </data>
   <data name="&gt;&gt;splitContainer1.Panel2.Name" xml:space="preserve">
@@ -2912,48 +2879,6 @@
   </data>
   <data name="&gt;&gt;splitContainer1.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="columnHeader6.Text" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="columnHeader6.Width" type="System.Int32, mscorlib">
-    <value>30</value>
-  </data>
-  <data name="columnHeader1.Text" xml:space="preserve">
-    <value>ID</value>
-  </data>
-  <data name="columnHeader1.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="columnHeader1.Width" type="System.Int32, mscorlib">
-    <value>50</value>
-  </data>
-  <data name="columnHeader2.Text" xml:space="preserve">
-    <value>센서명</value>
-  </data>
-  <data name="columnHeader2.Width" type="System.Int32, mscorlib">
-    <value>100</value>
-  </data>
-  <data name="columnHeader3.Text" xml:space="preserve">
-    <value>주소</value>
-  </data>
-  <data name="columnHeader3.Width" type="System.Int32, mscorlib">
-    <value>150</value>
-  </data>
-  <data name="columnHeader4.Text" xml:space="preserve">
-    <value>설명</value>
-  </data>
-  <data name="columnHeader4.Width" type="System.Int32, mscorlib">
-    <value>200</value>
-  </data>
-  <data name="columnHeader5.Text" xml:space="preserve">
-    <value>사용 여부</value>
-  </data>
-  <data name="columnHeader5.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="columnHeader5.Width" type="System.Int32, mscorlib">
-    <value>65</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
