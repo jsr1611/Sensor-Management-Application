@@ -513,6 +513,11 @@ namespace DataCollectionApp2
             return exists;
         }
 
+
+
+
+
+
         private void b_save_Click(object sender, EventArgs e)
         {
             bool emptyColumn = false;
@@ -531,12 +536,13 @@ namespace DataCollectionApp2
                 }
                 else
                 {
-                    Console.WriteLine("ID:" + listView1.SelectedItems[0].Text);
+                    //Console.WriteLine("ID:" + listView1.SelectedItems[0].Text);
                     foreach (ListViewItem item in listView1.SelectedItems)
                     {
+                        item.SubItems[1].Text = sID.Value.ToString();
                         for (int i = 0; i < textBoxes_UpdSensorInfo.Count; i++)
                         {
-                            item.SubItems[i].Text = textBoxes_UpdSensorInfo[i].Text;
+                            item.SubItems[i+2].Text = textBoxes_UpdSensorInfo[i].Text;
                         }
                     }
 
@@ -593,18 +599,18 @@ namespace DataCollectionApp2
                 
             if (!idExists)
             {
-                MessageBox.Show("DB에 존재하지 않는 ID입니다.", "Status info");
+                MessageBox.Show("DB에 존재하지 않는 센서 ID입니다.", "Status info");
             }
             else
             {
                 using (SqlConnection con = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20"))
                 {
                     string sqlStr = $"UPDATE {dbName}.dbo.SENSOR_INFO " +
-                                        $"SET Name = '{textBoxes[1].Text}', " +
-                                            $"Location = '{textBoxes[2].Text}', " +
-                                            $"Description = '{textBoxes[3].Text}', " +
-                                            $"Usage = '{textBoxes[4].Text}' " +
-                                        $"WHERE ID = '{textBoxes[0].Text}'; ";
+                                        $"SET sName = '{textBoxes[1].Text}', " +
+                                            $"sLocation = '{textBoxes[2].Text}', " +
+                                            $"sDescription = '{textBoxes[3].Text}', " +
+                                            $"sUsage = '{textBoxes[4].Text}' " +
+                                        $"WHERE sID = '{textBoxes[0].Text}'; ";
                     using (SqlCommand sqlCommand = con.CreateCommand())
                     {
                         sqlCommand.CommandText = sqlStr;
