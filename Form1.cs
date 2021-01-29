@@ -42,6 +42,7 @@ namespace DataCollectionApp2
         public List<NumericUpDown> p25_Ranges { get; set; }
         public List<NumericUpDown> p50_Ranges { get; set; }
         public List<NumericUpDown> p100_Ranges { get; set; }
+        
 
         public string appAddress = @"C:\Users\JIMMY\source\repos\0DataCollectionAppNew\DataCollectionApp\bin\Release\Modbus_RTU_SensorData.EXE";
         public FlaUI.Core.Application dataCollectionApp { get; set; }
@@ -481,7 +482,6 @@ namespace DataCollectionApp2
                         SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlStr, con);
                         sqlDataAdapter.Fill(ds);
                     }
-
                 }
             }
             return ds;
@@ -595,7 +595,7 @@ namespace DataCollectionApp2
         /// <param name="textBoxes">업데이트되는 정보를 가지고 있음.  </param>
         private void UpdateDB(List<TextBox> textBoxes)
         {
-            bool idExists = GetSensorID(Convert.ToInt32(textBoxes[0].Text));
+            bool idExists = GetSensorID(Convert.ToInt32(sID.Value));
                 
             if (!idExists)
             {
@@ -603,23 +603,32 @@ namespace DataCollectionApp2
             }
             else
             {
-                using (SqlConnection con = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20"))
+                List<CheckBox> S_UsageCheckersChecked = S_UsageCheckers.Where(r => r.Checked).ToList();
+                if (S_UsageCheckersChecked.Count > 0)
                 {
-                    string sqlStr = $"UPDATE {dbName}.dbo.SENSOR_INFO " +
-                                        $"SET sName = '{textBoxes[1].Text}', " +
-                                            $"sLocation = '{textBoxes[2].Text}', " +
-                                            $"sDescription = '{textBoxes[3].Text}', " +
-                                            $"sUsage = '{textBoxes[4].Text}' " +
-                                        $"WHERE sID = '{textBoxes[0].Text}'; ";
-                    using (SqlCommand sqlCommand = con.CreateCommand())
-                    {
-                        sqlCommand.CommandText = sqlStr;
-                        con.Open();
-                        sqlCommand.ExecuteNonQuery();
-                        MessageBox.Show("DB Update Successful.", "Status info");
-                        con.Close();
-                    }
+                    IfDbExistsChecker ifDbExists = new IfDbExistsChecker();
+                    ifDbExists.connStr = new List<string>() { dbServer, dbName, dbUID, dbUID };
+                    List<string> CheckedItems = ifDbExists.CheckTablesExistHandler(S_UsageCheckersChecked);
+                
                 }
+                SqlConnection con = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20");
+                
+
+                string sqlStr = $"UPDATE {dbName}.dbo.SENSOR_INFO " +
+                                    $"SET sName = '{textBoxes[1].Text}', " +
+                                        $"sLocation = '{textBoxes[2].Text}', " +
+                                        $"sDescription = '{textBoxes[3].Text}', " +
+                                        $"sUsage = '{textBoxes[4].Text}' " +
+                                    $"WHERE sID = '{textBoxes[0].Text}'; ";
+                using (SqlCommand sqlCommand = con.CreateCommand())
+                {
+                    sqlCommand.CommandText = sqlStr;
+                    con.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    MessageBox.Show("DB Update Successful.", "Status info");
+                    con.Close();
+                }
+                
             }
         }
 
