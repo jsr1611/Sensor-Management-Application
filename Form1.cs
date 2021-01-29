@@ -43,6 +43,7 @@ namespace DataCollectionApp2
         public List<NumericUpDown> p50_Ranges { get; set; }
         public List<NumericUpDown> p100_Ranges { get; set; }
         
+        public DbTableHandler g_DbTableHandler = new DbTableHandler();
 
         public string appAddress = @"C:\Users\JIMMY\source\repos\0DataCollectionAppNew\DataCollectionApp\bin\Release\Modbus_RTU_SensorData.EXE";
         public FlaUI.Core.Application dataCollectionApp { get; set; }
@@ -99,14 +100,14 @@ namespace DataCollectionApp2
                 textBoxes_LiveData = new List<TextBox>() { t_no, t_temp, t_humid, t_part03, t_part05, t_time };
                 List<ColumnHeader> lvColHeaders = new List<ColumnHeader>() { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 };
                 S_UsageCheckers = new List<CheckBox>() { c_tUsage, c_hUsage, c_p03Usage, c_p05Usage, c_p10Usage, c_p25Usage, c_p50Usage, c_p100Usage };
-            t_Ranges = new List<NumericUpDown>() { s_tLowerLimit1, s_tLowerLimit2, s_tHigherLimit1, s_tHigherLimit2 };
-            h_Ranges = new List<NumericUpDown>() { s_hLowerLimit1, s_hLowerLimit2, s_hHigherLimit1, s_hHigherLimit2 };
-            p03_Ranges = new List<NumericUpDown>() { s_p03LowerLimit1, s_p03LowerLimit2, s_p03HigherLimit1, s_p03HigherLimit2 };
-            p05_Ranges = new List<NumericUpDown>() { s_p05LowerLimit1, s_p05LowerLimit2, s_p05HigherLimit1, s_p05HigherLimit2 };
-            p10_Ranges = new List<NumericUpDown>() { s_p10LowerLimit1, s_p10LowerLimit2, s_p10HigherLimit1, s_p10HigherLimit2 };
-            p25_Ranges = new List<NumericUpDown>() { s_p25LowerLimit1, s_p25LowerLimit2, s_p25HigherLimit1, s_p25HigherLimit2 };
-            p50_Ranges = new List<NumericUpDown>() { s_p50LowerLimit1, s_p50LowerLimit2, s_p50HigherLimit1, s_p50HigherLimit2 };
-            p100_Ranges = new List<NumericUpDown>() { s_p100LowerLimit1, s_p100LowerLimit2, s_p100HigherLimit1, s_p100HigherLimit2 };
+                t_Ranges = new List<NumericUpDown>() { s_tLowerLimit1, s_tLowerLimit2, s_tHigherLimit1, s_tHigherLimit2 };
+                h_Ranges = new List<NumericUpDown>() { s_hLowerLimit1, s_hLowerLimit2, s_hHigherLimit1, s_hHigherLimit2 };
+                p03_Ranges = new List<NumericUpDown>() { s_p03LowerLimit1, s_p03LowerLimit2, s_p03HigherLimit1, s_p03HigherLimit2 };
+                p05_Ranges = new List<NumericUpDown>() { s_p05LowerLimit1, s_p05LowerLimit2, s_p05HigherLimit1, s_p05HigherLimit2 };
+                p10_Ranges = new List<NumericUpDown>() { s_p10LowerLimit1, s_p10LowerLimit2, s_p10HigherLimit1, s_p10HigherLimit2 };
+                p25_Ranges = new List<NumericUpDown>() { s_p25LowerLimit1, s_p25LowerLimit2, s_p25HigherLimit1, s_p25HigherLimit2 };
+                p50_Ranges = new List<NumericUpDown>() { s_p50LowerLimit1, s_p50LowerLimit2, s_p50HigherLimit1, s_p50HigherLimit2 };
+                p100_Ranges = new List<NumericUpDown>() { s_p100LowerLimit1, s_p100LowerLimit2, s_p100HigherLimit1, s_p100HigherLimit2 };
 
 
 
@@ -596,7 +597,7 @@ namespace DataCollectionApp2
         private void UpdateDB(List<TextBox> textBoxes)
         {
             bool idExists = GetSensorID(Convert.ToInt32(sID.Value));
-                
+            bool sUsage;
             if (!idExists)
             {
                 MessageBox.Show("DB에 존재하지 않는 센서 ID입니다.", "Status info");
@@ -606,27 +607,58 @@ namespace DataCollectionApp2
                 List<CheckBox> S_UsageCheckersChecked = S_UsageCheckers.Where(r => r.Checked).ToList();
                 if (S_UsageCheckersChecked.Count > 0)
                 {
-                    IfDbExistsChecker ifDbExists = new IfDbExistsChecker();
-                    ifDbExists.connStr = new List<string>() { dbServer, dbName, dbUID, dbUID };
-                    List<string> CheckedItems = ifDbExists.CheckTablesExistHandler(S_UsageCheckersChecked);
-                
+                    //IfDbExistsChecker ifDbExists = new IfDbExistsChecker();
+                    g_DbTableHandler.connStr = new List<string>() { dbServer, dbName, dbUID, dbUID };
+                    List<string> checkedTbNames = g_DbTableHandler.CheckTablesExistHandler(S_UsageCheckersChecked);
+                    sUsage = true;
+
+                    Dictionary<string, List<NumericUpDown>> keyValuePairs = new Dictionary<string, List<NumericUpDown>>();
+                    for (int i = 0; i < checkedTbNames.Count; i++)
+                    {
+                        for(int j=0; j<4; j++)
+                        {
+                            //
+                            keyValuePairs.Add(checkedTbNames[i], t_Ranges);
+                        }
+                        
+                    }
+                    g_DbTableHandler.UpdateLimitRangeInfo(checkedTbNames, t_Ranges);
+
+
+
                 }
+                else
+                {
+                    sUsage = false;
+                }
+
+
                 SqlConnection con = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20");
-                
 
                 string sqlStr = $"UPDATE {dbName}.dbo.SENSOR_INFO " +
                                     $"SET sName = '{textBoxes[1].Text}', " +
                                         $"sLocation = '{textBoxes[2].Text}', " +
                                         $"sDescription = '{textBoxes[3].Text}', " +
-                                        $"sUsage = '{textBoxes[4].Text}' " +
-                                    $"WHERE sID = '{textBoxes[0].Text}'; ";
-                using (SqlCommand sqlCommand = con.CreateCommand())
+                                        $"sUsage = '{sUsage}' " +
+                                    $"WHERE sID = '{sID.Value.ToString()}'; ";
+                SqlCommand sqlCommand =  new SqlCommand(sqlStr, con);
+                try
                 {
-                    sqlCommand.CommandText = sqlStr;
                     con.Open();
                     sqlCommand.ExecuteNonQuery();
-                    MessageBox.Show("DB Update Successful.", "Status info");
-                    con.Close();
+                    MessageBox.Show("DB Update Successful.", "Status info", MessageBoxButtons.OK);
+                    
+                }
+                catch(System.Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                finally
+                {
+                    if(con.State == ConnectionState.Open)
+                    {
+                        con.Close();
+                    }
                 }
                 
             }
@@ -643,13 +675,23 @@ namespace DataCollectionApp2
             {
                 string sqlStr = $"INSERT INTO {dbName}.dbo.SENSOR_INFO (ID, Name, Location, Description, Usage) " +
                     $"VALUES ('{textBoxes[0].Text}', '{textBoxes[1].Text}', '{textBoxes[2].Text}', '{textBoxes[3].Text}', '{textBoxes[4].Text}');";
-                using(SqlCommand sqlCommand = con.CreateCommand())
+                SqlCommand sqlCommand = new SqlCommand(sqlStr, con);
+                try
                 {
-                    sqlCommand.CommandText = sqlStr;
                     con.Open();
                     sqlCommand.ExecuteNonQuery();
-                    MessageBox.Show("New sensor info has been successfully saved", "Status info");
-                    con.Close();
+                    MessageBox.Show("New sensor info has been successfully saved", "Status info", MessageBoxButtons.OK);
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                finally
+                {
+                    if (con.State == ConnectionState.Open)
+                    {
+                        con.Close();
+                    }
                 }
             }
             
