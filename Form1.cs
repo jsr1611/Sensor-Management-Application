@@ -32,17 +32,9 @@ namespace DataCollectionApp2
         public List<TextBox> textBoxes_UpdSensorInfo { get; set; }
         public List<TextBox> textBoxes_LiveData { get; set; }
 
-        public List<CheckBox> S_UsageCheckers { get; set; }
-        public List<NumericUpDown> S_Ranges { get; set; }
-        public List<NumericUpDown> t_Ranges { get; set; }
-        public List<NumericUpDown> h_Ranges { get; set; }
-        public List<NumericUpDown> p03_Ranges { get; set; }
-        public List<NumericUpDown> p05_Ranges { get; set; }
-        public List<NumericUpDown> p10_Ranges { get; set; }
-        public List<NumericUpDown> p25_Ranges { get; set; }
-        public List<NumericUpDown> p50_Ranges { get; set; }
-        public List<NumericUpDown> p100_Ranges { get; set; }
-        
+        public Dictionary<CheckBox, List<NumericUpDown>> S_UsageCheckerRangePairs { get; set; }
+
+
         public DbTableHandler g_DbTableHandler = new DbTableHandler();
 
         public string appAddress = @"C:\Users\JIMMY\source\repos\0DataCollectionAppNew\DataCollectionApp\bin\Release\Modbus_RTU_SensorData.EXE";
@@ -59,89 +51,96 @@ namespace DataCollectionApp2
         }
         private void MyFunc()
         {
-           /* try
-            {*/
+            /* try
+             {*/
 
-                String[] sensordata = { "ID", "Temp", "Humidity", "Part03", "Part05", "DateTime" };
-                Console.WriteLine("Count\t" + string.Join("\t", sensordata) + "\t\t Run Time");
-                DataSet sensorInfoTable = GetSensorInfo();
-                S_IDs = new List<int>(sensorInfoTable.Tables[0].AsEnumerable().Where(r => r.Field<string>("sUsage") == "YES").Select(r=>r.Field<int>("sID")).ToList());
+            String[] sensordata = { "ID", "Temp", "Humidity", "Part03", "Part05", "DateTime" };
+            Console.WriteLine("Count\t" + string.Join("\t", sensordata) + "\t\t Run Time");
+            DataSet sensorInfoTable = GetSensorInfo();
+            S_IDs = new List<int>(sensorInfoTable.Tables[0].AsEnumerable().Where(r => r.Field<string>("sUsage") == "YES").Select(r => r.Field<int>("sID")).ToList());
 
-                //ModBus and myConnection initialization
-                ConnectionSettings(false);
-                
-                dataCount = 0;
+            //ModBus and myConnection initialization
+            ConnectionSettings(false);
 
-                string[] rows = new string[sensorInfoTable.Tables[0].Columns.Count];
+            dataCount = 0;
+
+            string[] rows = new string[sensorInfoTable.Tables[0].Columns.Count];
 
             int num = 1;
-                foreach(DataRow row in sensorInfoTable.Tables[0].Rows)
+            foreach (DataRow row in sensorInfoTable.Tables[0].Rows)
+            {
+                Console.WriteLine(row["sID"]);
+
+                ListViewItem listViewItem = new ListViewItem(num.ToString());
+                for (int i = 0; i < row.ItemArray.Length; i++)
                 {
-                    Console.WriteLine(row["sID"]);
-
-                    ListViewItem listViewItem = new ListViewItem(num.ToString());
-                    for (int i=0; i<row.ItemArray.Length; i++)
-                    {
-                        //if(row.ItemArray[i].ToString())
-                        //rows[i] = row.ItemArray[i].ToString();
-                        listViewItem.SubItems.Add(row.ItemArray[i].ToString());
-                        listView1.Columns[i].TextAlign = HorizontalAlignment.Center;
-                    }
-                    listView1.Items.Add(listViewItem);
-                num += 1;
+                    //if(row.ItemArray[i].ToString())
+                    //rows[i] = row.ItemArray[i].ToString();
+                    listViewItem.SubItems.Add(row.ItemArray[i].ToString());
+                    listView1.Columns[i].TextAlign = HorizontalAlignment.Center;
                 }
+                listView1.Items.Add(listViewItem);
+                num += 1;
+            }
 
 
-                //display listView1 sensor info in listView2
-                //Display_listView2();
-                //Display_GridView();
+            //display listView1 sensor info in listView2
+            //Display_listView2();
+            //Display_GridView();
 
-                textBoxes_UpdSensorInfo = new List<TextBox>() { sName, sLocation, sDescription  }; 
-                textBoxes_LiveData = new List<TextBox>() { t_no, t_temp, t_humid, t_part03, t_part05, t_time };
-                List<ColumnHeader> lvColHeaders = new List<ColumnHeader>() { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 };
-                S_UsageCheckers = new List<CheckBox>() { c_tUsage, c_hUsage, c_p03Usage, c_p05Usage, c_p10Usage, c_p25Usage, c_p50Usage, c_p100Usage };
-                t_Ranges = new List<NumericUpDown>() { s_tLowerLimit1, s_tLowerLimit2, s_tHigherLimit1, s_tHigherLimit2 };
-                h_Ranges = new List<NumericUpDown>() { s_hLowerLimit1, s_hLowerLimit2, s_hHigherLimit1, s_hHigherLimit2 };
-                p03_Ranges = new List<NumericUpDown>() { s_p03LowerLimit1, s_p03LowerLimit2, s_p03HigherLimit1, s_p03HigherLimit2 };
-                p05_Ranges = new List<NumericUpDown>() { s_p05LowerLimit1, s_p05LowerLimit2, s_p05HigherLimit1, s_p05HigherLimit2 };
-                p10_Ranges = new List<NumericUpDown>() { s_p10LowerLimit1, s_p10LowerLimit2, s_p10HigherLimit1, s_p10HigherLimit2 };
-                p25_Ranges = new List<NumericUpDown>() { s_p25LowerLimit1, s_p25LowerLimit2, s_p25HigherLimit1, s_p25HigherLimit2 };
-                p50_Ranges = new List<NumericUpDown>() { s_p50LowerLimit1, s_p50LowerLimit2, s_p50HigherLimit1, s_p50HigherLimit2 };
-                p100_Ranges = new List<NumericUpDown>() { s_p100LowerLimit1, s_p100LowerLimit2, s_p100HigherLimit1, s_p100HigherLimit2 };
+            textBoxes_UpdSensorInfo = new List<TextBox>() { sName, sLocation, sDescription };
+            textBoxes_LiveData = new List<TextBox>() { t_no, t_temp, t_humid, t_part03, t_part05, t_time };
+            List<ColumnHeader> lvColHeaders = new List<ColumnHeader>() { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 };
 
 
 
+            List<CheckBox> S_UsageCheckers = new List<CheckBox>() { c_tUsage, c_hUsage, c_p03Usage, c_p05Usage, c_p10Usage, c_p25Usage, c_p50Usage, c_p100Usage };
+            List<NumericUpDown> t_Ranges = new List<NumericUpDown>() { s_tLowerLimit1, s_tLowerLimit2, s_tHigherLimit1, s_tHigherLimit2 };
+            List<NumericUpDown> h_Ranges = new List<NumericUpDown>() { s_hLowerLimit1, s_hLowerLimit2, s_hHigherLimit1, s_hHigherLimit2 };
+            List<NumericUpDown> p03_Ranges = new List<NumericUpDown>() { s_p03LowerLimit1, s_p03LowerLimit2, s_p03HigherLimit1, s_p03HigherLimit2 };
+            List<NumericUpDown> p05_Ranges = new List<NumericUpDown>() { s_p05LowerLimit1, s_p05LowerLimit2, s_p05HigherLimit1, s_p05HigherLimit2 };
+            List<NumericUpDown> p10_Ranges = new List<NumericUpDown>() { s_p10LowerLimit1, s_p10LowerLimit2, s_p10HigherLimit1, s_p10HigherLimit2 };
+            List<NumericUpDown> p25_Ranges = new List<NumericUpDown>() { s_p25LowerLimit1, s_p25LowerLimit2, s_p25HigherLimit1, s_p25HigherLimit2 };
+            List<NumericUpDown> p50_Ranges = new List<NumericUpDown>() { s_p50LowerLimit1, s_p50LowerLimit2, s_p50HigherLimit1, s_p50HigherLimit2 };
+            List<NumericUpDown> p100_Ranges = new List<NumericUpDown>() { s_p100LowerLimit1, s_p100LowerLimit2, s_p100HigherLimit1, s_p100HigherLimit2 };
+
+            List<List<NumericUpDown>> S_Ranges = new List<List<NumericUpDown>>() { t_Ranges, h_Ranges, p03_Ranges, p05_Ranges, p100_Ranges, p25_Ranges, p50_Ranges, p100_Ranges };
+
+            S_UsageCheckerRangePairs = new Dictionary<CheckBox, List<NumericUpDown>>();
+            for (int i = 0; i < S_UsageCheckers.Count; i++)
+            {
+                S_UsageCheckerRangePairs.Add(S_UsageCheckers[i], S_Ranges[i]);
+            }
 
 
-            S_Ranges = new List<NumericUpDown>();
-            
-                /*DataSet rangesWithUsage = GetRangesWithUsage(Convert.ToInt32(sID.Value));
-                S_Ranges.AddRange((IEnumerable<NumericUpDown>)rangesWithUsage.Tables[0].Columns.Cast<DataColumn>()
-                .Select(x=>x.ColumnName)
-                .ToList());
-            textBoxes_UpdSensorInfo.Select(r => r.TextAlign = HorizontalAlignment.Center);*/
+
+            /*DataSet rangesWithUsage = GetRangesWithUsage(Convert.ToInt32(sID.Value));
+            S_Ranges.AddRange((IEnumerable<NumericUpDown>)rangesWithUsage.Tables[0].Columns.Cast<DataColumn>()
+            .Select(x=>x.ColumnName)
+            .ToList());
+        textBoxes_UpdSensorInfo.Select(r => r.TextAlign = HorizontalAlignment.Center);*/
             startTime = DateTime.Now;
             /*}
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "에러 메시지");
             }*/
-                
-                    
-            
+
+
+
         }
 
 
 
 
-       /*private void Display_GridView()
-        {
-            for(int i=0; i<listView1.Columns.Count; i++)
-            {
-                string[] row = { listView1.Columns[i].Text, "" };
-                dataGridView1.Rows.Add(row);
-            }
-        }*/
+        /*private void Display_GridView()
+         {
+             for(int i=0; i<listView1.Columns.Count; i++)
+             {
+                 string[] row = { listView1.Columns[i].Text, "" };
+                 dataGridView1.Rows.Add(row);
+             }
+         }*/
 
 
 
@@ -187,7 +186,7 @@ namespace DataCollectionApp2
                     notifyIcon1.Visible = false;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -205,7 +204,7 @@ namespace DataCollectionApp2
             }
         }
 
-        
+
 
         /// <summary>
         /// SENSOR_INFO테이블에 있는 모든 센서에 대한 ID를 List<int> 형태로 불러오는 함수
@@ -232,9 +231,9 @@ namespace DataCollectionApp2
             }
             return S_IDs;
         }
-        
 
-        
+
+
         /// <summary>
         /// 주어진 센서 ID가 SENSOR_INFO테이블에 있는지 확인하고 bool형태의 값을 반환해주는 함수
         /// </summary>
@@ -284,8 +283,8 @@ namespace DataCollectionApp2
             return ds;
         }
 
-            
-        
+
+
         private void b_start_Click(object sender, EventArgs e)
         {
 
@@ -294,7 +293,7 @@ namespace DataCollectionApp2
             {
                 var window = dataCollectionApp.GetMainWindow(automation);
                 //MessageBox.Show("Hello, " + window.Title, window.Title);
-                
+
             }
             b_dataCollection_status.Image = Resources.light_on_26_color;
 
@@ -367,7 +366,7 @@ namespace DataCollectionApp2
                 myCommand_part05.Parameters.AddWithValue("@DateAndTime", timestamp0);
                 myCommand_part05.ExecuteNonQuery();
             }
-            
+
         }
 
 
@@ -382,7 +381,7 @@ namespace DataCollectionApp2
             dataCollectionApp.Close();
             dataCollectionApp.Dispose();
             MessageBox.Show("Anything happened", "Application status");
-            
+
             /*
             timer1.Stop();
             myConnection.Close();
@@ -394,7 +393,7 @@ namespace DataCollectionApp2
 
         private void F_Exit_Click(object sender, EventArgs e)
         {
-           System.Windows.Forms.Application.Exit();
+            System.Windows.Forms.Application.Exit();
         }
 
 
@@ -407,8 +406,8 @@ namespace DataCollectionApp2
             int itemHight = 20;
             ImageList imgList = new ImageList();
             imgList.ImageSize = new Size(1, itemHight);
-            
-            for(int i=0; i<listView1.Columns.Count; i++)
+
+            for (int i = 0; i < listView1.Columns.Count; i++)
             {
                 ListViewItem listViewItem = new ListViewItem(listView1.Columns[i].Text);
                 listViewItem.SubItems.Add("");
@@ -426,33 +425,26 @@ namespace DataCollectionApp2
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach(ListViewItem item in listView1.SelectedItems)
+            foreach (ListViewItem item in listView1.SelectedItems)
             {
                 sID.Value = Convert.ToInt32(item.SubItems[1].Text);
-                for(int i=0;i<textBoxes_UpdSensorInfo.Count; i++)
+                for (int i = 0; i < textBoxes_UpdSensorInfo.Count; i++)
                 {
-                    textBoxes_UpdSensorInfo[i].Text = item.SubItems[i+2].Text;
+                    textBoxes_UpdSensorInfo[i].Text = item.SubItems[i + 2].Text;
                     textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
                 }
                 DataSet rangesWithUsage = GetRangesWithUsage(Convert.ToInt32(sID.Value));
 
                 // first time use
-                if(rangesWithUsage.Tables[0].Rows.Count == 0)
+                if (rangesWithUsage.Tables[0].Rows.Count == 0)
                 {
-                    for(int i = 0; i<S_UsageCheckers.Count; i++)
+                    S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Checked = false);
+                    for (int j = 0; j < S_UsageCheckerRangePairs.Keys.Count; j++)
                     {
-                        S_UsageCheckers[i].Checked = false;
-                    }
-                    for(int i=0; i<4; i++)
-                    {
-                        t_Ranges[i].Enabled = false;
-                        h_Ranges[i].Enabled = false;
-                        p03_Ranges[i].Enabled = false;
-                        p05_Ranges[i].Enabled = false;
-                        p10_Ranges[i].Enabled = false;
-                        p25_Ranges[i].Enabled = false;
-                        p50_Ranges[i].Enabled = false;
-                        p100_Ranges[i].Enabled = false;
+                        for (int i = 0; i < 4; i++)
+                        {
+                            S_UsageCheckerRangePairs.Values.AsEnumerable().ToList()[j][i].Enabled = false;
+                        }
                     }
                 }
                 else
@@ -464,7 +456,7 @@ namespace DataCollectionApp2
 
         private DataSet GetRangesWithUsage(int s_Id)
         {
-            DataSet ds = new DataSet(); 
+            DataSet ds = new DataSet();
             bool idExists = GetSensorID(s_Id);
 
             if (!idExists)
@@ -496,10 +488,10 @@ namespace DataCollectionApp2
                 string sqlStr = "SELECT COUNT(*) " +
                 "FROM INFORMATION_SCHEMA.TABLES " +
                 "WHERE TABLE_NAME = 'sUsageInfoAll'";
-                using(SqlCommand cmd = new SqlCommand(sqlStr, con))
+                using (SqlCommand cmd = new SqlCommand(sqlStr, con))
                 {
                     con.Open();
-                    using(SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -543,7 +535,7 @@ namespace DataCollectionApp2
                         item.SubItems[1].Text = sID.Value.ToString();
                         for (int i = 0; i < textBoxes_UpdSensorInfo.Count; i++)
                         {
-                            item.SubItems[i+2].Text = textBoxes_UpdSensorInfo[i].Text;
+                            item.SubItems[i + 2].Text = textBoxes_UpdSensorInfo[i].Text;
                         }
                     }
 
@@ -582,7 +574,7 @@ namespace DataCollectionApp2
 
         private void clearFields(List<TextBox> textBoxes)
         {
-            for(int i=0; i<textBoxes.Count; i++)
+            for (int i = 0; i < textBoxes.Count; i++)
             {
                 textBoxes[i].Text = "";
             }
@@ -604,25 +596,22 @@ namespace DataCollectionApp2
             }
             else
             {
-                List<CheckBox> S_UsageCheckersChecked = S_UsageCheckers.Where(r => r.Checked).ToList();
+                List<CheckBox> S_UsageCheckersChecked = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(r => r.Checked).ToList();
                 if (S_UsageCheckersChecked.Count > 0)
                 {
+                    sUsage = true;
                     //IfDbExistsChecker ifDbExists = new IfDbExistsChecker();
                     g_DbTableHandler.connStr = new List<string>() { dbServer, dbName, dbUID, dbUID };
-                    List<string> checkedTbNames = g_DbTableHandler.CheckTablesExistHandler(S_UsageCheckersChecked);
-                    sUsage = true;
 
-                    Dictionary<string, List<NumericUpDown>> keyValuePairs = new Dictionary<string, List<NumericUpDown>>();
-                    for (int i = 0; i < checkedTbNames.Count; i++)
+                    //targetChBoxes = 사용중인 (checkBox에서 체크된 항목들) 하한 및 상한 범위 정보를 저장하는 DB 테이블명들이 들어간 List
+                    List<CheckBox> targetChBoxes = g_DbTableHandler.CheckTablesExistHandler(S_UsageCheckersChecked);
+
+                    for (int i = 0; i < targetChBoxes.Count; i++)
                     {
-                        for(int j=0; j<4; j++)
-                        {
-                            //
-                            keyValuePairs.Add(checkedTbNames[i], t_Ranges);
-                        }
-                        
+                        //List<CheckBox> target = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(r => r.Name == targetTbNames[i]).ToList();
+                        g_DbTableHandler.UpdateLimitRangeInfo(sID.Value, targetChBoxes[i], S_UsageCheckerRangePairs[targetChBoxes[i]], myConnection);
                     }
-                    g_DbTableHandler.UpdateLimitRangeInfo(checkedTbNames, t_Ranges);
+
 
 
 
@@ -641,26 +630,26 @@ namespace DataCollectionApp2
                                         $"sDescription = '{textBoxes[3].Text}', " +
                                         $"sUsage = '{sUsage}' " +
                                     $"WHERE sID = '{sID.Value.ToString()}'; ";
-                SqlCommand sqlCommand =  new SqlCommand(sqlStr, con);
+                SqlCommand sqlCommand = new SqlCommand(sqlStr, con);
                 try
                 {
                     con.Open();
                     sqlCommand.ExecuteNonQuery();
                     MessageBox.Show("DB Update Successful.", "Status info", MessageBoxButtons.OK);
-                    
+
                 }
-                catch(System.Exception ex)
+                catch (System.Exception ex)
                 {
                     MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 finally
                 {
-                    if(con.State == ConnectionState.Open)
+                    if (con.State == ConnectionState.Open)
                     {
                         con.Close();
                     }
                 }
-                
+
             }
         }
 
@@ -694,11 +683,11 @@ namespace DataCollectionApp2
                     }
                 }
             }
-            
+
         }
 
 
-        
+
         private void b_add_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
@@ -706,13 +695,13 @@ namespace DataCollectionApp2
                 ListViewItem item = listView1.SelectedItems[0];
                 item.Selected = false;
             }
-            for (int i=0; i<textBoxes_UpdSensorInfo.Count; i++)
+            for (int i = 0; i < textBoxes_UpdSensorInfo.Count; i++)
             {
                 if (i == 0)
                 {
                     textBoxes_UpdSensorInfo[i].Text = (listView1.Items.Count + 1).ToString();
                 }
-                else if(i == textBoxes_UpdSensorInfo.Count - 1)
+                else if (i == textBoxes_UpdSensorInfo.Count - 1)
                 {
                     textBoxes_UpdSensorInfo[i].Text = "NO";
                     textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
@@ -740,25 +729,25 @@ namespace DataCollectionApp2
                 textBox5.Text = "NO";
             }*/
         }
-        
+
 
 
         private void DisplayLiveData(string[] data)
         {
-            for(int i=0; i<data.Length; i++)
+            for (int i = 0; i < data.Length; i++)
             {
                 textBoxes_LiveData[i].Text = data[i];
             }
         }
 
-        
-        
+
+
         private void b_deleteSensor_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 DelFromDB(textBoxes_UpdSensorInfo);
-                
+
                 ListViewItem item = listView1.SelectedItems[0];
                 item.Remove();
 
@@ -769,10 +758,10 @@ namespace DataCollectionApp2
                 MessageBox.Show("선택된 센서가 없습니다!", "Warning Message");
             }
         }
-        
-        
-        
-        
+
+
+
+
         private void DelFromDB(List<TextBox> textBoxes)
         {
             bool idExists = GetSensorID(Convert.ToInt32(textBoxes[0].Text));
@@ -799,54 +788,54 @@ namespace DataCollectionApp2
             }
         }
 
-       
+
 
 
         private void c_tUsage_CheckedChanged(object sender, EventArgs e)
         {
-            c_xUsage_Checker(c_tUsage, t_Ranges);
+            c_xUsage_Checker(c_tUsage, S_UsageCheckerRangePairs[c_tUsage]);
         }
 
 
         private void c_hUsage_CheckedChanged(object sender, EventArgs e)
         {
-            c_xUsage_Checker(c_hUsage, h_Ranges);
+            c_xUsage_Checker(c_hUsage, S_UsageCheckerRangePairs[c_hUsage]);
         }
 
 
         private void c_p03Usage_CheckedChanged(object sender, EventArgs e)
         {
-            c_xUsage_Checker(c_p03Usage, p03_Ranges);
+            c_xUsage_Checker(c_p03Usage, S_UsageCheckerRangePairs[c_p03Usage]);
         }
 
 
         private void c_p05Usage_CheckedChanged(object sender, EventArgs e)
         {
-            c_xUsage_Checker(c_p05Usage, p05_Ranges);
+            c_xUsage_Checker(c_p05Usage, S_UsageCheckerRangePairs[c_p05Usage]);
 
         }
 
         private void c_p10Usage_CheckedChanged(object sender, EventArgs e)
         {
-            c_xUsage_Checker(c_p10Usage, p10_Ranges);
+            c_xUsage_Checker(c_p10Usage, S_UsageCheckerRangePairs[c_p10Usage]);
 
         }
 
         private void c_p25Usage_CheckedChanged(object sender, EventArgs e)
         {
-            c_xUsage_Checker(c_p25Usage, p25_Ranges);
+            c_xUsage_Checker(c_p25Usage, S_UsageCheckerRangePairs[c_p25Usage]);
 
         }
 
         private void c_p50Usage_CheckedChanged(object sender, EventArgs e)
         {
-            c_xUsage_Checker(c_p50Usage, p50_Ranges);
+            c_xUsage_Checker(c_p50Usage, S_UsageCheckerRangePairs[c_p50Usage]);
 
         }
 
         private void c_p100Usage_CheckedChanged(object sender, EventArgs e)
         {
-            c_xUsage_Checker(c_p100Usage, p100_Ranges);
+            c_xUsage_Checker(c_p100Usage, S_UsageCheckerRangePairs[c_p100Usage]);
 
         }
 
@@ -862,7 +851,7 @@ namespace DataCollectionApp2
             bool res = false;
             foreach (var item in x_Ranges)
             {
-                if (item.Value > 0)
+                if (item.Value != 0)
                 {
                     res = true;
                 }
@@ -894,28 +883,30 @@ namespace DataCollectionApp2
                 }
             }
         }
-      
-        
+
+
 
         /// <summary>
         /// 센서 추가 시 범위 설정 컨트롤러를 재세팅 해줌
         /// </summary>
         private void RangeSetNew()
         {
-            for(int i=0; i < S_UsageCheckers.Count;i++)
+            S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x=>x.Checked = false);
+            for (int j = 0; j < S_UsageCheckerRangePairs.Keys.Count; j++)
             {
-                S_UsageCheckers[i].Checked = false;
-            }
-            for(int i=0; i<4; i++)
-            {
-                t_Ranges[i].Enabled = false;
-                h_Ranges[i].Enabled = false;
-                p03_Ranges[i].Enabled = false;
-                p05_Ranges[i].Enabled = false;
-                p10_Ranges[i].Enabled = false;
-                p25_Ranges[i].Enabled = false;
-                p50_Ranges[i].Enabled = false;
-                p100_Ranges[i].Enabled = false;
+                for (int i = 0; i < 4; i++)
+                {
+                    S_UsageCheckerRangePairs.Values.AsEnumerable().ToList()[j][i].Enabled = false;
+/*
+                    t_Ranges[i].Enabled = false;
+                    h_Ranges[i].Enabled = false;
+                    p03_Ranges[i].Enabled = false;
+                    p05_Ranges[i].Enabled = false;
+                    p10_Ranges[i].Enabled = false;
+                    p25_Ranges[i].Enabled = false;
+                    p50_Ranges[i].Enabled = false;
+                    p100_Ranges[i].Enabled = false;*/
+                }
             }
         }
 

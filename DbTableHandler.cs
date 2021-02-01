@@ -38,25 +38,28 @@ namespace DataCollectionApp2
         /// </summary>
         /// <param name="usageCheckers"></param>
         /// <returns></returns>
-        public List<string> CheckTablesExistHandler(List<CheckBox> usageCheckers)
+        public List<CheckBox> CheckTablesExistHandler(List<CheckBox> usageCheckers)
         {
-            List<string> target = new List<string>();
+            List<CheckBox> target = new List<CheckBox>();
+            CheckBox chbName;
             string tbName;
-            for(int i=0; i<usageCheckers.Count; i++)
+            for (int i = 0; i < usageCheckers.Count; i++)
             {
                 tbName = usageCheckers[i].Name;
-                if (IfExists(tbName) == true)
+                chbName = usageCheckers[i];
+                if (IfTbExists(tbName) == true)
                 {
-                    target.Add(tbName);
+                    target.Add(chbName);
                 }
                 else
                 {
-                    if(CreateTb(tbName) == true)
+                    if (CreateTb(tbName) == true)
                     {
-                        target.Add(tbName);
+                        target.Add(chbName);
                     }
                 }
             }
+            
             return target;
         }
         
@@ -67,7 +70,7 @@ namespace DataCollectionApp2
             for (int i = 0; i < usageCheckerNames.Count; i++)
             {
                 tbName = usageCheckerNames[i];
-                if (IfExists(tbName) == true)
+                if (IfTbExists(tbName) == true)
                 {
                     target.Add(tbName);
                 }
@@ -86,7 +89,7 @@ namespace DataCollectionApp2
         {
             string tbName;
             tbName = usageCheckerName;
-            if (IfExists(tbName) == true)
+            if (IfTbExists(tbName) == true)
             {
                 return tbName;
             }
@@ -106,6 +109,7 @@ namespace DataCollectionApp2
         
         private bool CreateTb(string tbName)
         {
+            //string tbName = targetCheckBox.Name;
             bool tbCreated = false;
             SqlConnection myConn = new SqlConnection($@"Data Source ={ connStr[0] }; Initial Catalog = { connStr[1] }; User id = { connStr[2] }; Password ={ connStr[3]}; Min Pool Size = 20");
             // Create Table command 
@@ -156,8 +160,9 @@ namespace DataCollectionApp2
         }
 
 
-        private bool IfExists(string checkBoxName)
+        private bool IfTbExists(string checkBoxName)
         {
+            //string checkBoxName = targetCheckBoxName;
             bool target = false;
             string dbCheckCmdStr;
             SqlConnection myConn = new SqlConnection($@"Data Source ={ connStr[0] }; Initial Catalog = { connStr[1] }; User id = { connStr[2] }; Password ={ connStr[3]}; Min Pool Size = 20");
@@ -189,13 +194,104 @@ namespace DataCollectionApp2
             return target;
         }
 
-        public void UpdateLimitRangeInfo(List<string> tbNames, List<NumericUpDown> RangeInfo)
+
+        
+
+
+
+        private bool CreateTb(CheckBox targetCheckBox)
         {
-            for(int i =0; i<tbNames.Count; i++)
+            string tbName = targetCheckBox.Name;
+            bool tbCreated = false;
+            SqlConnection myConn = new SqlConnection($@"Data Source ={ connStr[0] }; Initial Catalog = { connStr[1] }; User id = { connStr[2] }; Password ={ connStr[3]}; Min Pool Size = 20");
+            // Create Table command 
+            #region
+            string tbCreateCmdStr;
+            tbCreateCmdStr = $"Create TABLE [{connStr[1]}].[dbo].[{tbName}] ( " +
+                            " sID INT IDENTITY NOT NULL, " +
+                            " LowerLimit1 float NOT NULL, " +
+                            " LowerLimit2 float NOT NULL, " +
+                            " HigherLimit1 float NOT NULL, " +
+                            " HigherLimit2 float NOT NULL, " +
+                            " sUsage nvarchar(10) NOT NULL );";
+            SqlCommand tbCreateCmd = new SqlCommand(tbCreateCmdStr, myConn);
+            #endregion
+
+            // Check if table created correctly 
+            #region 
+            string tbCheckCmdStr;
+            tbCheckCmdStr = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'{tbName}';";
+            SqlCommand tbCheckCmd = new SqlCommand(tbCheckCmdStr, myConn);
+            #endregion
+
+            try
             {
+                myConn.Open();
+                tbCreateCmd.ExecuteNonQuery();
+
+                using (SqlDataReader reader = tbCheckCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        tbCreated = Convert.ToInt32(reader.GetValue(0)) == 1;
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            finally
+            {
+                if (myConn.State == System.Data.ConnectionState.Open)
+                {
+                    myConn.Close();
+                }
+            }
+            return tbCreated;
+        }
 
 
 
+        public void UpdateLimitRangeInfo(decimal sID, CheckBox targetCheckBox, List<NumericUpDown> rangeInfoList, SqlConnection myConn)
+        {
+            int sensorId = Convert.ToInt32(sID);
+            string tableName = targetCheckBox.Name;
+            List<float> rangeLimitData = rangeInfoList.AsEnumerable().Select(r => Convert.ToSingle(r.Value)).ToList();
+            string sensorUsage = rangeLimitData.AsEnumerable().Where(x => x != 0).ToList().Count > 0 ? "YES" : "NO";
+
+            string sqlCheckStr = $"SELECT COUNT(*) FROM {tableName} WHERE sID = {sensorId}";
+            SqlCommand checkCmd = new SqlCommand(sqlCheckStr, myConn);
+
+            string sqlUpdStr = $"UPDATE {tableName} SET sID={sID}, LowerLimit1 = {rangeLimitData[0]}, LowerLimit2 = {rangeLimitData[1]}, HigherLimit1 = {rangeLimitData[2]}, HigherLimit2 = {rangeLimitData[3]}, sUsage = {sensorUsage};";
+            SqlCommand updCmd = new SqlCommand(sqlUpdStr, myConn);
+
+            try
+            {
+                myConn.Open();
+                bool idExists = false;
+                using (SqlDataReader reader = checkCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        idExists = Convert.ToInt32(reader.GetValue(0)) == 1;
+                    }
+                }
+                if (idExists)
+                {
+                    updCmd.ExecuteNonQuery();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            finally
+            {
+                if (myConn.State == System.Data.ConnectionState.Open)
+                {
+                    myConn.Close();
+                }
             }
         }
 
