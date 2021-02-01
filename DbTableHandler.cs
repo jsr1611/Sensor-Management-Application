@@ -4,7 +4,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
 
 namespace DataCollectionApp2
@@ -15,6 +14,11 @@ namespace DataCollectionApp2
     public class DbTableHandler
     {
         public List<CheckBox> usageCheckers { get; set; }
+
+
+        /// <summary>
+        /// (0) dbServer, (1) dbName, (2) dbUID, (3) dbUID
+        /// </summary>
         public List<string> connStr { get; set; }
         
         public DbTableHandler()
@@ -107,7 +111,7 @@ namespace DataCollectionApp2
         }
 
         
-        private bool CreateTb(string tbName)
+        private bool CreateTb(string tableName)
         {
             //string tbName = targetCheckBox.Name;
             bool tbCreated = false;
@@ -115,8 +119,8 @@ namespace DataCollectionApp2
             // Create Table command 
             #region
             string tbCreateCmdStr;
-            tbCreateCmdStr = $"Create TABLE [{connStr[1]}].[dbo].[{tbName}] ( "+
-                            " sID INT IDENTITY NOT NULL, "+
+            tbCreateCmdStr = $"Create TABLE [{connStr[1]}].[dbo].[{tableName}] ( "+
+                            " sID INT NOT NULL, "+
                             " LowerLimit1 float NOT NULL, " +
                             " LowerLimit2 float NOT NULL, " +
                             " HigherLimit1 float NOT NULL, " +
@@ -128,7 +132,7 @@ namespace DataCollectionApp2
             // Check if table created correctly 
             #region 
             string tbCheckCmdStr;
-            tbCheckCmdStr = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'{tbName}';";
+            tbCheckCmdStr = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'{tableName}';";
             SqlCommand tbCheckCmd = new SqlCommand(tbCheckCmdStr, myConn);
             #endregion
 
@@ -160,13 +164,153 @@ namespace DataCollectionApp2
         }
 
 
-        private bool IfTbExists(string checkBoxName)
+
+
+
+        /// <summary>
+        /// Table 생성해주는 함수.
+        /// </summary>
+        /// <param name="tableName">Table명</param>
+        /// <param name="sqlCreateTable">Table생성을 위한 Sql쿼리 </param>
+        /// <param name="myConn">SqlConnection명</param>
+        /// <returns></returns>
+        private bool CreateTb(string tableName, string sqlCreateTable, SqlConnection myConn)
+        {
+            bool res = false;
+
+            SqlCommand createTbCmd = new SqlCommand(sqlCreateTable, myConn);
+            try
+            {
+                myConn.Open();
+                createTbCmd.ExecuteNonQuery();
+                bool tbCreated = IfTbExists(tableName);
+                if(tbCreated)
+                {
+                    res = true;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK);
+            }
+            finally
+            {
+                if(myConn.State == System.Data.ConnectionState.Open)
+                {
+                    myConn.Close();
+                }
+            }
+
+
+            return res;
+        }
+
+
+        /// <summary>
+        /// DB가 존재하는지 체크하고 존재하면 true를 반환함.
+        /// </summary>
+        /// <param name="sql_dbExists"></param>
+        /// <param name="myConn"></param>
+        /// <returns></returns>
+        private bool IfDbExistsChecker(string dbName, SqlConnection myConn)
+        {
+            bool res = false;
+            string sql_dbExists = $"IF DB_ID('{dbName}') IS NOT NULL print 1";
+            SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn);
+            using (SqlDataReader reader = dbExistsCmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    res = Convert.ToInt32(reader.GetValue(0)) == 1;
+                }
+            }
+            return res;
+        }
+
+        public bool CreateTable(string tableName, string sqlCreateTable, SqlConnection myConn)
+        {
+            bool target = false;
+
+            string dbName = connStr[1];
+            bool dbExists = IfDbExistsChecker(dbName, myConn);
+            if (dbExists)
+            {
+                SqlCommand createTbCmd = new SqlCommand(sqlCreateTable, myConn);
+                createTbCmd.ExecuteNonQuery();
+                bool tbExists = IfTbExists(tableName);
+                if (tbExists)
+                {
+                    MessageBox.Show($"{tableName} 명의 테이블이 이미 존재합니다.", "Status Info", MessageBoxButtons.OK);
+                }
+                else
+                {
+                    bool tbCreated = CreateTb(tableName, sqlCreateTable, myConn);
+                    if (tbCreated)
+                    {
+                        MessageBox.Show($"{tableName}명의 테이블이 성공적으로 생성되었습니다!", "Status Info", MessageBoxButtons.OK);
+                    }
+                    else
+                    {
+
+                    }
+                }
+
+            }
+            else
+            {
+                DialogResult createDbCheck = MessageBox.Show($"관리페이지에 오신 것을 환영합니다!. 데이터 저장을 위해 DB 생성을 해야 합니다. 진행하시겠습니까?.\n DB명은 {dbName} ", "Status Info", MessageBoxButtons.YesNoCancel);
+                if(createDbCheck == DialogResult.Yes)
+                {
+                    string sqlCreateDb = $"CREATE DATABASE {dbName};";
+                    CreateDatabase(myConn, dbName, sqlCreateDb);
+                }
+            }
+
+
+
+            return target;
+        }
+
+
+
+
+        public bool CreateDatabase(SqlConnection myConn, string dbName, string sqlStr_CreateDb)
+        {
+            bool res = false;
+            SqlCommand dbCreateCmd = new SqlCommand(sqlStr_CreateDb, myConn);
+            try
+            {
+                myConn.Open();
+                dbCreateCmd.ExecuteNonQuery();
+
+                res = IfDbExistsChecker()
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "에러 매지시", MessageBoxButtons.OK);
+            }
+            finally
+            {
+                if(myConn.State == System.Data.ConnectionState.Open)
+                {
+                    myConn.Close();
+                }
+            }
+
+
+            return res;
+
+        }
+
+
+
+        public bool IfTbExists(string tableName)
         {
             //string checkBoxName = targetCheckBoxName;
             bool target = false;
             string dbCheckCmdStr;
             SqlConnection myConn = new SqlConnection($@"Data Source ={ connStr[0] }; Initial Catalog = { connStr[1] }; User id = { connStr[2] }; Password ={ connStr[3]}; Min Pool Size = 20");
-            dbCheckCmdStr = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'{checkBoxName}';";
+            dbCheckCmdStr = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'{tableName}';";
             SqlCommand tbCheckCmd = new SqlCommand(dbCheckCmdStr, myConn);
 
             try
@@ -263,8 +407,10 @@ namespace DataCollectionApp2
             string sqlCheckStr = $"SELECT COUNT(*) FROM {tableName} WHERE sID = {sensorId}";
             SqlCommand checkCmd = new SqlCommand(sqlCheckStr, myConn);
 
-            string sqlUpdStr = $"UPDATE {tableName} SET sID={sID}, LowerLimit1 = {rangeLimitData[0]}, LowerLimit2 = {rangeLimitData[1]}, HigherLimit1 = {rangeLimitData[2]}, HigherLimit2 = {rangeLimitData[3]}, sUsage = {sensorUsage};";
+            string sqlUpdStr = $"UPDATE {tableName} SET LowerLimit1 = {rangeLimitData[0]}, LowerLimit2 = {rangeLimitData[1]}, HigherLimit1 = {rangeLimitData[2]}, HigherLimit2 = {rangeLimitData[3]}, sUsage = {sensorUsage};";
             SqlCommand updCmd = new SqlCommand(sqlUpdStr, myConn);
+
+            
 
             try
             {
@@ -280,6 +426,18 @@ namespace DataCollectionApp2
                 if (idExists)
                 {
                     updCmd.ExecuteNonQuery();
+                    MessageBox.Show("Data Successfully Updated", "Status Info", MessageBoxButtons.OK);
+                }
+                else
+                {
+                    MessageBox.Show("센서 정보 업데이트가 잘 이루어지지 않았습니다. ", "Status Info", MessageBoxButtons.OK);
+
+                    /*
+                    DialogResult SaveOrNot = MessageBox.Show("하한 및 상한 정보를 저음으로 업데이트하시는 것 같아요. 업데이트를 진행하시겠습니까?", "Status Info", MessageBoxButtons.YesNo);
+                    if (SaveOrNot == DialogResult.Yes)
+                    {
+
+                    }*/
                 }
             }
             catch (System.Exception ex)
@@ -295,8 +453,11 @@ namespace DataCollectionApp2
             }
         }
 
-        private bool AddInfoToDB(string tbName)
+        private bool AddInfoToDB(decimal sID, CheckBox targetCheckBox, List<NumericUpDown> rangeInfoList, SqlConnection myConn)
         {
+            
+            
+            
             bool target = false;
 
             return target;
