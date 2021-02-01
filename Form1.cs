@@ -64,7 +64,10 @@ namespace DataCollectionApp2
             String[] sensordata = { "ID", "Temp", "Humidity", "Part03", "Part05", "DateTime" };
             Console.WriteLine("Count\t" + string.Join("\t", sensordata) + "\t\t Run Time");
             g_DbTableHandler.connStr = new List<string>() { dbServer, dbName, dbUID, dbUID };
-            DataSet sensorInfoTable = GetSensorInfo();
+            myConnection = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
+            //string  dbName = "SensorDataDB";
+            string sensorInfo_tbName = "SENSOR_INFO2";
+            DataSet sensorInfoTable = GetSensorInfo(dbName, sensorInfo_tbName);
             if (sensorInfoTable.Tables.Count > 0)
             {
                 S_IDs = new List<int>(sensorInfoTable.Tables[0].AsEnumerable().Where(r => r.Field<string>("sUsage") == "YES").Select(r => r.Field<int>("sID")).ToList());
@@ -96,7 +99,7 @@ namespace DataCollectionApp2
             }
             else
             {
-                MessageBox.Show("Nothing to display!", "Status Info", MessageBoxButtons.OK);
+                //MessageBox.Show("Nothing to display!", "Status Info", MessageBoxButtons.OK);
             }
 
             //display listView1 sensor info in listView2
@@ -176,8 +179,8 @@ namespace DataCollectionApp2
                 //modbusClient.Connect();
                 Console.WriteLine("Device Connection Successful");
 
-                myConnection = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
-            }                                                                                                                              //myConnection.Open();
+                //myConnection.Open();
+            }                                                                                                                              
         }
 
 
@@ -284,35 +287,59 @@ namespace DataCollectionApp2
         /// SENSOR_INFO테이블에 있는 모든 정보를 DataSet형태로 불러오는 함수
         /// </summary>
         /// <returns></returns>
-        private DataSet GetSensorInfo()
+        private DataSet GetSensorInfo(string sensorData_dbName, string sensorInfo_tbName)
         {
+            SqlConnection myConn_master = new SqlConnection($@"Data Source = {dbServer};Initial Catalog=master;User id={dbUID};Password={dbPWD};Min Pool Size=20");
             DataSet ds = new DataSet();
-            string sensorInfo_tbName = "SENSOR_INFO2";
-            bool Check_SENSOR_INFO_tableExists = g_DbTableHandler.IfTbExists(sensorInfo_tbName);
-            if (Check_SENSOR_INFO_tableExists)
+            bool checkDbExists = g_DbTableHandler.IfDatabaseExists(sensorData_dbName, myConn_master);
+            if (checkDbExists)
             {
-                string sqlStr = "SELECT * FROM SensorDataDB.dbo.SENSOR_INFO";
-                
-                using (SqlConnection con = new SqlConnection($@"Data Source = {dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20"))
-                { //Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20")) // ; Integrated Security=True
-                  //con.Open();
-                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlStr, con);
-                    sqlDataAdapter.Fill(ds);
+                bool Check_SENSOR_INFO_tableExists = g_DbTableHandler.IfTableExists(sensorInfo_tbName);
+                if (Check_SENSOR_INFO_tableExists)
+                {
+                    string sqlStr = $"SELECT * FROM SensorDataDB.dbo.{sensorInfo_tbName}";
+                    using (SqlConnection con = new SqlConnection($@"Data Source = {dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20"))
+                    { //Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20")) // ; Integrated Security=True
+                      //con.Open();
+                        SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlStr, con);
+                        sqlDataAdapter.Fill(ds);
+                    }
+                }
+                else
+                {
+                    DialogResult createTbOrNot = MessageBox.Show($"센서 정보 테이블을 생성합니다. \nDB명은 {dbName}, \n센서정보 테이블명 = {sensorInfo_tbName}. \n진행하시겠습니까?", "Status Info", MessageBoxButtons.YesNo);
+                    if (createTbOrNot == DialogResult.Yes)
+                    {
+                        string sqlCreateTb = $"CREATE TABLE {sensorInfo_tbName} (sID INT NOT NULL, sName NVARCHAR(20) NOT NULL, sLocation NVARCHAR(150) NOT NULL, sDescription NVARCHAR(255) NULL, sUsage NVARCHAR(10) NOT NULL);";
+                        bool SENSOR_INFO_tableCreated = g_DbTableHandler.CreateTable(dbName, sensorInfo_tbName, sqlCreateTb, myConnection);
+                        if (SENSOR_INFO_tableCreated)
+                        {
+                            MessageBox.Show($"센서 정보 DB와 테이블이 성공적으로 생성되었습니다!\nDB명 = {dbName}\n센서 정보 테이블명 = {sensorInfo_tbName}", "Status Info", MessageBoxButtons.OK);
+                        }
+                        else
+                        {
+                            MessageBox.Show($"DB가 생성되었지만, 센서 정보 테이블이 성공적으로 생성되지 않았습니다!\nDB명 = {dbName}\n센서 정보 테이블명 = {sensorInfo_tbName}", "Status Info", MessageBoxButtons.OK);
+                        }
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("센서 정보 테이블이 생성되어 있지 않습니다.", "Status Info", MessageBoxButtons.OK);
+                    }
                 }
             }
             else
             {
                 DialogResult createTbOrNot = MessageBox.Show($"관리페이지에 오신 것을 환영합니다. \n센서 정보 DB와 테이블을 생성합니다. \nDB명은 {dbName}, \n센서정보 테이블명 = {sensorInfo_tbName}. \n진행하시겠습니까?", "Status Info", MessageBoxButtons.YesNo);
-                if(createTbOrNot == DialogResult.Yes)
+                if (createTbOrNot == DialogResult.Yes)
                 {
                     string sqlCreateDb = $"CREATE DATABASE {dbName};";
 
-                    SqlConnection myConn_master = new SqlConnection($@"Data Source = {dbServer};Initial Catalog=master;User id={dbUID};Password={dbPWD};Min Pool Size=20");
                     bool dataBase_Created = g_DbTableHandler.CreateDatabase(myConn_master, dbName, sqlCreateDb);
                     if (dataBase_Created)
                     {
                         string sqlCreateTb = $"CREATE TABLE {sensorInfo_tbName} (sID INT NOT NULL, sName NVARCHAR(20) NOT NULL, sLocation NVARCHAR(150) NOT NULL, sDescription NVARCHAR(255) NULL, sUsage NVARCHAR(10) NOT NULL);";
-                        bool SENSOR_INFO_tableCreated = g_DbTableHandler.CreateTable(sensorInfo_tbName, sqlCreateTb, myConnection);
+                        bool SENSOR_INFO_tableCreated = g_DbTableHandler.CreateTable(dbName, sensorInfo_tbName, sqlCreateTb, myConnection);
                         if (SENSOR_INFO_tableCreated)
                         {
                             MessageBox.Show($"센서 정보 DB와 테이블이 성공적으로 생성되었습니다!\nDB명 = {dbName}\n센서 정보 테이블명 = {sensorInfo_tbName}", "Status Info", MessageBoxButtons.OK);
@@ -326,11 +353,8 @@ namespace DataCollectionApp2
                     {
                         MessageBox.Show($"DB가 성공적으로 생성되지 않았습니다!\nDB명 = {dbName}", "Status Info", MessageBoxButtons.OK);
                     }
-                    
-                }
-                else
-                {
-                    MessageBox.Show("센서 정보 DB와 테이블이 생성되어 있지 않습니다.", "Status Info", MessageBoxButtons.OK);
+
+                    MessageBox.Show("센서 정보 DB가 생성되어 있지 않습니다.", "Status Info", MessageBoxButtons.OK);
                 }
             }
             return ds;
@@ -610,7 +634,15 @@ namespace DataCollectionApp2
                 }
                 else
                 {
-                    int newOrderNumber = Convert.ToInt32(listView1.Items[listView1.Items.Count - 1].Text) + 1;
+                    int newOrderNumber;
+                    if (listView1.Items.Count > 0)
+                    {
+                        newOrderNumber = Convert.ToInt32(listView1.Items[listView1.Items.Count - 1].Text) + 1;
+                    }
+                    else
+                    {
+                        newOrderNumber = 1;
+                    }
                     ListViewItem listViewItem = new ListViewItem(newOrderNumber.ToString());
 
                     listViewItem.SubItems.Add(sID.Value.ToString());

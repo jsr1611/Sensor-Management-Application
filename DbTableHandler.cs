@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -51,7 +52,7 @@ namespace DataCollectionApp2
             {
                 tbName = usageCheckers[i].Name;
                 chbName = usageCheckers[i];
-                if (IfTbExists(tbName) == true)
+                if (IfTableExists(tbName) == true)
                 {
                     target.Add(chbName);
                 }
@@ -74,7 +75,7 @@ namespace DataCollectionApp2
             for (int i = 0; i < usageCheckerNames.Count; i++)
             {
                 tbName = usageCheckerNames[i];
-                if (IfTbExists(tbName) == true)
+                if (IfTableExists(tbName) == true)
                 {
                     target.Add(tbName);
                 }
@@ -93,7 +94,7 @@ namespace DataCollectionApp2
         {
             string tbName;
             tbName = usageCheckerName;
-            if (IfTbExists(tbName) == true)
+            if (IfTableExists(tbName) == true)
             {
                 return tbName;
             }
@@ -183,7 +184,7 @@ namespace DataCollectionApp2
             {
                 myConn.Open();
                 createTbCmd.ExecuteNonQuery();
-                bool tbCreated = IfTbExists(tableName);
+                bool tbCreated = IfTableExists(tableName);
                 if(tbCreated)
                 {
                     res = true;
@@ -212,61 +213,100 @@ namespace DataCollectionApp2
         /// <param name="sql_dbExists"></param>
         /// <param name="myConn"></param>
         /// <returns></returns>
-        private bool IfDbExistsChecker(string dbName, SqlConnection myConn)
+        public bool IfDatabaseExists(string dbName, SqlConnection myConn)
         {
             bool res = false;
-            string sql_dbExists = $"IF DB_ID('{dbName}') IS NOT NULL print 1";
+            string sql_dbExists = $"IF DB_ID('{dbName}') IS NOT NULL SELECT 1";
             SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn);
-            using (SqlDataReader reader = dbExistsCmd.ExecuteReader())
+            DataSet ds = new DataSet();
+            try
             {
-                while (reader.Read())
+                myConn.Open();
+                SqlDataAdapter sqlData = new SqlDataAdapter(sql_dbExists, myConn);
+
+                sqlData.Fill(ds);
+                if(ds.Tables.Count > 0)
                 {
-                    res = Convert.ToInt32(reader.GetValue(0)) == 1;
+                    res = true;
+                }
+                /*using (SqlDataReader reader = dbExistsCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        res = Convert.ToInt32(reader.GetValue(0)) == 1;
+                    }
+                }*/
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK);
+            }
+            finally
+            {
+                if(myConn.State == System.Data.ConnectionState.Open)
+                {
+                    myConn.Close();
                 }
             }
             return res;
         }
 
-        public bool CreateTable(string tableName, string sqlCreateTable, SqlConnection myConn)
+
+
+
+        /// <summary>
+        /// 지정한 DB에서 테이블 생성해주는 함수.
+        /// </summary>
+        /// <param name="dbName">DB명</param>
+        /// <param name="tableName">생성할 테이블명</param>
+        /// <param name="sqlCreateTable">테이블 생성을 위한 SQL쿼리 </param>
+        /// <param name="myConn">SqlConnection명</param>
+        /// <returns></returns>
+        public bool CreateTable(string dbName, string tableName, string sqlCreateTable, SqlConnection myConn)
         {
             bool target = false;
 
-            string dbName = connStr[1];
-            bool dbExists = IfDbExistsChecker(dbName, myConn);
+            //dbName = connStr[1];
+            bool dbExists = IfDatabaseExists(dbName, myConn);
             if (dbExists)
             {
                 SqlCommand createTbCmd = new SqlCommand(sqlCreateTable, myConn);
-                createTbCmd.ExecuteNonQuery();
-                bool tbExists = IfTbExists(tableName);
-                if (tbExists)
+                try
                 {
-                    MessageBox.Show($"{tableName} 명의 테이블이 이미 존재합니다.", "Status Info", MessageBoxButtons.OK);
-                }
-                else
-                {
-                    bool tbCreated = CreateTb(tableName, sqlCreateTable, myConn);
-                    if (tbCreated)
+                    myConn.Open();
+                    createTbCmd.ExecuteNonQuery();
+                    bool tbAlreadyExists = IfTableExists(tableName);
+                    if (tbAlreadyExists)
                     {
-                        MessageBox.Show($"{tableName}명의 테이블이 성공적으로 생성되었습니다!", "Status Info", MessageBoxButtons.OK);
+                        target = true;
                     }
                     else
                     {
+                        bool tbCreated = CreateTb(tableName, sqlCreateTable, myConn);
+                        if (tbCreated)
+                        {
+                            target = true;
+                        }
+                    }
 
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK);
+                }
+                finally
+                {
+                    if(myConn.State == System.Data.ConnectionState.Open)
+                    {
+                        myConn.Close();
                     }
                 }
-
+                
             }
             else
             {
-                DialogResult createDbCheck = MessageBox.Show($"관리페이지에 오신 것을 환영합니다!. 데이터 저장을 위해 DB 생성을 해야 합니다. 진행하시겠습니까?.\n DB명은 {dbName} ", "Status Info", MessageBoxButtons.YesNoCancel);
-                if(createDbCheck == DialogResult.Yes)
-                {
-                    string sqlCreateDb = $"CREATE DATABASE {dbName};";
-                    CreateDatabase(myConn, dbName, sqlCreateDb);
-                }
+                DialogResult createDbCheck = MessageBox.Show($"DB를 찾을 수 없습니다.\nDB명은 {dbName}", "Status Info", MessageBoxButtons.OK);
             }
-
-
 
             return target;
         }
@@ -283,7 +323,7 @@ namespace DataCollectionApp2
                 myConn.Open();
                 dbCreateCmd.ExecuteNonQuery();
 
-                res = IfDbExistsChecker()
+                res = IfDatabaseExists(dbName, myConn);
             }
             catch (System.Exception ex)
             {
@@ -297,14 +337,13 @@ namespace DataCollectionApp2
                 }
             }
 
-
             return res;
 
         }
 
 
 
-        public bool IfTbExists(string tableName)
+        public bool IfTableExists(string tableName)
         {
             //string checkBoxName = targetCheckBoxName;
             bool target = false;
