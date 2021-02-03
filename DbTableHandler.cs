@@ -15,7 +15,10 @@ namespace DataCollectionApp2
     public class DbTableHandler
     {
         public List<CheckBox> usageCheckers { get; set; }
-
+        public string dbServer { get; set; }
+        public string dbName { get; set; }
+        public string dbUID { get; set; }
+        public string dbPWD { get; set; }
 
         /// <summary>
         /// (0) dbServer, (1) dbName, (2) dbUID, (3) dbUID
@@ -33,8 +36,11 @@ namespace DataCollectionApp2
         public DbTableHandler(List<string> _connStr)
         {
             _connStr = connStr;
+            dbServer = connStr[0];
+            dbName = connStr[1];
+            dbUID = connStr[2];
+            dbPWD = connStr[3];
         }
-
 
 
         /// <summary>
@@ -192,7 +198,7 @@ namespace DataCollectionApp2
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK);
+                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             finally
             {
@@ -221,7 +227,11 @@ namespace DataCollectionApp2
             DataSet ds = new DataSet();
             try
             {
-                myConn.Open();
+
+                if (myConn.State != ConnectionState.Open)
+                {
+                    myConn.Open();
+                }
                 SqlDataAdapter sqlData = new SqlDataAdapter(sql_dbExists, myConn);
 
                 sqlData.Fill(ds);
@@ -239,7 +249,7 @@ namespace DataCollectionApp2
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK);
+                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             finally
             {
@@ -273,8 +283,6 @@ namespace DataCollectionApp2
                 SqlCommand createTbCmd = new SqlCommand(sqlCreateTable, myConn);
                 try
                 {
-                    myConn.Open();
-                    createTbCmd.ExecuteNonQuery();
                     bool tbAlreadyExists = IfTableExists(tableName);
                     if (tbAlreadyExists)
                     {
@@ -282,7 +290,12 @@ namespace DataCollectionApp2
                     }
                     else
                     {
-                        bool tbCreated = CreateTb(tableName, sqlCreateTable, myConn);
+                        if (myConn.State != ConnectionState.Open)
+                        {
+                            myConn.Open();
+                        }
+                        createTbCmd.ExecuteNonQuery();
+                        bool tbCreated = IfTableExists(tableName);
                         if (tbCreated)
                         {
                             target = true;
@@ -292,7 +305,7 @@ namespace DataCollectionApp2
                 }
                 catch (System.Exception ex)
                 {
-                    MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK);
+                    MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 finally
                 {
@@ -320,14 +333,18 @@ namespace DataCollectionApp2
             SqlCommand dbCreateCmd = new SqlCommand(sqlStr_CreateDb, myConn);
             try
             {
-                myConn.Open();
+                if(myConn.State != ConnectionState.Open)
+                {
+                    myConn.Open();
+                }
+                
                 dbCreateCmd.ExecuteNonQuery();
 
                 res = IfDatabaseExists(dbName, myConn);
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "에러 매지시", MessageBoxButtons.OK);
+                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             finally
             {
@@ -354,7 +371,11 @@ namespace DataCollectionApp2
 
             try
             {
-                myConn.Open();
+                if(myConn.State != ConnectionState.Open)
+                {
+                    myConn.Open();
+                }
+                
                 using(SqlDataReader reader = tbCheckCmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -409,7 +430,10 @@ namespace DataCollectionApp2
 
             try
             {
-                myConn.Open();
+                if(myConn.State != ConnectionState.Open)
+                {
+                    myConn.Open();
+                }
                 tbCreateCmd.ExecuteNonQuery();
 
                 using (SqlDataReader reader = tbCheckCmd.ExecuteReader())
@@ -436,71 +460,6 @@ namespace DataCollectionApp2
 
 
 
-        public void UpdateLimitRangeInfo(decimal sID, CheckBox targetCheckBox, List<NumericUpDown> rangeInfoList, SqlConnection myConn)
-        {
-            int sensorId = Convert.ToInt32(sID);
-            string tableName = targetCheckBox.Name;
-            List<float> rangeLimitData = rangeInfoList.AsEnumerable().Select(r => Convert.ToSingle(r.Value)).ToList();
-            string sensorUsage = rangeLimitData.AsEnumerable().Where(x => x != 0).ToList().Count > 0 ? "YES" : "NO";
-
-            string sqlCheckStr = $"SELECT COUNT(*) FROM {tableName} WHERE sID = {sensorId}";
-            SqlCommand checkCmd = new SqlCommand(sqlCheckStr, myConn);
-
-            string sqlUpdStr = $"UPDATE {tableName} SET LowerLimit1 = {rangeLimitData[0]}, LowerLimit2 = {rangeLimitData[1]}, HigherLimit1 = {rangeLimitData[2]}, HigherLimit2 = {rangeLimitData[3]}, sUsage = {sensorUsage};";
-            SqlCommand updCmd = new SqlCommand(sqlUpdStr, myConn);
-
-            
-
-            try
-            {
-                myConn.Open();
-                bool idExists = false;
-                using (SqlDataReader reader = checkCmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        idExists = Convert.ToInt32(reader.GetValue(0)) == 1;
-                    }
-                }
-                if (idExists)
-                {
-                    updCmd.ExecuteNonQuery();
-                    MessageBox.Show("Data Successfully Updated", "Status Info", MessageBoxButtons.OK);
-                }
-                else
-                {
-                    MessageBox.Show("센서 정보 업데이트가 잘 이루어지지 않았습니다. ", "Status Info", MessageBoxButtons.OK);
-
-                    /*
-                    DialogResult SaveOrNot = MessageBox.Show("하한 및 상한 정보를 저음으로 업데이트하시는 것 같아요. 업데이트를 진행하시겠습니까?", "Status Info", MessageBoxButtons.YesNo);
-                    if (SaveOrNot == DialogResult.Yes)
-                    {
-
-                    }*/
-                }
-            }
-            catch (System.Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            finally
-            {
-                if (myConn.State == System.Data.ConnectionState.Open)
-                {
-                    myConn.Close();
-                }
-            }
-        }
-
-        private bool AddInfoToDB(decimal sID, CheckBox targetCheckBox, List<NumericUpDown> rangeInfoList, SqlConnection myConn)
-        {
-            
-            
-            
-            bool target = false;
-
-            return target;
-        }
 
 
 
