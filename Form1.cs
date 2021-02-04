@@ -104,8 +104,8 @@ namespace DataCollectionApp2
         private void MyFunc()
         {
             dbServer = "127.0.0.1";    //"10.1.55.174";
-            dbName = "SensorDataDB2";
-            S_SensorInfo = "SENSOR_INFO2";
+            dbName = "SensorDataDB0";
+            S_SensorInfo = "SENSOR_INFO0";
             
             txtB_SensorInfo = new List<TextBox>() { sName, sLocation, sDescription };
             List<ColumnHeader> lvColHeaders = new List<ColumnHeader>() { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 };
@@ -156,7 +156,7 @@ namespace DataCollectionApp2
                 int num = 1;
                 foreach (DataRow row in sensorInfoTable.Tables[0].Rows)
                 {
-                    Console.WriteLine(row["sID"]);
+                    //Console.WriteLine(row["sID"]);
 
                     ListViewItem listViewItem = new ListViewItem(num.ToString());
                     for (int i = 0; i < row.ItemArray.Length; i++)
@@ -412,32 +412,31 @@ namespace DataCollectionApp2
                 }
                 else
                 {
-                    DialogResult createTbOrNot = MessageBox.Show($"센서 정보 테이블을 생성합니다. \nDB명은 {dbName}, \n센서정보 테이블명 = {sensorInfo_tbName}. \n진행하시겠습니까?", "Status Info", MessageBoxButtons.YesNo);
+                    /*DialogResult createTbOrNot = MessageBox.Show($"센서 정보 테이블을 생성합니다. \nDB명은 {dbName}, \n센서정보 테이블명 = {sensorInfo_tbName}. \n진행하시겠습니까?", "Status Info", MessageBoxButtons.YesNo);
                     if (createTbOrNot == DialogResult.Yes)
-                    {
+                    {*/
                         string sqlCreateTb = $"CREATE TABLE {sensorInfo_tbName} ({S_SensorInfoColmn[0]} INT NOT NULL, {S_SensorInfoColmn[1]} NVARCHAR(20) NOT NULL, {S_SensorInfoColmn[2]} NVARCHAR(150) NULL, {S_SensorInfoColmn[3]} NVARCHAR(255) NULL, {S_SensorInfoColmn[4]} NVARCHAR(10) NOT NULL);";
                         bool SENSOR_INFO_tableCreated = g_DbTableHandler.CreateTable(dbName, sensorInfo_tbName, sqlCreateTb, myConn);
                         if (SENSOR_INFO_tableCreated)
                         {
-                            MessageBox.Show($"센서 정보 DB와 테이블이 성공적으로 생성되었습니다!\nDB명 = {dbName}\n센서 정보 테이블명 = {sensorInfo_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            //MessageBox.Show($"센서 정보 DB와 테이블이 성공적으로 생성되었습니다!\nDB명 = {dbName}\n센서 정보 테이블명 = {sensorInfo_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
                             MessageBox.Show($"DB가 생성되었지만, 센서 정보 테이블이 성공적으로 생성되지 않았습니다!\nDB명 = {dbName}\n센서 정보 테이블명 = {sensorInfo_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
-
-                    }
+/*                    }
                     else
                     {
                         MessageBox.Show("센서 정보 테이블이 생성되어 있지 않습니다.", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    }
+                    }*/
                 }
             }
             else
             {
-                DialogResult createTbOrNot = MessageBox.Show($"관리페이지에 오신 것을 환영합니다. \n센서 정보 DB와 테이블을 생성합니다. \nDB명은 {dbName}, \n센서정보 테이블명 = {sensorInfo_tbName}. \n진행하시겠습니까?", "Status Info", MessageBoxButtons.YesNo);
+                /*DialogResult createTbOrNot = MessageBox.Show($"관리페이지에 오신 것을 환영합니다. \n센서 정보 DB와 테이블을 생성합니다. \nDB명은 {dbName}, \n센서정보 테이블명 = {sensorInfo_tbName}. \n진행하시겠습니까?", "Status Info", MessageBoxButtons.YesNo);
                 if (createTbOrNot == DialogResult.Yes)
-                {
+                {*/
                     string sqlCreateDb = $"CREATE DATABASE {dbName};";
 
                     bool dataBase_Created = g_DbTableHandler.CreateDatabase(myConn_master, dbName, sqlCreateDb);
@@ -447,7 +446,7 @@ namespace DataCollectionApp2
                         bool SENSOR_INFO_tableCreated = g_DbTableHandler.CreateTable(dbName, sensorInfo_tbName, sqlCreateTb, myConn);
                         if (SENSOR_INFO_tableCreated)
                         {
-                            MessageBox.Show($"센서 정보 DB와 테이블이 성공적으로 생성되었습니다!\nDB명 = {dbName}\n센서 정보 테이블명 = {sensorInfo_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            //MessageBox.Show($"센서 정보 DB와 테이블이 성공적으로 생성되었습니다!\nDB명 = {dbName}\n센서 정보 테이블명 = {sensorInfo_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
@@ -458,11 +457,11 @@ namespace DataCollectionApp2
                     {
                         MessageBox.Show($"센서 정보 DB가 성공적으로 생성되지 않았습니다!\nDB명 = {dbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-                }
+                /*}
                 else
                 {
                     MessageBox.Show("센서 정보 DB가 생성되어 있지 않습니다.", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
+                }*/
             }
             return ds;
         }
@@ -781,6 +780,8 @@ namespace DataCollectionApp2
                     {
                         Console.WriteLine("listView IDs:" + listView1.Items[i].Text);
                     }*/
+
+
                     bool added = AddToDB(sUsage);
                     if (added)
                     {

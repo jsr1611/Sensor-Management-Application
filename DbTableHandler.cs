@@ -225,7 +225,7 @@ namespace DataCollectionApp2
         /// <returns></returns>
         public bool IfDatabaseExists(string dbName, SqlConnection myConn)
         {
-            bool res = false;
+            bool result = false;
             string sql_dbExists = $"IF DB_ID('{dbName}') IS NOT NULL SELECT 1";
             SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn);
             DataSet ds = new DataSet();
@@ -241,7 +241,7 @@ namespace DataCollectionApp2
                 sqlData.Fill(ds);
                 if(ds.Tables.Count > 0)
                 {
-                    res = true;
+                    result = true;
                 }
                 /*using (SqlDataReader reader = dbExistsCmd.ExecuteReader())
                 {
@@ -262,13 +262,13 @@ namespace DataCollectionApp2
                     myConn.Close();
                 }
             }
-            return res;
+            return result;
         }
 
         public bool IfDatabaseExists(string dbName)
         {
             SqlConnection myConn_master = new SqlConnection($@"Data Source = {dbServer};Initial Catalog=master;User id={dbUID};Password={dbPWD};Min Pool Size=20");
-            bool res = false;
+            bool result = false;
             string sql_dbExists = $"IF DB_ID('{dbName}') IS NOT NULL SELECT 1";
             SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn_master);
             DataSet ds = new DataSet();
@@ -284,7 +284,7 @@ namespace DataCollectionApp2
                 sqlData.Fill(ds);
                 if (ds.Tables.Count > 0)
                 {
-                    res = true;
+                    result = true;
                 }
                 /*using (SqlDataReader reader = dbExistsCmd.ExecuteReader())
                 {
@@ -305,7 +305,7 @@ namespace DataCollectionApp2
                     myConn_master.Close();
                 }
             }
-            return res;
+            return result;
         }
 
 
