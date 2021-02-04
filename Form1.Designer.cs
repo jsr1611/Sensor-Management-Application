@@ -31,7 +31,6 @@ namespace DataCollectionApp2
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,19 +48,6 @@ namespace DataCollectionApp2
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.t_time = new System.Windows.Forms.TextBox();
-            this.t_part03 = new System.Windows.Forms.TextBox();
-            this.t_temp = new System.Windows.Forms.TextBox();
-            this.t_no = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label_no = new System.Windows.Forms.Label();
-            this.label_temp = new System.Windows.Forms.Label();
-            this.t_humid = new System.Windows.Forms.TextBox();
-            this.t_part05 = new System.Windows.Forms.TextBox();
-            this.label_humid = new System.Windows.Forms.Label();
-            this.label_part03 = new System.Windows.Forms.Label();
-            this.label_part05 = new System.Windows.Forms.Label();
-            this.label_time = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -77,7 +63,6 @@ namespace DataCollectionApp2
             this.panel7 = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.label13 = new System.Windows.Forms.Label();
-            this.b_deleteSensor = new System.Windows.Forms.Button();
             this.panel_left = new System.Windows.Forms.Panel();
             this.panel_right = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -195,10 +180,6 @@ namespace DataCollectionApp2
             ((System.ComponentModel.ISupportInitialize)(this.sID)).BeginInit();
             this.SuspendLayout();
             // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
@@ -307,71 +288,6 @@ namespace DataCollectionApp2
             // 
             this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             resources.ApplyResources(this.notifyIcon1, "notifyIcon1");
-            // 
-            // t_time
-            // 
-            resources.ApplyResources(this.t_time, "t_time");
-            this.t_time.Name = "t_time";
-            // 
-            // t_part03
-            // 
-            resources.ApplyResources(this.t_part03, "t_part03");
-            this.t_part03.Name = "t_part03";
-            // 
-            // t_temp
-            // 
-            resources.ApplyResources(this.t_temp, "t_temp");
-            this.t_temp.Name = "t_temp";
-            // 
-            // t_no
-            // 
-            resources.ApplyResources(this.t_no, "t_no");
-            this.t_no.Name = "t_no";
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            // 
-            // label_no
-            // 
-            resources.ApplyResources(this.label_no, "label_no");
-            this.label_no.Name = "label_no";
-            // 
-            // label_temp
-            // 
-            resources.ApplyResources(this.label_temp, "label_temp");
-            this.label_temp.Name = "label_temp";
-            // 
-            // t_humid
-            // 
-            resources.ApplyResources(this.t_humid, "t_humid");
-            this.t_humid.Name = "t_humid";
-            // 
-            // t_part05
-            // 
-            resources.ApplyResources(this.t_part05, "t_part05");
-            this.t_part05.Name = "t_part05";
-            // 
-            // label_humid
-            // 
-            resources.ApplyResources(this.label_humid, "label_humid");
-            this.label_humid.Name = "label_humid";
-            // 
-            // label_part03
-            // 
-            resources.ApplyResources(this.label_part03, "label_part03");
-            this.label_part03.Name = "label_part03";
-            // 
-            // label_part05
-            // 
-            resources.ApplyResources(this.label_part05, "label_part05");
-            this.label_part05.Name = "label_part05";
-            // 
-            // label_time
-            // 
-            resources.ApplyResources(this.label_time, "label_time");
-            this.label_time.Name = "label_time";
             // 
             // panel1
             // 
@@ -483,14 +399,6 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.label13, "label13");
             this.label13.Name = "label13";
             // 
-            // b_deleteSensor
-            // 
-            this.b_deleteSensor.Image = global::DataCollectionApp2.Properties.Resources.delete_bin_26;
-            resources.ApplyResources(this.b_deleteSensor, "b_deleteSensor");
-            this.b_deleteSensor.Name = "b_deleteSensor";
-            this.b_deleteSensor.UseVisualStyleBackColor = true;
-            this.b_deleteSensor.Click += new System.EventHandler(this.b_deleteSensor_Click);
-            // 
             // panel_left
             // 
             resources.ApplyResources(this.panel_left, "panel_left");
@@ -544,7 +452,6 @@ namespace DataCollectionApp2
             this.splitContainer1.Panel2.Controls.Add(this.s_tLowerLimit1);
             this.splitContainer1.Panel2.Controls.Add(this.s_tHigherLimit2);
             this.splitContainer1.Panel2.Controls.Add(this.s_tHigherLimit1);
-            this.splitContainer1.Panel2.Controls.Add(this.sID);
             this.splitContainer1.Panel2.Controls.Add(this.c_p100Usage);
             this.splitContainer1.Panel2.Controls.Add(this.c_p50Usage);
             this.splitContainer1.Panel2.Controls.Add(this.c_p25Usage);
@@ -573,6 +480,7 @@ namespace DataCollectionApp2
             this.splitContainer1.Panel2.Controls.Add(this.sDescription);
             this.splitContainer1.Panel2.Controls.Add(this.sLocation);
             this.splitContainer1.Panel2.Controls.Add(this.sName);
+            this.splitContainer1.Panel2.Controls.Add(this.sID);
             // 
             // listView1
             // 
@@ -1133,20 +1041,6 @@ namespace DataCollectionApp2
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel_right);
             this.Controls.Add(this.panel_left);
-            this.Controls.Add(this.b_deleteSensor);
-            this.Controls.Add(this.label_time);
-            this.Controls.Add(this.label_part05);
-            this.Controls.Add(this.label_part03);
-            this.Controls.Add(this.label_humid);
-            this.Controls.Add(this.t_part05);
-            this.Controls.Add(this.t_humid);
-            this.Controls.Add(this.label_temp);
-            this.Controls.Add(this.label_no);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.t_time);
-            this.Controls.Add(this.t_part03);
-            this.Controls.Add(this.t_temp);
-            this.Controls.Add(this.t_no);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -1204,7 +1098,6 @@ namespace DataCollectionApp2
         }
 
         #endregion
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -1217,26 +1110,12 @@ namespace DataCollectionApp2
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem contactToolStripMenuItem;
         public System.Windows.Forms.NotifyIcon notifyIcon1;
-        private System.Windows.Forms.TextBox t_time;
-        private System.Windows.Forms.TextBox t_part03;
-        private System.Windows.Forms.TextBox t_temp;
-        private System.Windows.Forms.TextBox t_no;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label_no;
-        private System.Windows.Forms.Label label_temp;
-        private System.Windows.Forms.TextBox t_humid;
-        private System.Windows.Forms.TextBox t_part05;
-        private System.Windows.Forms.Label label_humid;
-        private System.Windows.Forms.Label label_part03;
-        private System.Windows.Forms.Label label_part05;
-        private System.Windows.Forms.Label label_time;
         private System.Windows.Forms.ToolStripMenuItem sensorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem S_Start;
         private System.Windows.Forms.ToolStripMenuItem S_Stop;
         private System.Windows.Forms.ToolStripMenuItem S_AddNewSensor;
         private System.Windows.Forms.ToolStripMenuItem S_Save;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button b_deleteSensor;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button b_dataCollection_status;

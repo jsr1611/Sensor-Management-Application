@@ -11,26 +11,43 @@ namespace DataCollectionApp2
 {
     public class DataHandler : DbTableHandler
     {
+        private string _SensorInfo;
+        public string S_SensorInfo { 
+            get { return _SensorInfo; }
+            set { _SensorInfo = value; }
+        }
+        private List<string> _sensorInfoColmn;
+        public List<string> S_SensorInfoColmn
+        {
+            get { return _sensorInfoColmn; }
+            set { _sensorInfoColmn = value; }
+        }
+
+
+
+        private List<string> _fourRangeColmn;
+        public List<string> S_FourRangeColmn
+        {
+            get { return _fourRangeColmn; }
+            set { _fourRangeColmn = value; }
+        }
+
         public DataHandler()
         {
 
         }
 
-        public void UpdateLimitRangeInfo(decimal sID, CheckBox targetCheckBox, List<NumericUpDown> rangeInfoList, SqlConnection myConn)
+        public void UpdateSensorInfo(SqlConnection myConn, string tableName, decimal sensorId, List<TextBox> txtB_SensorInfo, bool sUsage)
         {
-            int sensorId = Convert.ToInt32(sID);
-            string tableName = targetCheckBox.Name;
-            List<decimal> rangeLimitData = rangeInfoList.AsEnumerable().Select(r => r.Value).ToList();
-            string sensorUsage = rangeLimitData.AsEnumerable().Where(x => x != 0).ToList().Count > 0 ? "YES" : "NO";
 
-            string sqlCheckStr = $"SELECT COUNT(*) FROM {tableName} WHERE sID = {sensorId}";
-            SqlCommand checkCmd = new SqlCommand(sqlCheckStr, myConn);
-
-            string sqlUpdStr = $"UPDATE {tableName} SET LowerLimit1 = {rangeLimitData[0]}, LowerLimit2 = {rangeLimitData[1]}, HigherLimit1 = {rangeLimitData[2]}, HigherLimit2 = {rangeLimitData[3]}, sUsage = {sensorUsage};";
-            SqlCommand updCmd = new SqlCommand(sqlUpdStr, myConn);
-
-
-
+            string sensorUsage = sUsage ? "YES" : "NO";
+            string sqlStr = $"UPDATE {dbName}.dbo.{S_SensorInfo} " +
+                                    $"SET {S_SensorInfoColmn[1]} = '{txtB_SensorInfo[0].Text}', " +
+                                        $"{S_SensorInfoColmn[2]} = '{txtB_SensorInfo[1].Text}', " +
+                                        $"{S_SensorInfoColmn[3]} = '{txtB_SensorInfo[2].Text}', " +
+                                        $"{S_SensorInfoColmn[4]} = '{sensorUsage}' " +
+                                    $"WHERE {S_SensorInfoColmn[0]} = {sensorId}; ";
+            SqlCommand sqlCommand = new SqlCommand(sqlStr, myConn);
             try
             {
                 if (myConn.State != ConnectionState.Open)
@@ -38,34 +55,49 @@ namespace DataCollectionApp2
                     myConn.Open();
                 }
 
-                bool idExists = false;
-                using (SqlDataReader reader = checkCmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        idExists = Convert.ToInt32(reader.GetValue(0)) == 1;
-                    }
-                }
-                if (idExists)
-                {
-                    updCmd.ExecuteNonQuery();
-                    MessageBox.Show("Data Successfully Updated", "Status Info", MessageBoxButtons.OK);
-                }
-                else
-                {
-                    MessageBox.Show("센서 정보 업데이트가 잘 이루어지지 않았습니다. ", "Status Info", MessageBoxButtons.OK);
-
-                    /*
-                    DialogResult SaveOrNot = MessageBox.Show("하한 및 상한 정보를 저음으로 업데이트하시는 것 같아요. 업데이트를 진행하시겠습니까?", "Status Info", MessageBoxButtons.YesNo);
-                    if (SaveOrNot == DialogResult.Yes)
-                    {
-
-                    }*/
-                }
+                sqlCommand.ExecuteNonQuery();
+                MessageBox.Show("DB Update Successful.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (System.Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (myConn.State == ConnectionState.Open)
+                {
+                    myConn.Close();
+                }
+            }
+        }
+
+
+
+
+
+        public void UpdateLimitRangeInfo(decimal sID, CheckBox targetCheckBox, List<NumericUpDown> rangeInfoList, SqlConnection myConn)
+        {
+            int sensorId = Convert.ToInt32(sID);
+            string tableName = targetCheckBox.Name;
+            List<decimal> rangeLimitData = rangeInfoList.AsEnumerable().Select(r => r.Value).ToList();
+            
+           
+            string sqlUpdStr = $"UPDATE {tableName} SET {S_FourRangeColmn[0]} = {rangeLimitData[0]}, {S_FourRangeColmn[1]} = {rangeLimitData[1]}, {S_FourRangeColmn[2]} = {rangeLimitData[2]}, {S_FourRangeColmn[3]} = {rangeLimitData[3]};";
+            SqlCommand updCmd = new SqlCommand(sqlUpdStr, myConn);
+
+            try
+            {
+                if (myConn.State != ConnectionState.Open)
+                {
+                    myConn.Open();
+                }
+                updCmd.ExecuteNonQuery();
+                //MessageBox.Show("Data Successfully Updated", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -78,9 +110,6 @@ namespace DataCollectionApp2
 
         private bool AddInfoToDB(decimal sID, CheckBox targetCheckBox, List<NumericUpDown> rangeInfoList, SqlConnection myConn)
         {
-
-
-
             bool target = false;
 
             return target;

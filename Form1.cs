@@ -114,18 +114,18 @@ namespace DataCollectionApp2
 
             S_SensorInfoColmn = new List<string>() { sID.Name, txtB_SensorInfo[0].Name, txtB_SensorInfo[1].Name, txtB_SensorInfo[2].Name, "sUsage" };
             S_UsageInfo = "UsageInfo";
-            S_FourRangeColmn = new List<string>() { "lowerLimit1", "lowerLimit2", "higherLimit1", "higherLimit2" };
+            S_FourRangeColmn = new List<string>() { "higherLimit2", "higherLimit1", "lowerLimit1", "lowerLimit2"};
 
 
             List<CheckBox> S_UsageCheckers = new List<CheckBox>() { c_tUsage, c_hUsage, c_p03Usage, c_p05Usage, c_p10Usage, c_p25Usage, c_p50Usage, c_p100Usage };
-            List<NumericUpDown> t_Ranges = new List<NumericUpDown>() { s_tLowerLimit1, s_tLowerLimit2, s_tHigherLimit1, s_tHigherLimit2 };
-            List<NumericUpDown> h_Ranges = new List<NumericUpDown>() { s_hLowerLimit1, s_hLowerLimit2, s_hHigherLimit1, s_hHigherLimit2 };
-            List<NumericUpDown> p03_Ranges = new List<NumericUpDown>() { s_p03LowerLimit1, s_p03LowerLimit2, s_p03HigherLimit1, s_p03HigherLimit2 };
-            List<NumericUpDown> p05_Ranges = new List<NumericUpDown>() { s_p05LowerLimit1, s_p05LowerLimit2, s_p05HigherLimit1, s_p05HigherLimit2 };
-            List<NumericUpDown> p10_Ranges = new List<NumericUpDown>() { s_p10LowerLimit1, s_p10LowerLimit2, s_p10HigherLimit1, s_p10HigherLimit2 };
-            List<NumericUpDown> p25_Ranges = new List<NumericUpDown>() { s_p25LowerLimit1, s_p25LowerLimit2, s_p25HigherLimit1, s_p25HigherLimit2 };
-            List<NumericUpDown> p50_Ranges = new List<NumericUpDown>() { s_p50LowerLimit1, s_p50LowerLimit2, s_p50HigherLimit1, s_p50HigherLimit2 };
-            List<NumericUpDown> p100_Ranges = new List<NumericUpDown>() { s_p100LowerLimit1, s_p100LowerLimit2, s_p100HigherLimit1, s_p100HigherLimit2 };
+            List<NumericUpDown> t_Ranges = new List<NumericUpDown>() { s_tHigherLimit2, s_tHigherLimit1, s_tLowerLimit1, s_tLowerLimit2 };
+            List<NumericUpDown> h_Ranges = new List<NumericUpDown>() { s_hHigherLimit2, s_hHigherLimit1, s_hLowerLimit1, s_hLowerLimit2};
+            List<NumericUpDown> p03_Ranges = new List<NumericUpDown>() { s_p03HigherLimit2, s_p03HigherLimit1, s_p03LowerLimit1, s_p03LowerLimit2};
+            List<NumericUpDown> p05_Ranges = new List<NumericUpDown>() { s_p05HigherLimit2, s_p05HigherLimit1, s_p05LowerLimit1, s_p05LowerLimit2};
+            List<NumericUpDown> p10_Ranges = new List<NumericUpDown>() { s_p10HigherLimit2, s_p10HigherLimit1, s_p10LowerLimit1, s_p10LowerLimit2};
+            List<NumericUpDown> p25_Ranges = new List<NumericUpDown>() { s_p25HigherLimit2, s_p25HigherLimit1, s_p25LowerLimit1, s_p25LowerLimit2};
+            List<NumericUpDown> p50_Ranges = new List<NumericUpDown>() { s_p50HigherLimit2, s_p50HigherLimit1, s_p50LowerLimit1, s_p50LowerLimit2};
+            List<NumericUpDown> p100_Ranges = new List<NumericUpDown>() { s_p100HigherLimit2, s_p100HigherLimit1, s_p100LowerLimit1, s_p100LowerLimit2};
 
             List<List<NumericUpDown>> S_Ranges = new List<List<NumericUpDown>>() { t_Ranges, h_Ranges, p03_Ranges, p05_Ranges, p10_Ranges, p25_Ranges, p50_Ranges, p100_Ranges };
 
@@ -658,23 +658,38 @@ namespace DataCollectionApp2
                     {
                         S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Checked = false);
                         S_UsageCheckerRangePairs.Values.AsEnumerable().Select(list => list.Select(x => x.Enabled = false));
-
                     }
                     else
                     {
-
+                        // #FIX NEEDED
+                        List<decimal> dataFromDB = new List<decimal>();
+                        for(int j=0; j<S_FourRangeColmn.Count; j++)
+                        {
+                            dataFromDB.Add(Convert.ToDecimal(rangesWithUsage.Tables[0].Rows[0][S_FourRangeColmn[j]]));
+                        }
                         
-                        List<decimal> dataFromDB = rangesWithUsage.Tables[0].Rows[0].ItemArray.Select(x=> Convert.ToDecimal(x)).ToList();
-                        bool sUsage = rangesWithUsage.Tables[0].Columns[S_SensorInfoColmn[4]].ToString() == "YES";
+                        bool sUsage = rangesWithUsage.Tables[0].Rows[0][S_SensorInfoColmn[4]].ToString() == "YES";
 
                         List<NumericUpDown> checkers = S_UsageCheckerRangePairs[sUsageRangesCh[i]];
 
                         for(int j=0;j<checkers.Count; j++)
                         {
                             //checkers[i].Value = dataFromDB[i];
-                            S_UsageCheckerRangePairs[sUsageRangesCh[i]][j].Value = dataFromDB[i];
-                            S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x => x.Name == sUsageRangesTables[i]).Select(x => x.Checked = sUsage);
+                            S_UsageCheckerRangePairs[sUsageRangesCh[i]][j].Value = dataFromDB[j];
+                            
                         }
+                        S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x => x.Name == sUsageRangesTables[i]).Select(x => x.Checked = sUsage);
+
+
+
+
+
+
+
+
+
+
+
                     }
                 }
             }
@@ -846,6 +861,9 @@ namespace DataCollectionApp2
             else
             {
                 DataHandler g_dataHandler = new DataHandler();
+                g_dataHandler.S_FourRangeColmn = S_FourRangeColmn;
+                g_dataHandler.S_SensorInfoColmn = S_SensorInfoColmn;
+                g_dataHandler.S_SensorInfo = S_SensorInfo;
                 List<CheckBox> S_UsageCheckersChecked = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(r => r.Checked).ToList();
                 int sensorId = Convert.ToInt32(sID.Value);
                 if (S_UsageCheckersChecked.Count > 0)
@@ -859,7 +877,7 @@ namespace DataCollectionApp2
                     for (int i = 0; i < targetChBoxes.Count; i++)
                     {
                         //List<CheckBox> target = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(r => r.Name == targetTbNames[i]).ToList();
-                        g_dataHandler.UpdateLimitRangeInfo(sID.Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       , targetChBoxes[i], S_UsageCheckerRangePairs[targetChBoxes[i]], myConn);
+                        g_dataHandler.UpdateLimitRangeInfo(sID.Value, targetChBoxes[i], S_UsageCheckerRangePairs[targetChBoxes[i]], myConn);
                     }
 
                 }
@@ -868,38 +886,7 @@ namespace DataCollectionApp2
                     sUsage = false;
                 }
 
-
-                //SqlConnection myConn = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20");
-                
-                string sqlStr = $"UPDATE {dbName}.dbo.{S_SensorInfo} " +
-                                    $"SET {S_SensorInfoColmn[1]} = '{txtB_SensorInfo[1].Text}', " +
-                                        $"{S_SensorInfoColmn[2]} = '{txtB_SensorInfo[2].Text}', " +
-                                        $"{S_SensorInfoColmn[3]} = '{txtB_SensorInfo[3].Text}', " +
-                                        $"{S_SensorInfoColmn[4]} = '{sUsage}' " +
-                                    $"WHERE {S_SensorInfoColmn[0]} = {sensorId}; ";
-                SqlCommand sqlCommand = new SqlCommand(sqlStr, myConn);
-                try
-                {
-                    if(myConn.State != ConnectionState.Open)
-                    {
-                        myConn.Open();
-                    }
-                    
-                    sqlCommand.ExecuteNonQuery();
-                    MessageBox.Show("DB Update Successful.", "Status info", MessageBoxButtons.OK);
-                }
-                catch (System.Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                finally
-                {
-                    if (myConn.State == ConnectionState.Open)
-                    {
-                        myConn.Close();
-                    }
-                }
-
+                g_dataHandler.UpdateSensorInfo(myConn, S_SensorInfo, sensorId, txtB_SensorInfo, sUsage);
             }
         }
 
@@ -1012,11 +999,11 @@ namespace DataCollectionApp2
                     myConn.Open();
                 }
                 sqlCommand.ExecuteNonQuery();
-                MessageBox.Show("New sensor info has been successfully saved", "Status info", MessageBoxButtons.OK);
+                MessageBox.Show("New sensor info has been successfully saved", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -1030,7 +1017,7 @@ namespace DataCollectionApp2
         private int GetUserInput()
         {
             int sensorId;
-            MessageBox.Show("추가하시려는 센서는 이미 DB에서 존재합니다. 기존에 있는 센서 정보를 수정하시고나 센서 ID를 바꿔 보세요. \n센서ID를 수정하시려면 'Y' 버튼을 누르세요.", "Status Info", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            //MessageBox.Show("추가하시려는 센서는 이미 DB에서 존재합니다. 기존에 있는 센서 정보를 수정하시고나 센서 ID를 바꿔 보세요. \n센서ID를 수정하시려면 'Y' 버튼을 누르세요.", "Status Info", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             //react to dialogResults, yes, no, cancel
             // title, message, textBox enter info, etc. #Fix needed
             string newSensorId = Microsoft.VisualBasic.Interaction.InputBox("새 ID를 입력", "원하시는 센서 ID를 기존에 있는것보다 다르게 입력해 주세요", "Desired Default", -1, -1);
@@ -1060,7 +1047,7 @@ namespace DataCollectionApp2
                 txtB_SensorInfo[i].Text = "";
             }
             RangeSetNew();
-
+            txtB_SensorInfo[0].Focus();
         }
 
 
