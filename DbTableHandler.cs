@@ -23,11 +23,14 @@ namespace DataCollectionApp2
         /// <summary>
         /// (0) dbServer, (1) dbName, (2) dbUID, (3) dbUID
         /// </summary>
-        public List<string> connStr { get; set; }
+        private List<string> _conStr;
+        public List<string> connStr {
+            get { return _conStr; }
+            set { _conStr = value; }
+        }
         
         public DbTableHandler()
         {
-            
         }
         public DbTableHandler(List<CheckBox> _usageCheckers)
         {
@@ -35,11 +38,12 @@ namespace DataCollectionApp2
         }
         public DbTableHandler(List<string> _connStr)
         {
-            _connStr = connStr;
+            connStr = _connStr;
             dbServer = connStr[0];
             dbName = connStr[1];
             dbUID = connStr[2];
             dbPWD = connStr[3];
+
         }
 
 
@@ -249,7 +253,7 @@ namespace DataCollectionApp2
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -261,7 +265,48 @@ namespace DataCollectionApp2
             return res;
         }
 
+        public bool IfDatabaseExists(string dbName)
+        {
+            SqlConnection myConn_master = new SqlConnection($@"Data Source = {dbServer};Initial Catalog=master;User id={dbUID};Password={dbPWD};Min Pool Size=20");
+            bool res = false;
+            string sql_dbExists = $"IF DB_ID('{dbName}') IS NOT NULL SELECT 1";
+            SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn_master);
+            DataSet ds = new DataSet();
+            try
+            {
 
+                if (myConn_master.State != ConnectionState.Open)
+                {
+                    myConn_master.Open();
+                }
+                SqlDataAdapter sqlData = new SqlDataAdapter(sql_dbExists, myConn_master);
+
+                sqlData.Fill(ds);
+                if (ds.Tables.Count > 0)
+                {
+                    res = true;
+                }
+                /*using (SqlDataReader reader = dbExistsCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        res = Convert.ToInt32(reader.GetValue(0)) == 1;
+                    }
+                }*/
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (myConn_master.State == System.Data.ConnectionState.Open)
+                {
+                    myConn_master.Close();
+                }
+            }
+            return res;
+        }
 
 
         /// <summary>
