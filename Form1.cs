@@ -384,9 +384,6 @@ namespace DataCollectionApp2
 
 
 
-
-
-
         /// <summary>
         /// SENSOR_INFO테이블에 있는 모든 정보를 DataSet형태로 불러오는 함수
         /// </summary>
