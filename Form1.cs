@@ -25,14 +25,14 @@ namespace DataCollectionApp2
         public string dbUID = "dlitdb01";
         public string dbPWD = "dlitdb01";
         public string connectionTimeout = "180";
-        public string S_SensorInfo = "SensorInfo";
-        public string S_UsageInfo = "UsageInfo";
+        public string S_DeviceInfoTable = "SensorInfo";
+        public string S_UsageInfoTable = "UsageInfo";
 
-        private List<string> _sensorInfoColmn;
-        public List<string> S_SensorInfoColmn 
+        private List<string> _deviceInfoColmn;
+        public List<string> S_DeviceInfoColmn 
         { 
-            get { return _sensorInfoColmn; } 
-            set { _sensorInfoColmn = value; } 
+            get { return _deviceInfoColmn; } 
+            set { _deviceInfoColmn = value; } 
         }
         
         
@@ -61,7 +61,7 @@ namespace DataCollectionApp2
         
         
         private List<int> _IDs;
-        public List<int> S_IDs
+        public List<int> D_IDs
         {
             get { return _IDs; }
             set { _IDs = value; }
@@ -72,14 +72,14 @@ namespace DataCollectionApp2
 
 
 
-        private List<TextBox> _txtB_SensorInfo;
+        private List<TextBox> _SensorDeviceInfo;
         /// <summary>
         /// sName, sLocation, sDescription 들이 들어가 있음.
         /// </summary>
-        public List<TextBox> txtB_SensorInfo
+        public List<TextBox> S_DeviceInfo_txtB
         {
-            get { return _txtB_SensorInfo; }
-            set { _txtB_SensorInfo = value; }
+            get { return _SensorDeviceInfo; }
+            set { _SensorDeviceInfo = value; }
         }
         public Dictionary<CheckBox, List<NumericUpDown>> S_UsageCheckerRangePairs { get; set; }
 
@@ -104,14 +104,13 @@ namespace DataCollectionApp2
         private void MyFunc()
         {
             dbServer = "127.0.0.1";    //"10.1.55.174";
-            dbName = "SensorDataDB0";
-            S_SensorInfo = "SENSOR_INFO0";
-            
-            txtB_SensorInfo = new List<TextBox>() { sName, sLocation, sDescription };
-            List<ColumnHeader> lvColHeaders = new List<ColumnHeader>() { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 };
+            dbName = "SensorDataDB005";
+            S_DeviceInfoTable = "SENSOR_INFO";
+            S_UsageInfoTable = "UsageInfo";
 
-            S_SensorInfoColmn = new List<string>() { sID.Name, txtB_SensorInfo[0].Name, txtB_SensorInfo[1].Name, txtB_SensorInfo[2].Name, "sUsage" };
-            S_UsageInfo = "UsageInfo";
+            S_DeviceInfo_txtB = new List<TextBox>() { sName, sLocation, sDescription };
+            //List<ColumnHeader> lvColHeaders = new List<ColumnHeader>() { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 };
+            S_DeviceInfoColmn = new List<string>() { sID.Name, S_DeviceInfo_txtB[0].Name, S_DeviceInfo_txtB[1].Name, S_DeviceInfo_txtB[2].Name, "sUsage" };
             S_FourRangeColmn = new List<string>() { "higherLimit2", "higherLimit1", "lowerLimit1", "lowerLimit2"};
 
 
@@ -141,10 +140,10 @@ namespace DataCollectionApp2
             g_DbTableHandler = new DbTableHandler(new List<string>() { dbServer, dbName, dbUID, dbUID });
             //g_DbTableHandler.connStr = new List<string>() { dbServer, dbName, dbUID, dbUID };
 
-            DataSet sensorInfoTable = GetSensorInfo(dbName, S_SensorInfo);
+            DataSet sensorInfoTable = GetSensorInfo(dbName, S_DeviceInfoTable);
             if (sensorInfoTable.Tables.Count > 0)
             {
-                S_IDs = new List<int>(sensorInfoTable.Tables[0].AsEnumerable().Where(r => r.Field<string>("sUsage") == "YES").Select(r => r.Field<int>("sID")).ToList());
+                D_IDs = new List<int>(sensorInfoTable.Tables[0].AsEnumerable().Where(r => r.Field<string>(S_DeviceInfoColmn[4]) == "YES").Select(r => r.Field<int>(S_DeviceInfoColmn[0])).ToList());
 
                 //ModBus and myConnection initialization
                 ConnectionSettings(false);
@@ -260,7 +259,7 @@ namespace DataCollectionApp2
         /// <returns></returns>
         private List<int> GetSensorIDs(List<int> S_IDs)
         {
-            string IdCheckCmd = $"SELECT {S_SensorInfoColmn[0]} FROM {dbName}.dbo.{S_SensorInfo} WHERE {S_SensorInfoColmn[4]}='YES'";
+            string IdCheckCmd = $"SELECT {S_DeviceInfoColmn[0]} FROM {dbName}.dbo.{S_DeviceInfoTable} WHERE {S_DeviceInfoColmn[4]}='YES'";
             //Console.WriteLine("Usable sensor IDs:");
             SqlCommand sqlCommand = new SqlCommand(IdCheckCmd, myConn);
             try
@@ -273,7 +272,7 @@ namespace DataCollectionApp2
                 {
                     while (sqlDataReader.Read())
                     {
-                        S_IDs.Add(Convert.ToInt32(sqlDataReader[$"{S_SensorInfoColmn[0]}"]));
+                        S_IDs.Add(Convert.ToInt32(sqlDataReader[$"{S_DeviceInfoColmn[0]}"]));
                         //Console.WriteLine(Convert.ToInt32(sqlDataReader["sID"]));
                     }
                 }
@@ -303,7 +302,7 @@ namespace DataCollectionApp2
         {
             
                 bool idExists = false;
-                string sqlStrChecker = $"SELECT {S_SensorInfoColmn[0]} FROM [{dbName}].[dbo].[{S_SensorInfo}] WHERE {S_SensorInfoColmn[0]} = {id};";
+                string sqlStrChecker = $"SELECT {S_DeviceInfoColmn[0]} FROM [{dbName}].[dbo].[{S_DeviceInfoTable}] WHERE {S_DeviceInfoColmn[0]} = {id};";
                 using (SqlCommand sqlIdCheckerCmd = new SqlCommand(sqlStrChecker, myConn))
                 {
                     try
@@ -316,7 +315,7 @@ namespace DataCollectionApp2
                         {
                             while (reader.Read())
                             {
-                                idExists = Convert.ToInt32(reader[$"{S_SensorInfoColmn[0]}"].ToString()) == id;
+                                idExists = Convert.ToInt32(reader[$"{S_DeviceInfoColmn[0]}"].ToString()) == id;
                                 break;
                             }
                         }
@@ -348,7 +347,7 @@ namespace DataCollectionApp2
         private bool GetSensorID(int id, string tableName)
         {
             bool idExists = false;
-            string sqlStrChecker = $"SELECT {S_SensorInfoColmn[0]} FROM [{dbName}].[dbo].[{tableName}] WHERE {S_SensorInfoColmn[0]} = {id};";
+            string sqlStrChecker = $"SELECT {S_DeviceInfoColmn[0]} FROM [{dbName}].[dbo].[{tableName}] WHERE {S_DeviceInfoColmn[0]} = {id};";
             using (SqlCommand sqlIdCheckerCmd = new SqlCommand(sqlStrChecker, myConn))
             {
                 try
@@ -361,7 +360,7 @@ namespace DataCollectionApp2
                     {
                         while (reader.Read())
                         {
-                            idExists = Convert.ToInt32(reader[$"{S_SensorInfoColmn[0]}"].ToString()) == id;
+                            idExists = Convert.ToInt32(reader[$"{S_DeviceInfoColmn[0]}"].ToString()) == id;
                             break;
                         }
                     }
@@ -415,7 +414,7 @@ namespace DataCollectionApp2
                     /*DialogResult createTbOrNot = MessageBox.Show($"센서 정보 테이블을 생성합니다. \nDB명은 {dbName}, \n센서정보 테이블명 = {sensorInfo_tbName}. \n진행하시겠습니까?", "Status Info", MessageBoxButtons.YesNo);
                     if (createTbOrNot == DialogResult.Yes)
                     {*/
-                        string sqlCreateTb = $"CREATE TABLE {sensorInfo_tbName} ({S_SensorInfoColmn[0]} INT NOT NULL, {S_SensorInfoColmn[1]} NVARCHAR(20) NOT NULL, {S_SensorInfoColmn[2]} NVARCHAR(150) NULL, {S_SensorInfoColmn[3]} NVARCHAR(255) NULL, {S_SensorInfoColmn[4]} NVARCHAR(10) NOT NULL);";
+                        string sqlCreateTb = $"CREATE TABLE {sensorInfo_tbName} ({S_DeviceInfoColmn[0]} INT NOT NULL, {S_DeviceInfoColmn[1]} NVARCHAR(20) NOT NULL, {S_DeviceInfoColmn[2]} NVARCHAR(150) NULL, {S_DeviceInfoColmn[3]} NVARCHAR(255) NULL, {S_DeviceInfoColmn[4]} NVARCHAR(10) NOT NULL);";
                         bool SENSOR_INFO_tableCreated = g_DbTableHandler.CreateTable(dbName, sensorInfo_tbName, sqlCreateTb, myConn);
                         if (SENSOR_INFO_tableCreated)
                         {
@@ -442,7 +441,7 @@ namespace DataCollectionApp2
                     bool dataBase_Created = g_DbTableHandler.CreateDatabase(myConn_master, dbName, sqlCreateDb);
                     if (dataBase_Created)
                     {
-                        string sqlCreateTb = $"CREATE TABLE {sensorInfo_tbName} ({S_SensorInfoColmn[0]} INT NOT NULL, {S_SensorInfoColmn[1]} NVARCHAR(20) NOT NULL, {S_SensorInfoColmn[2]} NVARCHAR(150) NULL, {S_SensorInfoColmn[3]} NVARCHAR(255) NULL, {S_SensorInfoColmn[4]} NVARCHAR(10) NOT NULL);";
+                        string sqlCreateTb = $"CREATE TABLE {sensorInfo_tbName} ({S_DeviceInfoColmn[0]} INT NOT NULL, {S_DeviceInfoColmn[1]} NVARCHAR(20) NOT NULL, {S_DeviceInfoColmn[2]} NVARCHAR(150) NULL, {S_DeviceInfoColmn[3]} NVARCHAR(255) NULL, {S_DeviceInfoColmn[4]} NVARCHAR(10) NOT NULL);";
                         bool SENSOR_INFO_tableCreated = g_DbTableHandler.CreateTable(dbName, sensorInfo_tbName, sqlCreateTb, myConn);
                         if (SENSOR_INFO_tableCreated)
                         {
@@ -614,10 +613,10 @@ namespace DataCollectionApp2
                     int sensorId = Convert.ToInt32(item.SubItems[1].Text);
                     sID.Value = sensorId;
                     sID.Enabled = false;
-                    for (int i = 0; i < txtB_SensorInfo.Count; i++)
+                    for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
                     {
-                        txtB_SensorInfo[i].Text = item.SubItems[i + 2].Text;
-                        txtB_SensorInfo[i].TextAlign = HorizontalAlignment.Center;
+                        S_DeviceInfo_txtB[i].Text = item.SubItems[i + 2].Text;
+                        S_DeviceInfo_txtB[i].TextAlign = HorizontalAlignment.Center;
                     }
                     List<CheckBox> sUsageRangesCh = S_UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
                     List<string> sUsageRangesTables = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).ToList();
@@ -642,7 +641,7 @@ namespace DataCollectionApp2
                                 dataFromDB.Add(Convert.ToDecimal(rangesWithUsage.Tables[0].Rows[0][S_FourRangeColmn[j]]));
                             }
 
-                            bool sUsage = rangesWithUsage.Tables[0].Rows[0][S_SensorInfoColmn[4]].ToString() == "YES";
+                            bool sUsage = rangesWithUsage.Tables[0].Rows[0][S_DeviceInfoColmn[4]].ToString() == "YES";
 
                             List<NumericUpDown> checkers = S_UsageCheckerRangePairs[sUsageRangesCh[i]];
 
@@ -660,7 +659,8 @@ namespace DataCollectionApp2
             }
             else
             {
-                clearFields(txtB_SensorInfo);
+                clearFields(S_DeviceInfo_txtB);
+                sID.Enabled = true;
             }
         }
 
@@ -680,7 +680,7 @@ namespace DataCollectionApp2
                 bool sUsageInfoExists = g_DbTableHandler.IfTableExists(c_xRangesTb);       
                 if (sUsageInfoExists)
                 {
-                    string sqlGetRanges = $"SELECT DISTINCT ch.{S_FourRangeColmn[0]}, ch.{S_FourRangeColmn[1]}, ch.{S_FourRangeColmn[2]}, ch.{S_FourRangeColmn[3]}, si.{S_SensorInfoColmn[4]} FROM {S_SensorInfo} si JOIN {c_xRangesTb} ch ON ch.{S_SensorInfoColmn[0]} = si.{S_SensorInfoColmn[0]} WHERE si.{S_SensorInfoColmn[0]} = {s_Id}; ";
+                    string sqlGetRanges = $"SELECT DISTINCT ch.{S_FourRangeColmn[0]}, ch.{S_FourRangeColmn[1]}, ch.{S_FourRangeColmn[2]}, ch.{S_FourRangeColmn[3]}, si.{S_DeviceInfoColmn[4]} FROM {S_DeviceInfoTable} si JOIN {c_xRangesTb} ch ON ch.{S_DeviceInfoColmn[0]} = si.{S_DeviceInfoColmn[0]} WHERE si.{S_DeviceInfoColmn[0]} = {s_Id}; ";
                     //string sqlStr = $"SELECT * FROM [dbo].[{S_UsageInfo}]; ";
                     try
                     {
@@ -720,9 +720,9 @@ namespace DataCollectionApp2
             bool emptyColumn = false;
 
             Dictionary<CheckBox, List<NumericUpDown>> dataToBeSaved = new Dictionary<CheckBox, List<NumericUpDown>>();
-            for (int i = 0; i < txtB_SensorInfo.Count; i++)
+            for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
             {
-                if (txtB_SensorInfo[i].Text.Length < 1)
+                if (S_DeviceInfo_txtB[i].Text.Length < 1)
                 {
                     emptyColumn = true;
                 }
@@ -741,14 +741,14 @@ namespace DataCollectionApp2
                     foreach (ListViewItem item in listView1.SelectedItems)
                     {
                         item.SubItems[1].Text = sID.Value.ToString();
-                        for (int i = 0; i < txtB_SensorInfo.Count; i++)
+                        for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
                         {
-                            item.SubItems[i + 2].Text = txtB_SensorInfo[i].Text;
+                            item.SubItems[i + 2].Text = S_DeviceInfo_txtB[i].Text;
                         }
                     }
 
                     UpdateDB();
-                    clearFields(txtB_SensorInfo);
+                    clearFields(S_DeviceInfo_txtB);
                 }
 
             }
@@ -787,12 +787,12 @@ namespace DataCollectionApp2
                     {
                         ListViewItem listViewItem = new ListViewItem(newOrderNumber.ToString());
                         listViewItem.SubItems.Add(sID.Value.ToString());
-                        listViewItem.SubItems.Add(txtB_SensorInfo[0].Text);
-                        listViewItem.SubItems.Add(txtB_SensorInfo[1].Text);
-                        listViewItem.SubItems.Add(txtB_SensorInfo[2].Text);
+                        listViewItem.SubItems.Add(S_DeviceInfo_txtB[0].Text);
+                        listViewItem.SubItems.Add(S_DeviceInfo_txtB[1].Text);
+                        listViewItem.SubItems.Add(S_DeviceInfo_txtB[2].Text);
                         listViewItem.SubItems.Add(sUsage);
                         listView1.Items.Add(listViewItem);
-                        clearFields(txtB_SensorInfo);
+                        clearFields(S_DeviceInfo_txtB);
                     }
                     
                 }
@@ -809,13 +809,21 @@ namespace DataCollectionApp2
             {
                 textBoxes[i].Text = "";
             }
-            List<CheckBox> checkers = S_UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
-            
-            for (int i=0; i < checkers.Count; i++)
+            //S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(checkBox => checkBox.Checked = true);
+            //S_UsageCheckerRangePairs.Values.AsEnumerable().Select(list => list.Select(item => item.Enabled = false));
+
+            List<CheckBox> isCheked = S_UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
+            List<List<NumericUpDown>> listNumbers = S_UsageCheckerRangePairs.Values.AsEnumerable().ToList();
+            for(int i=0; i<isCheked.Count; i++)
             {
-                checkers[i].Checked = false;
-                S_UsageCheckerRangePairs.Values.AsEnumerable().Select(list => list.Select(item => item.Value = 0));
+                isCheked[i].Checked = false;
+                for(int j = 0; j < listNumbers[i].Count; j++)
+                {
+                    listNumbers[i][j].Value = 0;
+                    listNumbers[i][j].Enabled = false;
+                }
             }
+
         }
 
 
@@ -836,8 +844,8 @@ namespace DataCollectionApp2
             {
                 DataHandler g_dataHandler = new DataHandler();
                 g_dataHandler.S_FourRangeColmn = S_FourRangeColmn;
-                g_dataHandler.S_SensorInfoColmn = S_SensorInfoColmn;
-                g_dataHandler.S_SensorInfo = S_SensorInfo;
+                g_dataHandler.S_SensorInfoColmn = S_DeviceInfoColmn;
+                g_dataHandler.S_SensorInfo = S_DeviceInfoTable;
                 List<CheckBox> S_UsageCheckersChecked = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(r => r.Checked).ToList();
                 int sensorId = Convert.ToInt32(sID.Value);
                 if (S_UsageCheckersChecked.Count > 0)
@@ -860,7 +868,7 @@ namespace DataCollectionApp2
                     sUsage = false;
                 }
 
-                g_dataHandler.UpdateSensorInfo(myConn, S_SensorInfo, sensorId, txtB_SensorInfo, sUsage);
+                g_dataHandler.UpdateSensorInfo(myConn, S_DeviceInfoTable, sensorId, S_DeviceInfo_txtB, sUsage);
             }
         }
 
@@ -882,7 +890,12 @@ namespace DataCollectionApp2
                 //List<string> sRangeTablesChecked = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x=>x.Checked).Select(x => x.Name).ToList();
                 List<CheckBox> sRangeTablesChecked = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x => x.Checked).ToList();
                 List<CheckBox> sRangeTablesUnchecked = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x => !x.Checked).ToList();
-                 
+                List<string> sUsageResults = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Checked ? "YES" : "NO").ToList();
+                
+                bool[] result_for_checked = new bool[sRangeTablesChecked.Count];
+                bool[] result_for_unChecked = new bool[sRangeTablesUnchecked.Count];
+                
+
                 for (int i = 0; i < sRangeTablesChecked.Count; i++)
                 {
                     List<Decimal> sFourRangeTbVals = S_UsageCheckerRangePairs[sRangeTablesChecked[i]].Select(x=>x.Value).ToList();
@@ -891,12 +904,12 @@ namespace DataCollectionApp2
                     
                     bool checkRangesTb = g_DbTableHandler.IfTableExists(sRangeTable);
                     string sqlStrInsert = $"INSERT INTO {dbName}.dbo.{sRangeTable}" +
-                                            $"({S_SensorInfoColmn[0]}, {S_FourRangeColmn[0]}, {S_FourRangeColmn[1]}, {S_FourRangeColmn[2]}, {S_FourRangeColmn[3]}) " +
+                                            $"({S_DeviceInfoColmn[0]}, {S_FourRangeColmn[0]}, {S_FourRangeColmn[1]}, {S_FourRangeColmn[2]}, {S_FourRangeColmn[3]}) " +
                                             $"VALUES({sensorId}, {sFourRangeTbVals[0]},{sFourRangeTbVals[1]},{sFourRangeTbVals[2]},{sFourRangeTbVals[3]});";
 
                     SqlCommand InsertCmd = new SqlCommand(sqlStrInsert, myConn);
                     string sqlCreateTb = $"Create TABLE [{dbName}].[dbo].[{sRangeTable}] ( " +
-                                $" {S_SensorInfoColmn[0]} INT NOT NULL, " +
+                                $" {S_DeviceInfoColmn[0]} INT NOT NULL, " +
                                 $" {S_FourRangeColmn[0]} decimal(7,2) NULL, " +
                                 $" {S_FourRangeColmn[1]} decimal(7,2) NULL, " +
                                 $" {S_FourRangeColmn[2]} decimal(7,2) NULL, " +
@@ -904,7 +917,7 @@ namespace DataCollectionApp2
 
                     string sqlCheckUpd = $"SELECT 1 " +
                         $" FROM {dbName}.dbo.{sRangeTable} " +
-                        $" WHERE {S_SensorInfoColmn[0]} = { sensorId} and " +
+                        $" WHERE {S_DeviceInfoColmn[0]} = { sensorId} and " +
                         $" {S_FourRangeColmn[0]} = { sFourRangeTbVals[0]} and " +
                         $" {S_FourRangeColmn[1]} = { sFourRangeTbVals[1]} and " +
                         $" {S_FourRangeColmn[2]} = { sFourRangeTbVals[2]} and " +
@@ -937,7 +950,7 @@ namespace DataCollectionApp2
                                     {
                                         while (reader.Read())
                                         {
-                                            result = Convert.ToInt32(reader.GetValue(0)) == 1;
+                                            result_for_checked[i] = Convert.ToInt32(reader.GetValue(0)) == 1;
                                         }
                                     }
 
@@ -961,7 +974,7 @@ namespace DataCollectionApp2
                         else
                         {                   // table이 존재하지 않는다면 CreateTable를 통해 테이블 생성한 후 Insert함
                             bool tbCreated = g_DbTableHandler.CreateTable(dbName, sRangeTable, sqlCreateTb, myConn);
-
+                            
                             if (tbCreated)
                             {
                                 if (myConn.State != ConnectionState.Open)
@@ -974,7 +987,7 @@ namespace DataCollectionApp2
                                 {
                                     while (reader.Read())
                                     {
-                                        result = Convert.ToInt32(reader.GetValue(0)) == 1;
+                                       result_for_checked[i]  = Convert.ToInt32(reader.GetValue(0)) == 1;
                                     }
                                 }
                             }
@@ -993,14 +1006,68 @@ namespace DataCollectionApp2
                     }
 
                 }
+                result = !result_for_checked.Contains(false);
 
-                for(int i = 0; i<sRangeTablesUnchecked.Count; i++)
+
+                bool tbExists = g_DbTableHandler.IfTableExists(S_UsageInfoTable);
+                if (!tbExists)
+                {
+                    List<string> sRangesTbNames = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).ToList();
+                    string sqlCreateUsrInfoTb = $"CREATE TABLE {S_UsageInfoTable}(" +
+                        $" {S_DeviceInfoColmn[0]} INT NOT NULL ";
+                    foreach(var item in sRangesTbNames)
+                    {
+                        sqlCreateUsrInfoTb += $", {item} NVARCHAR(20) NOT NULL ";
+                    }
+                    
+                        sqlCreateUsrInfoTb += " );";
+                   bool tbCreated = g_DbTableHandler.CreateTable(dbName, S_UsageInfoTable, sqlCreateUsrInfoTb, myConn);
+                }
+
+                string sqlInsertUsage = $"INSERT INTO {S_UsageInfoTable} VALUES({sensorId} ";
+
+                    foreach(var item in sUsageResults)
+                {
+                    sqlInsertUsage += $", '{item}' ";
+                }
+
+                sqlInsertUsage += " );";
+                SqlCommand sqlInsertUsageCmd = new SqlCommand(sqlInsertUsage, myConn);
+                try
+                {
+                    if(myConn.State != ConnectionState.Open)
+                    {
+                        myConn.Open();
+                    }
+                    
+                    
+
+
+                    sqlInsertUsageCmd.ExecuteNonQuery();
+
+
+
+
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (myConn.State == ConnectionState.Open)
+                    {
+                        myConn.Close();
+                    }
+                }
+
+                for (int i = 0; i<sRangeTablesUnchecked.Count; i++)
                 {
 
                 }
                 // 관련 테이블도 같이 업데이트함.
-                string sqlInsert_SensorInfo = $"INSERT INTO {dbName}.dbo.{S_SensorInfo} ({S_SensorInfoColmn[0]}, {S_SensorInfoColmn[1]}, {S_SensorInfoColmn[2]}, {S_SensorInfoColmn[3]}, {S_SensorInfoColmn[4]}) " +
-                    $"VALUES ('{sensorId}', '{txtB_SensorInfo[0].Text}', '{txtB_SensorInfo[1].Text}', '{txtB_SensorInfo[2].Text}', '{g_sensorUsage}');";
+                string sqlInsert_SensorInfo = $"INSERT INTO {dbName}.dbo.{S_DeviceInfoTable} ({S_DeviceInfoColmn[0]}, {S_DeviceInfoColmn[1]}, {S_DeviceInfoColmn[2]}, {S_DeviceInfoColmn[3]}, {S_DeviceInfoColmn[4]}) " +
+                    $"VALUES ('{sensorId}', '{S_DeviceInfo_txtB[0].Text}', '{S_DeviceInfo_txtB[1].Text}', '{S_DeviceInfo_txtB[2].Text}', '{g_sensorUsage}');";
 
                 SqlCommand sqlCommand = new SqlCommand(sqlInsert_SensorInfo, myConn);
                 try
@@ -1037,7 +1104,7 @@ namespace DataCollectionApp2
             //MessageBox.Show("추가하시려는 센서는 이미 DB에서 존재합니다. 기존에 있는 센서 정보를 수정하시고나 센서 ID를 바꿔 보세요. \n센서ID를 수정하시려면 'Y' 버튼을 누르세요.", "Status Info", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             //react to dialogResults, yes, no, cancel
             // title, message, textBox enter info, etc. #Fix needed
-            string newSensorId = Microsoft.VisualBasic.Interaction.InputBox("새 ID를 입력", "원하시는 센서 ID를 기존에 있는것보다 다르게 입력해 주세요", "Desired Default", -1, -1);
+            string newSensorId = Microsoft.VisualBasic.Interaction.InputBox("원하시는 센서 ID를 기존에 있는것보다 다르게 입력해 주세요", "새 ID를 입력", "숫자만 입력해 주세요", -1, -1);
             try
             {
                 sensorId = Convert.ToInt32(newSensorId);
@@ -1059,13 +1126,13 @@ namespace DataCollectionApp2
                 ListViewItem item = listView1.SelectedItems[0];
                 item.Selected = false;
             }
-            for (int i = 0; i < txtB_SensorInfo.Count; i++)
+            for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
             {
                 //textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
-                txtB_SensorInfo[i].Text = "";
+                S_DeviceInfo_txtB[i].Text = "";
             }
             RangeSetNew();
-            txtB_SensorInfo[0].Focus();
+            S_DeviceInfo_txtB[0].Focus();
         }
 
 
