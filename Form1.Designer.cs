@@ -63,6 +63,7 @@ namespace DataCollectionApp2
             this.panel7 = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.label13 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.panel_left = new System.Windows.Forms.Panel();
             this.panel_right = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -134,7 +135,6 @@ namespace DataCollectionApp2
             this.sLocation = new System.Windows.Forms.TextBox();
             this.sName = new System.Windows.Forms.TextBox();
             this.sID = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -400,6 +400,11 @@ namespace DataCollectionApp2
             this.label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             resources.ApplyResources(this.label13, "label13");
             this.label13.Name = "label13";
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
             // 
             // panel_left
             // 
@@ -866,28 +871,28 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.c_p100Usage, "c_p100Usage");
             this.c_p100Usage.Name = "c_p100Usage";
             this.c_p100Usage.UseVisualStyleBackColor = true;
-            this.c_p100Usage.CheckedChanged += new System.EventHandler(this.c_p100Usage_CheckedChanged);
+            this.c_p100Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // c_p50Usage
             // 
             resources.ApplyResources(this.c_p50Usage, "c_p50Usage");
             this.c_p50Usage.Name = "c_p50Usage";
             this.c_p50Usage.UseVisualStyleBackColor = true;
-            this.c_p50Usage.CheckedChanged += new System.EventHandler(this.c_p50Usage_CheckedChanged);
+            this.c_p50Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // c_p25Usage
             // 
             resources.ApplyResources(this.c_p25Usage, "c_p25Usage");
             this.c_p25Usage.Name = "c_p25Usage";
             this.c_p25Usage.UseVisualStyleBackColor = true;
-            this.c_p25Usage.CheckedChanged += new System.EventHandler(this.c_p25Usage_CheckedChanged);
+            this.c_p25Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // c_p10Usage
             // 
             resources.ApplyResources(this.c_p10Usage, "c_p10Usage");
             this.c_p10Usage.Name = "c_p10Usage";
             this.c_p10Usage.UseVisualStyleBackColor = true;
-            this.c_p10Usage.CheckedChanged += new System.EventHandler(this.c_p10Usage_CheckedChanged);
+            this.c_p10Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // l_p100Usage
             // 
@@ -924,7 +929,7 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.c_p05Usage, "c_p05Usage");
             this.c_p05Usage.Name = "c_p05Usage";
             this.c_p05Usage.UseVisualStyleBackColor = true;
-            this.c_p05Usage.CheckedChanged += new System.EventHandler(this.c_p05Usage_CheckedChanged);
+            this.c_p05Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // l_p03Usage
             // 
@@ -937,7 +942,7 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.c_p03Usage, "c_p03Usage");
             this.c_p03Usage.Name = "c_p03Usage";
             this.c_p03Usage.UseVisualStyleBackColor = true;
-            this.c_p03Usage.CheckedChanged += new System.EventHandler(this.c_p03Usage_CheckedChanged);
+            this.c_p03Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // l_hUsage
             // 
@@ -950,7 +955,7 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.c_hUsage, "c_hUsage");
             this.c_hUsage.Name = "c_hUsage";
             this.c_hUsage.UseVisualStyleBackColor = true;
-            this.c_hUsage.CheckedChanged += new System.EventHandler(this.c_hUsage_CheckedChanged);
+            this.c_hUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // l_tUsage
             // 
@@ -963,7 +968,7 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.c_tUsage, "c_tUsage");
             this.c_tUsage.Name = "c_tUsage";
             this.c_tUsage.UseVisualStyleBackColor = true;
-            this.c_tUsage.CheckedChanged += new System.EventHandler(this.c_tUsage_CheckedChanged);
+            this.c_tUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // l_sHigherLimit2
             // 
@@ -1034,11 +1039,6 @@ namespace DataCollectionApp2
             0,
             0});
             this.sID.Name = "sID";
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
             // 
             // Form1
             // 

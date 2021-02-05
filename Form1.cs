@@ -36,13 +36,11 @@ namespace DataCollectionApp2
         }
         
         
-        
         private List<string> _fourRangeColmn;
         public List<string> S_FourRangeColmn 
         { get { return _fourRangeColmn; }
           set { _fourRangeColmn = value; } 
         }
-
 
 
 
@@ -92,11 +90,9 @@ namespace DataCollectionApp2
         {
             InitializeComponent();
             listView1.Scrollable = true;
+            
             MyFunc();
-
-
         }
-
 
 
 
@@ -183,11 +179,9 @@ namespace DataCollectionApp2
             }
             startTime = DateTime.Now;
 
-
+            clearFields(S_DeviceInfo_txtB);
 
         }
-
-
 
 
 
@@ -336,6 +330,7 @@ namespace DataCollectionApp2
             
             return idExists;
         }
+
 
 
         /// <summary>
@@ -576,31 +571,6 @@ namespace DataCollectionApp2
 
 
 
-        /// <summary>
-        /// Display listView1 Column headers and sensor info in the below listView2
-        /// </summary>
-        private void Display_listView2()
-        {
-            int itemHight = 20;
-            ImageList imgList = new ImageList();
-            imgList.ImageSize = new Size(1, itemHight);
-
-            for (int i = 0; i < listView1.Columns.Count; i++)
-            {
-                ListViewItem listViewItem = new ListViewItem(listView1.Columns[i].Text);
-                listViewItem.SubItems.Add("");
-                //listView2.Items.Add(listViewItem);
-            }
-            //listView2.SmallImageList = imgList;
-        }
-
-
-
-
-
-
-
-
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
@@ -609,7 +579,7 @@ namespace DataCollectionApp2
                 {
                     int sensorId = Convert.ToInt32(item.SubItems[1].Text);
                     sID.Value = sensorId;
-                    sID.Enabled = false;
+                    //sID.Enabled = false;
                     for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
                     {
                         S_DeviceInfo_txtB[i].Text = item.SubItems[i + 2].Text;
@@ -620,7 +590,6 @@ namespace DataCollectionApp2
 
                     for (int i = 0; i < sUsageRangesTables.Count; i++)
                     {
-
 
                         DataSet rangesWithUsage = GetRangesWithUsage(sensorId, sUsageRangesTables[i]);
 
@@ -648,7 +617,8 @@ namespace DataCollectionApp2
                                 S_UsageCheckerRangePairs[sUsageRangesCh[i]][j].Value = dataFromDB[j];
 
                             }
-                            S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x => x.Name == sUsageRangesTables[i]).Select(x => x.Checked = sUsage);
+                            CheckBox currentCheckBox = S_UsageCheckerRangePairs.Keys.Where(x => x.Name == sUsageRangesTables[i]).FirstOrDefault();
+                            currentCheckBox.Checked = sUsage;
 
                         }
                     }
@@ -660,6 +630,8 @@ namespace DataCollectionApp2
                 sID.Enabled = true;
             }
         }
+
+
 
         private DataSet GetRangesWithUsage(int s_Id, string c_xRangesTb)
         {
@@ -824,6 +796,7 @@ namespace DataCollectionApp2
         }
 
 
+
         /// <summary>
         /// SENSOR_INFO테이블에 있는 센서 정보를 업데이트해 주는 함수.
         /// ID (textBoxes[0].Text) 기준으로 센서 정보가 업데이트가 됨.
@@ -868,6 +841,7 @@ namespace DataCollectionApp2
                 g_dataHandler.UpdateSensorInfo(myConn, S_DeviceInfoTable, sensorId, S_DeviceInfo_txtB, sUsage);
             }
         }
+
 
 
         /// <summary>
@@ -1095,6 +1069,8 @@ namespace DataCollectionApp2
             return result;
         }
 
+
+
         private int GetUserInput()
         {
             int sensorId;
@@ -1114,6 +1090,7 @@ namespace DataCollectionApp2
 
             return sensorId;
         }
+
 
 
         private void b_add_Click(object sender, EventArgs e)
@@ -1149,51 +1126,33 @@ namespace DataCollectionApp2
 
 
 
-        private void c_tUsage_CheckedChanged(object sender, EventArgs e)
+
+
+        /// <summary>
+        /// Custom function for Checking/Unchecking the checkbox control
+        /// </summary>
+        /// <param name="sender">Chechbox object</param>
+        /// <param name="e"></param>
+        private void xCheckedChanged(object sender, EventArgs e)
         {
-            c_xUsage_Checker(c_tUsage, S_UsageCheckerRangePairs[c_tUsage]);
-        }
+            CheckBox chBox = (CheckBox)sender;
+            List<NumericUpDown> x_Ranges = S_UsageCheckerRangePairs[chBox];
 
 
-        private void c_hUsage_CheckedChanged(object sender, EventArgs e)
-        {
-            c_xUsage_Checker(c_hUsage, S_UsageCheckerRangePairs[c_hUsage]);
-        }
-
-
-        private void c_p03Usage_CheckedChanged(object sender, EventArgs e)
-        {
-            c_xUsage_Checker(c_p03Usage, S_UsageCheckerRangePairs[c_p03Usage]);
-        }
-
-
-        private void c_p05Usage_CheckedChanged(object sender, EventArgs e)
-        {
-            c_xUsage_Checker(c_p05Usage, S_UsageCheckerRangePairs[c_p05Usage]);
-
-        }
-
-        private void c_p10Usage_CheckedChanged(object sender, EventArgs e)
-        {
-            c_xUsage_Checker(c_p10Usage, S_UsageCheckerRangePairs[c_p10Usage]);
-
-        }
-
-        private void c_p25Usage_CheckedChanged(object sender, EventArgs e)
-        {
-            c_xUsage_Checker(c_p25Usage, S_UsageCheckerRangePairs[c_p25Usage]);
-
-        }
-
-        private void c_p50Usage_CheckedChanged(object sender, EventArgs e)
-        {
-            c_xUsage_Checker(c_p50Usage, S_UsageCheckerRangePairs[c_p50Usage]);
-
-        }
-
-        private void c_p100Usage_CheckedChanged(object sender, EventArgs e)
-        {
-            c_xUsage_Checker(c_p100Usage, S_UsageCheckerRangePairs[c_p100Usage]);
+            if (chBox.Checked)
+            {
+                foreach (var item in x_Ranges)
+                {
+                    item.Enabled = true;
+                }
+            }
+            else if (!chBox.Checked)  // || !NullOrNotChecker(x_Ranges)
+            {
+                foreach (var item in x_Ranges)
+                {
+                    item.Enabled = false;
+                }
+            }
 
         }
 
@@ -1215,31 +1174,6 @@ namespace DataCollectionApp2
                 }
             }
             return res;
-        }
-
-
-
-        /// <summary>
-        /// 체크 버튼 눌을 때 실행되는 코드
-        /// </summary>
-        /// <param name="c_xUsage"></param>
-        /// <param name="x_Ranges"></param>
-        private void c_xUsage_Checker(CheckBox c_xUsage, List<NumericUpDown> x_Ranges)
-        {
-            if (c_xUsage.Checked)
-            {
-                foreach (var item in x_Ranges)
-                {
-                    item.Enabled = true;
-                }
-            }
-            else if (c_xUsage.Checked == false || NullOrNotChecker(x_Ranges) == false)
-            {
-                foreach (var item in x_Ranges)
-                {
-                    item.Enabled = false;
-                }
-            }
         }
 
 
