@@ -781,7 +781,7 @@ namespace DataCollectionApp2
                         Console.WriteLine("listView IDs:" + listView1.Items[i].Text);
                     }*/
 
-
+                    //Added should return true if data added to DB.
                     bool added = AddToDB(sUsage);
                     if (added)
                     {
@@ -969,6 +969,14 @@ namespace DataCollectionApp2
                                     myConn.Open();
                                 }
                                 InsertCmd.ExecuteNonQuery();
+
+                                using (SqlDataReader reader = sqlUpdateCheck.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        result = Convert.ToInt32(reader.GetValue(0)) == 1;
+                                    }
+                                }
                             }
                         }
                     }
@@ -994,13 +1002,6 @@ namespace DataCollectionApp2
                 string sqlInsert_SensorInfo = $"INSERT INTO {dbName}.dbo.{S_SensorInfo} ({S_SensorInfoColmn[0]}, {S_SensorInfoColmn[1]}, {S_SensorInfoColmn[2]}, {S_SensorInfoColmn[3]}, {S_SensorInfoColmn[4]}) " +
                     $"VALUES ('{sensorId}', '{txtB_SensorInfo[0].Text}', '{txtB_SensorInfo[1].Text}', '{txtB_SensorInfo[2].Text}', '{g_sensorUsage}');";
 
-                //string sqlInsert_c_xUsage = $"INSERT INTO {dbName}.dbo.{S_SensorInfo} ({S_SensorInfoColmn[0]}, {S_FourRangeColmn[0]}, {S_FourRangeColmn[1]}, {S_FourRangeColmn[2]}, {S_FourRangeColmn[3]}) VALUES({sensorId}, {g_sensorUsage});";
-
-                //string sqlCheck_sUsageInfo = $"SELECT COUNT(*) FROM {dbName}.dbo.{S_UsageInfo};";
-                //string sqlInsert_sUsageInfo = $"INSERT INTO {dbName}.dbo.{S_UsageInfo}(sID, tUsage, hUsage, p03Usage, p05Usage, p10Usage, p25Usage, p50Usage, p100Usage) VALUES({sensorId}, 'NO', 'NO', 'NO', 'NO', 'NO', 'NO', 'NO', 'NO');";
-
-
-
                 SqlCommand sqlCommand = new SqlCommand(sqlInsert_SensorInfo, myConn);
                 try
                 {
@@ -1025,7 +1026,7 @@ namespace DataCollectionApp2
             }
             else
             {
-                MessageBox.Show("센서 정보 DB를 찾을 수 없었습니다. 프르그램을 다시 실행한 후 DB부터 생성해 주세여.", "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show("센서 정보 DB를 찾을 수 없었습니다. 프르그램을 다시 실행한 후 DB부터 생성해 주세요.", "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
             return result;
         }

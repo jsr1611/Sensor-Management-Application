@@ -105,7 +105,6 @@ namespace DataCollectionApp2
             this.s_tLowerLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_tHigherLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_tHigherLimit1 = new System.Windows.Forms.NumericUpDown();
-            this.sID = new System.Windows.Forms.NumericUpDown();
             this.c_p100Usage = new System.Windows.Forms.CheckBox();
             this.c_p50Usage = new System.Windows.Forms.CheckBox();
             this.c_p25Usage = new System.Windows.Forms.CheckBox();
@@ -134,6 +133,8 @@ namespace DataCollectionApp2
             this.sDescription = new System.Windows.Forms.TextBox();
             this.sLocation = new System.Windows.Forms.TextBox();
             this.sName = new System.Windows.Forms.TextBox();
+            this.sID = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -302,6 +303,7 @@ namespace DataCollectionApp2
             this.tableLayoutPanel2.Controls.Add(this.panel5, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.panel6, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel7, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             // 
             // panel4
@@ -859,16 +861,6 @@ namespace DataCollectionApp2
             -2147483648});
             this.s_tHigherLimit1.Name = "s_tHigherLimit1";
             // 
-            // sID
-            // 
-            resources.ApplyResources(this.sID, "sID");
-            this.sID.Maximum = new decimal(new int[] {
-            250,
-            0,
-            0,
-            0});
-            this.sID.Name = "sID";
-            // 
             // c_p100Usage
             // 
             resources.ApplyResources(this.c_p100Usage, "c_p100Usage");
@@ -1032,6 +1024,21 @@ namespace DataCollectionApp2
             // 
             resources.ApplyResources(this.sName, "sName");
             this.sName.Name = "sName";
+            // 
+            // sID
+            // 
+            resources.ApplyResources(this.sID, "sID");
+            this.sID.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.sID.Name = "sID";
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
             // 
             // Form1
             // 
@@ -1201,6 +1208,7 @@ namespace DataCollectionApp2
         private System.Windows.Forms.NumericUpDown s_p03HigherLimit1;
         private System.Windows.Forms.NumericUpDown s_p03LowerLimit2;
         private System.Windows.Forms.NumericUpDown s_p03LowerLimit1;
+        private System.Windows.Forms.Label label2;
     }
 }
 
