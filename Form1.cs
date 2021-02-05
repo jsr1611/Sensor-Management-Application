@@ -100,7 +100,7 @@ namespace DataCollectionApp2
         private void MyFunc()
         {
             dbServer = "127.0.0.1";    //"10.1.55.174";
-            dbName = "SensorDataDB005";
+            dbName = "SensorDataDB002";
             S_DeviceInfoTable = "SENSOR_INFO";
             S_UsageInfoTable = "UsageInfo";
 
@@ -687,6 +687,7 @@ namespace DataCollectionApp2
         private void b_save_Click(object sender, EventArgs e)
         {
             bool emptyColumn = false;
+            
 
             Dictionary<CheckBox, List<NumericUpDown>> dataToBeSaved = new Dictionary<CheckBox, List<NumericUpDown>>();
             for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
@@ -700,24 +701,30 @@ namespace DataCollectionApp2
             //기존 센서 정보를 update하는 부분
             if (listView1.SelectedItems.Count > 0)
             {
+
                 if (emptyColumn)
                 {
                     MessageBox.Show($"빈칸이 있어요.", "Status Info", MessageBoxButtons.OK);
                 }
                 else
                 {
+                    int deviceId = Convert.ToInt32(listView1.SelectedItems[0].SubItems[1].Text);
                     //Console.WriteLine("ID:" + listView1.SelectedItems[0].Text);
-                    foreach (ListViewItem item in listView1.SelectedItems)
+                    bool updated = UpdateDB(deviceId);
+                    if (updated)
                     {
-                        item.SubItems[1].Text = sID.Value.ToString();
-                        for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
+                        foreach (ListViewItem item in listView1.SelectedItems)
                         {
-                            item.SubItems[i + 2].Text = S_DeviceInfo_txtB[i].Text;
+                            item.SubItems[1].Text = sID.Value.ToString();
+                            for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
+                            {
+                                item.SubItems[i + 2].Text = S_DeviceInfo_txtB[i].Text;
+                            }
                         }
-                    }
-
-                    UpdateDB();
                     clearFields(S_DeviceInfo_txtB);
+                        MessageBox.Show("센서 정보 DB 업데이트가 성공적으로 이루어졌습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    
                 }
 
             }
@@ -802,22 +809,24 @@ namespace DataCollectionApp2
         /// ID (textBoxes[0].Text) 기준으로 센서 정보가 업데이트가 됨.
         /// </summary>
         /// <param name="textBoxes_SensorInfo">업데이트되는 정보를 가지고 있음.  </param>
-        private void UpdateDB()
+        private bool UpdateDB(int deviceIdOld)
         {
+            bool result_UPD = false;
             bool idExists = GetSensorID(Convert.ToInt32(sID.Value));
             bool sUsage;
-            if (!idExists)
+            if (idExists)
             {
-                MessageBox.Show("DB에 존재하지 않는 센서 ID입니다.", "Status info");
+                MessageBox.Show("DB에 이미 존재하는 센서 장비 ID입니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
                 DataHandler g_dataHandler = new DataHandler();
                 g_dataHandler.S_FourRangeColmn = S_FourRangeColmn;
-                g_dataHandler.S_SensorInfoColmn = S_DeviceInfoColmn;
-                g_dataHandler.S_SensorInfo = S_DeviceInfoTable;
+                g_dataHandler.S_DeviceInfoColmn = S_DeviceInfoColmn;
+                g_dataHandler.S_DeviceInfoTable = S_DeviceInfoTable;
                 List<CheckBox> S_UsageCheckersChecked = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(r => r.Checked).ToList();
-                int sensorId = Convert.ToInt32(sID.Value);
+                int deviceIdNew = Convert.ToInt32(sID.Value);
+                bool UpdLimitRangeInfoNotUpdated = false;
                 if (S_UsageCheckersChecked.Count > 0)
                 {
                     sUsage = true;
@@ -829,17 +838,23 @@ namespace DataCollectionApp2
                     for (int i = 0; i < targetChBoxes.Count; i++)
                     {
                         //List<CheckBox> target = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(r => r.Name == targetTbNames[i]).ToList();
-                        g_dataHandler.UpdateLimitRangeInfo(sID.Value, targetChBoxes[i], S_UsageCheckerRangePairs[targetChBoxes[i]], myConn);
+                        result_UPD = g_dataHandler.UpdateLimitRangeInfo(deviceIdOld, deviceIdNew, targetChBoxes[i], S_UsageCheckerRangePairs[targetChBoxes[i]], myConn);
+                        if (!result_UPD)
+                        {
+                            i = targetChBoxes.Count;
+                        }
                     }
 
                 }
                 else
                 {
                     sUsage = false;
+                    UpdLimitRangeInfoNotUpdated = true;
                 }
-
-                g_dataHandler.UpdateSensorInfo(myConn, S_DeviceInfoTable, sensorId, S_DeviceInfo_txtB, sUsage);
+                bool deviceInfoTbUpd = g_dataHandler.UpdateDeviceInfoTable(myConn, S_DeviceInfoTable, deviceIdOld, deviceIdNew, S_DeviceInfo_txtB, sUsage);
+                result_UPD = (result_UPD || UpdLimitRangeInfoNotUpdated) ? deviceInfoTbUpd : false;
             }
+            return result_UPD;
         }
 
 
