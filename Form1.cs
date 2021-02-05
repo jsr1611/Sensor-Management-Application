@@ -734,43 +734,49 @@ namespace DataCollectionApp2
             {
                 if (emptyColumn)
                 {
-                    MessageBox.Show($"빈칸이 있어요.", "Status Info", MessageBoxButtons.OK);
+                    MessageBox.Show($"빈칸이 있어요.", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
-                    int newOrderNumber;
-                    if (listView1.Items.Count > 0)
+                    bool idExists = GetSensorID(Convert.ToInt32(sID.Value));
+                    if (idExists)
                     {
-                        newOrderNumber = Convert.ToInt32(listView1.Items[listView1.Items.Count - 1].Text) + 1;
+                        MessageBox.Show("DB에 이미 존재하는 센서 장비 ID입니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-                    else
-                    {
-                        newOrderNumber = 1;
+                    else { 
+                        int newOrderNumber;
+                        if (listView1.Items.Count > 0)
+                        {
+                            newOrderNumber = Convert.ToInt32(listView1.Items[listView1.Items.Count - 1].Text) + 1;
+                        }
+                        else
+                        {
+                            newOrderNumber = 1;
+                        }
+
+                        List<CheckBox> checkedItems = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x => x.Checked).ToList();
+                        List<CheckBox> unCheckedItems = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x => !x.Checked).ToList();
+                        string sUsage = (checkedItems.Count > 0) ? "YES" : "NO";
+
+                        /*for (int i = 0; i < listView1.Items.Count; i++)
+                        {
+                            Console.WriteLine("listView IDs:" + listView1.Items[i].Text);
+                        }*/
+
+                        //Added should return true if data added to DB.
+                        bool added = AddToDB(sUsage);
+                        if (added)
+                        {
+                            ListViewItem listViewItem = new ListViewItem(newOrderNumber.ToString());
+                            listViewItem.SubItems.Add(sID.Value.ToString());
+                            listViewItem.SubItems.Add(S_DeviceInfo_txtB[0].Text);
+                            listViewItem.SubItems.Add(S_DeviceInfo_txtB[1].Text);
+                            listViewItem.SubItems.Add(S_DeviceInfo_txtB[2].Text);
+                            listViewItem.SubItems.Add(sUsage);
+                            listView1.Items.Add(listViewItem);
+                            clearFields(S_DeviceInfo_txtB);
+                        }
                     }
-
-                    List<CheckBox> checkedItems = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x => x.Checked).ToList();
-                    List<CheckBox> unCheckedItems = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x => !x.Checked).ToList();
-                    string sUsage = (checkedItems.Count > 0) ? "YES" : "NO";
-
-                    /*for (int i = 0; i < listView1.Items.Count; i++)
-                    {
-                        Console.WriteLine("listView IDs:" + listView1.Items[i].Text);
-                    }*/
-
-                    //Added should return true if data added to DB.
-                    bool added = AddToDB(sUsage);
-                    if (added)
-                    {
-                        ListViewItem listViewItem = new ListViewItem(newOrderNumber.ToString());
-                        listViewItem.SubItems.Add(sID.Value.ToString());
-                        listViewItem.SubItems.Add(S_DeviceInfo_txtB[0].Text);
-                        listViewItem.SubItems.Add(S_DeviceInfo_txtB[1].Text);
-                        listViewItem.SubItems.Add(S_DeviceInfo_txtB[2].Text);
-                        listViewItem.SubItems.Add(sUsage);
-                        listView1.Items.Add(listViewItem);
-                        clearFields(S_DeviceInfo_txtB);
-                    }
-                    
                 }
             }
 
@@ -814,7 +820,8 @@ namespace DataCollectionApp2
             bool result_UPD = false;
             bool idExists = GetSensorID(Convert.ToInt32(sID.Value));
             bool sUsage;
-            if (idExists)
+            int deviceIdNew = Convert.ToInt32(sID.Value);
+            if (idExists && deviceIdOld != deviceIdNew)
             {
                 MessageBox.Show("DB에 이미 존재하는 센서 장비 ID입니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -825,7 +832,7 @@ namespace DataCollectionApp2
                 g_dataHandler.S_DeviceInfoColmn = S_DeviceInfoColmn;
                 g_dataHandler.S_DeviceInfoTable = S_DeviceInfoTable;
                 List<CheckBox> S_UsageCheckersChecked = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(r => r.Checked).ToList();
-                int deviceIdNew = Convert.ToInt32(sID.Value);
+                
                 bool UpdLimitRangeInfoNotUpdated = false;
                 if (S_UsageCheckersChecked.Count > 0)
                 {

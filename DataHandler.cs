@@ -130,7 +130,7 @@ namespace DataCollectionApp2
             if (deviceId == deviceIdNew)
             {
                 sqlUpdStr = $"UPDATE {tableName} SET {S_FourRangeColmn[0]} = {rangeLimitData[0]}, {S_FourRangeColmn[1]} = {rangeLimitData[1]}, {S_FourRangeColmn[2]} = {rangeLimitData[2]}, {S_FourRangeColmn[3]} = {rangeLimitData[3]}  WHERE {S_DeviceInfoColmn[0]} = {deviceId};";
-                sqlUpdCheckStr = $"SELECT 1 FROM {tableName} WHERE {S_FourRangeColmn[0]} = {deviceId} and {S_FourRangeColmn[0]} = {rangeLimitData[0]} and {S_FourRangeColmn[1]} = {rangeLimitData[1]} and {S_FourRangeColmn[2]} = {rangeLimitData[2]} and {S_FourRangeColmn[3]} = {rangeLimitData[3]};";
+                sqlUpdCheckStr = $"SELECT 1 FROM {tableName} WHERE {S_DeviceInfoColmn[0]} = {deviceId} and {S_FourRangeColmn[0]} = {rangeLimitData[0]} and {S_FourRangeColmn[1]} = {rangeLimitData[1]} and {S_FourRangeColmn[2]} = {rangeLimitData[2]} and {S_FourRangeColmn[3]} = {rangeLimitData[3]};";
             }
             else
             {
