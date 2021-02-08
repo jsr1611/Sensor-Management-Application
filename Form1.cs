@@ -100,7 +100,7 @@ namespace DataCollectionApp2
         private void MyFunc()
         {
             dbServer = "127.0.0.1";    //"10.1.55.174";
-            dbName = "SensorData_2021";
+            dbName = "SensorDataDB";
             S_DeviceInfoTable = "Devices";
             S_UsageTable = "SensorUsage";
 
