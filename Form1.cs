@@ -21,7 +21,7 @@ namespace DataCollectionApp2
     {
 
         public string dbServer = "127.0.0.1";
-        public string dbName = "SensorDataDB";
+        public string dbName = ""; // "SensorDataDB";
         public string dbUID = "dlitdb01";
         public string dbPWD = "dlitdb01";
         public string connectionTimeout = "180";
@@ -100,7 +100,7 @@ namespace DataCollectionApp2
         private void MyFunc()
         {
             dbServer = "127.0.0.1";    //"10.1.55.174";
-            dbName = "SensorDataDB22";
+            dbName = "SensorData_2021";
             S_DeviceInfoTable = "Devices";
             S_UsageTable = "SensorUsage";
 
@@ -835,6 +835,7 @@ namespace DataCollectionApp2
                 List<CheckBox> S_UsageCheckersChecked = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(r => r.Checked).ToList();
 
                 List<CheckBox> S_UsageCheckers = S_UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
+                List<string> UsageTableColumns = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).ToList();
                 List<string> UsageInfo = S_UsageCheckers.Select(x => x.Checked == true ? "YES" : "NO").ToList();
                 
                 bool UpdLimitRangeInfoNotUpdated = false;
@@ -863,9 +864,9 @@ namespace DataCollectionApp2
                     UpdLimitRangeInfoNotUpdated = true;
                 }
 
-                bool upd_SensorUsageTable = g_dataHandler.UpdateUsageTable(myConn, S_UsageTable, deviceIdOld, deviceIdNew, UsageInfo);
+                bool upd_SensorUsageTable = g_dataHandler.UpdateUsageTable(myConn, S_UsageTable, UsageTableColumns, deviceIdOld, deviceIdNew, UsageInfo);
                 bool deviceInfoTbUpd = g_dataHandler.UpdateDeviceInfoTable(myConn, S_DeviceInfoTable, deviceIdOld, deviceIdNew, S_DeviceInfo_txtB, sUsage);
-                result_UPD = (result_UPD || UpdLimitRangeInfoNotUpdated) ? deviceInfoTbUpd : false;
+                result_UPD = (result_UPD || UpdLimitRangeInfoNotUpdated) ? (deviceInfoTbUpd && upd_SensorUsageTable) : false;
             }
             return result_UPD;
         }

@@ -186,28 +186,76 @@ namespace DataCollectionApp2
             return target;
         }
 
-        public bool UpdateUsageTable(SqlConnection myConn, string UsageTable, int deviceIdOld, int deviceIdNew, List<string> usageInfo)
+        public bool UpdateUsageTable(SqlConnection myConn, string UsageTable, List<string> usageTableColmn, int deviceIdOld, int deviceIdNew, List<string> usageInfo)
         {
+            //SqlConnection myConn = new SqlConnection($"@Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20");
             bool updSuccessful = false;
-            string sqlUpd;
+            string sqlUpd = "";
+            string sqlUpdCheck = "";
+
             if (deviceIdNew == deviceIdOld)
             {
-                sqlUpd = $"UPDATE {UsageTable} VALUES({deviceIdOld} ";
-                    foreach(var item in usageInfo)
+                sqlUpd = $"UPDATE {UsageTable} SET ";
+                sqlUpdCheck = $"SELECT 1 FROM {UsageTable} WHERE ";
+                for (int i=0; i<usageInfo.Count;i++)
                 {
-                    sqlUpd += $", {item}";
+                    sqlUpd += $" {usageTableColmn[i+1]} = {usageInfo[i]} ";
+                    sqlUpdCheck += $" {usageTableColmn[i+1]} = {usageInfo[i]} and ";
+                    if (i+1 != usageInfo.Count)
+                    {
+                        sqlUpd += ",";
+                    }
                 }
 
-                sqlUpd += ");";
+                sqlUpd += $" WHERE {S_DeviceColmn[0]} = {deviceIdOld};";
+                sqlUpdCheck += $"{S_DeviceColmn[0]} = {deviceIdOld}";
             }
-            SqlCommand updCmd = new SqlCommand();
-            if(myConn.State != ConnectionState.Open)
+            else
             {
-                myConn.Open();
-            }
-            updCmd.ExecuteNonQuery();
-            
+                sqlUpd = $"UPDATE {UsageTable} SET {S_DeviceColmn[0]} = {deviceIdNew}";
+                sqlUpdCheck = $"SELECT 1 FROM {UsageTable} WHERE {S_DeviceColmn[0]} = {deviceIdNew}";
+                for (int i = 0; i < usageInfo.Count; i++)
+                {
+                    sqlUpd += $", {usageTableColmn[i+1]} = {usageInfo[i]} ";
+                    sqlUpdCheck += $" and {usageTableColmn[i + 1]} = {usageInfo[i]}";
+                }
 
+                sqlUpd += $" WHERE {S_DeviceColmn[0]} = {deviceIdOld};";
+                sqlUpdCheck += ";";
+            }
+            SqlCommand updCmd = new SqlCommand(sqlUpd, myConn);
+            SqlCommand checkUpdCmd = new SqlCommand(sqlUpdCheck, myConn);
+            try
+            {
+                if (myConn.State != ConnectionState.Open)
+                {
+                    myConn.Open();
+                }
+                updCmd.ExecuteNonQuery();
+
+                using (SqlDataReader reader = checkUpdCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (Convert.ToInt32(reader.GetValue(0)) == 1)
+                        {
+                            updSuccessful = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (myConn.State == System.Data.ConnectionState.Open)
+                {
+                    myConn.Close();
+                }
+            }
             return updSuccessful;
         }
     }
