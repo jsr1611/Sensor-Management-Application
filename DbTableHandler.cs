@@ -506,7 +506,11 @@ namespace DataCollectionApp2
                 {
                     while (reader.Read())
                     {
-                        target = Convert.ToInt32(reader.GetValue(0)) == 1;
+                        if(Convert.ToInt32(reader.GetValue(0)) == 1)
+                        {
+                            target = true;
+                            break;
+                        }
                     }
                 }
             }

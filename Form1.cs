@@ -100,7 +100,7 @@ namespace DataCollectionApp2
 
             listView1.Scrollable = true;
 
-            S_DeviceInfo_txtB = new List<TextBox>() { sName, sLocation, sZone, sDescription };
+            S_DeviceInfo_txtB = new List<TextBox>() { sName, sZone, sLocation,  sDescription };
             S_DeviceInfoColumns = new List<string>() { sID.Name, S_DeviceInfo_txtB[0].Name, S_DeviceInfo_txtB[1].Name, S_DeviceInfo_txtB[2].Name, S_DeviceInfo_txtB[3].Name, "sUsage" };
             S_FourRangeColumns = new List<string>() { "higherLimit2", "higherLimit1", "lowerLimit1", "lowerLimit2" };
 
@@ -374,10 +374,21 @@ namespace DataCollectionApp2
             //SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True");
             DataSet ds = new DataSet();
             bool checkDbExists = g_DbTableHandler.IfDatabaseExists(sensorData_dbName);
+            
+            string sqlCreateDeviceTb = $"CREATE TABLE {Devices_tbName} ({S_DeviceInfoColumns[0]} INT NOT NULL ";
+            //  S_DeviceInfo_txtB 크기만큼은 loop를 통해 스트링에 추가
+            for (int i=1; i<S_DeviceInfoColumns.Count-1; i++)
+            {
+                sqlCreateDeviceTb += $", {S_DeviceInfoColumns[i]} NVARCHAR(250) NULL ";                 
+            }
+                sqlCreateDeviceTb += $",{S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} NVARCHAR(20) NOT NULL);";
+
+
+
             if (checkDbExists)
             {
-                bool Check_SENSOR_INFO_tableExists = g_DbTableHandler.IfTableExists(Devices_tbName);
-                if (Check_SENSOR_INFO_tableExists)
+                bool Check_Device_tableExists = g_DbTableHandler.IfTableExists(Devices_tbName);
+                if (Check_Device_tableExists)
                 {
                     string sqlStr = $"SELECT * FROM {Devices_tbName}";
                     using (SqlConnection con = new SqlConnection($@"Data Source = {DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD};Min Pool Size=20"))
@@ -392,9 +403,9 @@ namespace DataCollectionApp2
                     /*DialogResult createTbOrNot = MessageBox.Show($"센서 정보 테이블을 생성합니다. \nDB명은 {dbName}, \n센서정보 테이블명 = {sensorInfo_tbName}. \n진행하시겠습니까?", "Status Info", MessageBoxButtons.YesNo);
                     if (createTbOrNot == DialogResult.Yes)
                     {*/
-                        string sqlCreateTb = $"CREATE TABLE {Devices_tbName} ({S_DeviceInfoColumns[0]} INT NOT NULL, {S_DeviceInfoColumns[1]} NVARCHAR(20) NOT NULL, {S_DeviceInfoColumns[2]} NVARCHAR(150) NULL, {S_DeviceInfoColumns[3]} NVARCHAR(150) NULL, {S_DeviceInfoColumns[4]} NVARCHAR(255) NULL,{S_DeviceInfoColumns[S_DeviceInfoColumns.Count-1]} NVARCHAR(10) NOT NULL);";
-                        bool SENSOR_INFO_tableCreated = g_DbTableHandler.CreateTable(DbName, Devices_tbName, sqlCreateTb, myConn);
-                        if (SENSOR_INFO_tableCreated)
+                        
+                        bool Device_tableCreated = g_DbTableHandler.CreateTable(DbName, Devices_tbName, sqlCreateDeviceTb, myConn);
+                        if (Device_tableCreated)
                         {
                             //MessageBox.Show($"센서 정보 DB와 테이블이 성공적으로 생성되었습니다!\nDB명 = {dbName}\n센서 정보 테이블명 = {sensorInfo_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
@@ -419,9 +430,9 @@ namespace DataCollectionApp2
                     bool dataBase_Created = g_DbTableHandler.CreateDatabase(DbName, sqlCreateDb);
                     if (dataBase_Created)
                     {
-                    string sqlCreateTb = $"CREATE TABLE {Devices_tbName} ({S_DeviceInfoColumns[0]} INT NOT NULL, {S_DeviceInfoColumns[1]} NVARCHAR(20) NOT NULL, {S_DeviceInfoColumns[2]} NVARCHAR(150) NULL, {S_DeviceInfoColumns[3]} NVARCHAR(150) NULL, {S_DeviceInfoColumns[4]} NVARCHAR(255) NULL,{S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} NVARCHAR(10) NOT NULL);";
-                    bool SENSOR_INFO_tableCreated = g_DbTableHandler.CreateTable(DbName, Devices_tbName, sqlCreateTb, myConn);
-                        if (SENSOR_INFO_tableCreated)
+
+                    bool Device_tableCreated = g_DbTableHandler.CreateTable(DbName, Devices_tbName, sqlCreateDeviceTb, myConn);
+                        if (Device_tableCreated)
                         {
                             //MessageBox.Show($"센서 정보 DB와 테이블이 성공적으로 생성되었습니다!\nDB명 = {dbName}\n센서 정보 테이블명 = {sensorInfo_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
@@ -674,28 +685,17 @@ namespace DataCollectionApp2
 
         private void b_save_Click(object sender, EventArgs e)
         {
-            bool emptyColumn = false;
             
+            List<CheckBox> checkedItems = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x => x.Checked).ToList();
+            string sUsage = (checkedItems.Count > 0) ? "YES" : "NO";
 
             Dictionary<CheckBox, List<NumericUpDown>> dataToBeSaved = new Dictionary<CheckBox, List<NumericUpDown>>();
-            for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
-            {
-                if (S_DeviceInfo_txtB[i].Text.Length < 1)
-                {
-                    emptyColumn = true;
-                }
-            }
+            
 
             //기존 센서 정보를 update하는 부분
             if (listView1.SelectedItems.Count > 0)
             {
 
-                if (emptyColumn)
-                {
-                    MessageBox.Show($"빈칸이 있어요.", "Status Info", MessageBoxButtons.OK);
-                }
-                else
-                {
                     int deviceId = Convert.ToInt32(listView1.SelectedItems[0].SubItems[1].Text);
                     //Console.WriteLine("ID:" + listView1.SelectedItems[0].Text);
                     bool updated = UpdateDB(deviceId);
@@ -708,24 +708,16 @@ namespace DataCollectionApp2
                             {
                                 item.SubItems[i + 2].Text = S_DeviceInfo_txtB[i].Text;
                             }
+                            item.SubItems[item.SubItems.Count - 1].Text = sUsage;
                         }
                     clearFields(S_DeviceInfo_txtB);
                         MessageBox.Show("센서 정보 DB 업데이트가 성공적으로 이루어졌습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    
-                }
-
             }
             
             //새 장비 추가하는 부분
             else
             {
-                if (emptyColumn)
-                {
-                    MessageBox.Show($"빈칸이 있어요.", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else
-                {
                     bool idExists = GetSensorID(Convert.ToInt32(sID.Value));
                     if (idExists)
                     {
@@ -742,14 +734,6 @@ namespace DataCollectionApp2
                             newOrderNumber = 1;
                         }
 
-                        List<CheckBox> checkedItems = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x => x.Checked).ToList();
-                        //List<CheckBox> unCheckedItems = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x => !x.Checked).ToList();
-                        string sUsage = (checkedItems.Count > 0) ? "YES" : "NO";
-
-                        /*for (int i = 0; i < listView1.Items.Count; i++)
-                        {
-                            Console.WriteLine("listView IDs:" + listView1.Items[i].Text);
-                        }*/
 
                         //Added should return true if data added to DB.
                         bool added = AddToDB(sUsage);
@@ -766,7 +750,6 @@ namespace DataCollectionApp2
                             MessageBox.Show("새 센서 장비 정보가 DB에 성공적으로 추가 되었습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
-                }
             }
 
             
@@ -1144,8 +1127,10 @@ namespace DataCollectionApp2
             }
 
 
-
-            sID.Value = Convert.ToInt32(listView1.Items[listView1.Items.Count - 1].SubItems[0].Text) + 1;
+            if(listView1.Items.Count > 0) { 
+                sID.Value = Convert.ToInt32(listView1.Items[listView1.Items.Count - 1].SubItems[0].Text) + 1; 
+            }
+            
             RangeSetNew();
             S_DeviceInfo_txtB[0].Focus();
         }

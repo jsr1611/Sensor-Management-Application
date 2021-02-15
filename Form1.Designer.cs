@@ -74,6 +74,8 @@ namespace DataCollectionApp2
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.l_zone = new System.Windows.Forms.Label();
+            this.sZone = new System.Windows.Forms.TextBox();
             this.s_p100HigherLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_p100HigherLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_p100LowerLimit2 = new System.Windows.Forms.NumericUpDown();
@@ -135,8 +137,7 @@ namespace DataCollectionApp2
             this.sLocation = new System.Windows.Forms.TextBox();
             this.sName = new System.Windows.Forms.TextBox();
             this.sID = new System.Windows.Forms.NumericUpDown();
-            this.l_zone = new System.Windows.Forms.Label();
-            this.sZone = new System.Windows.Forms.TextBox();
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -500,8 +501,9 @@ namespace DataCollectionApp2
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
+            this.columnHeader5,
             this.columnHeader4,
-            this.columnHeader5});
+            this.columnHeader6});
             resources.ApplyResources(this.listView1, "listView1");
             this.listView1.FullRowSelect = true;
             this.listView1.HideSelection = false;
@@ -535,6 +537,16 @@ namespace DataCollectionApp2
             // columnHeader5
             // 
             resources.ApplyResources(this.columnHeader5, "columnHeader5");
+            // 
+            // l_zone
+            // 
+            resources.ApplyResources(this.l_zone, "l_zone");
+            this.l_zone.Name = "l_zone";
+            // 
+            // sZone
+            // 
+            resources.ApplyResources(this.sZone, "sZone");
+            this.sZone.Name = "sZone";
             // 
             // s_p100HigherLimit2
             // 
@@ -1054,15 +1066,9 @@ namespace DataCollectionApp2
             0,
             0});
             // 
-            // l_zone
+            // columnHeader6
             // 
-            resources.ApplyResources(this.l_zone, "l_zone");
-            this.l_zone.Name = "l_zone";
-            // 
-            // sZone
-            // 
-            resources.ApplyResources(this.sZone, "sZone");
-            this.sZone.Name = "sZone";
+            resources.ApplyResources(this.columnHeader6, "columnHeader6");
             // 
             // Form1
             // 
@@ -1235,6 +1241,7 @@ namespace DataCollectionApp2
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label l_zone;
         private System.Windows.Forms.TextBox sZone;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
     }
 }
 
