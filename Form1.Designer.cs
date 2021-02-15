@@ -51,7 +51,12 @@ namespace DataCollectionApp2
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.b_dataCollection_status = new System.Windows.Forms.Button();
+            this.b_stop = new System.Windows.Forms.Button();
+            this.b_start = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.b_save = new System.Windows.Forms.Button();
+            this.b_addSensor = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.splitter2 = new System.Windows.Forms.Splitter();
@@ -130,11 +135,8 @@ namespace DataCollectionApp2
             this.sLocation = new System.Windows.Forms.TextBox();
             this.sName = new System.Windows.Forms.TextBox();
             this.sID = new System.Windows.Forms.NumericUpDown();
-            this.b_dataCollection_status = new System.Windows.Forms.Button();
-            this.b_stop = new System.Windows.Forms.Button();
-            this.b_start = new System.Windows.Forms.Button();
-            this.b_save = new System.Windows.Forms.Button();
-            this.b_addSensor = new System.Windows.Forms.Button();
+            this.l_zone = new System.Windows.Forms.Label();
+            this.sZone = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -314,12 +316,52 @@ namespace DataCollectionApp2
             resources.ApplyResources(this.panel4, "panel4");
             this.panel4.Name = "panel4";
             // 
+            // b_dataCollection_status
+            // 
+            resources.ApplyResources(this.b_dataCollection_status, "b_dataCollection_status");
+            this.b_dataCollection_status.Image = global::DataCollectionApp2.Properties.Resources.light_off_26;
+            this.b_dataCollection_status.Name = "b_dataCollection_status";
+            this.b_dataCollection_status.UseVisualStyleBackColor = true;
+            // 
+            // b_stop
+            // 
+            resources.ApplyResources(this.b_stop, "b_stop");
+            this.b_stop.Image = global::DataCollectionApp2.Properties.Resources.pause_26_color;
+            this.b_stop.Name = "b_stop";
+            this.b_stop.UseVisualStyleBackColor = true;
+            this.b_stop.Click += new System.EventHandler(this.b_stop_Click);
+            // 
+            // b_start
+            // 
+            resources.ApplyResources(this.b_start, "b_start");
+            this.b_start.Image = global::DataCollectionApp2.Properties.Resources.play_26_color;
+            this.b_start.Name = "b_start";
+            this.b_start.UseVisualStyleBackColor = true;
+            this.b_start.Click += new System.EventHandler(this.b_start_Click);
+            // 
             // panel5
             // 
             this.panel5.Controls.Add(this.b_save);
             this.panel5.Controls.Add(this.b_addSensor);
             resources.ApplyResources(this.panel5, "panel5");
             this.panel5.Name = "panel5";
+            // 
+            // b_save
+            // 
+            this.b_save.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.b_save, "b_save");
+            this.b_save.Image = global::DataCollectionApp2.Properties.Resources.save_26_color;
+            this.b_save.Name = "b_save";
+            this.b_save.UseVisualStyleBackColor = false;
+            this.b_save.Click += new System.EventHandler(this.b_save_Click);
+            // 
+            // b_addSensor
+            // 
+            resources.ApplyResources(this.b_addSensor, "b_addSensor");
+            this.b_addSensor.Image = global::DataCollectionApp2.Properties.Resources.add_26_color;
+            this.b_addSensor.Name = "b_addSensor";
+            this.b_addSensor.UseVisualStyleBackColor = true;
+            this.b_addSensor.Click += new System.EventHandler(this.b_add_Click);
             // 
             // panel6
             // 
@@ -387,6 +429,8 @@ namespace DataCollectionApp2
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.l_zone);
+            this.splitContainer1.Panel2.Controls.Add(this.sZone);
             this.splitContainer1.Panel2.Controls.Add(this.s_p100HigherLimit2);
             this.splitContainer1.Panel2.Controls.Add(this.s_p100HigherLimit1);
             this.splitContainer1.Panel2.Controls.Add(this.s_p100LowerLimit2);
@@ -998,47 +1042,27 @@ namespace DataCollectionApp2
             0,
             0,
             0});
+            this.sID.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.sID.Name = "sID";
+            this.sID.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
-            // b_dataCollection_status
+            // l_zone
             // 
-            resources.ApplyResources(this.b_dataCollection_status, "b_dataCollection_status");
-            this.b_dataCollection_status.Image = global::DataCollectionApp2.Properties.Resources.light_off_26;
-            this.b_dataCollection_status.Name = "b_dataCollection_status";
-            this.b_dataCollection_status.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.l_zone, "l_zone");
+            this.l_zone.Name = "l_zone";
             // 
-            // b_stop
+            // sZone
             // 
-            resources.ApplyResources(this.b_stop, "b_stop");
-            this.b_stop.Image = global::DataCollectionApp2.Properties.Resources.pause_26_color;
-            this.b_stop.Name = "b_stop";
-            this.b_stop.UseVisualStyleBackColor = true;
-            this.b_stop.Click += new System.EventHandler(this.b_stop_Click);
-            // 
-            // b_start
-            // 
-            resources.ApplyResources(this.b_start, "b_start");
-            this.b_start.Image = global::DataCollectionApp2.Properties.Resources.play_26_color;
-            this.b_start.Name = "b_start";
-            this.b_start.UseVisualStyleBackColor = true;
-            this.b_start.Click += new System.EventHandler(this.b_start_Click);
-            // 
-            // b_save
-            // 
-            this.b_save.BackColor = System.Drawing.Color.Transparent;
-            resources.ApplyResources(this.b_save, "b_save");
-            this.b_save.Image = global::DataCollectionApp2.Properties.Resources.save_26_color;
-            this.b_save.Name = "b_save";
-            this.b_save.UseVisualStyleBackColor = false;
-            this.b_save.Click += new System.EventHandler(this.b_save_Click);
-            // 
-            // b_addSensor
-            // 
-            resources.ApplyResources(this.b_addSensor, "b_addSensor");
-            this.b_addSensor.Image = global::DataCollectionApp2.Properties.Resources.add_26_color;
-            this.b_addSensor.Name = "b_addSensor";
-            this.b_addSensor.UseVisualStyleBackColor = true;
-            this.b_addSensor.Click += new System.EventHandler(this.b_add_Click);
+            resources.ApplyResources(this.sZone, "sZone");
+            this.sZone.Name = "sZone";
             // 
             // Form1
             // 
@@ -1209,6 +1233,8 @@ namespace DataCollectionApp2
         private System.Windows.Forms.NumericUpDown s_p03LowerLimit2;
         private System.Windows.Forms.NumericUpDown s_p03LowerLimit1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label l_zone;
+        private System.Windows.Forms.TextBox sZone;
     }
 }
 

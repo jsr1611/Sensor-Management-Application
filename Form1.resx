@@ -948,6 +948,57 @@
   <data name="&gt;&gt;splitContainer1.Panel1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="l_zone.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="l_zone.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="l_zone.Location" type="System.Drawing.Point, System.Drawing">
+    <value>315, 70</value>
+  </data>
+  <data name="l_zone.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 12</value>
+  </data>
+  <data name="l_zone.TabIndex" type="System.Int32, mscorlib">
+    <value>105</value>
+  </data>
+  <data name="l_zone.Text" xml:space="preserve">
+    <value>주소</value>
+  </data>
+  <data name="&gt;&gt;l_zone.Name" xml:space="preserve">
+    <value>l_zone</value>
+  </data>
+  <data name="&gt;&gt;l_zone.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;l_zone.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;l_zone.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="sZone.Location" type="System.Drawing.Point, System.Drawing">
+    <value>386, 67</value>
+  </data>
+  <data name="sZone.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 21</value>
+  </data>
+  <data name="sZone.TabIndex" type="System.Int32, mscorlib">
+    <value>104</value>
+  </data>
+  <data name="&gt;&gt;sZone.Name" xml:space="preserve">
+    <value>sZone</value>
+  </data>
+  <data name="&gt;&gt;sZone.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;sZone.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;sZone.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="s_p100HigherLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>522, 159</value>
   </data>
@@ -970,7 +1021,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p100HigherLimit2.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="s_p100HigherLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>522, 187</value>
@@ -994,7 +1045,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p100HigherLimit1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="s_p100LowerLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>522, 245</value>
@@ -1018,7 +1069,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p100LowerLimit2.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="s_p100LowerLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>522, 218</value>
@@ -1042,7 +1093,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p100LowerLimit1.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="s_p50HigherLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>456, 159</value>
@@ -1066,7 +1117,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p50HigherLimit2.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="s_p50HigherLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>456, 187</value>
@@ -1090,7 +1141,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p50HigherLimit1.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="s_p50LowerLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>456, 245</value>
@@ -1114,7 +1165,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p50LowerLimit2.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="s_p50LowerLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>456, 218</value>
@@ -1138,7 +1189,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p50LowerLimit1.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="s_p25HigherLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>391, 159</value>
@@ -1162,7 +1213,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p25HigherLimit2.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="s_p25HigherLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>391, 187</value>
@@ -1186,7 +1237,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p25HigherLimit1.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="s_p25LowerLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>391, 245</value>
@@ -1210,7 +1261,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p25LowerLimit2.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="s_p25LowerLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>391, 218</value>
@@ -1234,7 +1285,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p25LowerLimit1.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="s_p10HigherLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>326, 159</value>
@@ -1258,7 +1309,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p10HigherLimit2.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>14</value>
   </data>
   <data name="s_p10HigherLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>326, 187</value>
@@ -1282,7 +1333,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p10HigherLimit1.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>15</value>
   </data>
   <data name="s_p10LowerLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>326, 245</value>
@@ -1306,7 +1357,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p10LowerLimit2.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>16</value>
   </data>
   <data name="s_p10LowerLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>326, 218</value>
@@ -1330,7 +1381,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p10LowerLimit1.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>17</value>
   </data>
   <data name="s_p05HigherLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 159</value>
@@ -1354,7 +1405,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p05HigherLimit2.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>18</value>
   </data>
   <data name="s_p05HigherLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 187</value>
@@ -1378,7 +1429,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p05HigherLimit1.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>19</value>
   </data>
   <data name="s_p05LowerLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 245</value>
@@ -1402,7 +1453,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p05LowerLimit2.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>20</value>
   </data>
   <data name="s_p05LowerLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 218</value>
@@ -1426,7 +1477,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p05LowerLimit1.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>21</value>
   </data>
   <data name="s_p03HigherLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>195, 159</value>
@@ -1450,7 +1501,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p03HigherLimit2.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>22</value>
   </data>
   <data name="s_p03HigherLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>195, 187</value>
@@ -1474,7 +1525,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p03HigherLimit1.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>23</value>
   </data>
   <data name="s_p03LowerLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>195, 245</value>
@@ -1498,7 +1549,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p03LowerLimit2.ZOrder" xml:space="preserve">
-    <value>22</value>
+    <value>24</value>
   </data>
   <data name="s_p03LowerLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>195, 218</value>
@@ -1522,7 +1573,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_p03LowerLimit1.ZOrder" xml:space="preserve">
-    <value>23</value>
+    <value>25</value>
   </data>
   <data name="s_hLowerLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>138, 245</value>
@@ -1549,7 +1600,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_hLowerLimit2.ZOrder" xml:space="preserve">
-    <value>24</value>
+    <value>26</value>
   </data>
   <data name="s_hLowerLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>138, 218</value>
@@ -1576,7 +1627,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_hLowerLimit1.ZOrder" xml:space="preserve">
-    <value>25</value>
+    <value>27</value>
   </data>
   <data name="s_hHigherLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>138, 159</value>
@@ -1603,7 +1654,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_hHigherLimit2.ZOrder" xml:space="preserve">
-    <value>26</value>
+    <value>28</value>
   </data>
   <data name="s_hHigherLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>138, 187</value>
@@ -1630,7 +1681,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_hHigherLimit1.ZOrder" xml:space="preserve">
-    <value>27</value>
+    <value>29</value>
   </data>
   <data name="s_tLowerLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 245</value>
@@ -1657,7 +1708,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_tLowerLimit2.ZOrder" xml:space="preserve">
-    <value>28</value>
+    <value>30</value>
   </data>
   <data name="s_tLowerLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 218</value>
@@ -1684,7 +1735,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_tLowerLimit1.ZOrder" xml:space="preserve">
-    <value>29</value>
+    <value>31</value>
   </data>
   <data name="s_tHigherLimit2.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 159</value>
@@ -1711,7 +1762,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_tHigherLimit2.ZOrder" xml:space="preserve">
-    <value>30</value>
+    <value>32</value>
   </data>
   <data name="s_tHigherLimit1.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 187</value>
@@ -1738,7 +1789,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;s_tHigherLimit1.ZOrder" xml:space="preserve">
-    <value>31</value>
+    <value>33</value>
   </data>
   <data name="c_p100Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1762,7 +1813,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;c_p100Usage.ZOrder" xml:space="preserve">
-    <value>32</value>
+    <value>34</value>
   </data>
   <data name="c_p50Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1786,7 +1837,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;c_p50Usage.ZOrder" xml:space="preserve">
-    <value>33</value>
+    <value>35</value>
   </data>
   <data name="c_p25Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1810,7 +1861,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;c_p25Usage.ZOrder" xml:space="preserve">
-    <value>34</value>
+    <value>36</value>
   </data>
   <data name="c_p10Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1834,7 +1885,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;c_p10Usage.ZOrder" xml:space="preserve">
-    <value>35</value>
+    <value>37</value>
   </data>
   <data name="l_p100Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1864,7 +1915,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_p100Usage.ZOrder" xml:space="preserve">
-    <value>36</value>
+    <value>38</value>
   </data>
   <data name="l_p5Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1894,7 +1945,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_p5Usage.ZOrder" xml:space="preserve">
-    <value>37</value>
+    <value>39</value>
   </data>
   <data name="l_p25Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1924,7 +1975,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_p25Usage.ZOrder" xml:space="preserve">
-    <value>38</value>
+    <value>40</value>
   </data>
   <data name="l_p10Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1954,7 +2005,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_p10Usage.ZOrder" xml:space="preserve">
-    <value>39</value>
+    <value>41</value>
   </data>
   <data name="l_p05Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1984,7 +2035,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_p05Usage.ZOrder" xml:space="preserve">
-    <value>40</value>
+    <value>42</value>
   </data>
   <data name="c_p05Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -2008,7 +2059,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;c_p05Usage.ZOrder" xml:space="preserve">
-    <value>41</value>
+    <value>43</value>
   </data>
   <data name="l_p03Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -2038,7 +2089,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_p03Usage.ZOrder" xml:space="preserve">
-    <value>42</value>
+    <value>44</value>
   </data>
   <data name="c_p03Usage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -2062,7 +2113,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;c_p03Usage.ZOrder" xml:space="preserve">
-    <value>43</value>
+    <value>45</value>
   </data>
   <data name="l_hUsage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -2092,7 +2143,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_hUsage.ZOrder" xml:space="preserve">
-    <value>44</value>
+    <value>46</value>
   </data>
   <data name="c_hUsage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -2116,7 +2167,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;c_hUsage.ZOrder" xml:space="preserve">
-    <value>45</value>
+    <value>47</value>
   </data>
   <data name="l_tUsage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -2146,7 +2197,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_tUsage.ZOrder" xml:space="preserve">
-    <value>46</value>
+    <value>48</value>
   </data>
   <data name="c_tUsage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -2170,7 +2221,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;c_tUsage.ZOrder" xml:space="preserve">
-    <value>47</value>
+    <value>49</value>
   </data>
   <data name="l_sHigherLimit2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2200,7 +2251,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_sHigherLimit2.ZOrder" xml:space="preserve">
-    <value>48</value>
+    <value>50</value>
   </data>
   <data name="l_sHigherLimit1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2230,7 +2281,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_sHigherLimit1.ZOrder" xml:space="preserve">
-    <value>49</value>
+    <value>51</value>
   </data>
   <data name="l_sLowerLimit2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2260,7 +2311,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_sLowerLimit2.ZOrder" xml:space="preserve">
-    <value>50</value>
+    <value>52</value>
   </data>
   <data name="l_sLowerLimit1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2290,7 +2341,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_sLowerLimit1.ZOrder" xml:space="preserve">
-    <value>51</value>
+    <value>53</value>
   </data>
   <data name="l_sUsage.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2320,7 +2371,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_sUsage.ZOrder" xml:space="preserve">
-    <value>52</value>
+    <value>54</value>
   </data>
   <data name="l_sDescription.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2350,7 +2401,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_sDescription.ZOrder" xml:space="preserve">
-    <value>53</value>
+    <value>55</value>
   </data>
   <data name="l_sLocation.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2380,7 +2431,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_sLocation.ZOrder" xml:space="preserve">
-    <value>54</value>
+    <value>56</value>
   </data>
   <data name="l_sName.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2410,7 +2461,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_sName.ZOrder" xml:space="preserve">
-    <value>55</value>
+    <value>57</value>
   </data>
   <data name="l_sID.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2440,7 +2491,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;l_sID.ZOrder" xml:space="preserve">
-    <value>56</value>
+    <value>58</value>
   </data>
   <data name="sDescription.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 94</value>
@@ -2449,7 +2500,7 @@
     <value>True</value>
   </data>
   <data name="sDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>445, 21</value>
+    <value>502, 21</value>
   </data>
   <data name="sDescription.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -2464,7 +2515,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;sDescription.ZOrder" xml:space="preserve">
-    <value>57</value>
+    <value>59</value>
   </data>
   <data name="sLocation.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 67</value>
@@ -2485,7 +2536,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;sLocation.ZOrder" xml:space="preserve">
-    <value>58</value>
+    <value>60</value>
   </data>
   <data name="sName.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 40</value>
@@ -2506,7 +2557,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;sName.ZOrder" xml:space="preserve">
-    <value>59</value>
+    <value>61</value>
   </data>
   <data name="sID.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 13</value>
@@ -2527,7 +2578,7 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;sID.ZOrder" xml:space="preserve">
-    <value>60</value>
+    <value>62</value>
   </data>
   <data name="&gt;&gt;splitContainer1.Panel2.Name" xml:space="preserve">
     <value>splitContainer1.Panel2</value>

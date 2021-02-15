@@ -87,10 +87,11 @@ namespace DataCollectionApp2
         {
             InitializeComponent();
 
-            DbServer = "127.0.0.1";    //"10.1.55.174";
+            DbServer = "localhost\\SQLEXPRESS";//"127.0.0.1";    //"10.1.55.174"; 
+            //Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;
             DbName = "SensorDataDB";
-            DbUID = "dlitdb01";
-            DbPWD = "dlitdb01";
+            DbUID = "dlitadmin";
+            DbPWD = "dlitadmin";
 
             S_DeviceTable = "SENSOR_INFO";
             S_UsageTable = "SensorUsage";
@@ -99,8 +100,8 @@ namespace DataCollectionApp2
 
             listView1.Scrollable = true;
 
-            S_DeviceInfo_txtB = new List<TextBox>() { sName, sLocation, sDescription };
-            S_DeviceInfoColumns = new List<string>() { sID.Name, S_DeviceInfo_txtB[0].Name, S_DeviceInfo_txtB[1].Name, S_DeviceInfo_txtB[2].Name, "sUsage" };
+            S_DeviceInfo_txtB = new List<TextBox>() { sName, sLocation, sZone, sDescription };
+            S_DeviceInfoColumns = new List<string>() { sID.Name, S_DeviceInfo_txtB[0].Name, S_DeviceInfo_txtB[1].Name, S_DeviceInfo_txtB[2].Name, S_DeviceInfo_txtB[3].Name, "sUsage" };
             S_FourRangeColumns = new List<string>() { "higherLimit2", "higherLimit1", "lowerLimit1", "lowerLimit2" };
 
 
@@ -128,7 +129,7 @@ namespace DataCollectionApp2
             DataSet DeviceTable = GetDeviceInfo(DbName, S_DeviceTable);
             if (DeviceTable.Tables.Count > 0)
             {
-                D_IDs = new List<int>(DeviceTable.Tables[0].AsEnumerable().Where(r => r.Field<string>(S_DeviceInfoColumns[4]) == "YES").Select(r => r.Field<int>(S_DeviceInfoColumns[0])).ToList());
+                D_IDs = new List<int>(DeviceTable.Tables[0].AsEnumerable().Where(r => r.Field<string>(S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]) == "YES").Select(r => r.Field<int>(S_DeviceInfoColumns[0])).ToList());
 
                 //ModBus and myConnection initialization
                 //ConnectionSettings(true);
@@ -237,7 +238,7 @@ namespace DataCollectionApp2
         /// <returns></returns>
         private List<int> GetSensorIDs(List<int> S_IDs)
         {
-            string IdCheckCmd = $"SELECT {S_DeviceInfoColumns[0]} FROM {DbName}.dbo.{S_DeviceTable} WHERE {S_DeviceInfoColumns[4]}='YES'";
+            string IdCheckCmd = $"SELECT {S_DeviceInfoColumns[0]} FROM {DbName}.dbo.{S_DeviceTable} WHERE {S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]}='YES'";
             //Console.WriteLine("Usable sensor IDs:");
             SqlCommand sqlCommand = new SqlCommand(IdCheckCmd, myConn);
             try
@@ -369,15 +370,16 @@ namespace DataCollectionApp2
         /// <returns></returns>
         private DataSet GetDeviceInfo(string sensorData_dbName, string Devices_tbName)
         {
-            SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;User id={DbUID};Password={DbPWD};Min Pool Size=20");
+            // Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;
+            //SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True");
             DataSet ds = new DataSet();
-            bool checkDbExists = g_DbTableHandler.IfDatabaseExists(sensorData_dbName, myConn_master);
+            bool checkDbExists = g_DbTableHandler.IfDatabaseExists(sensorData_dbName);
             if (checkDbExists)
             {
                 bool Check_SENSOR_INFO_tableExists = g_DbTableHandler.IfTableExists(Devices_tbName);
                 if (Check_SENSOR_INFO_tableExists)
                 {
-                    string sqlStr = $"SELECT * FROM {sensorData_dbName}.dbo.{Devices_tbName}";
+                    string sqlStr = $"SELECT * FROM {Devices_tbName}";
                     using (SqlConnection con = new SqlConnection($@"Data Source = {DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD};Min Pool Size=20"))
                     { //Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20")) // ; Integrated Security=True
                       //con.Open();
@@ -390,7 +392,7 @@ namespace DataCollectionApp2
                     /*DialogResult createTbOrNot = MessageBox.Show($"센서 정보 테이블을 생성합니다. \nDB명은 {dbName}, \n센서정보 테이블명 = {sensorInfo_tbName}. \n진행하시겠습니까?", "Status Info", MessageBoxButtons.YesNo);
                     if (createTbOrNot == DialogResult.Yes)
                     {*/
-                        string sqlCreateTb = $"CREATE TABLE {Devices_tbName} ({S_DeviceInfoColumns[0]} INT NOT NULL, {S_DeviceInfoColumns[1]} NVARCHAR(20) NOT NULL, {S_DeviceInfoColumns[2]} NVARCHAR(150) NULL, {S_DeviceInfoColumns[3]} NVARCHAR(255) NULL, {S_DeviceInfoColumns[4]} NVARCHAR(10) NOT NULL);";
+                        string sqlCreateTb = $"CREATE TABLE {Devices_tbName} ({S_DeviceInfoColumns[0]} INT NOT NULL, {S_DeviceInfoColumns[1]} NVARCHAR(20) NOT NULL, {S_DeviceInfoColumns[2]} NVARCHAR(150) NULL, {S_DeviceInfoColumns[3]} NVARCHAR(150) NULL, {S_DeviceInfoColumns[4]} NVARCHAR(255) NULL,{S_DeviceInfoColumns[S_DeviceInfoColumns.Count-1]} NVARCHAR(10) NOT NULL);";
                         bool SENSOR_INFO_tableCreated = g_DbTableHandler.CreateTable(DbName, Devices_tbName, sqlCreateTb, myConn);
                         if (SENSOR_INFO_tableCreated)
                         {
@@ -412,13 +414,13 @@ namespace DataCollectionApp2
                 /*DialogResult createTbOrNot = MessageBox.Show($"관리페이지에 오신 것을 환영합니다. \n센서 정보 DB와 테이블을 생성합니다. \nDB명은 {dbName}, \n센서정보 테이블명 = {sensorInfo_tbName}. \n진행하시겠습니까?", "Status Info", MessageBoxButtons.YesNo);
                 if (createTbOrNot == DialogResult.Yes)
                 {*/
-                    string sqlCreateDb = $"CREATE DATABASE {DbName};";
+                    string sqlCreateDb = $@"CREATE DATABASE {DbName};";
 
-                    bool dataBase_Created = g_DbTableHandler.CreateDatabase(myConn_master, DbName, sqlCreateDb);
+                    bool dataBase_Created = g_DbTableHandler.CreateDatabase(DbName, sqlCreateDb);
                     if (dataBase_Created)
                     {
-                        string sqlCreateTb = $"CREATE TABLE {Devices_tbName} ({S_DeviceInfoColumns[0]} INT NOT NULL, {S_DeviceInfoColumns[1]} NVARCHAR(20) NOT NULL, {S_DeviceInfoColumns[2]} NVARCHAR(150) NULL, {S_DeviceInfoColumns[3]} NVARCHAR(255) NULL, {S_DeviceInfoColumns[4]} NVARCHAR(10) NOT NULL);";
-                        bool SENSOR_INFO_tableCreated = g_DbTableHandler.CreateTable(DbName, Devices_tbName, sqlCreateTb, myConn);
+                    string sqlCreateTb = $"CREATE TABLE {Devices_tbName} ({S_DeviceInfoColumns[0]} INT NOT NULL, {S_DeviceInfoColumns[1]} NVARCHAR(20) NOT NULL, {S_DeviceInfoColumns[2]} NVARCHAR(150) NULL, {S_DeviceInfoColumns[3]} NVARCHAR(150) NULL, {S_DeviceInfoColumns[4]} NVARCHAR(255) NULL,{S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} NVARCHAR(10) NOT NULL);";
+                    bool SENSOR_INFO_tableCreated = g_DbTableHandler.CreateTable(DbName, Devices_tbName, sqlCreateTb, myConn);
                         if (SENSOR_INFO_tableCreated)
                         {
                             //MessageBox.Show($"센서 정보 DB와 테이블이 성공적으로 생성되었습니다!\nDB명 = {dbName}\n센서 정보 테이블명 = {sensorInfo_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -869,6 +871,7 @@ namespace DataCollectionApp2
         /// <param name="g_sensorUsage">(g = general) 전체적인 센서 사용여부를 결정하는 파라메터</param>
         private bool AddToDB(string g_sensorUsage)
         {
+            
             //SqlConnection myConn = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20");
             bool result = false;
 
@@ -1070,8 +1073,8 @@ namespace DataCollectionApp2
                 }
                 
                 // 관련 테이블도 같이 업데이트함.
-                string sqlInsert_DevicesTable = $"INSERT INTO {S_DeviceTable} ({S_DeviceInfoColumns[0]}, {S_DeviceInfoColumns[1]}, {S_DeviceInfoColumns[2]}, {S_DeviceInfoColumns[3]}, {S_DeviceInfoColumns[4]}) " +
-                    $"VALUES ('{sensorId}', '{S_DeviceInfo_txtB[0].Text}', '{S_DeviceInfo_txtB[1].Text}', '{S_DeviceInfo_txtB[2].Text}', '{g_sensorUsage}');";
+                string sqlInsert_DevicesTable = $"INSERT INTO {S_DeviceTable} ({S_DeviceInfoColumns[0]}, {S_DeviceInfoColumns[1]}, {S_DeviceInfoColumns[2]}, {S_DeviceInfoColumns[3]}, {S_DeviceInfoColumns[4]}, {S_DeviceInfoColumns[S_DeviceInfoColumns.Count-1]}) " +
+                    $"VALUES ('{sensorId}', '{S_DeviceInfo_txtB[0].Text}', '{S_DeviceInfo_txtB[1].Text}', '{S_DeviceInfo_txtB[2].Text}','{S_DeviceInfo_txtB[3].Text}', '{g_sensorUsage}');";
 
                 SqlCommand sqlCommand = new SqlCommand(sqlInsert_DevicesTable, myConn);
                 try
@@ -1132,12 +1135,17 @@ namespace DataCollectionApp2
             {
                 ListViewItem item = listView1.SelectedItems[0];
                 item.Selected = false;
+                
             }
             for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
             {
                 //textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
                 S_DeviceInfo_txtB[i].Text = "";
             }
+
+
+
+            sID.Value = Convert.ToInt32(listView1.Items[listView1.Items.Count - 1].SubItems[0].Text) + 1;
             RangeSetNew();
             S_DeviceInfo_txtB[0].Focus();
         }

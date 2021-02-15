@@ -346,7 +346,8 @@ namespace DataCollectionApp2
 
         public bool IfDatabaseExists(string dbName)
         {
-            SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;User id={DbUID};Password={DbPWD};Min Pool Size=20");
+            SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True"); 
+                                                        //($@"Data Source = {DbServer};Initial Catalog=master;User id={DbUID};Password={DbPWD};Min Pool Size=20");
             bool result = false;
             string sql_dbExists = $"IF DB_ID('{dbName}') IS NOT NULL SELECT 1";
             SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn_master);
@@ -451,20 +452,21 @@ namespace DataCollectionApp2
 
 
 
-        public bool CreateDatabase(SqlConnection myConn, string dbName, string sqlStr_CreateDb)
+        public bool CreateDatabase(string dbName, string sqlStr_CreateDb)
         {
+            SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True");
             bool res = false;
-            SqlCommand dbCreateCmd = new SqlCommand(sqlStr_CreateDb, myConn);
+            SqlCommand dbCreateCmd = new SqlCommand(sqlStr_CreateDb, myConn_master);
             try
             {
-                if (myConn.State != ConnectionState.Open)
+                if (myConn_master.State != ConnectionState.Open)
                 {
-                    myConn.Open();
+                    myConn_master.Open();
                 }
 
                 dbCreateCmd.ExecuteNonQuery();
 
-                res = IfDatabaseExists(dbName, myConn);
+                res = IfDatabaseExists(dbName, myConn_master);
             }
             catch (System.Exception ex)
             {
@@ -472,9 +474,9 @@ namespace DataCollectionApp2
             }
             finally
             {
-                if (myConn.State == System.Data.ConnectionState.Open)
+                if (myConn_master.State == System.Data.ConnectionState.Open)
                 {
-                    myConn.Close();
+                    myConn_master.Close();
                 }
             }
 
@@ -537,14 +539,16 @@ namespace DataCollectionApp2
                                         $"SET {S_DeviceInfoColumns[1]} = '{txtB_DeviceInfo[0].Text}' " +
                                             $", {S_DeviceInfoColumns[2]} = '{txtB_DeviceInfo[1].Text}' " +
                                             $", {S_DeviceInfoColumns[3]} = '{txtB_DeviceInfo[2].Text}' " +
-                                            $", {S_DeviceInfoColumns[4]} = '{sensorUsage}' " +
+                                            $", {S_DeviceInfoColumns[4]} = '{txtB_DeviceInfo[3].Text}' " +
+                                            $", {S_DeviceInfoColumns[S_DeviceInfoColumns.Count-1]} = '{sensorUsage}' " +
                                         $" WHERE {S_DeviceInfoColumns[0]} = {deviceId}; ";
                 sqlCheckStr = $"SELECT 1 FROM {S_DeviceTable} " +
                             $" WHERE {S_DeviceInfoColumns[0]} = {deviceId} " +
                             $"and {S_DeviceInfoColumns[1]} = '{txtB_DeviceInfo[0].Text}' " +
                             $" and {S_DeviceInfoColumns[2]} = '{txtB_DeviceInfo[1].Text}' " +
                            $" and {S_DeviceInfoColumns[3]} = '{txtB_DeviceInfo[2].Text}' " +
-                           $" and {S_DeviceInfoColumns[4]} = '{sensorUsage}';";
+                           $" and {S_DeviceInfoColumns[4]} = '{txtB_DeviceInfo[3].Text}' " +
+                           $" and {S_DeviceInfoColumns[S_DeviceInfoColumns.Count-1]} = '{sensorUsage}';";
             }
             else
             {
@@ -553,15 +557,17 @@ namespace DataCollectionApp2
                                         $", {S_DeviceInfoColumns[1]} = '{txtB_DeviceInfo[0].Text}'" +
                                             $", {S_DeviceInfoColumns[2]} = '{txtB_DeviceInfo[1].Text}'" +
                                             $", {S_DeviceInfoColumns[3]} = '{txtB_DeviceInfo[2].Text}'" +
-                                            $", {S_DeviceInfoColumns[4]} = '{sensorUsage}' " +
+                                            $", {S_DeviceInfoColumns[4]} = '{txtB_DeviceInfo[3].Text}'" +
+                                            $", {S_DeviceInfoColumns[S_DeviceInfoColumns.Count-1]} = '{sensorUsage}' " +
                                         $"WHERE {S_DeviceInfoColumns[0]} = {deviceId}; ";
 
                 sqlCheckStr = $"SELECT 1 FROM {S_DeviceTable} " +
-                            $" WHERE {S_DeviceInfoColumns[0]} = {deviceIdNew} " +
-                            $"and {S_DeviceInfoColumns[1]} = '{txtB_DeviceInfo[0].Text}' " +
-                            $" and {S_DeviceInfoColumns[2]} = '{txtB_DeviceInfo[1].Text}' " +
-                           $" and {S_DeviceInfoColumns[3]} = '{txtB_DeviceInfo[2].Text}' " +
-                           $" and {S_DeviceInfoColumns[4]} = '{sensorUsage}';";
+                            $" WHERE {S_DeviceInfoColumns[0]} = {deviceIdNew} ";
+                for(int i=0; i<txtB_DeviceInfo.Count; i++)
+                {
+                    sqlCheckStr += $"and {S_DeviceInfoColumns[i+1]} = '{txtB_DeviceInfo[i].Text}' ";
+                }
+                sqlCheckStr += $" and {S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} = '{sensorUsage}';";
             }
 
             SqlCommand sqlUpdCmd = new SqlCommand(sqlUpdStr, myConn);
@@ -736,9 +742,9 @@ namespace DataCollectionApp2
                 sqlInsert = $"INSERT INTO {UsageTable} VALUES({deviceIdOld} ";
                 for (int i = 0; i < usageInfo.Count; i++)
                 {
-                    sqlUpd += $" {usageTableColmn[i + 1]} = {usageInfo[i]} ";
-                    sqlUpdCheck += $" {usageTableColmn[i + 1]} = {usageInfo[i]} and ";
-                    sqlInsert += $", {usageInfo[i]} ";
+                    sqlUpd += $" {usageTableColmn[i]} = '{usageInfo[i]}' ";
+                    sqlUpdCheck += $" {usageTableColmn[i]} = '{usageInfo[i]}' and ";
+                    sqlInsert += $", '{usageInfo[i]}' ";
                     if (i + 1 != usageInfo.Count)
                     {
                         sqlUpd += ",";
@@ -749,7 +755,7 @@ namespace DataCollectionApp2
                 sqlUpdCheck += $"{S_DeviceInfoColumns[0]} = {deviceIdOld}";
 
                 //corner case if data doesn't exist=>insert it!
-                sqlCheckNoData = $"SELECT COUNT(*) FROM {UsageTable} WHERE {usageTableColmn[0]} = {deviceIdOld};";
+                sqlCheckNoData = $"SELECT COUNT(*) FROM {UsageTable} WHERE {S_DeviceInfoColumns[0]} = {deviceIdOld};";
                 sqlInsert += ");";
 
             }
@@ -761,15 +767,15 @@ namespace DataCollectionApp2
                 sqlInsert = $"INSERT INTO {UsageTable} VALUES({deviceIdNew} ";
                 for (int i = 0; i < usageInfo.Count; i++)
                 {
-                    sqlUpd += $", {usageTableColmn[i + 1]} = {usageInfo[i]} ";
-                    sqlUpdCheck += $" and {usageTableColmn[i + 1]} = {usageInfo[i]}";
-                    sqlInsert += $", {usageInfo[i]} ";
+                    sqlUpd += $", {usageTableColmn[i]} = '{usageInfo[i]}' ";
+                    sqlUpdCheck += $" and {usageTableColmn[i]} = '{usageInfo[i]}'";
+                    sqlInsert += $", '{usageInfo[i]}' ";
                 }
 
                 sqlUpd += $" WHERE {S_DeviceInfoColumns[0]} = {deviceIdOld};";
                 sqlUpdCheck += ";";
                 //corner case if data doesn't exist=>insert it!
-                sqlCheckNoData = $"SELECT COUNT(*) FROM {UsageTable} WHERE {usageTableColmn[0]} = {deviceIdOld};";
+                sqlCheckNoData = $"SELECT COUNT(*) FROM {UsageTable} WHERE {S_DeviceInfoColumns[0]} = {deviceIdOld};";
                 sqlInsert += ");";
             }
             SqlCommand CheckIdExistsCmd = new SqlCommand(sqlCheckNoData, myConn);
