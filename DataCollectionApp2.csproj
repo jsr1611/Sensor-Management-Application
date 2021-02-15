@@ -68,7 +68,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataHandler.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,7 +75,6 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="DbTableHandler.cs" />
-    <Compile Include="Ini.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -156,6 +154,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\light-on-26_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_26_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_48_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play_26_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play_48_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save_26_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save_48_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop_26_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop_48_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pause_26_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pause_48_color.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Interop.UIAutomationClient.10.18362.0\build\Interop.UIAutomationClient.targets" Condition="Exists('packages\Interop.UIAutomationClient.10.18362.0\build\Interop.UIAutomationClient.targets')" />

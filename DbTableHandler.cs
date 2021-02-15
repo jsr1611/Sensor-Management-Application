@@ -14,35 +14,78 @@ namespace DataCollectionApp2
     /// </summary>
     public class DbTableHandler
     {
-        public List<CheckBox> usageCheckers { get; set; }
-        public string dbServer { get; set; }
-        public string dbName { get; set; }
-        public string dbUID { get; set; }
-        public string dbPWD { get; set; }
+        public List<CheckBox> UsageCheckers { get => usageCheckers; set => usageCheckers = value; }
+        public string DbServer { get => dbServer; set => dbServer = value; }
+        public string DbName { get => dbName; set => dbName = value; }
+        public string DbUID { get => dbUID; set => dbUID = value; }
+        public string DbPWD { get; set; }
+
+        public DbTableHandler(string dbPWD)
+        {
+            DbPWD = dbPWD;
+        }
+
+        private string _DeviceTable;
+        public string S_DeviceTable
+        {
+            get { return _DeviceTable; }
+            set { _DeviceTable = value; }
+        }
+        private List<string> _DeviceInfoColmn;
+        public List<string> S_DeviceInfoColumns
+        {
+            get { return _DeviceInfoColmn; }
+            set { _DeviceInfoColmn = value; }
+        }
+
+
+
+        private List<string> _fourRangeColmn;
+        public List<string> S_FourRangeColumns
+        {
+            get { return _fourRangeColmn; }
+            set { _fourRangeColmn = value; }
+        }
+
+
+        private SqlConnection _myConn;
+
+        public SqlConnection MyConn
+        {
+            get { return _myConn; }
+            set { _myConn = value; }
+        }
+
 
         /// <summary>
         /// (0) dbServer, (1) dbName, (2) dbUID, (3) dbUID
         /// </summary>
         private List<string> _conStr;
-        public List<string> connStr {
+        private List<CheckBox> usageCheckers;
+        private string dbServer;
+        private string dbName;
+        private string dbUID;
+
+        public List<string> ConnStr
+        {
             get { return _conStr; }
             set { _conStr = value; }
         }
-        
+
         public DbTableHandler()
         {
         }
         public DbTableHandler(List<CheckBox> _usageCheckers)
         {
-            _usageCheckers = usageCheckers;
+            _usageCheckers = UsageCheckers;
         }
         public DbTableHandler(List<string> _connStr)
         {
-            connStr = _connStr;
-            dbServer = connStr[0];
-            dbName = connStr[1];
-            dbUID = connStr[2];
-            dbPWD = connStr[3];
+            ConnStr = _connStr;
+            DbServer = ConnStr[0];
+            DbName = ConnStr[1];
+            DbUID = ConnStr[2];
+            DbPWD = ConnStr[3];
 
         }
 
@@ -68,16 +111,18 @@ namespace DataCollectionApp2
                 }
                 else
                 {
+
                     if (CreateTb(tbName) == true)
                     {
                         target.Add(chbName);
                     }
+
                 }
             }
-            
+
             return target;
         }
-        
+
         public List<string> CheckTablesExistHandler(List<string> usageCheckerNames)
         {
             List<string> target = new List<string>();
@@ -121,25 +166,44 @@ namespace DataCollectionApp2
             }
         }
 
-        
+
+
+
+
+
+
+
+
+
+
         private bool CreateTb(string tableName)
         {
             //string tbName = targetCheckBox.Name;
             bool tbCreated = false;
-            SqlConnection myConn = new SqlConnection($@"Data Source ={ connStr[0] }; Initial Catalog = { connStr[1] }; User id = { connStr[2] }; Password ={ connStr[3]}; Min Pool Size = 20");
-            // Create Table command 
-            #region
-            string tbCreateCmdStr;
-            tbCreateCmdStr = $"Create TABLE [{connStr[1]}].[dbo].[{tableName}] ( "+
+            SqlConnection myConn = new SqlConnection($@"Data Source ={ ConnStr[0] }; Initial Catalog = { ConnStr[1] }; User id = { ConnStr[2] }; Password ={ ConnStr[3]}; Min Pool Size = 20");
+
+            /*          tbCreateCmdStr = $"Create TABLE {tableName} ( "+
                             " sID INT NOT NULL, "+
                             " LowerLimit1 float NOT NULL, " +
                             " LowerLimit2 float NOT NULL, " +
                             " HigherLimit1 float NOT NULL, " +
                             " HigherLimit2 float NOT NULL, " + 
                             " sUsage nvarchar(10) NOT NULL );";
+
+*/
+            // Create Table command 
+            #region
+            string tbCreateCmdStr = "";
+            tbCreateCmdStr = $"Create TABLE {tableName} ( " +
+                        $" {S_DeviceInfoColumns[0]} INT NOT NULL, " +
+                        $" {S_FourRangeColumns[0]} decimal(7,2) NULL, " +
+                        $" {S_FourRangeColumns[1]} decimal(7,2) NULL, " +
+                        $" {S_FourRangeColumns[2]} decimal(7,2) NULL, " +
+                        $" {S_FourRangeColumns[3]} decimal(7,2) NULL);";
+
             SqlCommand tbCreateCmd = new SqlCommand(tbCreateCmdStr, myConn);
             #endregion
-            
+
             // Check if table created correctly 
             #region 
             string tbCheckCmdStr;
@@ -166,13 +230,28 @@ namespace DataCollectionApp2
             }
             finally
             {
-                if(myConn.State == System.Data.ConnectionState.Open)
+                if (myConn.State == System.Data.ConnectionState.Open)
                 {
                     myConn.Close();
                 }
             }
             return tbCreated;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -195,7 +274,7 @@ namespace DataCollectionApp2
                 myConn.Open();
                 createTbCmd.ExecuteNonQuery();
                 bool tbCreated = IfTableExists(tableName);
-                if(tbCreated)
+                if (tbCreated)
                 {
                     res = true;
                 }
@@ -206,7 +285,7 @@ namespace DataCollectionApp2
             }
             finally
             {
-                if(myConn.State == System.Data.ConnectionState.Open)
+                if (myConn.State == System.Data.ConnectionState.Open)
                 {
                     myConn.Close();
                 }
@@ -239,7 +318,7 @@ namespace DataCollectionApp2
                 SqlDataAdapter sqlData = new SqlDataAdapter(sql_dbExists, myConn);
 
                 sqlData.Fill(ds);
-                if(ds.Tables.Count > 0)
+                if (ds.Tables.Count > 0)
                 {
                     result = true;
                 }
@@ -257,7 +336,7 @@ namespace DataCollectionApp2
             }
             finally
             {
-                if(myConn.State == System.Data.ConnectionState.Open)
+                if (myConn.State == System.Data.ConnectionState.Open)
                 {
                     myConn.Close();
                 }
@@ -267,7 +346,7 @@ namespace DataCollectionApp2
 
         public bool IfDatabaseExists(string dbName)
         {
-            SqlConnection myConn_master = new SqlConnection($@"Data Source = {dbServer};Initial Catalog=master;User id={dbUID};Password={dbPWD};Min Pool Size=20");
+            SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;User id={DbUID};Password={DbPWD};Min Pool Size=20");
             bool result = false;
             string sql_dbExists = $"IF DB_ID('{dbName}') IS NOT NULL SELECT 1";
             SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn_master);
@@ -354,12 +433,12 @@ namespace DataCollectionApp2
                 }
                 finally
                 {
-                    if(myConn.State == System.Data.ConnectionState.Open)
+                    if (myConn.State == System.Data.ConnectionState.Open)
                     {
                         myConn.Close();
                     }
                 }
-                
+
             }
             else
             {
@@ -378,11 +457,11 @@ namespace DataCollectionApp2
             SqlCommand dbCreateCmd = new SqlCommand(sqlStr_CreateDb, myConn);
             try
             {
-                if(myConn.State != ConnectionState.Open)
+                if (myConn.State != ConnectionState.Open)
                 {
                     myConn.Open();
                 }
-                
+
                 dbCreateCmd.ExecuteNonQuery();
 
                 res = IfDatabaseExists(dbName, myConn);
@@ -393,7 +472,7 @@ namespace DataCollectionApp2
             }
             finally
             {
-                if(myConn.State == System.Data.ConnectionState.Open)
+                if (myConn.State == System.Data.ConnectionState.Open)
                 {
                     myConn.Close();
                 }
@@ -410,18 +489,18 @@ namespace DataCollectionApp2
             //string checkBoxName = targetCheckBoxName;
             bool target = false;
             string dbCheckCmdStr;
-            SqlConnection myConn = new SqlConnection($@"Data Source ={ connStr[0] }; Initial Catalog = { connStr[1] }; User id = { connStr[2] }; Password ={ connStr[3]}; Min Pool Size = 20");
+            SqlConnection myConn = new SqlConnection($@"Data Source ={ ConnStr[0] }; Initial Catalog = { ConnStr[1] }; User id = { ConnStr[2] }; Password ={ ConnStr[3]}; Min Pool Size = 20");
             dbCheckCmdStr = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'{tableName}';";
             SqlCommand tbCheckCmd = new SqlCommand(dbCheckCmdStr, myConn);
 
             try
             {
-                if(myConn.State != ConnectionState.Open)
+                if (myConn.State != ConnectionState.Open)
                 {
                     myConn.Open();
                 }
-                
-                using(SqlDataReader reader = tbCheckCmd.ExecuteReader())
+
+                using (SqlDataReader reader = tbCheckCmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -429,69 +508,9 @@ namespace DataCollectionApp2
                     }
                 }
             }
-            catch(System.Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            finally
-            {
-                if(myConn.State == System.Data.ConnectionState.Open)
-                {
-                    myConn.Close();
-                }
-            }
-            return target;
-        }
-
-
-        
-
-
-
-        private bool CreateTb(CheckBox targetCheckBox)
-        {
-            string tbName = targetCheckBox.Name;
-            bool tbCreated = false;
-            SqlConnection myConn = new SqlConnection($@"Data Source ={ connStr[0] }; Initial Catalog = { connStr[1] }; User id = { connStr[2] }; Password ={ connStr[3]}; Min Pool Size = 20");
-            // Create Table command 
-            #region
-            string tbCreateCmdStr;
-            tbCreateCmdStr = $"Create TABLE [{connStr[1]}].[dbo].[{tbName}] ( " +
-                            " sID INT IDENTITY NOT NULL, " +
-                            " LowerLimit1 float NOT NULL, " +
-                            " LowerLimit2 float NOT NULL, " +
-                            " HigherLimit1 float NOT NULL, " +
-                            " HigherLimit2 float NOT NULL, " +
-                            " sUsage nvarchar(10) NOT NULL );";
-            SqlCommand tbCreateCmd = new SqlCommand(tbCreateCmdStr, myConn);
-            #endregion
-
-            // Check if table created correctly 
-            #region 
-            string tbCheckCmdStr;
-            tbCheckCmdStr = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'{tbName}';";
-            SqlCommand tbCheckCmd = new SqlCommand(tbCheckCmdStr, myConn);
-            #endregion
-
-            try
-            {
-                if(myConn.State != ConnectionState.Open)
-                {
-                    myConn.Open();
-                }
-                tbCreateCmd.ExecuteNonQuery();
-
-                using (SqlDataReader reader = tbCheckCmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        tbCreated = Convert.ToInt32(reader.GetValue(0)) == 1;
-                    }
-                }
-            }
             catch (System.Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                System.Windows.Forms.MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             finally
             {
@@ -500,11 +519,391 @@ namespace DataCollectionApp2
                     myConn.Close();
                 }
             }
-            return tbCreated;
+            return target;
         }
 
 
 
+
+        public bool UpdateDeviceInfoTable(SqlConnection myConn, string tableName, int deviceId, int deviceIdNew, List<TextBox> txtB_DeviceInfo, bool sUsage)
+        {
+            bool updSuccessful = false;
+            string sensorUsage = sUsage ? "YES" : "NO";
+            string sqlUpdStr;
+            string sqlCheckStr;
+            if (deviceId == deviceIdNew)
+            {
+                sqlUpdStr = $"UPDATE {S_DeviceTable} " +
+                                        $"SET {S_DeviceInfoColumns[1]} = '{txtB_DeviceInfo[0].Text}' " +
+                                            $", {S_DeviceInfoColumns[2]} = '{txtB_DeviceInfo[1].Text}' " +
+                                            $", {S_DeviceInfoColumns[3]} = '{txtB_DeviceInfo[2].Text}' " +
+                                            $", {S_DeviceInfoColumns[4]} = '{sensorUsage}' " +
+                                        $" WHERE {S_DeviceInfoColumns[0]} = {deviceId}; ";
+                sqlCheckStr = $"SELECT 1 FROM {S_DeviceTable} " +
+                            $" WHERE {S_DeviceInfoColumns[0]} = {deviceId} " +
+                            $"and {S_DeviceInfoColumns[1]} = '{txtB_DeviceInfo[0].Text}' " +
+                            $" and {S_DeviceInfoColumns[2]} = '{txtB_DeviceInfo[1].Text}' " +
+                           $" and {S_DeviceInfoColumns[3]} = '{txtB_DeviceInfo[2].Text}' " +
+                           $" and {S_DeviceInfoColumns[4]} = '{sensorUsage}';";
+            }
+            else
+            {
+                sqlUpdStr = $"UPDATE {S_DeviceTable} " +
+                                        $"SET {S_DeviceInfoColumns[0]} = {deviceIdNew}" +
+                                        $", {S_DeviceInfoColumns[1]} = '{txtB_DeviceInfo[0].Text}'" +
+                                            $", {S_DeviceInfoColumns[2]} = '{txtB_DeviceInfo[1].Text}'" +
+                                            $", {S_DeviceInfoColumns[3]} = '{txtB_DeviceInfo[2].Text}'" +
+                                            $", {S_DeviceInfoColumns[4]} = '{sensorUsage}' " +
+                                        $"WHERE {S_DeviceInfoColumns[0]} = {deviceId}; ";
+
+                sqlCheckStr = $"SELECT 1 FROM {S_DeviceTable} " +
+                            $" WHERE {S_DeviceInfoColumns[0]} = {deviceIdNew} " +
+                            $"and {S_DeviceInfoColumns[1]} = '{txtB_DeviceInfo[0].Text}' " +
+                            $" and {S_DeviceInfoColumns[2]} = '{txtB_DeviceInfo[1].Text}' " +
+                           $" and {S_DeviceInfoColumns[3]} = '{txtB_DeviceInfo[2].Text}' " +
+                           $" and {S_DeviceInfoColumns[4]} = '{sensorUsage}';";
+            }
+
+            SqlCommand sqlUpdCmd = new SqlCommand(sqlUpdStr, myConn);
+            SqlCommand sqlCheckCmd = new SqlCommand(sqlCheckStr, myConn);
+            try
+            {
+                if (myConn.State != ConnectionState.Open)
+                {
+                    myConn.Open();
+                }
+
+                sqlUpdCmd.ExecuteNonQuery();
+                using (SqlDataReader reader = sqlCheckCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (Convert.ToInt32(reader.GetValue(0)) == 1)
+                        {
+                            updSuccessful = true;
+
+                            break;
+                        }
+                    }
+                }
+
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (myConn.State == ConnectionState.Open)
+                {
+                    myConn.Close();
+                }
+            }
+            return updSuccessful;
+        }
+
+
+        public bool UpdateLimitRangeInfo(int deviceId, int deviceIdNew, CheckBox targetCheckBox, List<NumericUpDown> rangeInfoList, SqlConnection myConn)
+        {
+            bool updSuccessful = false;
+            //deviceId = Convert.ToInt32(sID);
+            string tableName = targetCheckBox.Name;
+            List<decimal> rangeLimitData = rangeInfoList.AsEnumerable().Select(r => r.Value).ToList();
+            string idCheckStr = $"SELECT 1 FROM {tableName} WHERE { S_DeviceInfoColumns[0]} = { deviceId};";
+            bool idExists = false;
+            string sqlInsert;
+            string sqlUpdStr;
+            string sqlUpdCheckStr;
+            if (deviceId == deviceIdNew)
+            {
+                sqlInsert = $"INSERT INTO {tableName} VALUES({deviceId} ";
+                sqlUpdStr = $"UPDATE {tableName} SET ";
+                sqlUpdCheckStr = $"SELECT 1 FROM {tableName} WHERE {S_DeviceInfoColumns[0]} = {deviceId} ";
+                for (int i = 0; i < rangeLimitData.Count; i++)
+                {
+                    sqlInsert += $", {rangeLimitData[i]}";
+                    sqlUpdStr += $" { S_FourRangeColumns[i]} = { rangeLimitData[i]} ";
+                    sqlUpdCheckStr += $" and { S_FourRangeColumns[i]} = { rangeLimitData[i]} ";
+
+                    if (i + 1 != rangeLimitData.Count)
+                    {
+                        sqlUpdStr += ",";
+                    }
+                }
+
+                sqlInsert += ");";
+                sqlUpdStr += $" WHERE { S_DeviceInfoColumns[0]} = { deviceId}; ";
+                sqlUpdCheckStr += ";";
+
+            }
+            else
+            {
+
+                sqlInsert = $"INSERT INTO {tableName} VALUES({deviceId} ";
+                sqlUpdStr = $"UPDATE {tableName} SET {S_DeviceInfoColumns[0]} = {deviceIdNew} ";
+                sqlUpdCheckStr = $"SELECT 1 FROM {tableName} WHERE {S_DeviceInfoColumns[0]} = {deviceIdNew} ";
+                for (int i = 0; i < rangeLimitData.Count; i++)
+                {
+                    sqlInsert += $", { rangeLimitData[i]}";
+                    sqlUpdStr += $", { S_FourRangeColumns[i]} = { rangeLimitData[i]} ";
+                    sqlUpdCheckStr += $" and { S_FourRangeColumns[i]} = { rangeLimitData[i]} ";
+                }
+                sqlInsert += ");";
+                sqlUpdStr += $" WHERE { S_DeviceInfoColumns[0]} = { deviceId}; "; // WHERE {S_DeviceColmn[0]} = {deviceId};";
+                sqlUpdCheckStr += ";";
+
+            }
+            SqlCommand idExistsCmd = new SqlCommand(idCheckStr, myConn);
+            SqlCommand updCmd = new SqlCommand(sqlUpdStr, myConn);
+            SqlCommand updCheckCmd = new SqlCommand(sqlUpdCheckStr, myConn);
+            SqlCommand insertCmd = new SqlCommand(sqlInsert, myConn);
+            try
+            {
+                if (myConn.State != ConnectionState.Open)
+                {
+                    myConn.Open();
+                }
+
+                using (SqlDataReader reader = idExistsCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (Convert.ToInt32(reader.GetValue(0)) == 1)
+                        {
+                            idExists = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!idExists)
+                {
+                    insertCmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    updCmd.ExecuteNonQuery();
+                }
+                using (SqlDataReader reader = updCheckCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (Convert.ToInt32(reader.GetValue(0)) == 1)
+                        {
+                            updSuccessful = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (myConn.State == System.Data.ConnectionState.Open)
+                {
+                    myConn.Close();
+                }
+            }
+            return updSuccessful;
+        }
+
+        private bool AddInfoToDB(decimal sID, CheckBox targetCheckBox, List<NumericUpDown> rangeInfoList, SqlConnection myConn)
+        {
+            bool target = false;
+
+            return target;
+        }
+
+        public bool UpdateUsageTable(SqlConnection myConn, string UsageTable, List<string> usageTableColmn, int deviceIdOld, int deviceIdNew, List<string> usageInfo)
+        {
+            //Check if ID exists
+            string sqlCheckNoData = "";
+            string sqlInsert = "";
+            bool dataExists = true;
+
+            bool updSuccessful = false;
+            string sqlUpd = "";
+            string sqlUpdCheck = "";
+
+            if (deviceIdNew == deviceIdOld)
+            {
+                sqlUpd = $"UPDATE {UsageTable} SET ";
+                sqlUpdCheck = $"SELECT 1 FROM {UsageTable} WHERE ";
+                //for corner case of NonExisting ID => Insert data!
+                sqlInsert = $"INSERT INTO {UsageTable} VALUES({deviceIdOld} ";
+                for (int i = 0; i < usageInfo.Count; i++)
+                {
+                    sqlUpd += $" {usageTableColmn[i + 1]} = {usageInfo[i]} ";
+                    sqlUpdCheck += $" {usageTableColmn[i + 1]} = {usageInfo[i]} and ";
+                    sqlInsert += $", {usageInfo[i]} ";
+                    if (i + 1 != usageInfo.Count)
+                    {
+                        sqlUpd += ",";
+                    }
+                }
+
+                sqlUpd += $" WHERE {S_DeviceInfoColumns[0]} = {deviceIdOld};";
+                sqlUpdCheck += $"{S_DeviceInfoColumns[0]} = {deviceIdOld}";
+
+                //corner case if data doesn't exist=>insert it!
+                sqlCheckNoData = $"SELECT COUNT(*) FROM {UsageTable} WHERE {usageTableColmn[0]} = {deviceIdOld};";
+                sqlInsert += ");";
+
+            }
+            else
+            {
+                sqlUpd = $"UPDATE {UsageTable} SET {S_DeviceInfoColumns[0]} = {deviceIdNew}";
+                sqlUpdCheck = $"SELECT 1 FROM {UsageTable} WHERE {S_DeviceInfoColumns[0]} = {deviceIdNew}";
+                //for corner case of NonExisting ID => Insert data!
+                sqlInsert = $"INSERT INTO {UsageTable} VALUES({deviceIdNew} ";
+                for (int i = 0; i < usageInfo.Count; i++)
+                {
+                    sqlUpd += $", {usageTableColmn[i + 1]} = {usageInfo[i]} ";
+                    sqlUpdCheck += $" and {usageTableColmn[i + 1]} = {usageInfo[i]}";
+                    sqlInsert += $", {usageInfo[i]} ";
+                }
+
+                sqlUpd += $" WHERE {S_DeviceInfoColumns[0]} = {deviceIdOld};";
+                sqlUpdCheck += ";";
+                //corner case if data doesn't exist=>insert it!
+                sqlCheckNoData = $"SELECT COUNT(*) FROM {UsageTable} WHERE {usageTableColmn[0]} = {deviceIdOld};";
+                sqlInsert += ");";
+            }
+            SqlCommand CheckIdExistsCmd = new SqlCommand(sqlCheckNoData, myConn);
+            SqlCommand InsertCmd = new SqlCommand(sqlInsert, myConn);
+            SqlCommand updCmd = new SqlCommand(sqlUpd, myConn);
+            SqlCommand checkUpdCmd = new SqlCommand(sqlUpdCheck, myConn);
+            try
+            {
+                if (myConn.State != ConnectionState.Open)
+                {
+                    myConn.Open();
+                }
+                using (SqlDataReader reader = CheckIdExistsCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (Convert.ToInt32(reader.GetValue(0)) == 1)
+                        {
+                            dataExists = false;
+                            break;
+                        }
+                    }
+                }
+                if (!dataExists)
+                {
+                    if (myConn.State != ConnectionState.Open)
+                    {
+                        myConn.Open();
+                    }
+
+                    InsertCmd.ExecuteNonQuery();
+                }
+
+
+                updCmd.ExecuteNonQuery();
+
+                using (SqlDataReader reader = checkUpdCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (Convert.ToInt32(reader.GetValue(0)) == 1)
+                        {
+                            updSuccessful = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (myConn.State == System.Data.ConnectionState.Open)
+                {
+                    myConn.Close();
+                }
+            }
+            return updSuccessful;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*
+                private bool CreateTb(CheckBox targetCheckBox)
+                {
+                    string tbName = targetCheckBox.Name;
+                    bool tbCreated = false;
+                    SqlConnection myConn = new SqlConnection($@"Data Source ={ connStr[0] }; Initial Catalog = { connStr[1] }; User id = { connStr[2] }; Password ={ connStr[3]}; Min Pool Size = 20");
+                    // Create Table command 
+                    #region
+                    string tbCreateCmdStr;
+                    tbCreateCmdStr = $"Create TABLE [{connStr[1]}].[dbo].[{tbName}] ( " +
+                                    " sID INT IDENTITY NOT NULL, " +
+                                    " LowerLimit1 float NOT NULL, " +
+                                    " LowerLimit2 float NOT NULL, " +
+                                    " HigherLimit1 float NOT NULL, " +
+                                    " HigherLimit2 float NOT NULL, " +
+                                    " sUsage nvarchar(10) NOT NULL );";
+                    SqlCommand tbCreateCmd = new SqlCommand(tbCreateCmdStr, myConn);
+                    #endregion
+
+                    // Check if table created correctly 
+                    #region 
+                    string tbCheckCmdStr;
+                    tbCheckCmdStr = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'{tbName}';";
+                    SqlCommand tbCheckCmd = new SqlCommand(tbCheckCmdStr, myConn);
+                    #endregion
+
+                    try
+                    {
+                        if(myConn.State != ConnectionState.Open)
+                        {
+                            myConn.Open();
+                        }
+                        tbCreateCmd.ExecuteNonQuery();
+
+                        using (SqlDataReader reader = tbCheckCmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                tbCreated = Convert.ToInt32(reader.GetValue(0)) == 1;
+                            }
+                        }
+                    }
+                    catch (System.Exception ex)
+                    {
+                        System.Windows.Forms.MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    finally
+                    {
+                        if (myConn.State == System.Data.ConnectionState.Open)
+                        {
+                            myConn.Close();
+                        }
+                    }
+                    return tbCreated;
+                }
+
+
+        */
 
 
 
