@@ -294,8 +294,11 @@ namespace DataCollectionApp2
                         {
                             while (reader.Read())
                             {
-                                idExists = Convert.ToInt32(reader[$"{S_DeviceInfoColumns[0]}"].ToString()) == id;
-                                break;
+                                if(Convert.ToInt32(reader[$"{S_DeviceInfoColumns[0]}"].ToString()) == id)
+                                {
+                                    idExists = true;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -327,7 +330,7 @@ namespace DataCollectionApp2
         private bool GetSensorID(int id, string tableName)
         {
             bool idExists = false;
-            string sqlStrChecker = $"SELECT {S_DeviceInfoColumns[0]} FROM [{DbName}].[dbo].[{tableName}] WHERE {S_DeviceInfoColumns[0]} = {id};";
+            string sqlStrChecker = $"SELECT {S_DeviceInfoColumns[0]} FROM {tableName} WHERE {S_DeviceInfoColumns[0]} = {id};";
             using (SqlCommand sqlIdCheckerCmd = new SqlCommand(sqlStrChecker, myConn))
             {
                 try
@@ -741,9 +744,10 @@ namespace DataCollectionApp2
                         {
                             ListViewItem listViewItem = new ListViewItem(newOrderNumber.ToString());
                             listViewItem.SubItems.Add(sID.Value.ToString());
-                            listViewItem.SubItems.Add(S_DeviceInfo_txtB[0].Text);
-                            listViewItem.SubItems.Add(S_DeviceInfo_txtB[1].Text);
-                            listViewItem.SubItems.Add(S_DeviceInfo_txtB[2].Text);
+                            for(int i=0; i<S_DeviceInfo_txtB.Count; i++)
+                        {
+                            listViewItem.SubItems.Add(S_DeviceInfo_txtB[i].Text);
+                        }
                             listViewItem.SubItems.Add(sUsage);
                             listView1.Items.Add(listViewItem);
                             clearFields(S_DeviceInfo_txtB);
@@ -1096,14 +1100,14 @@ namespace DataCollectionApp2
             //MessageBox.Show("추가하시려는 센서는 이미 DB에서 존재합니다. 기존에 있는 센서 정보를 수정하시고나 센서 ID를 바꿔 보세요. \n센서ID를 수정하시려면 'Y' 버튼을 누르세요.", "Status Info", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             //react to dialogResults, yes, no, cancel
             // title, message, textBox enter info, etc. #Fix needed
-            string newSensorId = Microsoft.VisualBasic.Interaction.InputBox("원하시는 센서 ID를 기존에 있는것보다 다르게 입력해 주세요", "새 ID를 입력", "숫자만 입력해 주세요", -1, -1);
+            string newSensorId = Microsoft.VisualBasic.Interaction.InputBox("같은 ID의 센서 정보가 존재합니다. 다른 ID번호를 입력해 주세요", "새 ID를 입력", "숫자만 입력해 주세요", -1, -1);
             try
             {
                 sensorId = Convert.ToInt32(newSensorId);
             }
             catch
             {
-                MessageBox.Show("숫자만 입력 가능합니다. 다시 입력해 주세요.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("숫자만 입력 가능합니다. 새로운 센서 장비 ID번호를 다시 입력해 주세요.", "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 sensorId = 0;
             }
 

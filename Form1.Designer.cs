@@ -500,8 +500,8 @@ namespace DataCollectionApp2
             this.columnHeader0,
             this.columnHeader1,
             this.columnHeader2,
-            this.columnHeader3,
             this.columnHeader5,
+            this.columnHeader3,
             this.columnHeader4,
             this.columnHeader6});
             resources.ApplyResources(this.listView1, "listView1");
