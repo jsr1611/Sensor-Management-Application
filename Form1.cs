@@ -104,7 +104,9 @@ namespace DataCollectionApp2
             DataCollectionAppName = "Modbus_RTU_SensorData";
             
             applicationProcess = new Process();
-            applicationProcess = GetAppProcess(DataCollectionAppName);
+            pTrackerTimer.Enabled = true;
+            pTrackerTimer.Start();
+            //applicationProcess = GetAppProcess(DataCollectionAppName);
             
             listView1.Scrollable = true;
 
@@ -595,6 +597,7 @@ namespace DataCollectionApp2
                 DialogResult dialog = MessageBox.Show("데이터 수집 프로그램을 중지하시겠습니까?", "Application status", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dialog == DialogResult.Yes)
                 {
+                    applicationProcess = GetAppProcess(DataCollectionAppName);
                     applicationProcess.Kill();
                     b_dataCollection_status.Image = Resources.light_off_26;
                     appAlreadyRunning = false;
@@ -626,7 +629,7 @@ namespace DataCollectionApp2
                     for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
                     {
                         S_DeviceInfo_txtB[i].Text = item.SubItems[i + 2].Text;
-                        S_DeviceInfo_txtB[i].TextAlign = HorizontalAlignment.Center;
+                        //S_DeviceInfo_txtB[i].TextAlign = HorizontalAlignment.Center;
                     }
                     List<CheckBox> sUsageRangesCh = S_UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
                     List<string> sUsageRangesTables = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).ToList();
@@ -1263,5 +1266,31 @@ namespace DataCollectionApp2
             }
         }
 
+        private void pTrackerTimer_Tick(object sender, EventArgs e)
+        {
+            appAlreadyRunning = CheckAppRunning(DataCollectionAppName);
+            if (!appAlreadyRunning)
+            {
+                b_dataCollection_status.Image = Resources.light_off_26;
+            }
+            else
+            {
+                if(applicationProcess == null)
+                {
+                    applicationProcess = GetAppProcess(DataCollectionAppName);
+                }
+                b_dataCollection_status.Image = Resources.light_on_26_color;
+            }
+        }
+
+        private bool CheckAppRunning(string dataCollectionAppName)
+        {
+            bool res = false;
+            if(Process.GetProcessesByName(dataCollectionAppName).Length > 0)
+            {
+                res = true;
+            }
+            return res;
+        }
     }
 }

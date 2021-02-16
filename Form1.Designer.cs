@@ -71,9 +71,10 @@ namespace DataCollectionApp2
             this.columnHeader0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.l_zone = new System.Windows.Forms.Label();
             this.sZone = new System.Windows.Forms.TextBox();
             this.s_p100HigherLimit2 = new System.Windows.Forms.NumericUpDown();
@@ -137,7 +138,7 @@ namespace DataCollectionApp2
             this.sLocation = new System.Windows.Forms.TextBox();
             this.sName = new System.Windows.Forms.TextBox();
             this.sID = new System.Windows.Forms.NumericUpDown();
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.pTrackerTimer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -526,6 +527,10 @@ namespace DataCollectionApp2
             // 
             resources.ApplyResources(this.columnHeader2, "columnHeader2");
             // 
+            // columnHeader5
+            // 
+            resources.ApplyResources(this.columnHeader5, "columnHeader5");
+            // 
             // columnHeader3
             // 
             resources.ApplyResources(this.columnHeader3, "columnHeader3");
@@ -534,9 +539,9 @@ namespace DataCollectionApp2
             // 
             resources.ApplyResources(this.columnHeader4, "columnHeader4");
             // 
-            // columnHeader5
+            // columnHeader6
             // 
-            resources.ApplyResources(this.columnHeader5, "columnHeader5");
+            resources.ApplyResources(this.columnHeader6, "columnHeader6");
             // 
             // l_zone
             // 
@@ -1060,15 +1065,18 @@ namespace DataCollectionApp2
             0,
             0});
             this.sID.Name = "sID";
+            this.sID.ReadOnly = true;
             this.sID.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
             // 
-            // columnHeader6
+            // pTrackerTimer
             // 
-            resources.ApplyResources(this.columnHeader6, "columnHeader6");
+            this.pTrackerTimer.Enabled = true;
+            this.pTrackerTimer.Interval = 2000;
+            this.pTrackerTimer.Tick += new System.EventHandler(this.pTrackerTimer_Tick);
             // 
             // Form1
             // 
@@ -1242,6 +1250,7 @@ namespace DataCollectionApp2
         private System.Windows.Forms.Label l_zone;
         private System.Windows.Forms.TextBox sZone;
         private System.Windows.Forms.ColumnHeader columnHeader6;
+        public System.Windows.Forms.Timer pTrackerTimer;
     }
 }
 
