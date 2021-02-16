@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DataCollectionApp2
+namespace AdminPage
 {
     static class Program
     {

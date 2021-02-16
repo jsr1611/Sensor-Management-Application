@@ -1,5 +1,5 @@
 ﻿
-namespace DataCollectionApp2
+namespace AdminPage
 {
     partial class Form1
     {
@@ -321,14 +321,14 @@ namespace DataCollectionApp2
             // b_dataCollection_status
             // 
             resources.ApplyResources(this.b_dataCollection_status, "b_dataCollection_status");
-            this.b_dataCollection_status.Image = global::DataCollectionApp2.Properties.Resources.light_off_26;
+            this.b_dataCollection_status.Image = global::AdminPage.Properties.Resources.light_off_26;
             this.b_dataCollection_status.Name = "b_dataCollection_status";
             this.b_dataCollection_status.UseVisualStyleBackColor = true;
             // 
             // b_stop
             // 
             resources.ApplyResources(this.b_stop, "b_stop");
-            this.b_stop.Image = global::DataCollectionApp2.Properties.Resources.pause_26_color;
+            this.b_stop.Image = global::AdminPage.Properties.Resources.pause_26_color;
             this.b_stop.Name = "b_stop";
             this.b_stop.UseVisualStyleBackColor = true;
             this.b_stop.Click += new System.EventHandler(this.b_stop_Click);
@@ -336,7 +336,7 @@ namespace DataCollectionApp2
             // b_start
             // 
             resources.ApplyResources(this.b_start, "b_start");
-            this.b_start.Image = global::DataCollectionApp2.Properties.Resources.play_26_color;
+            this.b_start.Image = global::AdminPage.Properties.Resources.play_26_color;
             this.b_start.Name = "b_start";
             this.b_start.UseVisualStyleBackColor = true;
             this.b_start.Click += new System.EventHandler(this.b_start_Click);
@@ -352,7 +352,7 @@ namespace DataCollectionApp2
             // 
             this.b_save.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.b_save, "b_save");
-            this.b_save.Image = global::DataCollectionApp2.Properties.Resources.save_26_color;
+            this.b_save.Image = global::AdminPage.Properties.Resources.save_26_color;
             this.b_save.Name = "b_save";
             this.b_save.UseVisualStyleBackColor = false;
             this.b_save.Click += new System.EventHandler(this.b_save_Click);
@@ -360,7 +360,7 @@ namespace DataCollectionApp2
             // b_addSensor
             // 
             resources.ApplyResources(this.b_addSensor, "b_addSensor");
-            this.b_addSensor.Image = global::DataCollectionApp2.Properties.Resources.add_26_color;
+            this.b_addSensor.Image = global::AdminPage.Properties.Resources.add_26_color;
             this.b_addSensor.Name = "b_addSensor";
             this.b_addSensor.UseVisualStyleBackColor = true;
             this.b_addSensor.Click += new System.EventHandler(this.b_add_Click);

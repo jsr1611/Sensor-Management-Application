@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DataCollectionApp2
+namespace AdminPage
 {
     /// <summary>
     /// DB에서 틱정 

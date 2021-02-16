@@ -1,23 +1,14 @@
-﻿using EasyModbus;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using FlaUI.UIA3;
-using FlaUI.Core;
-using DataCollectionApp2.Properties;
-using System.Data.Odbc;
-using System.Runtime.InteropServices;
+using AdminPage.Properties;
 using System.Diagnostics;
 
-namespace DataCollectionApp2
+namespace AdminPage
 {
     public partial class Form1 : Form
     {
@@ -44,11 +35,6 @@ namespace DataCollectionApp2
         }
 
 
-        private ModbusClient _modbusClient;
-        public ModbusClient modbusClient 
-        { get { return _modbusClient; }
-          set { _modbusClient = value; } 
-        }
 
         private SqlConnection _myConn;
         public SqlConnection myConn
@@ -211,29 +197,6 @@ namespace DataCollectionApp2
             }
             return applicationProcess;
         }
-
-
-        /// <summary>
-        /// ModBus Connection settings and initialization of myConnection SQLConnection object
-        /// </summary>
-        /// <param name="modbusClient"></param>
-        private void ConnectionSettings(bool flag)
-        {
-            if (flag)
-            {
-                modbusClient = new ModbusClient("COM3");
-                modbusClient.Baudrate = 115200; // Not necessary since default baudrate = 9600
-                modbusClient.Parity = System.IO.Ports.Parity.None;
-                modbusClient.StopBits = System.IO.Ports.StopBits.Two;
-                modbusClient.ConnectionTimeout = 5000;
-                //modbusClient.Connect();
-                Console.WriteLine("Device Connection Successful");
-
-                //myConnection.Open();
-            }                                                                                                                              
-        }
-
-
 
 
         private void MinimizeToTray()
@@ -1166,7 +1129,10 @@ namespace DataCollectionApp2
                 item.Selected = false;
                 
             }
-            for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
+            S_DeviceInfo_txtB[0].Text = "PSU650";
+            S_DeviceInfo_txtB[1].Text = "ZONE N";
+
+            for (int i = 2; i < S_DeviceInfo_txtB.Count; i++)
             {
                 //textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
                 S_DeviceInfo_txtB[i].Text = "";
