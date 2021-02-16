@@ -15,6 +15,7 @@ using FlaUI.Core;
 using DataCollectionApp2.Properties;
 using System.Data.Odbc;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace DataCollectionApp2
 {
@@ -79,9 +80,13 @@ namespace DataCollectionApp2
         public Dictionary<CheckBox, List<NumericUpDown>> S_UsageCheckerRangePairs { get; set; }
 
         public DbTableHandler g_DbTableHandler;
-        public string appAddress = @"C:\Users\JIMMY\source\repos\0DataCollectionAppNew\DataCollectionApp\bin\Release\Modbus_RTU_SensorData.EXE";
-        public FlaUI.Core.Application dataCollectionApp { get; set; }
         
+        public string appAddress = @"C:\Users\JIMMY\source\repos\0DataCollectionAppNew\DataCollectionApp\bin\Release\Modbus_RTU_SensorData.EXE";
+        public string DataCollectionAppName { get; set; }
+        public FlaUI.Core.Application dataCollectionApp { get; set; }
+        public bool appAlreadyRunning { get; set; }
+        public Process applicationProcess { get; set; }
+
         public Form1()
         {
             InitializeComponent();
@@ -96,7 +101,11 @@ namespace DataCollectionApp2
             S_UsageTable = "SensorUsage";
             connectionTimeout = "180";
 
-
+            DataCollectionAppName = "Modbus_RTU_SensorData";
+            
+            applicationProcess = new Process();
+            applicationProcess = GetAppProcess(DataCollectionAppName);
+            
             listView1.Scrollable = true;
 
             S_DeviceInfo_txtB = new List<TextBox>() { sName, sZone, sLocation,  sDescription };
@@ -166,6 +175,39 @@ namespace DataCollectionApp2
 
             clearFields(S_DeviceInfo_txtB);
 
+        }
+
+
+        /// <summary>
+        /// Application Process를 반환함
+        /// </summary>
+        /// <param name="dataCollectionAppName"></param>
+        /// <returns></returns>
+        public Process GetAppProcess(string dataCollectionAppName)
+        {
+            int myCounter = 0;
+            while (true)
+            {
+                if (myCounter > 2)
+                {
+                    break;
+                }
+                Process[] processes = Process.GetProcessesByName(dataCollectionAppName);
+                if (processes.Length != 0)
+                {
+                    appAlreadyRunning = true;
+                    b_dataCollection_status.Image = Resources.light_on_26_color;
+                    applicationProcess = processes[0];
+                    break;
+                }
+                else
+                {
+                    dataCollectionAppName = Microsoft.VisualBasic.Interaction.InputBox("찾으신 어플리케이션의 정확한 이름을 찾아서 입력해 주세요!", "Application Status", ".exe를 제외한 Application명만 입력", -1, -1);
+
+                    //MessageBox.Show("찾으신 어플리케이션의 정확한 이름을 찾아서 입력해 주세요!", "Application Status", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                }
+            }
+            return applicationProcess;
         }
 
 
@@ -461,24 +503,24 @@ namespace DataCollectionApp2
         private void b_start_Click(object sender, EventArgs e)
         {
 
-            dataCollectionApp = FlaUI.Core.Application.Launch(appAddress);
-            using (var automation = new UIA3Automation())
+            if (!appAlreadyRunning)
             {
-                var window = dataCollectionApp.GetMainWindow(automation);
-                //MessageBox.Show("Hello, " + window.Title, window.Title);
 
+                dataCollectionApp = FlaUI.Core.Application.Launch(appAddress);
+                using (var automation = new UIA3Automation())
+                {
+                    var window = dataCollectionApp.GetMainWindow(automation);
+                    //MessageBox.Show("Hello, " + window.Title, window.Title);
+
+                }
+                b_dataCollection_status.Image = Resources.light_on_26_color;
+                applicationProcess = GetAppProcess(DataCollectionAppName);
+                appAlreadyRunning = true;
             }
-            b_dataCollection_status.Image = Resources.light_on_26_color;
-
-            /* 
-            if (!modbusClient.Connected && myConnection.State == ConnectionState.Closed)
+            else
             {
-                modbusClient.Connect();
-                myConnection.Open();
+                MessageBox.Show("데이터 수집 프로그램이 이미 실행중입니다.", "Application status", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            timer1.Enabled = true;
-            timer1.Start();
-*/
         }
 
 /*
@@ -548,20 +590,22 @@ namespace DataCollectionApp2
             //FlaUI.Core.Application application = FlaUI.Core.Application.Launch(appAddress);
 
             // code to interact with the UI
-
-            //
-            dataCollectionApp.Close();
-            dataCollectionApp.Dispose();
-            MessageBox.Show("Anything happened", "Application status");
-
-            /*
-            timer1.Stop();
-            myConnection.Close();
-            modbusClient.Disconnect();
-            */
+            if (appAlreadyRunning)
+            {
+                DialogResult dialog = MessageBox.Show("데이터 수집 프로그램을 중지하시겠습니까?", "Application status", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialog == DialogResult.Yes)
+                {
+                    applicationProcess.Kill();
+                    b_dataCollection_status.Image = Resources.light_off_26;
+                    appAlreadyRunning = false;
+                    applicationProcess.Dispose();
+                }
+            }
+            else
+            {
+                MessageBox.Show("데이터 수집 프로그램이 이미 중지되어 있습니다", "Application status", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
-
-
 
         private void F_Exit_Click(object sender, EventArgs e)
         {
