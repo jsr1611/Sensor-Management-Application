@@ -732,7 +732,7 @@ namespace DataCollectionApp2
             //Check if ID exists
             string sqlCheckNoData = "";
             string sqlInsert = "";
-            bool dataExists = true;
+            bool dataExists = false;
 
             bool updSuccessful = false;
             string sqlUpd = "";
@@ -798,7 +798,7 @@ namespace DataCollectionApp2
                     {
                         if (Convert.ToInt32(reader.GetValue(0)) == 1)
                         {
-                            dataExists = false;
+                            dataExists = true;
                             break;
                         }
                     }
@@ -812,9 +812,10 @@ namespace DataCollectionApp2
 
                     InsertCmd.ExecuteNonQuery();
                 }
-
-
-                updCmd.ExecuteNonQuery();
+                else
+                {
+                    updCmd.ExecuteNonQuery();
+                }
 
                 using (SqlDataReader reader = checkUpdCmd.ExecuteReader())
                 {
