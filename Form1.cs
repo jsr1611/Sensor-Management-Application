@@ -587,8 +587,7 @@ namespace AdminPage
                 foreach (ListViewItem item in listView1.SelectedItems)
                 {
                     int sensorId = Convert.ToInt32(item.SubItems[1].Text);
-                    sID.Value = sensorId;
-                    //sID.Enabled = false;
+                    sID.Text = sensorId.ToString();
                     for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
                     {
                         S_DeviceInfo_txtB[i].Text = item.SubItems[i + 2].Text;
@@ -636,7 +635,6 @@ namespace AdminPage
             else
             {
                 clearFields(S_DeviceInfo_txtB);
-                sID.Enabled = true;
             }
         }
 
@@ -715,7 +713,7 @@ namespace AdminPage
                     {
                         foreach (ListViewItem item in listView1.SelectedItems)
                         {
-                            item.SubItems[1].Text = sID.Value.ToString();
+                            item.SubItems[1].Text = sID.Text;
                             for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
                             {
                                 item.SubItems[i + 2].Text = S_DeviceInfo_txtB[i].Text;
@@ -730,7 +728,7 @@ namespace AdminPage
             //새 장비 추가하는 부분
             else
             {
-                    bool idExists = GetSensorID(Convert.ToInt32(sID.Value));
+                    bool idExists = GetSensorID(Convert.ToInt32(sID.Text));
                     if (idExists)
                     {
                         MessageBox.Show("DB에 이미 존재하는 센서 장비 ID입니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -752,7 +750,7 @@ namespace AdminPage
                         if (added)
                         {
                             ListViewItem listViewItem = new ListViewItem(newOrderNumber.ToString());
-                            listViewItem.SubItems.Add(sID.Value.ToString());
+                            listViewItem.SubItems.Add(sID.Text);
                             for(int i=0; i<S_DeviceInfo_txtB.Count; i++)
                         {
                             listViewItem.SubItems.Add(S_DeviceInfo_txtB[i].Text);
@@ -799,9 +797,9 @@ namespace AdminPage
         private bool UpdateDB(int deviceIdOld)
         {
             bool result_UPD = false;
-            bool idExists = GetSensorID(Convert.ToInt32(sID.Value));
+            bool idExists = GetSensorID(Convert.ToInt32(sID.Text));
             bool sUsage;
-            int deviceIdNew = Convert.ToInt32(sID.Value);
+            int deviceIdNew = Convert.ToInt32(sID.Text);
             if (idExists && deviceIdOld != deviceIdNew)
             {
                 MessageBox.Show("DB에 이미 존재하는 센서 장비 ID입니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -870,7 +868,7 @@ namespace AdminPage
             bool dbExists = g_DbTableHandler.IfDatabaseExists(DbName);
             if (dbExists)
             {
-                int sensorId = Convert.ToInt32(sID.Value);
+                int sensorId = Convert.ToInt32(sID.Text);
 
                 //List<string> sRangeTablesChecked = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x=>x.Checked).Select(x => x.Name).ToList();
                 List<CheckBox> sRangeTablesAll = S_UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
@@ -955,7 +953,7 @@ namespace AdminPage
                                         if (sensorId != newID)
                                         {
                                             sensorId = newID;
-                                            sID.Value = newID;
+                                            sID.Text= newID.ToString();
                                             break;
                                         }
                                         if (errorLimit <= counter)
@@ -1140,7 +1138,11 @@ namespace AdminPage
 
 
             if(listView1.Items.Count > 0) { 
-                sID.Value = Convert.ToInt32(listView1.Items[listView1.Items.Count - 1].SubItems[0].Text) + 1; 
+                sID.Text= (Convert.ToInt32(listView1.Items[listView1.Items.Count - 1].SubItems[0].Text) + 1).ToString(); 
+            }
+            else
+            {
+                sID.Text = "1";
             }
             
             RangeSetNew();

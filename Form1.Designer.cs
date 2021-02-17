@@ -137,8 +137,8 @@ namespace AdminPage
             this.sDescription = new System.Windows.Forms.TextBox();
             this.sLocation = new System.Windows.Forms.TextBox();
             this.sName = new System.Windows.Forms.TextBox();
-            this.sID = new System.Windows.Forms.NumericUpDown();
             this.pTrackerTimer = new System.Windows.Forms.Timer(this.components);
+            this.sID = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -182,7 +182,6 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.s_tLowerLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_tHigherLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_tHigherLimit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sID)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -431,6 +430,7 @@ namespace AdminPage
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.sID);
             this.splitContainer1.Panel2.Controls.Add(this.l_zone);
             this.splitContainer1.Panel2.Controls.Add(this.sZone);
             this.splitContainer1.Panel2.Controls.Add(this.s_p100HigherLimit2);
@@ -493,7 +493,6 @@ namespace AdminPage
             this.splitContainer1.Panel2.Controls.Add(this.sDescription);
             this.splitContainer1.Panel2.Controls.Add(this.sLocation);
             this.splitContainer1.Panel2.Controls.Add(this.sName);
-            this.splitContainer1.Panel2.Controls.Add(this.sID);
             // 
             // listView1
             // 
@@ -1051,32 +1050,17 @@ namespace AdminPage
             resources.ApplyResources(this.sName, "sName");
             this.sName.Name = "sName";
             // 
-            // sID
-            // 
-            resources.ApplyResources(this.sID, "sID");
-            this.sID.Maximum = new decimal(new int[] {
-            250,
-            0,
-            0,
-            0});
-            this.sID.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.sID.Name = "sID";
-            this.sID.ReadOnly = true;
-            this.sID.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
             // pTrackerTimer
             // 
             this.pTrackerTimer.Enabled = true;
-            this.pTrackerTimer.Interval = 2000;
+            this.pTrackerTimer.Interval = 1000;
             this.pTrackerTimer.Tick += new System.EventHandler(this.pTrackerTimer_Tick);
+            // 
+            // sID
+            // 
+            resources.ApplyResources(this.sID, "sID");
+            this.sID.Name = "sID";
+            this.sID.ReadOnly = true;
             // 
             // Form1
             // 
@@ -1136,7 +1120,6 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.s_tLowerLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_tHigherLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_tHigherLimit1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sID)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1213,7 +1196,6 @@ namespace AdminPage
         private System.Windows.Forms.CheckBox c_p50Usage;
         private System.Windows.Forms.CheckBox c_p25Usage;
         private System.Windows.Forms.CheckBox c_p10Usage;
-        private System.Windows.Forms.NumericUpDown sID;
         private System.Windows.Forms.NumericUpDown s_tHigherLimit1;
         private System.Windows.Forms.NumericUpDown s_tLowerLimit2;
         private System.Windows.Forms.NumericUpDown s_tLowerLimit1;
@@ -1251,6 +1233,7 @@ namespace AdminPage
         private System.Windows.Forms.TextBox sZone;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         public System.Windows.Forms.Timer pTrackerTimer;
+        private System.Windows.Forms.TextBox sID;
     }
 }
 
