@@ -94,7 +94,7 @@ namespace AdminPage
             pTrackerTimer.Start();
             //applicationProcess = GetAppProcess(DataCollectionAppName);
             
-            listView1.Scrollable = true;
+            
 
             S_DeviceInfo_txtB = new List<TextBox>() { sName, sZone, sLocation,  sDescription };
             S_DeviceInfoColumns = new List<string>() { sID.Name, S_DeviceInfo_txtB[0].Name, S_DeviceInfo_txtB[1].Name, S_DeviceInfo_txtB[2].Name, S_DeviceInfo_txtB[3].Name, "sUsage" };
@@ -146,6 +146,8 @@ namespace AdminPage
                     listView1.Items.Add(listViewItem);
                     num += 1;
                 }
+                listView1.Scrollable = true;
+                listView1.Sort();
 
             }
             else
@@ -399,7 +401,7 @@ namespace AdminPage
                 bool Check_Device_tableExists = g_DbTableHandler.IfTableExists(Devices_tbName);
                 if (Check_Device_tableExists)
                 {
-                    string sqlStr = $"SELECT * FROM {Devices_tbName}";
+                    string sqlStr = $"SELECT * FROM {Devices_tbName} ORDER BY {S_DeviceInfoColumns[0]}";
                     using (SqlConnection con = new SqlConnection($@"Data Source = {DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD};Min Pool Size=20"))
                     { //Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20")) // ; Integrated Security=True
                       //con.Open();
