@@ -227,18 +227,6 @@ namespace AdminPage
 
 
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                notifyIcon1.Visible = true;
-                this.Hide();
-                e.Cancel = true;
-            }
-        }
-
-
-
         /// <summary>
         /// 센서 장비 테이블에 있는 모든 장비에 대한 ID를 List<int> 형태로 불러오는 함수
         /// </summary>
