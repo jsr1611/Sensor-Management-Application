@@ -47,7 +47,6 @@ namespace AdminPage
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -287,11 +286,6 @@ namespace AdminPage
             // 
             this.contactToolStripMenuItem.Name = "contactToolStripMenuItem";
             resources.ApplyResources(this.contactToolStripMenuItem, "contactToolStripMenuItem");
-            // 
-            // notifyIcon1
-            // 
-            this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            resources.ApplyResources(this.notifyIcon1, "notifyIcon1");
             // 
             // panel1
             // 
@@ -1138,7 +1132,6 @@ namespace AdminPage
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem contactToolStripMenuItem;
-        public System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ToolStripMenuItem sensorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem S_Start;
         private System.Windows.Forms.ToolStripMenuItem S_Stop;

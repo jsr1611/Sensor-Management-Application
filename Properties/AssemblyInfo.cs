@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DataCollectionApp Admin Page")]
-[assembly: AssemblyDescription("Admin Page for Data Collection Application")]
+[assembly: AssemblyTitle("Sensor Management Admin Page Application")]
+[assembly: AssemblyDescription("Sensor Management Admin Page for Data Collection and Visualization Application")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("DLIT Inc.")]
-[assembly: AssemblyProduct("DataCollectionApp Admin Page")]
+[assembly: AssemblyProduct("Sensor Management Admin Page")]
 [assembly: AssemblyCopyright("Copyright © DLIT Inc. 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

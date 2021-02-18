@@ -201,31 +201,6 @@ namespace AdminPage
         }
 
 
-        private void MinimizeToTray()
-        {
-            try
-            {
-                notifyIcon1.BalloonTipTitle = "Sample text";
-                notifyIcon1.BalloonTipText = "Form is minimized";
-
-                if (FormWindowState.Minimized == this.WindowState)
-                {
-                    notifyIcon1.Visible = true;
-                    notifyIcon1.ShowBalloonTip(500);
-                    this.Hide();
-                }
-                else if (FormWindowState.Normal == this.WindowState)
-                {
-                    notifyIcon1.Visible = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-
 
         /// <summary>
         /// 센서 장비 테이블에 있는 모든 장비에 대한 ID를 List<int> 형태로 불러오는 함수
@@ -358,8 +333,6 @@ namespace AdminPage
             }
             return idExists;
         }
-
-
 
 
 
