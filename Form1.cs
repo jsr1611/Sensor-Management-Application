@@ -440,19 +440,16 @@ namespace AdminPage
                 try
                 {
                     Process.Start(appAddress);
-                }
-                catch (System.Exception)
-                {
-                    appAddress = @"C:\Program Files\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
-                    Process.Start(appAddress);
-                }
-                finally
-                {
                     b_dataCollection_status.Image = Resources.light_on_26_color;
                     applicationProcess = GetAppProcess(DataCollectionAppName);
                     appAlreadyRunning = true;
                 }
-
+                catch (System.Exception)
+                {
+                    MessageBox.Show("데이터 수집 프로그램이 컴퓨터에 설치되어 있는지 확인후 다시 실행해 주세요.", "Application Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
+/*                    appAddress = @"C:\Program Files\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
+                    Process.Start(appAddress);*/
+                }
             }
             else
             {

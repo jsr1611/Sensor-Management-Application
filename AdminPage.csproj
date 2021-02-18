@@ -7,7 +7,7 @@
     <ProjectGuid>{4B849936-8B83-44AC-AED9-F990069155FF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>AdminPage</RootNamespace>
-    <AssemblyName>Admin Page Application</AssemblyName>
+    <AssemblyName>Sensor Management Application</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
