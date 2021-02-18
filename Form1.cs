@@ -4,9 +4,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
-using FlaUI.UIA3;
 using AdminPage.Properties;
 using System.Diagnostics;
+using System.IO;
 
 namespace AdminPage
 {
@@ -66,10 +66,9 @@ namespace AdminPage
         public Dictionary<CheckBox, List<NumericUpDown>> S_UsageCheckerRangePairs { get; set; }
 
         public DbTableHandler g_DbTableHandler;
-        
-        public string appAddress = @"C:\Users\JIMMY\source\repos\0DataCollectionAppNew\DataCollectionApp\bin\Release\Modbus_RTU_SensorData.EXE";
+
+        public string appAddress = @"C:\Program Files (x86)\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
         public string DataCollectionAppName { get; set; }
-        public FlaUI.Core.Application dataCollectionApp { get; set; }
         public bool appAlreadyRunning { get; set; }
         public Process applicationProcess { get; set; }
 
@@ -87,8 +86,8 @@ namespace AdminPage
             S_UsageTable = "SensorUsage";
             connectionTimeout = "180";
 
-            DataCollectionAppName = "Modbus_RTU_SensorData";
-            
+            DataCollectionAppName = "SensorData Collection Application";
+
             applicationProcess = new Process();
             pTrackerTimer.Enabled = true;
             pTrackerTimer.Start();
@@ -176,12 +175,9 @@ namespace AdminPage
         public Process GetAppProcess(string dataCollectionAppName)
         {
             int myCounter = 0;
-            while (true)
+            while (myCounter < 2)
             {
-                if (myCounter > 2)
-                {
-                    break;
-                }
+                //dataCollectionAppName = "SensorData Collection Application";
                 Process[] processes = Process.GetProcessesByName(dataCollectionAppName);
                 if (processes.Length != 0)
                 {
@@ -193,7 +189,7 @@ namespace AdminPage
                 else
                 {
                     dataCollectionAppName = Microsoft.VisualBasic.Interaction.InputBox("찾으신 어플리케이션의 정확한 이름을 찾아서 입력해 주세요!", "Application Status", ".exe를 제외한 Application명만 입력", -1, -1);
-
+                    myCounter += 1;
                     //MessageBox.Show("찾으신 어플리케이션의 정확한 이름을 찾아서 입력해 주세요!", "Application Status", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                 }
             }
@@ -430,88 +426,39 @@ namespace AdminPage
 
         private void b_start_Click(object sender, EventArgs e)
         {
-
+            
             if (!appAlreadyRunning)
             {
 
-                dataCollectionApp = FlaUI.Core.Application.Launch(appAddress);
+                /*dataCollectionApp = FlaUI.Core.Application.Launch(appAddress);
                 using (var automation = new UIA3Automation())
                 {
                     var window = dataCollectionApp.GetMainWindow(automation);
                     //MessageBox.Show("Hello, " + window.Title, window.Title);
 
+                }*/
+                try
+                {
+                    Process.Start(appAddress);
                 }
-                b_dataCollection_status.Image = Resources.light_on_26_color;
-                applicationProcess = GetAppProcess(DataCollectionAppName);
-                appAlreadyRunning = true;
+                catch (System.Exception)
+                {
+                    appAddress = @"C:\Program Files\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
+                    Process.Start(appAddress);
+                }
+                finally
+                {
+                    b_dataCollection_status.Image = Resources.light_on_26_color;
+                    applicationProcess = GetAppProcess(DataCollectionAppName);
+                    appAlreadyRunning = true;
+                }
+
             }
             else
             {
                 MessageBox.Show("데이터 수집 프로그램이 이미 실행중입니다.", "Application status", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-
-/*
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            DateTime timestamp = DateTime.Now;
-            foreach (int s_id in S_IDs)
-            {
-                if (dataCount >= 2147483646)
-                {
-                    dataCount = 1;
-                }
-                dataCount += 1;
-                modbusClient.UnitIdentifier = (byte)s_id;
-                //string timestamp0 = now.ToString("yyyy-MM-dd HH:mm:ss.fff"); // 
-
-                int[] test1 = modbusClient.ReadInputRegisters(10, 6);
-
-                var timeCount = DateTime.Now - startTime;
-                string timestamp0 = timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff");
-                decimal temp = test1[0];
-                decimal humid = test1[1];
-                int[] part03_arr = { 0, 0 };
-                int[] part05_arr = { 0, 0 };
-                part03_arr[0] = test1[3];
-                part03_arr[1] = test1[2];
-                part05_arr[0] = test1[5];
-                part05_arr[1] = test1[4];
-                Int64 part03 = ModbusClient.ConvertRegistersToInt(part03_arr);
-                Int64 part05 = ModbusClient.ConvertRegistersToInt(part05_arr);
-                Console.WriteLine(dataCount + "\t" + s_id + "\t" + (temp / 100m).ToString("F", CultureInfo.InvariantCulture) + "\t" + (humid / 100m).ToString("F", CultureInfo.InvariantCulture) + "\t\t" + String.Format("{0:n0}", part03) + "\t" + String.Format("{0:n0}", part05) + "\t" + timestamp0 + "\t  {0}일 {1}시간 {2}분 {3}초", timeCount.Days, timeCount.Hours, timeCount.Minutes, timeCount.Seconds);
-                string[] allData = { s_id.ToString(), (temp / 100m).ToString("F", CultureInfo.InvariantCulture), (humid / 100m).ToString("F", CultureInfo.InvariantCulture), String.Format("{0:n0}", part03), String.Format("{0:n0}", part05), timestamp0 };
-                string sql_str_temp = "INSERT INTO DEV_TEMP_" + s_id.ToString() + " (Temperature, DateAndTime) Values (@Temperature, @DateAndTime)";
-                string sql_str_humid = "INSERT INTO DEV_HUMID_" + s_id.ToString() + " (Humidity, DateAndTime) Values (@Humidity, @DateAndTime)";
-                string sql_str_part03 = "INSERT INTO DEV_PART03_" + s_id.ToString() + " (Particle03, DateAndTime) Values (@Particle03, @DateAndTime)";
-                string sql_str_part05 = "INSERT INTO DEV_PART05_" + s_id.ToString() + " (Particle05, DateAndTime) Values (@Particle05, @DateAndTime)";
-
-                SqlCommand myCommand_temp = new SqlCommand(sql_str_temp, myConn);
-                SqlCommand myCommand_humid = new SqlCommand(sql_str_humid, myConn);
-                SqlCommand myCommand_part03 = new SqlCommand(sql_str_part03, myConn);
-                SqlCommand myCommand_part05 = new SqlCommand(sql_str_part05, myConn);
-
-                myCommand_temp.Parameters.AddWithValue("@Temperature ", (temp / 100m).ToString("F", CultureInfo.InvariantCulture));
-                myCommand_temp.Parameters.AddWithValue("@DateAndTime", timestamp0);
-                myCommand_temp.ExecuteNonQuery();
-
-                myCommand_humid.Parameters.AddWithValue("@Humidity", (humid / 100m).ToString("F", CultureInfo.InvariantCulture));
-                myCommand_humid.Parameters.AddWithValue("@DateAndTime", timestamp0);
-                myCommand_humid.ExecuteNonQuery();
-
-                myCommand_part03.Parameters.AddWithValue("@Particle03", part03);
-                myCommand_part03.Parameters.AddWithValue("@DateAndTime", timestamp0);
-                myCommand_part03.ExecuteNonQuery();
-
-                myCommand_part05.Parameters.AddWithValue("@Particle05", part05);
-                myCommand_part05.Parameters.AddWithValue("@DateAndTime", timestamp0);
-                myCommand_part05.ExecuteNonQuery();
-            }
-
-        }
-*/
-
 
         private void b_stop_Click(object sender, EventArgs e)
         {
@@ -1197,6 +1144,13 @@ namespace AdminPage
             }
         }
 
+
+
+        /// <summary>
+        /// 데이터 수집 프로그램 프로세스를 트레킹하는 함수.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pTrackerTimer_Tick(object sender, EventArgs e)
         {
             appAlreadyRunning = CheckAppRunning(DataCollectionAppName);
@@ -1214,6 +1168,13 @@ namespace AdminPage
             }
         }
 
+
+
+        /// <summary>
+        /// 수집 프로그램이 잘 실행되고 있는지 확인함.
+        /// </summary>
+        /// <param name="dataCollectionAppName"></param>
+        /// <returns></returns>
         private bool CheckAppRunning(string dataCollectionAppName)
         {
             bool res = false;
