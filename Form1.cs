@@ -1129,8 +1129,8 @@ namespace AdminPage
                 item.Selected = false;
                 
             }
-            S_DeviceInfo_txtB[0].Text = "PSU650";
-            S_DeviceInfo_txtB[1].Text = "ZONE N";
+            //S_DeviceInfo_txtB[0].Text = "PSU650";
+            S_DeviceInfo_txtB[1].Text = "ZONE";
 
             for (int i = 2; i < S_DeviceInfo_txtB.Count; i++)
             {

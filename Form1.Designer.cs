@@ -75,6 +75,7 @@ namespace AdminPage
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.sID = new System.Windows.Forms.TextBox();
             this.l_zone = new System.Windows.Forms.Label();
             this.sZone = new System.Windows.Forms.TextBox();
             this.s_p100HigherLimit2 = new System.Windows.Forms.NumericUpDown();
@@ -138,7 +139,6 @@ namespace AdminPage
             this.sLocation = new System.Windows.Forms.TextBox();
             this.sName = new System.Windows.Forms.TextBox();
             this.pTrackerTimer = new System.Windows.Forms.Timer(this.components);
-            this.sID = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -327,7 +327,7 @@ namespace AdminPage
             // b_stop
             // 
             resources.ApplyResources(this.b_stop, "b_stop");
-            this.b_stop.Image = global::AdminPage.Properties.Resources.pause_26_color;
+            this.b_stop.Image = global::AdminPage.Properties.Resources.stop_26_color;
             this.b_stop.Name = "b_stop";
             this.b_stop.UseVisualStyleBackColor = true;
             this.b_stop.Click += new System.EventHandler(this.b_stop_Click);
@@ -541,6 +541,12 @@ namespace AdminPage
             // columnHeader6
             // 
             resources.ApplyResources(this.columnHeader6, "columnHeader6");
+            // 
+            // sID
+            // 
+            resources.ApplyResources(this.sID, "sID");
+            this.sID.Name = "sID";
+            this.sID.ReadOnly = true;
             // 
             // l_zone
             // 
@@ -1056,12 +1062,6 @@ namespace AdminPage
             this.pTrackerTimer.Interval = 1000;
             this.pTrackerTimer.Tick += new System.EventHandler(this.pTrackerTimer_Tick);
             // 
-            // sID
-            // 
-            resources.ApplyResources(this.sID, "sID");
-            this.sID.Name = "sID";
-            this.sID.ReadOnly = true;
-            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
@@ -1072,7 +1072,9 @@ namespace AdminPage
             this.Controls.Add(this.panel_left);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.menuStrip1.ResumeLayout(false);
