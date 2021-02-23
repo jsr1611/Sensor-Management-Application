@@ -78,9 +78,9 @@ namespace AdminPage
 
             DbServer = "localhost\\SQLEXPRESS";//"127.0.0.1";    //"10.1.55.174"; 
             //Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;
-            DbName = "SensorDataDB";
-            DbUID = "dlitadmin";
-            DbPWD = "dlitadmin";
+            DbName = "SensorDataNewDB";
+            DbUID = "admin";
+            DbPWD = "admin";
 
             S_DeviceTable = "SENSOR_INFO";
             S_UsageTable = "SensorUsage";
@@ -343,13 +343,14 @@ namespace AdminPage
             DataSet ds = new DataSet();
             bool checkDbExists = g_DbTableHandler.IfDatabaseExists(sensorData_dbName);
             
-            string sqlCreateDeviceTb = $"CREATE TABLE {Devices_tbName} ({S_DeviceInfoColumns[0]} INT NOT NULL ";
+            string sqlCreateDeviceTb = $"CREATE TABLE {Devices_tbName} ({S_DeviceInfoColumns[0]} INT NOT NULL, CONSTRAINT PK_{Devices_tbName}_{S_DeviceInfoColumns[0]} PRIMARY KEY ({S_DeviceInfoColumns[0]}) ";
             //  S_DeviceInfo_txtB 크기만큼은 loop를 통해 스트링에 추가
             for (int i=1; i<S_DeviceInfoColumns.Count-1; i++)
             {
-                sqlCreateDeviceTb += $", {S_DeviceInfoColumns[i]} NVARCHAR(250) NULL ";                 
+                sqlCreateDeviceTb += $", {S_DeviceInfoColumns[i]} NVARCHAR(250) NULL ";
+                    
             }
-                sqlCreateDeviceTb += $",{S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} NVARCHAR(20) NOT NULL);";
+                sqlCreateDeviceTb += $",{S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} NVARCHAR(20) NOT NULL, INDEX IX_{S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} NONCLUSTERED({S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]})); ";
 
 
 
@@ -794,12 +795,13 @@ namespace AdminPage
                     
                     bool checkRangesTb = g_DbTableHandler.IfTableExists(sRangeTable);
 
-                    string sqlCreateTb = $"Create TABLE [{sRangeTable}] ( " +
+                    string sqlCreateTb = $"Create TABLE {sRangeTable} ( " +
                                 $" {S_DeviceInfoColumns[0]} INT NOT NULL, " +
                                 $" {S_FourRangeColumns[0]} decimal(7,2) NULL, " +
                                 $" {S_FourRangeColumns[1]} decimal(7,2) NULL, " +
                                 $" {S_FourRangeColumns[2]} decimal(7,2) NULL, " +
-                                $" {S_FourRangeColumns[3]} decimal(7,2) NULL);";
+                                $" {S_FourRangeColumns[3]} decimal(7,2) NULL, " +
+                                $" CONSTRAINT PK_{sRangeTable}_{S_DeviceInfoColumns[0]} PRIMARY KEY ({S_DeviceInfoColumns[0]}))";
 
 
 
@@ -916,7 +918,7 @@ namespace AdminPage
                 {
                     List<string> sRangesTbNames = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).ToList();
                     string sqlCreateUsageTb = $"CREATE TABLE {S_UsageTable}(" +
-                        $" {S_DeviceInfoColumns[0]} INT NOT NULL ";
+                        $" {S_DeviceInfoColumns[0]} INT NOT NULL, CONSTRAINT PK_{S_UsageTable}_{S_DeviceInfoColumns[0]} PRIMARY KEY ({S_DeviceInfoColumns[0]})  ";
                     foreach(var item in sRangesTbNames)
                     {
                         sqlCreateUsageTb += $", {item} NVARCHAR(20) NOT NULL ";
@@ -997,7 +999,7 @@ namespace AdminPage
             }
             else
             {
-                MessageBox.Show("센서 정보 DB를 찾을 수 없었습니다. 프르그램을 다시 실행한 후 DB부터 생성해 주세요.", "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show("센서 정보 DB를 찾을 수 없거나 연결을 못했습니다. 프르그램을 다시 실행한 후 DB부터 생성해 주세요.", "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
             return result;
         }

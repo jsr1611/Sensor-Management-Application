@@ -196,6 +196,7 @@ namespace AdminPage
             string tbCreateCmdStr = "";
             tbCreateCmdStr = $"Create TABLE {tableName} ( " +
                         $" {S_DeviceInfoColumns[0]} INT NOT NULL, " +
+                        $" CONSTRAINT PK_{tableName}_{S_DeviceInfoColumns[0]} PRIMARY KEY ({S_DeviceInfoColumns[0]}), " +
                         $" {S_FourRangeColumns[0]} decimal(7,2) NULL, " +
                         $" {S_FourRangeColumns[1]} decimal(7,2) NULL, " +
                         $" {S_FourRangeColumns[2]} decimal(7,2) NULL, " +
