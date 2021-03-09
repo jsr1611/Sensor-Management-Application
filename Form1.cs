@@ -139,7 +139,7 @@ namespace AdminPage
             List<List<NumericUpDown>> S_Ranges_p = new List<List<NumericUpDown>>() {pa_Ranges, hPa_Ranges, kPa_Ranges, mmH2O_Ranges, inchH2O_Ranges, mmHg_Ranges, inchHg_Ranges };
 
 
-                myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
+            myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
             g_DbTableHandler = new DbTableHandler(new List<string>() { DbServer, DbName, DbUID, DbUID });
 
             g_DbTableHandler.MyConn = myConn;
@@ -199,6 +199,7 @@ namespace AdminPage
             startTime = DateTime.Now;
 
             clearFields(S_DeviceInfo_txtB);
+            clearFields(S_DeviceInfo_txtB_p);
 
         }
 
@@ -460,66 +461,88 @@ namespace AdminPage
         }
 
 
-
+        /// <summary>
+        /// 데이터 수집 시작 센서 제어 부문
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void b_start_Click(object sender, EventArgs e)
         {
-            
-            if (!appAlreadyRunning)
+            if (tabControl1.SelectedTab == tabPage1)
             {
-
-                /*dataCollectionApp = FlaUI.Core.Application.Launch(appAddress);
-                using (var automation = new UIA3Automation())
+                if (!appAlreadyRunning)
                 {
-                    var window = dataCollectionApp.GetMainWindow(automation);
-                    //MessageBox.Show("Hello, " + window.Title, window.Title);
 
-                }*/
-                try
-                {
-                    Process.Start(appAddress);
-                    b_dataCollection_status.Image = Resources.light_on_26_color;
-                    applicationProcess = GetAppProcess(DataCollectionAppName);
-                    appAlreadyRunning = true;
+                    /*dataCollectionApp = FlaUI.Core.Application.Launch(appAddress);
+                    using (var automation = new UIA3Automation())
+                    {
+                        var window = dataCollectionApp.GetMainWindow(automation);
+                        //MessageBox.Show("Hello, " + window.Title, window.Title);
+
+                    }*/
+                    try
+                    {
+                        Process.Start(appAddress);
+                        b_dataCollection_status.Image = Resources.light_on_26_color;
+                        applicationProcess = GetAppProcess(DataCollectionAppName);
+                        appAlreadyRunning = true;
+                    }
+                    catch (System.Exception)
+                    {
+                        MessageBox.Show("데이터 수집 프로그램이 컴퓨터에 설치되어 있는지 확인후 다시 실행해 주세요.", "Application Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        /*                    appAddress = @"C:\Program Files\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
+                                            Process.Start(appAddress);*/
+                        //string[] filePaths = System.IO.Directory.GetFiles(@"C:\Program Files\DLIT Inc\", "SensorData Collection Application.exe", SearchOption.TopDirectoryOnly);
+                        /*appAddress = @"C:\Users\" + System.Security.Principal.WindowsIdentity.GetCurrent().Name.Split('\\')[1] + @"\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\DLIT Inc\Sensor Data Collection App";
+                        Process.Start(appAddress);
+                        b_dataCollection_status.Image = Resources.light_on_26_color;
+                        applicationProcess = GetAppProcess(DataCollectionAppName);
+                        appAlreadyRunning = true;*/
+                    }
                 }
-                catch (System.Exception)
+                else
                 {
-                    MessageBox.Show("데이터 수집 프로그램이 컴퓨터에 설치되어 있는지 확인후 다시 실행해 주세요.", "Application Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    /*                    appAddress = @"C:\Program Files\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
-                                        Process.Start(appAddress);*/
-                    //string[] filePaths = System.IO.Directory.GetFiles(@"C:\Program Files\DLIT Inc\", "SensorData Collection Application.exe", SearchOption.TopDirectoryOnly);
-                    /*appAddress = @"C:\Users\" + System.Security.Principal.WindowsIdentity.GetCurrent().Name.Split('\\')[1] + @"\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\DLIT Inc\Sensor Data Collection App";
-                    Process.Start(appAddress);
-                    b_dataCollection_status.Image = Resources.light_on_26_color;
-                    applicationProcess = GetAppProcess(DataCollectionAppName);
-                    appAlreadyRunning = true;*/
+                    MessageBox.Show("데이터 수집 프로그램이 이미 실행중입니다.", "Application status", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            else
+            else if(tabControl1.SelectedTab == tabPage2)
             {
-                MessageBox.Show("데이터 수집 프로그램이 이미 실행중입니다.", "Application status", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("차압 센서 데이터 수집 프로그램은 아직 구현이 안되어 있어요!", "Application status", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
+
+
+        /// <summary>
+        /// 데이터 수집 중지 센서 제어 부문
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void b_stop_Click(object sender, EventArgs e)
         {
-            //FlaUI.Core.Application application = FlaUI.Core.Application.Launch(appAddress);
 
-            // code to interact with the UI
-            if (appAlreadyRunning)
+            if (tabControl1.SelectedTab == tabPage1)
             {
-                DialogResult dialog = MessageBox.Show("데이터 수집 프로그램을 중지하시겠습니까?", "Application status", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialog == DialogResult.Yes)
+                if (appAlreadyRunning)
                 {
-                    applicationProcess = GetAppProcess(DataCollectionAppName);
-                    applicationProcess.Kill();
-                    b_dataCollection_status.Image = Resources.light_off_26;
-                    appAlreadyRunning = false;
-                    applicationProcess.Dispose();
+                    DialogResult dialog = MessageBox.Show("데이터 수집 프로그램을 중지하시겠습니까?", "Application status", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dialog == DialogResult.Yes)
+                    {
+                        applicationProcess = GetAppProcess(DataCollectionAppName);
+                        applicationProcess.Kill();
+                        b_dataCollection_status.Image = Resources.light_off_26;
+                        appAlreadyRunning = false;
+                        applicationProcess.Dispose();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("데이터 수집 프로그램이 이미 중지되어 있습니다", "Application status", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            else
+            else if (tabControl1.SelectedTab == tabPage2)
             {
-                MessageBox.Show("데이터 수집 프로그램이 이미 중지되어 있습니다", "Application status", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("차압 센서 데이터 수집 프로그램은 아직 구현이 안되어 있어요!", "Application status", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -793,21 +816,36 @@ namespace AdminPage
             {
                 textBoxes[i].Text = "";
             }
-            //S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(checkBox => checkBox.Checked = true);
-            //S_UsageCheckerRangePairs.Values.AsEnumerable().Select(list => list.Select(item => item.Enabled = false));
+            List<CheckBox> isCheked;
+            List<List<NumericUpDown>> listNumbers;
 
-            List<CheckBox> isCheked = S_UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
-            List<List<NumericUpDown>> listNumbers = S_UsageCheckerRangePairs.Values.AsEnumerable().ToList();
-            for(int i=0; i<isCheked.Count; i++)
+            if (tabControl1.SelectedTab == tabPage1)
+            {
+                
+                isCheked = S_UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
+                listNumbers = S_UsageCheckerRangePairs.Values.AsEnumerable().ToList();
+            
+            }
+            else if(tabControl1.SelectedTab == tabPage2)
+            {
+                isCheked = S_UsageCheckerRangePairs_p.Keys.AsEnumerable().ToList();
+                listNumbers = S_UsageCheckerRangePairs_p.Values.AsEnumerable().ToList();
+                
+            }
+            else
+            {
+                isCheked = new List<CheckBox>();
+                listNumbers = new List<List<NumericUpDown>>();
+            }
+            for (int i = 0; i < isCheked.Count; i++)
             {
                 isCheked[i].Checked = false;
-                for(int j = 0; j < listNumbers[i].Count; j++)
+                for (int j = 0; j < listNumbers[i].Count; j++)
                 {
                     listNumbers[i][j].Value = 0;
                     listNumbers[i][j].Enabled = false;
                 }
             }
-
         }
 
 
@@ -1398,6 +1436,64 @@ namespace AdminPage
                     pTrackerTimer.Stop();
                     pTrackerTimer.Enabled = false;
                 }
+            }
+        }
+
+        private void listView2_pressure_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listView2_pressure.SelectedItems.Count > 0)
+            {
+                foreach (ListViewItem item in listView2_pressure.SelectedItems)
+                {
+                    int sensorId = Convert.ToInt32(item.SubItems[1].Text);
+                    sID_p.Text = sensorId.ToString();
+                    for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
+                    {
+                        S_DeviceInfo_txtB_p[i].Text = item.SubItems[i + 2].Text;
+                        //S_DeviceInfo_txtB[i].TextAlign = HorizontalAlignment.Center;
+                    }
+                    List<CheckBox> sUsageRangesCh = S_UsageCheckerRangePairs_p.Keys.AsEnumerable().ToList();
+                    List<string> sUsageRangesTables = S_UsageCheckerRangePairs_p.Keys.AsEnumerable().Select(x => x.Name).ToList();
+
+                    for (int i = 0; i < sUsageRangesTables.Count; i++)
+                    {
+
+                        DataSet rangesWithUsage = GetRangesWithUsage(sensorId, sUsageRangesTables[i]);
+
+                        // first time use
+                        if (rangesWithUsage.Tables.Count == 0 || rangesWithUsage.Tables[0].Rows.Count == 0)
+                        {
+                            S_UsageCheckerRangePairs_p.Keys.AsEnumerable().Select(x => x.Checked = false);
+                            S_UsageCheckerRangePairs_p.Values.AsEnumerable().Select(list => list.Select(x => x.Enabled = false));
+                        }
+                        else
+                        {
+                            List<decimal> dataFromDB = new List<decimal>();
+                            for (int j = 0; j < S_FourRangeColumns.Count; j++)
+                            {
+                                dataFromDB.Add(Convert.ToDecimal(rangesWithUsage.Tables[0].Rows[0][S_FourRangeColumns[j]]));
+                            }
+
+                            bool sUsage = rangesWithUsage.Tables[0].Rows[0][sUsageRangesTables[i]].ToString() == "YES";
+
+                            List<NumericUpDown> checkers = S_UsageCheckerRangePairs_p[sUsageRangesCh[i]];
+
+                            for (int j = 0; j < checkers.Count; j++)
+                            {
+                                //checkers[i].Value = dataFromDB[i];
+                                S_UsageCheckerRangePairs_p[sUsageRangesCh[i]][j].Value = dataFromDB[j];
+
+                            }
+                            CheckBox currentCheckBox = S_UsageCheckerRangePairs_p.Keys.Where(x => x.Name == sUsageRangesTables[i]).FirstOrDefault();
+                            currentCheckBox.Checked = sUsage;
+
+                        }
+                    }
+                }
+            }
+            else
+            {
+                clearFields(S_DeviceInfo_txtB_p);
             }
         }
     }

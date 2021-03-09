@@ -1274,6 +1274,7 @@ namespace AdminPage
             this.listView2_pressure.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listView2_pressure.UseCompatibleStateImageBehavior = false;
             this.listView2_pressure.View = System.Windows.Forms.View.Details;
+            this.listView2_pressure.SelectedIndexChanged += new System.EventHandler(this.listView2_pressure_SelectedIndexChanged);
             // 
             // columnHeader7
             // 
