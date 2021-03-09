@@ -1208,24 +1208,6 @@ namespace AdminPage
         }
 
 
-
-        private void textBox5_Click(object sender, EventArgs e)
-        {
-            /*if(textBox5.Text == "NO")
-            {
-                textBox5.Text = "YES";
-            }
-            else
-            {
-                textBox5.Text = "NO";
-            }*/
-        }
-
-
-
-
-
-
         /// <summary>
         /// Custom function for Checking/Unchecking the checkbox control
         /// </summary>
