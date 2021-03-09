@@ -158,13 +158,13 @@ namespace AdminPage
             this.sID_p = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.sZone_p = new System.Windows.Forms.TextBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.checkBox8 = new System.Windows.Forms.CheckBox();
+            this.c_inchhgUsage = new System.Windows.Forms.CheckBox();
+            this.c_mmhgUsage = new System.Windows.Forms.CheckBox();
+            this.c_inchh2oUsage = new System.Windows.Forms.CheckBox();
+            this.c_mmh2oUsage = new System.Windows.Forms.CheckBox();
+            this.c_kpaUsage = new System.Windows.Forms.CheckBox();
+            this.c_hpaUsage = new System.Windows.Forms.CheckBox();
+            this.c_paUsage = new System.Windows.Forms.CheckBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
@@ -1236,13 +1236,13 @@ namespace AdminPage
             this.splitContainer2.Panel2.Controls.Add(this.sID_p);
             this.splitContainer2.Panel2.Controls.Add(this.label8);
             this.splitContainer2.Panel2.Controls.Add(this.sZone_p);
-            this.splitContainer2.Panel2.Controls.Add(this.checkBox2);
-            this.splitContainer2.Panel2.Controls.Add(this.checkBox3);
-            this.splitContainer2.Panel2.Controls.Add(this.checkBox4);
-            this.splitContainer2.Panel2.Controls.Add(this.checkBox5);
-            this.splitContainer2.Panel2.Controls.Add(this.checkBox6);
-            this.splitContainer2.Panel2.Controls.Add(this.checkBox7);
-            this.splitContainer2.Panel2.Controls.Add(this.checkBox8);
+            this.splitContainer2.Panel2.Controls.Add(this.c_inchhgUsage);
+            this.splitContainer2.Panel2.Controls.Add(this.c_mmhgUsage);
+            this.splitContainer2.Panel2.Controls.Add(this.c_inchh2oUsage);
+            this.splitContainer2.Panel2.Controls.Add(this.c_mmh2oUsage);
+            this.splitContainer2.Panel2.Controls.Add(this.c_kpaUsage);
+            this.splitContainer2.Panel2.Controls.Add(this.c_hpaUsage);
+            this.splitContainer2.Panel2.Controls.Add(this.c_paUsage);
             this.splitContainer2.Panel2.Controls.Add(this.label18);
             this.splitContainer2.Panel2.Controls.Add(this.label19);
             this.splitContainer2.Panel2.Controls.Add(this.label20);
@@ -1350,47 +1350,54 @@ namespace AdminPage
             resources.ApplyResources(this.sZone_p, "sZone_p");
             this.sZone_p.Name = "sZone_p";
             // 
-            // checkBox2
+            // c_inchhgUsage
             // 
-            resources.ApplyResources(this.checkBox2, "checkBox2");
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.c_inchhgUsage, "c_inchhgUsage");
+            this.c_inchhgUsage.Name = "c_inchhgUsage";
+            this.c_inchhgUsage.UseVisualStyleBackColor = true;
+            this.c_inchhgUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // checkBox3
+            // c_mmhgUsage
             // 
-            resources.ApplyResources(this.checkBox3, "checkBox3");
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.c_mmhgUsage, "c_mmhgUsage");
+            this.c_mmhgUsage.Name = "c_mmhgUsage";
+            this.c_mmhgUsage.UseVisualStyleBackColor = true;
+            this.c_mmhgUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // checkBox4
+            // c_inchh2oUsage
             // 
-            resources.ApplyResources(this.checkBox4, "checkBox4");
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.c_inchh2oUsage, "c_inchh2oUsage");
+            this.c_inchh2oUsage.Name = "c_inchh2oUsage";
+            this.c_inchh2oUsage.UseVisualStyleBackColor = true;
+            this.c_inchh2oUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // checkBox5
+            // c_mmh2oUsage
             // 
-            resources.ApplyResources(this.checkBox5, "checkBox5");
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.c_mmh2oUsage, "c_mmh2oUsage");
+            this.c_mmh2oUsage.Name = "c_mmh2oUsage";
+            this.c_mmh2oUsage.UseVisualStyleBackColor = true;
+            this.c_mmh2oUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // checkBox6
+            // c_kpaUsage
             // 
-            resources.ApplyResources(this.checkBox6, "checkBox6");
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.c_kpaUsage, "c_kpaUsage");
+            this.c_kpaUsage.Name = "c_kpaUsage";
+            this.c_kpaUsage.UseVisualStyleBackColor = true;
+            this.c_kpaUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // checkBox7
+            // c_hpaUsage
             // 
-            resources.ApplyResources(this.checkBox7, "checkBox7");
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.c_hpaUsage, "c_hpaUsage");
+            this.c_hpaUsage.Name = "c_hpaUsage";
+            this.c_hpaUsage.UseVisualStyleBackColor = true;
+            this.c_hpaUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // checkBox8
+            // c_paUsage
             // 
-            resources.ApplyResources(this.checkBox8, "checkBox8");
-            this.checkBox8.Name = "checkBox8";
-            this.checkBox8.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.c_paUsage, "c_paUsage");
+            this.c_paUsage.Name = "c_paUsage";
+            this.c_paUsage.UseVisualStyleBackColor = true;
+            this.c_paUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // label18
             // 
@@ -2362,13 +2369,13 @@ namespace AdminPage
         private System.Windows.Forms.TextBox sID_p;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox sZone_p;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox6;
-        private System.Windows.Forms.CheckBox checkBox7;
-        private System.Windows.Forms.CheckBox checkBox8;
+        private System.Windows.Forms.CheckBox c_inchhgUsage;
+        private System.Windows.Forms.CheckBox c_mmhgUsage;
+        private System.Windows.Forms.CheckBox c_inchh2oUsage;
+        private System.Windows.Forms.CheckBox c_mmh2oUsage;
+        private System.Windows.Forms.CheckBox c_kpaUsage;
+        private System.Windows.Forms.CheckBox c_hpaUsage;
+        private System.Windows.Forms.CheckBox c_paUsage;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;

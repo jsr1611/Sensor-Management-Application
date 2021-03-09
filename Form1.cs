@@ -126,7 +126,7 @@ namespace AdminPage
             List<List<NumericUpDown>> S_Ranges = new List<List<NumericUpDown>>() { t_Ranges, h_Ranges, p03_Ranges, p05_Ranges, p10_Ranges, p25_Ranges, p50_Ranges, p100_Ranges };
 
 
-            List<CheckBox> S_UsageCheckers_p = new List<CheckBox>() { c_tUsage, c_hUsage, c_p03Usage, c_p05Usage, c_p10Usage, c_p25Usage, c_p50Usage, c_p100Usage };
+            List<CheckBox> S_UsageCheckers_p = new List<CheckBox>() { c_paUsage, c_hpaUsage, c_kpaUsage, c_mmh2oUsage, c_inchh2oUsage, c_mmhgUsage, c_inchhgUsage};
 
             List<NumericUpDown> pa_Ranges = new List<NumericUpDown>() { s_paHigherLimit2, s_paHigherLimit1, s_paLowerLimit1, s_paLowerLimit2 };
             List<NumericUpDown> hPa_Ranges = new List<NumericUpDown>() { s_hpaHigherLimit2, s_hpaHigherLimit1, s_hpaLowerLimit1, s_hpaLowerLimit2 };
@@ -136,8 +136,10 @@ namespace AdminPage
             List<NumericUpDown> mmHg_Ranges = new List<NumericUpDown>() { s_mmhgHigherLimit2, s_mmhgHigherLimit1, s_mmhgLowerLimit1, s_mmhgLowerLimit2 }; 
             List<NumericUpDown> inchHg_Ranges = new List<NumericUpDown>() { s_inchhgHigherLimit2, s_inchhgHigherLimit1, s_inchhgLowerLimit1, s_inchhgLowerLimit2 };
 
+            List<List<NumericUpDown>> S_Ranges_p = new List<List<NumericUpDown>>() {pa_Ranges, hPa_Ranges, kPa_Ranges, mmH2O_Ranges, inchH2O_Ranges, mmHg_Ranges, inchHg_Ranges };
 
-            myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
+
+                myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
             g_DbTableHandler = new DbTableHandler(new List<string>() { DbServer, DbName, DbUID, DbUID });
 
             g_DbTableHandler.MyConn = myConn;
@@ -188,6 +190,10 @@ namespace AdminPage
 
             S_UsageCheckerRangePairs_p = new Dictionary<CheckBox, List<NumericUpDown>>();
 
+            for(int i=0; i < S_UsageCheckers_p.Count; i++)
+            {
+                S_UsageCheckerRangePairs_p.Add(S_UsageCheckers_p[i], S_Ranges_p[i]);
+            }
 
 
             startTime = DateTime.Now;
@@ -1228,7 +1234,24 @@ namespace AdminPage
         private void xCheckedChanged(object sender, EventArgs e)
         {
             CheckBox chBox = (CheckBox)sender;
-            List<NumericUpDown> x_Ranges = S_UsageCheckerRangePairs[chBox];
+            List<NumericUpDown> x_Ranges;
+
+            //온습도 및 파티클 센서
+            if (tabControl1.SelectedTab == tabPage1)
+            {
+                x_Ranges = S_UsageCheckerRangePairs[chBox];
+            }
+            //차압 센서 
+            else if (tabControl1.SelectedTab == tabPage2)
+            {
+                x_Ranges = S_UsageCheckerRangePairs_p[chBox];
+            }
+            // empty case;
+            else
+            {
+                x_Ranges = new List<NumericUpDown>();
+            }
+
 
 
             if (chBox.Checked)
@@ -1245,7 +1268,6 @@ namespace AdminPage
                     item.Enabled = false;
                 }
             }
-
         }
 
 
@@ -1275,13 +1297,28 @@ namespace AdminPage
         /// </summary>
         private void RangeSetNew()
         {
-            S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x=>x.Checked = false);
-            for (int j = 0; j < S_UsageCheckerRangePairs.Keys.Count; j++)
+            if (tabControl1.SelectedTab == tabPage1)
             {
-                for (int i = 0; i < 4; i++)
+                S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Checked = false);
+                for (int j = 0; j < S_UsageCheckerRangePairs.Keys.Count; j++)
                 {
-                    S_UsageCheckerRangePairs.Values.AsEnumerable().ToList()[j][i].Enabled = false;
+                    for (int i = 0; i < 4; i++)
+                    {
+                        S_UsageCheckerRangePairs.Values.AsEnumerable().ToList()[j][i].Enabled = false;
 
+                    }
+                }
+            }
+            else if(tabControl1.SelectedTab == tabPage2)
+            {
+                S_UsageCheckerRangePairs_p.Keys.AsEnumerable().Select(x => x.Checked = false);
+                for (int j = 0; j < S_UsageCheckerRangePairs_p.Keys.Count; j++)
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        S_UsageCheckerRangePairs_p.Values.AsEnumerable().ToList()[j][i].Enabled = false;
+
+                    }
                 }
             }
         }
