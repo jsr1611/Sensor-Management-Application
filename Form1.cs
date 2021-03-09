@@ -56,21 +56,31 @@ namespace AdminPage
 
         private List<TextBox> _SensorDeviceInfo;
         /// <summary>
-        /// sName, sLocation, sDescription 들이 들어가 있음.
+        /// (온습도 및 파티클 관련함)sName, sLocation, sDescription 들이 들어가 있음.
         /// </summary>
         public List<TextBox> S_DeviceInfo_txtB
         {
             get { return _SensorDeviceInfo; }
             set { _SensorDeviceInfo = value; }
         }
+
+
+        /// <summary>
+        /// (차압 관련함)sName, sLocation, sDescription 들이 들어가 있음.
+        /// </summary>
+        public List<TextBox> S_DeviceInfo_txtB_p { get; set; }
+
         public Dictionary<CheckBox, List<NumericUpDown>> S_UsageCheckerRangePairs { get; set; }
 
         public DbTableHandler g_DbTableHandler;
 
         public string appAddress = @"C:\Program Files (x86)\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
+        
+
         public string DataCollectionAppName { get; set; }
         public bool appAlreadyRunning { get; set; }
         public Process applicationProcess { get; set; }
+        
 
         public Form1()
         {
@@ -96,6 +106,7 @@ namespace AdminPage
             
 
             S_DeviceInfo_txtB = new List<TextBox>() { sName, sZone, sLocation,  sDescription };
+            S_DeviceInfo_txtB_p = new List<TextBox>() { sName_p, sZone_p, sLocation_p, sDescription_p };
             S_DeviceInfoColumns = new List<string>() { sID.Name, S_DeviceInfo_txtB[0].Name, S_DeviceInfo_txtB[1].Name, S_DeviceInfo_txtB[2].Name, S_DeviceInfo_txtB[3].Name, "sUsage" };
             S_FourRangeColumns = new List<string>() { "higherLimit2", "higherLimit1", "lowerLimit1", "lowerLimit2" };
 
@@ -140,13 +151,13 @@ namespace AdminPage
                     for (int i = 0; i < row.ItemArray.Length; i++)
                     {
                         listViewItem.SubItems.Add(row.ItemArray[i].ToString());
-                        listView1.Columns[i].TextAlign = HorizontalAlignment.Center;
+                        listView1_thp.Columns[i].TextAlign = HorizontalAlignment.Center;
                     }
-                    listView1.Items.Add(listViewItem);
+                    listView1_thp.Items.Add(listViewItem);
                     num += 1;
                 }
-                listView1.Scrollable = true;
-                listView1.Sort();
+                listView1_thp.Scrollable = true;
+                listView1_thp.Sort();
 
             }
             else
@@ -448,8 +459,14 @@ namespace AdminPage
                 catch (System.Exception)
                 {
                     MessageBox.Show("데이터 수집 프로그램이 컴퓨터에 설치되어 있는지 확인후 다시 실행해 주세요.", "Application Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
-/*                    appAddress = @"C:\Program Files\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
-                    Process.Start(appAddress);*/
+                    /*                    appAddress = @"C:\Program Files\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
+                                        Process.Start(appAddress);*/
+                    //string[] filePaths = System.IO.Directory.GetFiles(@"C:\Program Files\DLIT Inc\", "SensorData Collection Application.exe", SearchOption.TopDirectoryOnly);
+                    /*appAddress = @"C:\Users\" + System.Security.Principal.WindowsIdentity.GetCurrent().Name.Split('\\')[1] + @"\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\DLIT Inc\Sensor Data Collection App";
+                    Process.Start(appAddress);
+                    b_dataCollection_status.Image = Resources.light_on_26_color;
+                    applicationProcess = GetAppProcess(DataCollectionAppName);
+                    appAlreadyRunning = true;*/
                 }
             }
             else
@@ -490,9 +507,9 @@ namespace AdminPage
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count > 0)
+            if (listView1_thp.SelectedItems.Count > 0)
             {
-                foreach (ListViewItem item in listView1.SelectedItems)
+                foreach (ListViewItem item in listView1_thp.SelectedItems)
                 {
                     int sensorId = Convert.ToInt32(item.SubItems[1].Text);
                     sID.Text = sensorId.ToString();
@@ -611,15 +628,15 @@ namespace AdminPage
             
 
             //기존 센서 정보를 update하는 부분
-            if (listView1.SelectedItems.Count > 0)
+            if (listView1_thp.SelectedItems.Count > 0)
             {
 
-                    int deviceId = Convert.ToInt32(listView1.SelectedItems[0].SubItems[1].Text);
+                    int deviceId = Convert.ToInt32(listView1_thp.SelectedItems[0].SubItems[1].Text);
                     //Console.WriteLine("ID:" + listView1.SelectedItems[0].Text);
                     bool updated = UpdateDB(deviceId);
                     if (updated)
                     {
-                        foreach (ListViewItem item in listView1.SelectedItems)
+                        foreach (ListViewItem item in listView1_thp.SelectedItems)
                         {
                             item.SubItems[1].Text = sID.Text;
                             for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
@@ -643,9 +660,9 @@ namespace AdminPage
                     }
                     else { 
                         int newOrderNumber;
-                        if (listView1.Items.Count > 0)
+                        if (listView1_thp.Items.Count > 0)
                         {
-                            newOrderNumber = Convert.ToInt32(listView1.Items[listView1.Items.Count - 1].Text) + 1;
+                            newOrderNumber = Convert.ToInt32(listView1_thp.Items[listView1_thp.Items.Count - 1].Text) + 1;
                         }
                         else
                         {
@@ -664,7 +681,7 @@ namespace AdminPage
                             listViewItem.SubItems.Add(S_DeviceInfo_txtB[i].Text);
                         }
                             listViewItem.SubItems.Add(sUsage);
-                            listView1.Items.Add(listViewItem);
+                            listView1_thp.Items.Add(listViewItem);
                             clearFields(S_DeviceInfo_txtB);
                             MessageBox.Show("새 센서 장비 정보가 DB에 성공적으로 추가 되었습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
@@ -1030,32 +1047,66 @@ namespace AdminPage
 
         private void b_add_Click(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count > 0)
+            if (tabControl1.SelectedTab == tabPage1)
             {
-                ListViewItem item = listView1.SelectedItems[0];
-                item.Selected = false;
-                
-            }
-            //S_DeviceInfo_txtB[0].Text = "PSU650";
-            S_DeviceInfo_txtB[1].Text = "ZONE";
+                if (listView1_thp.SelectedItems.Count > 0)
+                {
+                    ListViewItem item = listView1_thp.SelectedItems[0];
+                    item.Selected = false;
 
-            for (int i = 2; i < S_DeviceInfo_txtB.Count; i++)
+                }
+                //S_DeviceInfo_txtB[0].Text = "PSU650";
+                S_DeviceInfo_txtB[1].Text = "ZONE";
+
+                for (int i = 2; i < S_DeviceInfo_txtB.Count; i++)
+                {
+                    //textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
+                    S_DeviceInfo_txtB[i].Text = "";
+                }
+
+
+                if (listView1_thp.Items.Count > 0)
+                {
+                    sID.Text = (Convert.ToInt32(listView1_thp.Items[listView1_thp.Items.Count - 1].SubItems[0].Text) + 1).ToString();
+                }
+                else
+                {
+                    sID.Text = "1";
+                }
+
+                RangeSetNew();
+                S_DeviceInfo_txtB[0].Focus();
+            }
+            else if (tabControl1.SelectedTab == tabPage2)
             {
-                //textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
-                S_DeviceInfo_txtB[i].Text = "";
-            }
+                if (listView2_pressure.SelectedItems.Count > 0)
+                {
+                    ListViewItem item = listView2_pressure.SelectedItems[0];
+                    item.Selected = false;
+
+                }
+                //S_DeviceInfo_txtB[0].Text = "PSU650";
+                S_DeviceInfo_txtB_p[1].Text = "ZONE";
+
+                for (int i = 2; i < S_DeviceInfo_txtB_p.Count; i++)
+                {
+                    //textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
+                    S_DeviceInfo_txtB_p[i].Text = "";
+                }
 
 
-            if(listView1.Items.Count > 0) { 
-                sID.Text= (Convert.ToInt32(listView1.Items[listView1.Items.Count - 1].SubItems[0].Text) + 1).ToString(); 
+                if (listView2_pressure.Items.Count > 0)
+                {
+                    sID_p.Text = (Convert.ToInt32(listView2_pressure.Items[listView2_pressure.Items.Count - 1].SubItems[0].Text) + 1).ToString();
+                }
+                else
+                {
+                    sID_p.Text = "1";
+                }
+
+                RangeSetNew();
+                S_DeviceInfo_txtB_p[0].Focus();
             }
-            else
-            {
-                sID.Text = "1";
-            }
-            
-            RangeSetNew();
-            S_DeviceInfo_txtB[0].Focus();
         }
 
 
@@ -1182,6 +1233,50 @@ namespace AdminPage
                 res = true;
             }
             return res;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            dateTimePicker1.CustomFormat = "yyyy-MM-dd HH:mm:ss";
+            dateTimePicker2.CustomFormat = "yyyy-MM-dd HH:mm:ss";
+            string startTime = dateTimePicker1.Value.ToString("yyyy-MM-dd HH:mm:ss");
+            string endTime = dateTimePicker2.Value.ToString("yyyy-MM-dd HH:mm:ss");
+            DownToExcel downToExcel = new DownToExcel(tbName: "d_p03Usage", sqlConnection:myConn, (startTime, endTime));
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(tabControl1.SelectedTab == tabPage1)
+            {
+                if (appAlreadyRunning)
+                {
+                    b_dataCollection_status.Image = Resources.light_on_26_color; 
+                }
+                else
+                {
+                    b_dataCollection_status.Image = Resources.light_off_26;
+                }
+            }
+            else if(tabControl1.SelectedTab == tabPage2)
+            {
+                
+                // Further FIX is Needed after Pressure sensor data collection is added
+                
+                if (appAlreadyRunning && "온습도" == "차압")     
+                {
+                    b_dataCollection_status.Image = Resources.light_on_26_color;
+                }
+                else
+                {
+                    b_dataCollection_status.Image = Resources.light_off_26; 
+                }
+            }
         }
     }
 }
