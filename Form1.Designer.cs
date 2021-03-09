@@ -198,18 +198,18 @@ namespace AdminPage
             this.numericUpDown14 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown15 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown16 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown17 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown18 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown19 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown20 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown21 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown22 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown23 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown24 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown25 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown26 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown27 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown28 = new System.Windows.Forms.NumericUpDown();
+            this.s_kpaHigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_kpaHigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_kpaLowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_kpaLowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_hpaLowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_hpaLowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_hpaHigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_hpaHigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_paLowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_paLowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_paHigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_paHigherLimit1 = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -283,18 +283,18 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown17)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown21)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown22)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown23)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown24)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown25)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown26)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown27)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown28)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_kpaHigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_kpaHigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_kpaLowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_kpaLowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hpaLowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hpaLowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hpaHigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hpaHigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_paLowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_paLowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -529,7 +529,6 @@ namespace AdminPage
             // 
             // pTrackerTimer
             // 
-            this.pTrackerTimer.Enabled = true;
             this.pTrackerTimer.Interval = 1000;
             this.pTrackerTimer.Tick += new System.EventHandler(this.pTrackerTimer_Tick);
             // 
@@ -1210,18 +1209,18 @@ namespace AdminPage
             this.splitContainer2.Panel2.Controls.Add(this.numericUpDown14);
             this.splitContainer2.Panel2.Controls.Add(this.numericUpDown15);
             this.splitContainer2.Panel2.Controls.Add(this.numericUpDown16);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown17);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown18);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown19);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown20);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown21);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown22);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown23);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown24);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown25);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown26);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown27);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown28);
+            this.splitContainer2.Panel2.Controls.Add(this.s_kpaHigherLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_kpaHigherLimit1);
+            this.splitContainer2.Panel2.Controls.Add(this.s_kpaLowerLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_kpaLowerLimit1);
+            this.splitContainer2.Panel2.Controls.Add(this.s_hpaLowerLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_hpaLowerLimit1);
+            this.splitContainer2.Panel2.Controls.Add(this.s_hpaHigherLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_hpaHigherLimit1);
+            this.splitContainer2.Panel2.Controls.Add(this.s_paLowerLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_paLowerLimit1);
+            this.splitContainer2.Panel2.Controls.Add(this.s_paHigherLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_paHigherLimit1);
             this.splitContainer2.Panel2.Controls.Add(this.label9);
             this.splitContainer2.Panel2.Controls.Add(this.label10);
             this.splitContainer2.Panel2.Controls.Add(this.label11);
@@ -1703,263 +1702,263 @@ namespace AdminPage
             -2147483648});
             this.numericUpDown16.Name = "numericUpDown16";
             // 
-            // numericUpDown17
+            // s_kpaHigherLimit2
             // 
-            this.numericUpDown17.DecimalPlaces = 3;
-            this.numericUpDown17.Increment = new decimal(new int[] {
+            this.s_kpaHigherLimit2.DecimalPlaces = 3;
+            this.s_kpaHigherLimit2.Increment = new decimal(new int[] {
             1,
             0,
             0,
             196608});
-            resources.ApplyResources(this.numericUpDown17, "numericUpDown17");
-            this.numericUpDown17.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_kpaHigherLimit2, "s_kpaHigherLimit2");
+            this.s_kpaHigherLimit2.Maximum = new decimal(new int[] {
             5,
             0,
             0,
             65536});
-            this.numericUpDown17.Minimum = new decimal(new int[] {
+            this.s_kpaHigherLimit2.Minimum = new decimal(new int[] {
             5,
             0,
             0,
             -2147418112});
-            this.numericUpDown17.Name = "numericUpDown17";
+            this.s_kpaHigherLimit2.Name = "s_kpaHigherLimit2";
             // 
-            // numericUpDown18
+            // s_kpaHigherLimit1
             // 
-            this.numericUpDown18.DecimalPlaces = 3;
-            this.numericUpDown18.Increment = new decimal(new int[] {
+            this.s_kpaHigherLimit1.DecimalPlaces = 3;
+            this.s_kpaHigherLimit1.Increment = new decimal(new int[] {
             1,
             0,
             0,
             196608});
-            resources.ApplyResources(this.numericUpDown18, "numericUpDown18");
-            this.numericUpDown18.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_kpaHigherLimit1, "s_kpaHigherLimit1");
+            this.s_kpaHigherLimit1.Maximum = new decimal(new int[] {
             5,
             0,
             0,
             65536});
-            this.numericUpDown18.Minimum = new decimal(new int[] {
+            this.s_kpaHigherLimit1.Minimum = new decimal(new int[] {
             5,
             0,
             0,
             -2147418112});
-            this.numericUpDown18.Name = "numericUpDown18";
+            this.s_kpaHigherLimit1.Name = "s_kpaHigherLimit1";
             // 
-            // numericUpDown19
+            // s_kpaLowerLimit2
             // 
-            this.numericUpDown19.DecimalPlaces = 3;
-            this.numericUpDown19.Increment = new decimal(new int[] {
+            this.s_kpaLowerLimit2.DecimalPlaces = 3;
+            this.s_kpaLowerLimit2.Increment = new decimal(new int[] {
             1,
             0,
             0,
             196608});
-            resources.ApplyResources(this.numericUpDown19, "numericUpDown19");
-            this.numericUpDown19.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_kpaLowerLimit2, "s_kpaLowerLimit2");
+            this.s_kpaLowerLimit2.Maximum = new decimal(new int[] {
             5,
             0,
             0,
             65536});
-            this.numericUpDown19.Minimum = new decimal(new int[] {
+            this.s_kpaLowerLimit2.Minimum = new decimal(new int[] {
             5,
             0,
             0,
             -2147418112});
-            this.numericUpDown19.Name = "numericUpDown19";
+            this.s_kpaLowerLimit2.Name = "s_kpaLowerLimit2";
             // 
-            // numericUpDown20
+            // s_kpaLowerLimit1
             // 
-            this.numericUpDown20.DecimalPlaces = 3;
-            this.numericUpDown20.Increment = new decimal(new int[] {
+            this.s_kpaLowerLimit1.DecimalPlaces = 3;
+            this.s_kpaLowerLimit1.Increment = new decimal(new int[] {
             1,
             0,
             0,
             196608});
-            resources.ApplyResources(this.numericUpDown20, "numericUpDown20");
-            this.numericUpDown20.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_kpaLowerLimit1, "s_kpaLowerLimit1");
+            this.s_kpaLowerLimit1.Maximum = new decimal(new int[] {
             5,
             0,
             0,
             65536});
-            this.numericUpDown20.Minimum = new decimal(new int[] {
+            this.s_kpaLowerLimit1.Minimum = new decimal(new int[] {
             5,
             0,
             0,
             -2147418112});
-            this.numericUpDown20.Name = "numericUpDown20";
+            this.s_kpaLowerLimit1.Name = "s_kpaLowerLimit1";
             // 
-            // numericUpDown21
+            // s_hpaLowerLimit2
             // 
-            this.numericUpDown21.AllowDrop = true;
-            this.numericUpDown21.DecimalPlaces = 3;
-            this.numericUpDown21.Increment = new decimal(new int[] {
+            this.s_hpaLowerLimit2.AllowDrop = true;
+            this.s_hpaLowerLimit2.DecimalPlaces = 3;
+            this.s_hpaLowerLimit2.Increment = new decimal(new int[] {
             1,
             0,
             0,
             196608});
-            resources.ApplyResources(this.numericUpDown21, "numericUpDown21");
-            this.numericUpDown21.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_hpaLowerLimit2, "s_hpaLowerLimit2");
+            this.s_hpaLowerLimit2.Maximum = new decimal(new int[] {
             5,
             0,
             0,
             0});
-            this.numericUpDown21.Minimum = new decimal(new int[] {
+            this.s_hpaLowerLimit2.Minimum = new decimal(new int[] {
             5,
             0,
             0,
             -2147483648});
-            this.numericUpDown21.Name = "numericUpDown21";
+            this.s_hpaLowerLimit2.Name = "s_hpaLowerLimit2";
             // 
-            // numericUpDown22
+            // s_hpaLowerLimit1
             // 
-            this.numericUpDown22.DecimalPlaces = 3;
-            this.numericUpDown22.Increment = new decimal(new int[] {
+            this.s_hpaLowerLimit1.DecimalPlaces = 3;
+            this.s_hpaLowerLimit1.Increment = new decimal(new int[] {
             1,
             0,
             0,
             196608});
-            resources.ApplyResources(this.numericUpDown22, "numericUpDown22");
-            this.numericUpDown22.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_hpaLowerLimit1, "s_hpaLowerLimit1");
+            this.s_hpaLowerLimit1.Maximum = new decimal(new int[] {
             5,
             0,
             0,
             0});
-            this.numericUpDown22.Minimum = new decimal(new int[] {
+            this.s_hpaLowerLimit1.Minimum = new decimal(new int[] {
             5,
             0,
             0,
             -2147483648});
-            this.numericUpDown22.Name = "numericUpDown22";
+            this.s_hpaLowerLimit1.Name = "s_hpaLowerLimit1";
             // 
-            // numericUpDown23
+            // s_hpaHigherLimit2
             // 
-            this.numericUpDown23.AllowDrop = true;
-            this.numericUpDown23.DecimalPlaces = 3;
-            this.numericUpDown23.Increment = new decimal(new int[] {
+            this.s_hpaHigherLimit2.AllowDrop = true;
+            this.s_hpaHigherLimit2.DecimalPlaces = 3;
+            this.s_hpaHigherLimit2.Increment = new decimal(new int[] {
             1,
             0,
             0,
             196608});
-            resources.ApplyResources(this.numericUpDown23, "numericUpDown23");
-            this.numericUpDown23.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_hpaHigherLimit2, "s_hpaHigherLimit2");
+            this.s_hpaHigherLimit2.Maximum = new decimal(new int[] {
             5,
             0,
             0,
             0});
-            this.numericUpDown23.Minimum = new decimal(new int[] {
+            this.s_hpaHigherLimit2.Minimum = new decimal(new int[] {
             5,
             0,
             0,
             -2147483648});
-            this.numericUpDown23.Name = "numericUpDown23";
+            this.s_hpaHigherLimit2.Name = "s_hpaHigherLimit2";
             // 
-            // numericUpDown24
+            // s_hpaHigherLimit1
             // 
-            this.numericUpDown24.AllowDrop = true;
-            this.numericUpDown24.DecimalPlaces = 3;
-            this.numericUpDown24.Increment = new decimal(new int[] {
+            this.s_hpaHigherLimit1.AllowDrop = true;
+            this.s_hpaHigherLimit1.DecimalPlaces = 3;
+            this.s_hpaHigherLimit1.Increment = new decimal(new int[] {
             1,
             0,
             0,
             196608});
-            resources.ApplyResources(this.numericUpDown24, "numericUpDown24");
-            this.numericUpDown24.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_hpaHigherLimit1, "s_hpaHigherLimit1");
+            this.s_hpaHigherLimit1.Maximum = new decimal(new int[] {
             5,
             0,
             0,
             0});
-            this.numericUpDown24.Minimum = new decimal(new int[] {
+            this.s_hpaHigherLimit1.Minimum = new decimal(new int[] {
             5,
             0,
             0,
             -2147483648});
-            this.numericUpDown24.Name = "numericUpDown24";
+            this.s_hpaHigherLimit1.Name = "s_hpaHigherLimit1";
             // 
-            // numericUpDown25
+            // s_paLowerLimit2
             // 
-            this.numericUpDown25.AllowDrop = true;
-            this.numericUpDown25.DecimalPlaces = 1;
-            this.numericUpDown25.Increment = new decimal(new int[] {
+            this.s_paLowerLimit2.AllowDrop = true;
+            this.s_paLowerLimit2.DecimalPlaces = 1;
+            this.s_paLowerLimit2.Increment = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-            resources.ApplyResources(this.numericUpDown25, "numericUpDown25");
-            this.numericUpDown25.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_paLowerLimit2, "s_paLowerLimit2");
+            this.s_paLowerLimit2.Maximum = new decimal(new int[] {
             500,
             0,
             0,
             0});
-            this.numericUpDown25.Minimum = new decimal(new int[] {
+            this.s_paLowerLimit2.Minimum = new decimal(new int[] {
             500,
             0,
             0,
             -2147483648});
-            this.numericUpDown25.Name = "numericUpDown25";
+            this.s_paLowerLimit2.Name = "s_paLowerLimit2";
             // 
-            // numericUpDown26
+            // s_paLowerLimit1
             // 
-            this.numericUpDown26.DecimalPlaces = 1;
-            this.numericUpDown26.Increment = new decimal(new int[] {
+            this.s_paLowerLimit1.DecimalPlaces = 1;
+            this.s_paLowerLimit1.Increment = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-            resources.ApplyResources(this.numericUpDown26, "numericUpDown26");
-            this.numericUpDown26.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_paLowerLimit1, "s_paLowerLimit1");
+            this.s_paLowerLimit1.Maximum = new decimal(new int[] {
             500,
             0,
             0,
             0});
-            this.numericUpDown26.Minimum = new decimal(new int[] {
+            this.s_paLowerLimit1.Minimum = new decimal(new int[] {
             500,
             0,
             0,
             -2147483648});
-            this.numericUpDown26.Name = "numericUpDown26";
+            this.s_paLowerLimit1.Name = "s_paLowerLimit1";
             // 
-            // numericUpDown27
+            // s_paHigherLimit2
             // 
-            this.numericUpDown27.AllowDrop = true;
-            this.numericUpDown27.DecimalPlaces = 1;
-            this.numericUpDown27.Increment = new decimal(new int[] {
+            this.s_paHigherLimit2.AllowDrop = true;
+            this.s_paHigherLimit2.DecimalPlaces = 1;
+            this.s_paHigherLimit2.Increment = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-            resources.ApplyResources(this.numericUpDown27, "numericUpDown27");
-            this.numericUpDown27.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_paHigherLimit2, "s_paHigherLimit2");
+            this.s_paHigherLimit2.Maximum = new decimal(new int[] {
             500,
             0,
             0,
             0});
-            this.numericUpDown27.Minimum = new decimal(new int[] {
+            this.s_paHigherLimit2.Minimum = new decimal(new int[] {
             500,
             0,
             0,
             -2147483648});
-            this.numericUpDown27.Name = "numericUpDown27";
+            this.s_paHigherLimit2.Name = "s_paHigherLimit2";
             // 
-            // numericUpDown28
+            // s_paHigherLimit1
             // 
-            this.numericUpDown28.AllowDrop = true;
-            this.numericUpDown28.DecimalPlaces = 1;
-            this.numericUpDown28.Increment = new decimal(new int[] {
+            this.s_paHigherLimit1.AllowDrop = true;
+            this.s_paHigherLimit1.DecimalPlaces = 1;
+            this.s_paHigherLimit1.Increment = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-            resources.ApplyResources(this.numericUpDown28, "numericUpDown28");
-            this.numericUpDown28.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_paHigherLimit1, "s_paHigherLimit1");
+            this.s_paHigherLimit1.Maximum = new decimal(new int[] {
             500,
             0,
             0,
             0});
-            this.numericUpDown28.Minimum = new decimal(new int[] {
+            this.s_paHigherLimit1.Minimum = new decimal(new int[] {
             500,
             0,
             0,
             -2147483648});
-            this.numericUpDown28.Name = "numericUpDown28";
+            this.s_paHigherLimit1.Name = "s_paHigherLimit1";
             // 
             // label9
             // 
@@ -2086,18 +2085,18 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown17)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown21)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown22)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown23)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown24)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown25)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown26)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown27)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown28)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_kpaHigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_kpaHigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_kpaLowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_kpaLowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hpaLowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hpaLowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hpaHigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_hpaHigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_paLowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_paLowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2271,18 +2270,18 @@ namespace AdminPage
         private System.Windows.Forms.NumericUpDown numericUpDown14;
         private System.Windows.Forms.NumericUpDown numericUpDown15;
         private System.Windows.Forms.NumericUpDown numericUpDown16;
-        private System.Windows.Forms.NumericUpDown numericUpDown17;
-        private System.Windows.Forms.NumericUpDown numericUpDown18;
-        private System.Windows.Forms.NumericUpDown numericUpDown19;
-        private System.Windows.Forms.NumericUpDown numericUpDown20;
-        private System.Windows.Forms.NumericUpDown numericUpDown21;
-        private System.Windows.Forms.NumericUpDown numericUpDown22;
-        private System.Windows.Forms.NumericUpDown numericUpDown23;
-        private System.Windows.Forms.NumericUpDown numericUpDown24;
-        private System.Windows.Forms.NumericUpDown numericUpDown25;
-        private System.Windows.Forms.NumericUpDown numericUpDown26;
-        private System.Windows.Forms.NumericUpDown numericUpDown27;
-        private System.Windows.Forms.NumericUpDown numericUpDown28;
+        private System.Windows.Forms.NumericUpDown s_kpaHigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_kpaHigherLimit1;
+        private System.Windows.Forms.NumericUpDown s_kpaLowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_kpaLowerLimit1;
+        private System.Windows.Forms.NumericUpDown s_hpaLowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_hpaLowerLimit1;
+        private System.Windows.Forms.NumericUpDown s_hpaHigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_hpaHigherLimit1;
+        private System.Windows.Forms.NumericUpDown s_paLowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_paLowerLimit1;
+        private System.Windows.Forms.NumericUpDown s_paHigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_paHigherLimit1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;

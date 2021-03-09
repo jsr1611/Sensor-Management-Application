@@ -72,6 +72,8 @@ namespace AdminPage
 
         public Dictionary<CheckBox, List<NumericUpDown>> S_UsageCheckerRangePairs { get; set; }
 
+        public Dictionary<CheckBox, List<NumericUpDown>> S_UsageCheckerRangePairs_p { get; set; }
+
         public DbTableHandler g_DbTableHandler;
 
         public string appAddress = @"C:\Program Files (x86)\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
@@ -124,6 +126,17 @@ namespace AdminPage
             List<List<NumericUpDown>> S_Ranges = new List<List<NumericUpDown>>() { t_Ranges, h_Ranges, p03_Ranges, p05_Ranges, p10_Ranges, p25_Ranges, p50_Ranges, p100_Ranges };
 
 
+            List<CheckBox> S_UsageCheckers_p = new List<CheckBox>() { c_tUsage, c_hUsage, c_p03Usage, c_p05Usage, c_p10Usage, c_p25Usage, c_p50Usage, c_p100Usage };
+
+            List<NumericUpDown> pa_Ranges = new List<NumericUpDown>() { s_paHigherLimit2, s_paHigherLimit1, s_paLowerLimit1, s_paLowerLimit2 };
+            List<NumericUpDown> hPa_Ranges = new List<NumericUpDown>() { s_hpaHigherLimit2, s_hpaHigherLimit1, s_hpaLowerLimit1, s_hpaLowerLimit2 };
+            List<NumericUpDown> kPa_Ranges = new List<NumericUpDown>() { s_kpaHigherLimit2, s_kpaHigherLimit1, s_kpaLowerLimit1, s_kpaLowerLimit2 };
+            List<NumericUpDown> mmAq_Ranges = new List<NumericUpDown>() { s_p05HigherLimit2, s_p05HigherLimit1, s_p05LowerLimit1, s_p05LowerLimit2 };
+            List<NumericUpDown> inchH2O_Ranges = new List<NumericUpDown>() { s_p10HigherLimit2, s_p10HigherLimit1, s_p10LowerLimit1, s_p10LowerLimit2 };
+            List<NumericUpDown> mmHg_Ranges = new List<NumericUpDown>() { s_p25HigherLimit2, s_p25HigherLimit1, s_p25LowerLimit1, s_p25LowerLimit2 };
+            List<NumericUpDown> inchHg_Ranges = new List<NumericUpDown>() { s_p50HigherLimit2, s_p50HigherLimit1, s_p50LowerLimit1, s_p50LowerLimit2 };
+
+
             myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
             g_DbTableHandler = new DbTableHandler(new List<string>() { DbServer, DbName, DbUID, DbUID });
 
@@ -167,10 +180,16 @@ namespace AdminPage
             }
 
             S_UsageCheckerRangePairs = new Dictionary<CheckBox, List<NumericUpDown>>();
+
             for (int i = 0; i < S_UsageCheckers.Count; i++)
             {
                 S_UsageCheckerRangePairs.Add(S_UsageCheckers[i], S_Ranges[i]);
             }
+
+            S_UsageCheckerRangePairs_p = new Dictionary<CheckBox, List<NumericUpDown>>();
+
+
+
             startTime = DateTime.Now;
 
             clearFields(S_DeviceInfo_txtB);
@@ -620,16 +639,17 @@ namespace AdminPage
 
         private void b_save_Click(object sender, EventArgs e)
         {
-            
-            List<CheckBox> checkedItems = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x => x.Checked).ToList();
-            string sUsage = (checkedItems.Count > 0) ? "YES" : "NO";
-
-            Dictionary<CheckBox, List<NumericUpDown>> dataToBeSaved = new Dictionary<CheckBox, List<NumericUpDown>>();
-            
-
-            //기존 센서 정보를 update하는 부분
-            if (listView1_thp.SelectedItems.Count > 0)
+            if (tabControl1.SelectedTab == tabPage1)
             {
+                List<CheckBox> checkedItems = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x => x.Checked).ToList();
+                string sUsage = (checkedItems.Count > 0) ? "YES" : "NO";
+
+                Dictionary<CheckBox, List<NumericUpDown>> dataToBeSaved = new Dictionary<CheckBox, List<NumericUpDown>>();
+
+
+                //기존 센서 정보를 update하는 부분
+                if (listView1_thp.SelectedItems.Count > 0)
+                {
 
                     int deviceId = Convert.ToInt32(listView1_thp.SelectedItems[0].SubItems[1].Text);
                     //Console.WriteLine("ID:" + listView1.SelectedItems[0].Text);
@@ -645,20 +665,21 @@ namespace AdminPage
                             }
                             item.SubItems[item.SubItems.Count - 1].Text = sUsage;
                         }
-                    clearFields(S_DeviceInfo_txtB);
+                        clearFields(S_DeviceInfo_txtB);
                         MessageBox.Show("센서 정보 DB 업데이트가 성공적으로 이루어졌습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-            }
-            
-            //새 장비 추가하는 부분
-            else
-            {
+                }
+
+                //새 장비 추가하는 부분
+                else
+                {
                     bool idExists = GetSensorID(Convert.ToInt32(sID.Text));
                     if (idExists)
                     {
                         MessageBox.Show("DB에 이미 존재하는 센서 장비 ID입니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-                    else { 
+                    else
+                    {
                         int newOrderNumber;
                         if (listView1_thp.Items.Count > 0)
                         {
@@ -676,16 +697,87 @@ namespace AdminPage
                         {
                             ListViewItem listViewItem = new ListViewItem(newOrderNumber.ToString());
                             listViewItem.SubItems.Add(sID.Text);
-                            for(int i=0; i<S_DeviceInfo_txtB.Count; i++)
-                        {
-                            listViewItem.SubItems.Add(S_DeviceInfo_txtB[i].Text);
-                        }
+                            for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
+                            {
+                                listViewItem.SubItems.Add(S_DeviceInfo_txtB[i].Text);
+                            }
                             listViewItem.SubItems.Add(sUsage);
                             listView1_thp.Items.Add(listViewItem);
                             clearFields(S_DeviceInfo_txtB);
                             MessageBox.Show("새 센서 장비 정보가 DB에 성공적으로 추가 되었습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
+                }
+            }
+            else if(tabControl1.SelectedTab == tabPage2)
+            {
+                List<CheckBox> checkedItems = S_UsageCheckerRangePairs_p.Keys.AsEnumerable().Where(x => x.Checked).ToList();
+                string sUsage = (checkedItems.Count > 0) ? "YES" : "NO";
+
+                Dictionary<CheckBox, List<NumericUpDown>> dataToBeSaved = new Dictionary<CheckBox, List<NumericUpDown>>();
+
+
+                //기존 센서 정보를 update하는 부분
+                if (listView1_thp.SelectedItems.Count > 0)
+                {
+
+                    int deviceId = Convert.ToInt32(listView1_thp.SelectedItems[0].SubItems[1].Text);
+                    //Console.WriteLine("ID:" + listView1.SelectedItems[0].Text);
+                    bool updated = UpdateDB(deviceId);
+                    if (updated)
+                    {
+                        foreach (ListViewItem item in listView1_thp.SelectedItems)
+                        {
+                            item.SubItems[1].Text = sID.Text;
+                            for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
+                            {
+                                item.SubItems[i + 2].Text = S_DeviceInfo_txtB[i].Text;
+                            }
+                            item.SubItems[item.SubItems.Count - 1].Text = sUsage;
+                        }
+                        clearFields(S_DeviceInfo_txtB);
+                        MessageBox.Show("센서 정보 DB 업데이트가 성공적으로 이루어졌습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+
+                //새 장비 추가하는 부분
+                else
+                {
+                    bool idExists = GetSensorID(Convert.ToInt32(sID.Text));
+                    if (idExists)
+                    {
+                        MessageBox.Show("DB에 이미 존재하는 센서 장비 ID입니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        int newOrderNumber;
+                        if (listView1_thp.Items.Count > 0)
+                        {
+                            newOrderNumber = Convert.ToInt32(listView1_thp.Items[listView1_thp.Items.Count - 1].Text) + 1;
+                        }
+                        else
+                        {
+                            newOrderNumber = 1;
+                        }
+
+
+                        //Added should return true if data added to DB.
+                        bool added = AddToDB(sUsage);
+                        if (added)
+                        {
+                            ListViewItem listViewItem = new ListViewItem(newOrderNumber.ToString());
+                            listViewItem.SubItems.Add(sID.Text);
+                            for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
+                            {
+                                listViewItem.SubItems.Add(S_DeviceInfo_txtB[i].Text);
+                            }
+                            listViewItem.SubItems.Add(sUsage);
+                            listView1_thp.Items.Add(listViewItem);
+                            clearFields(S_DeviceInfo_txtB);
+                            MessageBox.Show("새 센서 장비 정보가 DB에 성공적으로 추가 되었습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                }
             }
         }
 
@@ -1254,6 +1346,13 @@ namespace AdminPage
         {
             if(tabControl1.SelectedTab == tabPage1)
             {
+                if(pTrackerTimer.Enabled == false)
+                {
+                    pTrackerTimer.Enabled = true;
+                    pTrackerTimer.Start();
+                    CheckAppRunning(DataCollectionAppName);
+                }
+
                 if (appAlreadyRunning)
                 {
                     b_dataCollection_status.Image = Resources.light_on_26_color; 
@@ -1267,14 +1366,18 @@ namespace AdminPage
             {
                 
                 // Further FIX is Needed after Pressure sensor data collection is added
+
                 
                 if (appAlreadyRunning && "온습도" == "차압")     
                 {
                     b_dataCollection_status.Image = Resources.light_on_26_color;
+                    
                 }
                 else
                 {
-                    b_dataCollection_status.Image = Resources.light_off_26; 
+                    b_dataCollection_status.Image = Resources.light_off_26;
+                    pTrackerTimer.Stop();
+                    pTrackerTimer.Enabled = false;
                 }
             }
         }
