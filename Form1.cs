@@ -772,7 +772,7 @@ namespace AdminPage
                 //새 장비 추가하는 부분
                 else
                 {
-                    bool idExists = GetSensorID(Convert.ToInt32(sID.Text));      /// FIX GetSensorID 부문
+                    bool idExists = GetSensorID(Convert.ToInt32(sID_p.Text));      /// FIX GetSensorID 부문
                     if (idExists)
                     {
                         MessageBox.Show("DB에 이미 존재하는 센서 장비 ID입니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -862,20 +862,51 @@ namespace AdminPage
         private bool UpdateDB(int deviceIdOld)
         {
             bool result_UPD = false;
-            bool idExists = GetSensorID(Convert.ToInt32(sID.Text));
+            TextBox sID_txtB;
+            List<TextBox> sDeviceInfo_txtB;
             bool sUsage;
-            int deviceIdNew = Convert.ToInt32(sID.Text);
+            int deviceIdNew;
+            Dictionary<CheckBox, List<NumericUpDown>> UsageCheckerRangePairs;  //   One reference for all (S_UsageCheckerRangePairs or S_UsageCheckerRangePairs_p, etc...)
+
+            if (tabControl1.SelectedTab == tabPage1)
+            {
+                sID_txtB = sID;
+                sDeviceInfo_txtB = S_DeviceInfo_txtB;
+                deviceIdNew = Convert.ToInt32(this.sID.Text);
+                UsageCheckerRangePairs = S_UsageCheckerRangePairs;
+
+            }
+            else if(tabControl1.SelectedTab == tabPage2)
+            {
+                sID_txtB = sID_p;
+                sDeviceInfo_txtB = S_DeviceInfo_txtB_p;
+                deviceIdNew = Convert.ToInt32(sID_p.Text);
+                UsageCheckerRangePairs = S_UsageCheckerRangePairs_p;
+            }
+            else
+            {
+                sID_txtB = new TextBox();
+                sDeviceInfo_txtB = new List<TextBox>();
+                deviceIdNew = 00;
+                UsageCheckerRangePairs = new Dictionary<CheckBox, List<NumericUpDown>>();
+            }
+
+            bool idExists = GetSensorID(Convert.ToInt32(sID_txtB.Text));
+
+
             if (idExists && deviceIdOld != deviceIdNew)
             {
                 MessageBox.Show("DB에 이미 존재하는 센서 장비 ID입니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
-            {
-                List<CheckBox> S_UsageCheckersChecked = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(r => r.Checked).ToList();
+            {   
+                
+                List<CheckBox> S_UsageCheckersChecked = UsageCheckerRangePairs.Keys.AsEnumerable().Where(r => r.Checked).ToList();
 
-                List<CheckBox> S_UsageCheckers = S_UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
+                List<CheckBox> S_UsageCheckers = UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
                 List<string> UsageTableColumns = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).ToList();
                 List<string> UsageInfo = S_UsageCheckers.Select(x => x.Checked == true ? "YES" : "NO").ToList();
+
 
                 bool UpdLimitRangeInfoNotUpdated = false;
                 if (S_UsageCheckersChecked.Count > 0)
@@ -889,7 +920,9 @@ namespace AdminPage
                     for (int i = 0; i < targetChBoxes.Count; i++)
                     {
                         //List<CheckBox> target = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(r => r.Name == targetTbNames[i]).ToList();
-                        result_UPD = g_DbTableHandler.UpdateLimitRangeInfo(deviceIdOld, deviceIdNew, targetChBoxes[i], S_UsageCheckerRangePairs[targetChBoxes[i]], myConn);
+                        
+                        result_UPD = g_DbTableHandler.UpdateLimitRangeInfo(deviceIdOld, deviceIdNew, targetChBoxes[i], UsageCheckerRangePairs[targetChBoxes[i]], myConn);
+                        
                         if (!result_UPD)
                         {
                             i = targetChBoxes.Count;
@@ -909,7 +942,7 @@ namespace AdminPage
                     bool upd_SensorUsageTable = g_DbTableHandler.UpdateUsageTable(myConn, S_UsageTable, UsageTableColumns, deviceIdOld, deviceIdNew, UsageInfo);
                     if (upd_SensorUsageTable)
                     {
-                        bool deviceInfoTbUpd = g_DbTableHandler.UpdateDeviceInfoTable(myConn, S_DeviceTable, deviceIdOld, deviceIdNew, S_DeviceInfo_txtB, sUsage);
+                        bool deviceInfoTbUpd = g_DbTableHandler.UpdateDeviceInfoTable(myConn, S_DeviceTable, deviceIdOld, deviceIdNew, sDeviceInfo_txtB, sUsage);
                     }
                 }
 
@@ -934,11 +967,22 @@ namespace AdminPage
             if (dbExists)
             {
                 int sensorId = Convert.ToInt32(sID.Text);
+                Dictionary<CheckBox, List<NumericUpDown>> UsageCheckerRangePairs;       // generic reference for more than one type: UsageCheckerRangePairs, UsageCheckerRangePairs_p, etc.
+                if (tabControl1.SelectedTab == tabPage1)
+                {
+                    UsageCheckerRangePairs = S_UsageCheckerRangePairs;
+                }
+                else
+                {
+                    UsageCheckerRangePairs = S_UsageCheckerRangePairs_p;
+                }
 
-                //List<string> sRangeTablesChecked = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x=>x.Checked).Select(x => x.Name).ToList();
-                List<CheckBox> sRangeTablesAll = S_UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
-                //List<CheckBox> sRangeTablesChecked = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(x => x.Checked).ToList();
-                List<string> sUsageResults = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Checked ? "YES" : "NO").ToList();
+
+
+                List<CheckBox> sRangeTablesAll = UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
+                List<string> sUsageResults = UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Checked ? "YES" : "NO").ToList();
+
+                
 
                 bool[] result_for_checked = new bool[sRangeTablesAll.Count];
 
@@ -946,7 +990,7 @@ namespace AdminPage
                 // 적정범위 정보를 DB에 저장하는 부분
                 for (int i = 0; i < sRangeTablesAll.Count; i++)
                 {
-                    List<Decimal> sFourRangeTbVals = S_UsageCheckerRangePairs[sRangeTablesAll[i]].Select(x => x.Value).ToList();
+                    List<Decimal> sFourRangeTbVals = UsageCheckerRangePairs[sRangeTablesAll[i]].Select(x => x.Value).ToList();
                     string sRangeTable = sRangeTablesAll[i].Name;
 
 
@@ -1073,7 +1117,7 @@ namespace AdminPage
                 bool tbExists = g_DbTableHandler.IfTableExists(S_UsageTable);
                 if (!tbExists)
                 {
-                    List<string> sRangesTbNames = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).ToList();
+                    List<string> sRangesTbNames = UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).ToList();
                     string sqlCreateUsageTb = $"CREATE TABLE {S_UsageTable}(" +
                         $" {S_DeviceInfoColumns[0]} INT NOT NULL, CONSTRAINT PK_{S_UsageTable}_{S_DeviceInfoColumns[0]} PRIMARY KEY ({S_DeviceInfoColumns[0]})  ";
                     foreach (var item in sRangesTbNames)
