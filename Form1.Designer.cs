@@ -182,22 +182,22 @@ namespace AdminPage
             this.s_p100HigherLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_p100HigherLimit2 = new System.Windows.Forms.NumericUpDown();
             this.l_p100Usage = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown7 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown8 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown10 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown11 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown12 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown13 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown14 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown15 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown16 = new System.Windows.Forms.NumericUpDown();
+            this.s_inchhgHigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_inchhgHigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_inchhgLowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_inchhgLowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_mmhgHigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_mmhgHigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_mmhgLowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_mmhgLowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_inchh2oHigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_inchh2oHigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_inchh2oLowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_inchh2oLowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_mmh2oHigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_mmh2oHigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_mmh2oLowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_mmh2oLowerLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_kpaHigherLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_kpaHigherLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_kpaLowerLimit2 = new System.Windows.Forms.NumericUpDown();
@@ -267,22 +267,22 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.s_p100LowerLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchhgHigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchhgHigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchhgLowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchhgLowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmhgHigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmhgHigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmhgLowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmhgLowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchh2oHigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchh2oHigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchh2oLowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchh2oLowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmh2oHigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmh2oHigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmh2oLowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmh2oLowerLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_kpaHigherLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_kpaHigherLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_kpaLowerLimit2)).BeginInit();
@@ -1193,22 +1193,22 @@ namespace AdminPage
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown1);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown2);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown3);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown4);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown5);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown6);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown7);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown8);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown9);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown10);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown11);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown12);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown13);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown14);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown15);
-            this.splitContainer2.Panel2.Controls.Add(this.numericUpDown16);
+            this.splitContainer2.Panel2.Controls.Add(this.s_inchhgHigherLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_inchhgHigherLimit1);
+            this.splitContainer2.Panel2.Controls.Add(this.s_inchhgLowerLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_inchhgLowerLimit1);
+            this.splitContainer2.Panel2.Controls.Add(this.s_mmhgHigherLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_mmhgHigherLimit1);
+            this.splitContainer2.Panel2.Controls.Add(this.s_mmhgLowerLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_mmhgLowerLimit1);
+            this.splitContainer2.Panel2.Controls.Add(this.s_inchh2oHigherLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_inchh2oHigherLimit1);
+            this.splitContainer2.Panel2.Controls.Add(this.s_inchh2oLowerLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_inchh2oLowerLimit1);
+            this.splitContainer2.Panel2.Controls.Add(this.s_mmh2oHigherLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_mmh2oHigherLimit1);
+            this.splitContainer2.Panel2.Controls.Add(this.s_mmh2oLowerLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_mmh2oLowerLimit1);
             this.splitContainer2.Panel2.Controls.Add(this.s_kpaHigherLimit2);
             this.splitContainer2.Panel2.Controls.Add(this.s_kpaHigherLimit1);
             this.splitContainer2.Panel2.Controls.Add(this.s_kpaLowerLimit2);
@@ -1498,209 +1498,341 @@ namespace AdminPage
             resources.ApplyResources(this.l_p100Usage, "l_p100Usage");
             this.l_p100Usage.Name = "l_p100Usage";
             // 
-            // numericUpDown1
+            // s_inchhgHigherLimit2
             // 
-            resources.ApplyResources(this.numericUpDown1, "numericUpDown1");
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            500000,
+            this.s_inchhgHigherLimit2.DecimalPlaces = 3;
+            this.s_inchhgHigherLimit2.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_inchhgHigherLimit2, "s_inchhgHigherLimit2");
+            this.s_inchhgHigherLimit2.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            131072});
+            this.s_inchhgHigherLimit2.Minimum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            -2147352576});
+            this.s_inchhgHigherLimit2.Name = "s_inchhgHigherLimit2";
+            // 
+            // s_inchhgHigherLimit1
+            // 
+            this.s_inchhgHigherLimit1.DecimalPlaces = 3;
+            this.s_inchhgHigherLimit1.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_inchhgHigherLimit1, "s_inchhgHigherLimit1");
+            this.s_inchhgHigherLimit1.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            131072});
+            this.s_inchhgHigherLimit1.Minimum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            -2147352576});
+            this.s_inchhgHigherLimit1.Name = "s_inchhgHigherLimit1";
+            // 
+            // s_inchhgLowerLimit2
+            // 
+            this.s_inchhgLowerLimit2.DecimalPlaces = 3;
+            this.s_inchhgLowerLimit2.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_inchhgLowerLimit2, "s_inchhgLowerLimit2");
+            this.s_inchhgLowerLimit2.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            131072});
+            this.s_inchhgLowerLimit2.Minimum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            -2147352576});
+            this.s_inchhgLowerLimit2.Name = "s_inchhgLowerLimit2";
+            // 
+            // s_inchhgLowerLimit1
+            // 
+            this.s_inchhgLowerLimit1.DecimalPlaces = 3;
+            this.s_inchhgLowerLimit1.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_inchhgLowerLimit1, "s_inchhgLowerLimit1");
+            this.s_inchhgLowerLimit1.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            131072});
+            this.s_inchhgLowerLimit1.Minimum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            -2147352576});
+            this.s_inchhgLowerLimit1.Name = "s_inchhgLowerLimit1";
+            // 
+            // s_mmhgHigherLimit2
+            // 
+            this.s_mmhgHigherLimit2.DecimalPlaces = 3;
+            this.s_mmhgHigherLimit2.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_mmhgHigherLimit2, "s_mmhgHigherLimit2");
+            this.s_mmhgHigherLimit2.Maximum = new decimal(new int[] {
+            375,
+            0,
+            0,
+            131072});
+            this.s_mmhgHigherLimit2.Minimum = new decimal(new int[] {
+            375,
+            0,
+            0,
+            -2147352576});
+            this.s_mmhgHigherLimit2.Name = "s_mmhgHigherLimit2";
+            // 
+            // s_mmhgHigherLimit1
+            // 
+            this.s_mmhgHigherLimit1.DecimalPlaces = 3;
+            this.s_mmhgHigherLimit1.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_mmhgHigherLimit1, "s_mmhgHigherLimit1");
+            this.s_mmhgHigherLimit1.Maximum = new decimal(new int[] {
+            375,
+            0,
+            0,
+            131072});
+            this.s_mmhgHigherLimit1.Minimum = new decimal(new int[] {
+            375,
+            0,
+            0,
+            -2147352576});
+            this.s_mmhgHigherLimit1.Name = "s_mmhgHigherLimit1";
+            // 
+            // s_mmhgLowerLimit2
+            // 
+            this.s_mmhgLowerLimit2.DecimalPlaces = 3;
+            this.s_mmhgLowerLimit2.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_mmhgLowerLimit2, "s_mmhgLowerLimit2");
+            this.s_mmhgLowerLimit2.Maximum = new decimal(new int[] {
+            375,
+            0,
+            0,
+            131072});
+            this.s_mmhgLowerLimit2.Minimum = new decimal(new int[] {
+            375,
+            0,
+            0,
+            -2147352576});
+            this.s_mmhgLowerLimit2.Name = "s_mmhgLowerLimit2";
+            // 
+            // s_mmhgLowerLimit1
+            // 
+            this.s_mmhgLowerLimit1.DecimalPlaces = 3;
+            this.s_mmhgLowerLimit1.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_mmhgLowerLimit1, "s_mmhgLowerLimit1");
+            this.s_mmhgLowerLimit1.Maximum = new decimal(new int[] {
+            375,
+            0,
+            0,
+            131072});
+            this.s_mmhgLowerLimit1.Minimum = new decimal(new int[] {
+            375,
+            0,
+            0,
+            -2147352576});
+            this.s_mmhgLowerLimit1.Name = "s_mmhgLowerLimit1";
+            // 
+            // s_inchh2oHigherLimit2
+            // 
+            this.s_inchh2oHigherLimit2.DecimalPlaces = 3;
+            this.s_inchh2oHigherLimit2.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_inchh2oHigherLimit2, "s_inchh2oHigherLimit2");
+            this.s_inchh2oHigherLimit2.Maximum = new decimal(new int[] {
+            2,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
+            this.s_inchh2oHigherLimit2.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            -2147483648});
+            this.s_inchh2oHigherLimit2.Name = "s_inchh2oHigherLimit2";
             // 
-            // numericUpDown2
+            // s_inchh2oHigherLimit1
             // 
-            resources.ApplyResources(this.numericUpDown2, "numericUpDown2");
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            500000,
+            this.s_inchh2oHigherLimit1.DecimalPlaces = 3;
+            this.s_inchh2oHigherLimit1.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_inchh2oHigherLimit1, "s_inchh2oHigherLimit1");
+            this.s_inchh2oHigherLimit1.Maximum = new decimal(new int[] {
+            2,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
+            this.s_inchh2oHigherLimit1.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            -2147483648});
+            this.s_inchh2oHigherLimit1.Name = "s_inchh2oHigherLimit1";
             // 
-            // numericUpDown3
+            // s_inchh2oLowerLimit2
             // 
-            resources.ApplyResources(this.numericUpDown3, "numericUpDown3");
-            this.numericUpDown3.Maximum = new decimal(new int[] {
-            500000,
+            this.s_inchh2oLowerLimit2.DecimalPlaces = 3;
+            this.s_inchh2oLowerLimit2.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_inchh2oLowerLimit2, "s_inchh2oLowerLimit2");
+            this.s_inchh2oLowerLimit2.Maximum = new decimal(new int[] {
+            2,
             0,
             0,
             0});
-            this.numericUpDown3.Name = "numericUpDown3";
+            this.s_inchh2oLowerLimit2.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            -2147483648});
+            this.s_inchh2oLowerLimit2.Name = "s_inchh2oLowerLimit2";
             // 
-            // numericUpDown4
+            // s_inchh2oLowerLimit1
             // 
-            resources.ApplyResources(this.numericUpDown4, "numericUpDown4");
-            this.numericUpDown4.Maximum = new decimal(new int[] {
-            500000,
+            this.s_inchh2oLowerLimit1.DecimalPlaces = 3;
+            this.s_inchh2oLowerLimit1.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_inchh2oLowerLimit1, "s_inchh2oLowerLimit1");
+            this.s_inchh2oLowerLimit1.Maximum = new decimal(new int[] {
+            2,
             0,
             0,
             0});
-            this.numericUpDown4.Name = "numericUpDown4";
-            // 
-            // numericUpDown5
-            // 
-            resources.ApplyResources(this.numericUpDown5, "numericUpDown5");
-            this.numericUpDown5.Maximum = new decimal(new int[] {
-            500000,
+            this.s_inchh2oLowerLimit1.Minimum = new decimal(new int[] {
+            2,
             0,
             0,
-            0});
-            this.numericUpDown5.Name = "numericUpDown5";
+            -2147483648});
+            this.s_inchh2oLowerLimit1.Name = "s_inchh2oLowerLimit1";
             // 
-            // numericUpDown6
+            // s_mmh2oHigherLimit2
             // 
-            resources.ApplyResources(this.numericUpDown6, "numericUpDown6");
-            this.numericUpDown6.Maximum = new decimal(new int[] {
-            500000,
-            0,
-            0,
-            0});
-            this.numericUpDown6.Name = "numericUpDown6";
-            // 
-            // numericUpDown7
-            // 
-            resources.ApplyResources(this.numericUpDown7, "numericUpDown7");
-            this.numericUpDown7.Maximum = new decimal(new int[] {
-            500000,
-            0,
-            0,
-            0});
-            this.numericUpDown7.Name = "numericUpDown7";
-            // 
-            // numericUpDown8
-            // 
-            resources.ApplyResources(this.numericUpDown8, "numericUpDown8");
-            this.numericUpDown8.Maximum = new decimal(new int[] {
-            500000,
-            0,
-            0,
-            0});
-            this.numericUpDown8.Name = "numericUpDown8";
-            // 
-            // numericUpDown9
-            // 
-            resources.ApplyResources(this.numericUpDown9, "numericUpDown9");
-            this.numericUpDown9.Maximum = new decimal(new int[] {
-            500000,
-            0,
-            0,
-            0});
-            this.numericUpDown9.Name = "numericUpDown9";
-            // 
-            // numericUpDown10
-            // 
-            resources.ApplyResources(this.numericUpDown10, "numericUpDown10");
-            this.numericUpDown10.Maximum = new decimal(new int[] {
-            500000,
-            0,
-            0,
-            0});
-            this.numericUpDown10.Name = "numericUpDown10";
-            // 
-            // numericUpDown11
-            // 
-            resources.ApplyResources(this.numericUpDown11, "numericUpDown11");
-            this.numericUpDown11.Maximum = new decimal(new int[] {
-            500000,
-            0,
-            0,
-            0});
-            this.numericUpDown11.Name = "numericUpDown11";
-            // 
-            // numericUpDown12
-            // 
-            resources.ApplyResources(this.numericUpDown12, "numericUpDown12");
-            this.numericUpDown12.Maximum = new decimal(new int[] {
-            500000,
-            0,
-            0,
-            0});
-            this.numericUpDown12.Name = "numericUpDown12";
-            // 
-            // numericUpDown13
-            // 
-            this.numericUpDown13.DecimalPlaces = 2;
-            this.numericUpDown13.Increment = new decimal(new int[] {
+            this.s_mmh2oHigherLimit2.DecimalPlaces = 2;
+            this.s_mmh2oHigherLimit2.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            resources.ApplyResources(this.numericUpDown13, "numericUpDown13");
-            this.numericUpDown13.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_mmh2oHigherLimit2, "s_mmh2oHigherLimit2");
+            this.s_mmh2oHigherLimit2.Maximum = new decimal(new int[] {
             50,
             0,
             0,
             0});
-            this.numericUpDown13.Minimum = new decimal(new int[] {
+            this.s_mmh2oHigherLimit2.Minimum = new decimal(new int[] {
             50,
             0,
             0,
             -2147483648});
-            this.numericUpDown13.Name = "numericUpDown13";
+            this.s_mmh2oHigherLimit2.Name = "s_mmh2oHigherLimit2";
             // 
-            // numericUpDown14
+            // s_mmh2oHigherLimit1
             // 
-            this.numericUpDown14.DecimalPlaces = 2;
-            this.numericUpDown14.Increment = new decimal(new int[] {
+            this.s_mmh2oHigherLimit1.DecimalPlaces = 2;
+            this.s_mmh2oHigherLimit1.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            resources.ApplyResources(this.numericUpDown14, "numericUpDown14");
-            this.numericUpDown14.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_mmh2oHigherLimit1, "s_mmh2oHigherLimit1");
+            this.s_mmh2oHigherLimit1.Maximum = new decimal(new int[] {
             50,
             0,
             0,
             0});
-            this.numericUpDown14.Minimum = new decimal(new int[] {
+            this.s_mmh2oHigherLimit1.Minimum = new decimal(new int[] {
             50,
             0,
             0,
             -2147483648});
-            this.numericUpDown14.Name = "numericUpDown14";
+            this.s_mmh2oHigherLimit1.Name = "s_mmh2oHigherLimit1";
             // 
-            // numericUpDown15
+            // s_mmh2oLowerLimit2
             // 
-            this.numericUpDown15.DecimalPlaces = 2;
-            this.numericUpDown15.Increment = new decimal(new int[] {
+            this.s_mmh2oLowerLimit2.DecimalPlaces = 2;
+            this.s_mmh2oLowerLimit2.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            resources.ApplyResources(this.numericUpDown15, "numericUpDown15");
-            this.numericUpDown15.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_mmh2oLowerLimit2, "s_mmh2oLowerLimit2");
+            this.s_mmh2oLowerLimit2.Maximum = new decimal(new int[] {
             50,
             0,
             0,
             0});
-            this.numericUpDown15.Minimum = new decimal(new int[] {
+            this.s_mmh2oLowerLimit2.Minimum = new decimal(new int[] {
             50,
             0,
             0,
             -2147483648});
-            this.numericUpDown15.Name = "numericUpDown15";
+            this.s_mmh2oLowerLimit2.Name = "s_mmh2oLowerLimit2";
             // 
-            // numericUpDown16
+            // s_mmh2oLowerLimit1
             // 
-            this.numericUpDown16.DecimalPlaces = 2;
-            this.numericUpDown16.Increment = new decimal(new int[] {
+            this.s_mmh2oLowerLimit1.DecimalPlaces = 2;
+            this.s_mmh2oLowerLimit1.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            resources.ApplyResources(this.numericUpDown16, "numericUpDown16");
-            this.numericUpDown16.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_mmh2oLowerLimit1, "s_mmh2oLowerLimit1");
+            this.s_mmh2oLowerLimit1.Maximum = new decimal(new int[] {
             50,
             0,
             0,
             0});
-            this.numericUpDown16.Minimum = new decimal(new int[] {
+            this.s_mmh2oLowerLimit1.Minimum = new decimal(new int[] {
             50,
             0,
             0,
             -2147483648});
-            this.numericUpDown16.Name = "numericUpDown16";
+            this.s_mmh2oLowerLimit1.Name = "s_mmh2oLowerLimit1";
             // 
             // s_kpaHigherLimit2
             // 
@@ -2069,22 +2201,22 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.s_p100LowerLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchhgHigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchhgHigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchhgLowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchhgLowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmhgHigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmhgHigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmhgLowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmhgLowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchh2oHigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchh2oHigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchh2oLowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_inchh2oLowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmh2oHigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmh2oHigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmh2oLowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mmh2oLowerLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_kpaHigherLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_kpaHigherLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_kpaLowerLimit2)).EndInit();
@@ -2254,22 +2386,22 @@ namespace AdminPage
         private System.Windows.Forms.NumericUpDown s_p100LowerLimit2;
         private System.Windows.Forms.NumericUpDown s_p100LowerLimit1;
         private System.Windows.Forms.Label l_p100Usage;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
-        private System.Windows.Forms.NumericUpDown numericUpDown4;
-        private System.Windows.Forms.NumericUpDown numericUpDown5;
-        private System.Windows.Forms.NumericUpDown numericUpDown6;
-        private System.Windows.Forms.NumericUpDown numericUpDown7;
-        private System.Windows.Forms.NumericUpDown numericUpDown8;
-        private System.Windows.Forms.NumericUpDown numericUpDown9;
-        private System.Windows.Forms.NumericUpDown numericUpDown10;
-        private System.Windows.Forms.NumericUpDown numericUpDown11;
-        private System.Windows.Forms.NumericUpDown numericUpDown12;
-        private System.Windows.Forms.NumericUpDown numericUpDown13;
-        private System.Windows.Forms.NumericUpDown numericUpDown14;
-        private System.Windows.Forms.NumericUpDown numericUpDown15;
-        private System.Windows.Forms.NumericUpDown numericUpDown16;
+        private System.Windows.Forms.NumericUpDown s_inchhgHigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_inchhgHigherLimit1;
+        private System.Windows.Forms.NumericUpDown s_inchhgLowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_inchhgLowerLimit1;
+        private System.Windows.Forms.NumericUpDown s_mmhgHigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_mmhgHigherLimit1;
+        private System.Windows.Forms.NumericUpDown s_mmhgLowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_mmhgLowerLimit1;
+        private System.Windows.Forms.NumericUpDown s_inchh2oHigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_inchh2oHigherLimit1;
+        private System.Windows.Forms.NumericUpDown s_inchh2oLowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_inchh2oLowerLimit1;
+        private System.Windows.Forms.NumericUpDown s_mmh2oHigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_mmh2oHigherLimit1;
+        private System.Windows.Forms.NumericUpDown s_mmh2oLowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_mmh2oLowerLimit1;
         private System.Windows.Forms.NumericUpDown s_kpaHigherLimit2;
         private System.Windows.Forms.NumericUpDown s_kpaHigherLimit1;
         private System.Windows.Forms.NumericUpDown s_kpaLowerLimit2;

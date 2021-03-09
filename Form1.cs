@@ -131,10 +131,10 @@ namespace AdminPage
             List<NumericUpDown> pa_Ranges = new List<NumericUpDown>() { s_paHigherLimit2, s_paHigherLimit1, s_paLowerLimit1, s_paLowerLimit2 };
             List<NumericUpDown> hPa_Ranges = new List<NumericUpDown>() { s_hpaHigherLimit2, s_hpaHigherLimit1, s_hpaLowerLimit1, s_hpaLowerLimit2 };
             List<NumericUpDown> kPa_Ranges = new List<NumericUpDown>() { s_kpaHigherLimit2, s_kpaHigherLimit1, s_kpaLowerLimit1, s_kpaLowerLimit2 };
-            List<NumericUpDown> mmAq_Ranges = new List<NumericUpDown>() { s_p05HigherLimit2, s_p05HigherLimit1, s_p05LowerLimit1, s_p05LowerLimit2 };
-            List<NumericUpDown> inchH2O_Ranges = new List<NumericUpDown>() { s_p10HigherLimit2, s_p10HigherLimit1, s_p10LowerLimit1, s_p10LowerLimit2 };
-            List<NumericUpDown> mmHg_Ranges = new List<NumericUpDown>() { s_p25HigherLimit2, s_p25HigherLimit1, s_p25LowerLimit1, s_p25LowerLimit2 };
-            List<NumericUpDown> inchHg_Ranges = new List<NumericUpDown>() { s_p50HigherLimit2, s_p50HigherLimit1, s_p50LowerLimit1, s_p50LowerLimit2 };
+            List<NumericUpDown> mmH2O_Ranges = new List<NumericUpDown>() { s_mmh2oHigherLimit2, s_mmh2oHigherLimit1, s_mmh2oLowerLimit1, s_mmh2oLowerLimit2 };
+            List<NumericUpDown> inchH2O_Ranges = new List<NumericUpDown>() { s_inchh2oHigherLimit2, s_inchh2oHigherLimit1, s_inchh2oLowerLimit1, s_inchh2oLowerLimit2 };
+            List<NumericUpDown> mmHg_Ranges = new List<NumericUpDown>() { s_mmhgHigherLimit2, s_mmhgHigherLimit1, s_mmhgLowerLimit1, s_mmhgLowerLimit2 }; 
+            List<NumericUpDown> inchHg_Ranges = new List<NumericUpDown>() { s_inchhgHigherLimit2, s_inchhgHigherLimit1, s_inchhgLowerLimit1, s_inchhgLowerLimit2 };
 
 
             myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
