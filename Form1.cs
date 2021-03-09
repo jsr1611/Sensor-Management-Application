@@ -1394,16 +1394,13 @@ namespace AdminPage
 
         }
 
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(tabControl1.SelectedTab == tabPage1)
+                if (tabControl1.SelectedTab == tabPage1)
             {
-                if(pTrackerTimer.Enabled == false)
+                clearFields(S_DeviceInfo_txtB);
+                if (pTrackerTimer.Enabled == false)
                 {
                     pTrackerTimer.Enabled = true;
                     pTrackerTimer.Start();
@@ -1412,23 +1409,21 @@ namespace AdminPage
 
                 if (appAlreadyRunning)
                 {
-                    b_dataCollection_status.Image = Resources.light_on_26_color; 
+                    b_dataCollection_status.Image = Resources.light_on_26_color;
                 }
                 else
                 {
                     b_dataCollection_status.Image = Resources.light_off_26;
                 }
             }
-            else if(tabControl1.SelectedTab == tabPage2)
+            else if (tabControl1.SelectedTab == tabPage2)
             {
-                
+                clearFields(S_DeviceInfo_txtB_p);
                 // Further FIX is Needed after Pressure sensor data collection is added
 
-                
-                if (appAlreadyRunning && "온습도" == "차압")     
+                if (appAlreadyRunning && "온습도" == "차압")
                 {
                     b_dataCollection_status.Image = Resources.light_on_26_color;
-                    
                 }
                 else
                 {
@@ -1436,7 +1431,11 @@ namespace AdminPage
                     pTrackerTimer.Stop();
                     pTrackerTimer.Enabled = false;
                 }
+
             }
+                
+                
+            
         }
 
         private void listView2_pressure_SelectedIndexChanged(object sender, EventArgs e)
