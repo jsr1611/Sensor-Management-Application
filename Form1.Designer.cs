@@ -77,14 +77,13 @@ namespace AdminPage
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.button1 = new System.Windows.Forms.Button();
             this.sID = new System.Windows.Forms.TextBox();
             this.l_zone = new System.Windows.Forms.Label();
             this.sZone = new System.Windows.Forms.TextBox();
+            this.s_p100HigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p100HigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_p100LowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p100LowerLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_p50HigherLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_p50HigherLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_p50LowerLimit2 = new System.Windows.Forms.NumericUpDown();
@@ -117,6 +116,7 @@ namespace AdminPage
             this.c_p50Usage = new System.Windows.Forms.CheckBox();
             this.c_p25Usage = new System.Windows.Forms.CheckBox();
             this.c_p10Usage = new System.Windows.Forms.CheckBox();
+            this.l_p100Usage = new System.Windows.Forms.Label();
             this.l_p5Usage = new System.Windows.Forms.Label();
             this.l_p25Usage = new System.Windows.Forms.Label();
             this.l_p10Usage = new System.Windows.Forms.Label();
@@ -150,38 +150,6 @@ namespace AdminPage
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker4 = new System.Windows.Forms.DateTimePicker();
-            this.button2 = new System.Windows.Forms.Button();
-            this.sID_p = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.sZone_p = new System.Windows.Forms.TextBox();
-            this.c_inchhgUsage = new System.Windows.Forms.CheckBox();
-            this.c_mmhgUsage = new System.Windows.Forms.CheckBox();
-            this.c_inchh2oUsage = new System.Windows.Forms.CheckBox();
-            this.c_mmh2oUsage = new System.Windows.Forms.CheckBox();
-            this.c_kpaUsage = new System.Windows.Forms.CheckBox();
-            this.c_hpaUsage = new System.Windows.Forms.CheckBox();
-            this.c_paUsage = new System.Windows.Forms.CheckBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.sDescription_p = new System.Windows.Forms.TextBox();
-            this.sLocation_p = new System.Windows.Forms.TextBox();
-            this.sName_p = new System.Windows.Forms.TextBox();
-            this.s_p100LowerLimit2 = new System.Windows.Forms.NumericUpDown();
-            this.s_p100LowerLimit1 = new System.Windows.Forms.NumericUpDown();
-            this.s_p100HigherLimit1 = new System.Windows.Forms.NumericUpDown();
-            this.s_p100HigherLimit2 = new System.Windows.Forms.NumericUpDown();
-            this.l_p100Usage = new System.Windows.Forms.Label();
             this.s_inchhgHigherLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_inchhgHigherLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_inchhgLowerLimit2 = new System.Windows.Forms.NumericUpDown();
@@ -217,6 +185,36 @@ namespace AdminPage
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
+            this.sID_p = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.sZone_p = new System.Windows.Forms.TextBox();
+            this.c_inchhgUsage = new System.Windows.Forms.CheckBox();
+            this.c_mmhgUsage = new System.Windows.Forms.CheckBox();
+            this.c_inchh2oUsage = new System.Windows.Forms.CheckBox();
+            this.c_mmh2oUsage = new System.Windows.Forms.CheckBox();
+            this.c_kpaUsage = new System.Windows.Forms.CheckBox();
+            this.c_hpaUsage = new System.Windows.Forms.CheckBox();
+            this.c_paUsage = new System.Windows.Forms.CheckBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.sDescription_p = new System.Windows.Forms.TextBox();
+            this.sLocation_p = new System.Windows.Forms.TextBox();
+            this.sName_p = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker4 = new System.Windows.Forms.DateTimePicker();
+            this.button2 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -230,6 +228,10 @@ namespace AdminPage
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p100LowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p100LowerLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p50HigherLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p50HigherLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p50LowerLimit2)).BeginInit();
@@ -263,10 +265,6 @@ namespace AdminPage
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p100LowerLimit2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p100LowerLimit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_inchhgHigherLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_inchhgHigherLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_inchhgLowerLimit2)).BeginInit();
@@ -560,7 +558,6 @@ namespace AdminPage
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.label5);
-            this.splitContainer1.Panel2.Controls.Add(this.label4);
             this.splitContainer1.Panel2.Controls.Add(this.dateTimePicker2);
             this.splitContainer1.Panel2.Controls.Add(this.dateTimePicker1);
             this.splitContainer1.Panel2.Controls.Add(this.button1);
@@ -676,37 +673,6 @@ namespace AdminPage
             // 
             resources.ApplyResources(this.columnHeader6, "columnHeader6");
             // 
-            // label5
-            // 
-            resources.ApplyResources(this.label5, "label5");
-            this.label5.Name = "label5";
-            // 
-            // label4
-            // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.Name = "label4";
-            // 
-            // dateTimePicker2
-            // 
-            resources.ApplyResources(this.dateTimePicker2, "dateTimePicker2");
-            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Value = new System.DateTime(2021, 3, 4, 0, 0, 0, 0);
-            // 
-            // dateTimePicker1
-            // 
-            resources.ApplyResources(this.dateTimePicker1, "dateTimePicker1");
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Value = new System.DateTime(2021, 3, 4, 16, 24, 36, 0);
-            // 
-            // button1
-            // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // sID
             // 
             resources.ApplyResources(this.sID, "sID");
@@ -722,6 +688,46 @@ namespace AdminPage
             // 
             resources.ApplyResources(this.sZone, "sZone");
             this.sZone.Name = "sZone";
+            // 
+            // s_p100HigherLimit2
+            // 
+            resources.ApplyResources(this.s_p100HigherLimit2, "s_p100HigherLimit2");
+            this.s_p100HigherLimit2.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p100HigherLimit2.Name = "s_p100HigherLimit2";
+            // 
+            // s_p100HigherLimit1
+            // 
+            resources.ApplyResources(this.s_p100HigherLimit1, "s_p100HigherLimit1");
+            this.s_p100HigherLimit1.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p100HigherLimit1.Name = "s_p100HigherLimit1";
+            // 
+            // s_p100LowerLimit2
+            // 
+            resources.ApplyResources(this.s_p100LowerLimit2, "s_p100LowerLimit2");
+            this.s_p100LowerLimit2.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p100LowerLimit2.Name = "s_p100LowerLimit2";
+            // 
+            // s_p100LowerLimit1
+            // 
+            resources.ApplyResources(this.s_p100LowerLimit1, "s_p100LowerLimit1");
+            this.s_p100LowerLimit1.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p100LowerLimit1.Name = "s_p100LowerLimit1";
             // 
             // s_p50HigherLimit2
             // 
@@ -1045,6 +1051,12 @@ namespace AdminPage
             this.c_p10Usage.UseVisualStyleBackColor = true;
             this.c_p10Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
+            // l_p100Usage
+            // 
+            this.l_p100Usage.AutoEllipsis = true;
+            resources.ApplyResources(this.l_p100Usage, "l_p100Usage");
+            this.l_p100Usage.Name = "l_p100Usage";
+            // 
             // l_p5Usage
             // 
             this.l_p5Usage.AutoEllipsis = true;
@@ -1193,6 +1205,10 @@ namespace AdminPage
             // 
             // splitContainer2.Panel2
             // 
+            this.splitContainer2.Panel2.Controls.Add(this.label4);
+            this.splitContainer2.Panel2.Controls.Add(this.dateTimePicker3);
+            this.splitContainer2.Panel2.Controls.Add(this.dateTimePicker4);
+            this.splitContainer2.Panel2.Controls.Add(this.button2);
             this.splitContainer2.Panel2.Controls.Add(this.s_inchhgHigherLimit2);
             this.splitContainer2.Panel2.Controls.Add(this.s_inchhgHigherLimit1);
             this.splitContainer2.Panel2.Controls.Add(this.s_inchhgLowerLimit2);
@@ -1228,11 +1244,6 @@ namespace AdminPage
             this.splitContainer2.Panel2.Controls.Add(this.label14);
             this.splitContainer2.Panel2.Controls.Add(this.label15);
             this.splitContainer2.Panel2.Controls.Add(this.label16);
-            this.splitContainer2.Panel2.Controls.Add(this.label6);
-            this.splitContainer2.Panel2.Controls.Add(this.label7);
-            this.splitContainer2.Panel2.Controls.Add(this.dateTimePicker3);
-            this.splitContainer2.Panel2.Controls.Add(this.dateTimePicker4);
-            this.splitContainer2.Panel2.Controls.Add(this.button2);
             this.splitContainer2.Panel2.Controls.Add(this.sID_p);
             this.splitContainer2.Panel2.Controls.Add(this.label8);
             this.splitContainer2.Panel2.Controls.Add(this.sZone_p);
@@ -1303,208 +1314,6 @@ namespace AdminPage
             // columnHeader13
             // 
             resources.ApplyResources(this.columnHeader13, "columnHeader13");
-            // 
-            // label6
-            // 
-            resources.ApplyResources(this.label6, "label6");
-            this.label6.Name = "label6";
-            // 
-            // label7
-            // 
-            resources.ApplyResources(this.label7, "label7");
-            this.label7.Name = "label7";
-            // 
-            // dateTimePicker3
-            // 
-            resources.ApplyResources(this.dateTimePicker3, "dateTimePicker3");
-            this.dateTimePicker3.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.Value = new System.DateTime(2021, 3, 4, 0, 0, 0, 0);
-            // 
-            // dateTimePicker4
-            // 
-            resources.ApplyResources(this.dateTimePicker4, "dateTimePicker4");
-            this.dateTimePicker4.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker4.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
-            this.dateTimePicker4.Name = "dateTimePicker4";
-            this.dateTimePicker4.Value = new System.DateTime(2021, 3, 4, 16, 24, 36, 0);
-            // 
-            // button2
-            // 
-            resources.ApplyResources(this.button2, "button2");
-            this.button2.Name = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // sID_p
-            // 
-            resources.ApplyResources(this.sID_p, "sID_p");
-            this.sID_p.Name = "sID_p";
-            this.sID_p.ReadOnly = true;
-            // 
-            // label8
-            // 
-            resources.ApplyResources(this.label8, "label8");
-            this.label8.Name = "label8";
-            // 
-            // sZone_p
-            // 
-            resources.ApplyResources(this.sZone_p, "sZone_p");
-            this.sZone_p.Name = "sZone_p";
-            // 
-            // c_inchhgUsage
-            // 
-            resources.ApplyResources(this.c_inchhgUsage, "c_inchhgUsage");
-            this.c_inchhgUsage.Name = "c_inchhgUsage";
-            this.c_inchhgUsage.UseVisualStyleBackColor = true;
-            this.c_inchhgUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
-            // 
-            // c_mmhgUsage
-            // 
-            resources.ApplyResources(this.c_mmhgUsage, "c_mmhgUsage");
-            this.c_mmhgUsage.Name = "c_mmhgUsage";
-            this.c_mmhgUsage.UseVisualStyleBackColor = true;
-            this.c_mmhgUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
-            // 
-            // c_inchh2oUsage
-            // 
-            resources.ApplyResources(this.c_inchh2oUsage, "c_inchh2oUsage");
-            this.c_inchh2oUsage.Name = "c_inchh2oUsage";
-            this.c_inchh2oUsage.UseVisualStyleBackColor = true;
-            this.c_inchh2oUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
-            // 
-            // c_mmh2oUsage
-            // 
-            resources.ApplyResources(this.c_mmh2oUsage, "c_mmh2oUsage");
-            this.c_mmh2oUsage.Name = "c_mmh2oUsage";
-            this.c_mmh2oUsage.UseVisualStyleBackColor = true;
-            this.c_mmh2oUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
-            // 
-            // c_kpaUsage
-            // 
-            resources.ApplyResources(this.c_kpaUsage, "c_kpaUsage");
-            this.c_kpaUsage.Name = "c_kpaUsage";
-            this.c_kpaUsage.UseVisualStyleBackColor = true;
-            this.c_kpaUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
-            // 
-            // c_hpaUsage
-            // 
-            resources.ApplyResources(this.c_hpaUsage, "c_hpaUsage");
-            this.c_hpaUsage.Name = "c_hpaUsage";
-            this.c_hpaUsage.UseVisualStyleBackColor = true;
-            this.c_hpaUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
-            // 
-            // c_paUsage
-            // 
-            resources.ApplyResources(this.c_paUsage, "c_paUsage");
-            this.c_paUsage.Name = "c_paUsage";
-            this.c_paUsage.UseVisualStyleBackColor = true;
-            this.c_paUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
-            // 
-            // label18
-            // 
-            resources.ApplyResources(this.label18, "label18");
-            this.label18.Name = "label18";
-            // 
-            // label19
-            // 
-            resources.ApplyResources(this.label19, "label19");
-            this.label19.Name = "label19";
-            // 
-            // label20
-            // 
-            resources.ApplyResources(this.label20, "label20");
-            this.label20.Name = "label20";
-            // 
-            // label21
-            // 
-            resources.ApplyResources(this.label21, "label21");
-            this.label21.Name = "label21";
-            // 
-            // label22
-            // 
-            resources.ApplyResources(this.label22, "label22");
-            this.label22.Name = "label22";
-            // 
-            // label23
-            // 
-            resources.ApplyResources(this.label23, "label23");
-            this.label23.Name = "label23";
-            // 
-            // label24
-            // 
-            resources.ApplyResources(this.label24, "label24");
-            this.label24.Name = "label24";
-            // 
-            // label25
-            // 
-            resources.ApplyResources(this.label25, "label25");
-            this.label25.Name = "label25";
-            // 
-            // label26
-            // 
-            resources.ApplyResources(this.label26, "label26");
-            this.label26.Name = "label26";
-            // 
-            // sDescription_p
-            // 
-            resources.ApplyResources(this.sDescription_p, "sDescription_p");
-            this.sDescription_p.Name = "sDescription_p";
-            // 
-            // sLocation_p
-            // 
-            resources.ApplyResources(this.sLocation_p, "sLocation_p");
-            this.sLocation_p.Name = "sLocation_p";
-            // 
-            // sName_p
-            // 
-            resources.ApplyResources(this.sName_p, "sName_p");
-            this.sName_p.Name = "sName_p";
-            // 
-            // s_p100LowerLimit2
-            // 
-            resources.ApplyResources(this.s_p100LowerLimit2, "s_p100LowerLimit2");
-            this.s_p100LowerLimit2.Maximum = new decimal(new int[] {
-            500000,
-            0,
-            0,
-            0});
-            this.s_p100LowerLimit2.Name = "s_p100LowerLimit2";
-            // 
-            // s_p100LowerLimit1
-            // 
-            resources.ApplyResources(this.s_p100LowerLimit1, "s_p100LowerLimit1");
-            this.s_p100LowerLimit1.Maximum = new decimal(new int[] {
-            500000,
-            0,
-            0,
-            0});
-            this.s_p100LowerLimit1.Name = "s_p100LowerLimit1";
-            // 
-            // s_p100HigherLimit1
-            // 
-            resources.ApplyResources(this.s_p100HigherLimit1, "s_p100HigherLimit1");
-            this.s_p100HigherLimit1.Maximum = new decimal(new int[] {
-            500000,
-            0,
-            0,
-            0});
-            this.s_p100HigherLimit1.Name = "s_p100HigherLimit1";
-            // 
-            // s_p100HigherLimit2
-            // 
-            resources.ApplyResources(this.s_p100HigherLimit2, "s_p100HigherLimit2");
-            this.s_p100HigherLimit2.Maximum = new decimal(new int[] {
-            500000,
-            0,
-            0,
-            0});
-            this.s_p100HigherLimit2.Name = "s_p100HigherLimit2";
-            // 
-            // l_p100Usage
-            // 
-            this.l_p100Usage.AutoEllipsis = true;
-            resources.ApplyResources(this.l_p100Usage, "l_p100Usage");
-            this.l_p100Usage.Name = "l_p100Usage";
             // 
             // s_inchhgHigherLimit2
             // 
@@ -2142,6 +1951,191 @@ namespace AdminPage
             resources.ApplyResources(this.label16, "label16");
             this.label16.Name = "label16";
             // 
+            // sID_p
+            // 
+            resources.ApplyResources(this.sID_p, "sID_p");
+            this.sID_p.Name = "sID_p";
+            this.sID_p.ReadOnly = true;
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
+            // 
+            // sZone_p
+            // 
+            resources.ApplyResources(this.sZone_p, "sZone_p");
+            this.sZone_p.Name = "sZone_p";
+            // 
+            // c_inchhgUsage
+            // 
+            resources.ApplyResources(this.c_inchhgUsage, "c_inchhgUsage");
+            this.c_inchhgUsage.Name = "c_inchhgUsage";
+            this.c_inchhgUsage.UseVisualStyleBackColor = true;
+            this.c_inchhgUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            // 
+            // c_mmhgUsage
+            // 
+            resources.ApplyResources(this.c_mmhgUsage, "c_mmhgUsage");
+            this.c_mmhgUsage.Name = "c_mmhgUsage";
+            this.c_mmhgUsage.UseVisualStyleBackColor = true;
+            this.c_mmhgUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            // 
+            // c_inchh2oUsage
+            // 
+            resources.ApplyResources(this.c_inchh2oUsage, "c_inchh2oUsage");
+            this.c_inchh2oUsage.Name = "c_inchh2oUsage";
+            this.c_inchh2oUsage.UseVisualStyleBackColor = true;
+            this.c_inchh2oUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            // 
+            // c_mmh2oUsage
+            // 
+            resources.ApplyResources(this.c_mmh2oUsage, "c_mmh2oUsage");
+            this.c_mmh2oUsage.Name = "c_mmh2oUsage";
+            this.c_mmh2oUsage.UseVisualStyleBackColor = true;
+            this.c_mmh2oUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            // 
+            // c_kpaUsage
+            // 
+            resources.ApplyResources(this.c_kpaUsage, "c_kpaUsage");
+            this.c_kpaUsage.Name = "c_kpaUsage";
+            this.c_kpaUsage.UseVisualStyleBackColor = true;
+            this.c_kpaUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            // 
+            // c_hpaUsage
+            // 
+            resources.ApplyResources(this.c_hpaUsage, "c_hpaUsage");
+            this.c_hpaUsage.Name = "c_hpaUsage";
+            this.c_hpaUsage.UseVisualStyleBackColor = true;
+            this.c_hpaUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            // 
+            // c_paUsage
+            // 
+            resources.ApplyResources(this.c_paUsage, "c_paUsage");
+            this.c_paUsage.Name = "c_paUsage";
+            this.c_paUsage.UseVisualStyleBackColor = true;
+            this.c_paUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            // 
+            // label18
+            // 
+            resources.ApplyResources(this.label18, "label18");
+            this.label18.Name = "label18";
+            // 
+            // label19
+            // 
+            resources.ApplyResources(this.label19, "label19");
+            this.label19.Name = "label19";
+            // 
+            // label20
+            // 
+            resources.ApplyResources(this.label20, "label20");
+            this.label20.Name = "label20";
+            // 
+            // label21
+            // 
+            resources.ApplyResources(this.label21, "label21");
+            this.label21.Name = "label21";
+            // 
+            // label22
+            // 
+            resources.ApplyResources(this.label22, "label22");
+            this.label22.Name = "label22";
+            // 
+            // label23
+            // 
+            resources.ApplyResources(this.label23, "label23");
+            this.label23.Name = "label23";
+            // 
+            // label24
+            // 
+            resources.ApplyResources(this.label24, "label24");
+            this.label24.Name = "label24";
+            // 
+            // label25
+            // 
+            resources.ApplyResources(this.label25, "label25");
+            this.label25.Name = "label25";
+            // 
+            // label26
+            // 
+            resources.ApplyResources(this.label26, "label26");
+            this.label26.Name = "label26";
+            // 
+            // sDescription_p
+            // 
+            resources.ApplyResources(this.sDescription_p, "sDescription_p");
+            this.sDescription_p.Name = "sDescription_p";
+            // 
+            // sLocation_p
+            // 
+            resources.ApplyResources(this.sLocation_p, "sLocation_p");
+            this.sLocation_p.Name = "sLocation_p";
+            // 
+            // sName_p
+            // 
+            resources.ApplyResources(this.sName_p, "sName_p");
+            this.sName_p.Name = "sName_p";
+            // 
+            // button1
+            // 
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.DownloadToExcel_Click);
+            // 
+            // dateTimePicker1
+            // 
+            resources.ApplyResources(this.dateTimePicker1, "dateTimePicker1");
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker1.MaxDate = new System.DateTime(2200, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker1.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Value = new System.DateTime(2021, 1, 1, 0, 0, 0, 0);
+            // 
+            // dateTimePicker2
+            // 
+            resources.ApplyResources(this.dateTimePicker2, "dateTimePicker2");
+            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker2.MaxDate = new System.DateTime(2200, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker2.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker2.Name = "dateTimePicker2";
+            this.dateTimePicker2.Value = new System.DateTime(2021, 1, 1, 0, 0, 0, 0);
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            // 
+            // dateTimePicker3
+            // 
+            resources.ApplyResources(this.dateTimePicker3, "dateTimePicker3");
+            this.dateTimePicker3.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker3.MaxDate = new System.DateTime(2200, 12, 31, 0, 0, 0, 0);
+            this.dateTimePicker3.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker3.Name = "dateTimePicker3";
+            this.dateTimePicker3.Value = new System.DateTime(2021, 1, 1, 0, 0, 0, 0);
+            // 
+            // dateTimePicker4
+            // 
+            resources.ApplyResources(this.dateTimePicker4, "dateTimePicker4");
+            this.dateTimePicker4.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker4.MaxDate = new System.DateTime(2300, 12, 31, 0, 0, 0, 0);
+            this.dateTimePicker4.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker4.Name = "dateTimePicker4";
+            this.dateTimePicker4.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            // 
+            // button2
+            // 
+            resources.ApplyResources(this.button2, "button2");
+            this.button2.Name = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.DownloadToExcel_Click);
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
@@ -2171,6 +2165,10 @@ namespace AdminPage
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p100LowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p100LowerLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p50HigherLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p50HigherLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p50LowerLimit2)).EndInit();
@@ -2205,10 +2203,6 @@ namespace AdminPage
             this.splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.s_p100LowerLimit2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p100LowerLimit1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_inchhgHigherLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_inchhgHigherLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_inchhgLowerLimit2)).EndInit();
@@ -2289,11 +2283,6 @@ namespace AdminPage
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox sID;
         private System.Windows.Forms.Label l_zone;
         private System.Windows.Forms.TextBox sZone;
@@ -2362,11 +2351,6 @@ namespace AdminPage
         private System.Windows.Forms.ColumnHeader columnHeader11;
         private System.Windows.Forms.ColumnHeader columnHeader12;
         private System.Windows.Forms.ColumnHeader columnHeader13;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker4;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox sID_p;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox sZone_p;
@@ -2429,6 +2413,14 @@ namespace AdminPage
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DateTimePicker dateTimePicker3;
+        private System.Windows.Forms.DateTimePicker dateTimePicker4;
+        private System.Windows.Forms.Button button2;
     }
 }
 

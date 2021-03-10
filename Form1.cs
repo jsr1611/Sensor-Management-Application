@@ -1432,7 +1432,7 @@ namespace AdminPage
             return res;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void DownloadToExcel_Click(object sender, EventArgs e)
         {
             dateTimePicker1.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             dateTimePicker2.CustomFormat = "yyyy-MM-dd HH:mm:ss";
