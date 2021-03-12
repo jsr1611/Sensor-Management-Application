@@ -10,11 +10,18 @@ using System.Windows.Forms;
 using System.Drawing;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using System.Data;
 
 namespace AdminPage
 {
     public class DownToExcel
     {
+
+        /// <summary>
+        /// SqlConnection.ConnectionString property
+        /// </summary>
+        public string sqlConString { get; set; }
+
         public string tableName { get; set; }
         public string dbName { get; set; }
         public SqlConnection myConn { get; set; }
@@ -24,137 +31,90 @@ namespace AdminPage
         {
 
         }
-        public DownToExcel(string tbName, SqlConnection sqlConnection, (string, string) StartEndTime)
+        public DownToExcel(string tbName, string sqlConStr, (string, string) StartEndTime)
         {
             tableName = tbName;
-            myConn = sqlConnection;
+            myConn = new SqlConnection();
+            sqlConString = sqlConStr;
+            myConn.ConnectionString = sqlConStr;
             startEndTime = StartEndTime;
-
-            string fileName = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" +
-    "ExcelReport.xlsx";
-
-            //The Excel file will be created on the desktop. If a previous file with the same name exists, it will be deleted first and then the new file is created.
-
-            Excel.Application xlsApp;
-            Excel.Workbook xlsWorkbook;
-            Excel.Worksheet xlsWorksheet;
-            object misValue = System.Reflection.Missing.Value;
-
-            // Remove the old excel report file
-            try
+               
+            if(myConn == null ||  myConn.ConnectionString == String.Empty)
             {
-                FileInfo oldFile = new FileInfo(fileName);
-                if (oldFile.Exists)
-                {
-                    File.SetAttributes(oldFile.FullName, FileAttributes.Normal);
-                    oldFile.Delete();
-                }
+                myConn.ConnectionString = sqlConString;
+                myConn.Open();
             }
-            catch (Exception ex)
+            else if (myConn.State != System.Data.ConnectionState.Open)
             {
-                MessageBox.Show("Error removing old Excel report: " + ex.Message, "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return;
+                myConn.Open();
             }
 
+            DataSet ds = new DataSet();
+            string sqlselect = $"SELECT * FROM {tableName} WHERE dateandtime >= '{startEndTime.Item1}' and dateandtime <= '{startEndTime.Item2}' ORDER BY dateandtime;";
+            SqlCommand cmd = new SqlCommand(sqlselect, myConn);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
 
-            // We create the Excel file using code like this:
-            try
-            {
-                xlsApp = new Excel.Application();
-                xlsWorkbook = xlsApp.Workbooks.Add(misValue);
-                xlsWorksheet = (Excel.Worksheet)xlsWorkbook.Sheets[1];
+            da.Fill(ds);
 
-                // Create the header for Excel file
-                xlsWorksheet.Cells[1, 1] = "Example of Excel report. Get data from pubs database, table authors";
-                Excel.Range range = xlsWorksheet.get_Range("A1", "E1");
-                range.Merge(1);
-                range.Borders.Color = Color.Black.ToArgb();
-                range.Interior.Color = Color.Yellow.ToArgb();
-                dynamic dbschema = new JObject();
-
-
-                //The next step is to export the table to an Excel file. This can be done with the following code:
-
-                try
-                {
-                    if (myConn.State != System.Data.ConnectionState.Open)
-                    {
-                        myConn.Open();
-                    }
-                }
-                catch
-                {
-                    throw new Exception();
-                }
-
-                int i = 3;
-                string sqlselect = $"SELECT * FROM {tableName} WHERE dateandtime >= '{startEndTime.Item1}' and dateandtime <= '{startEndTime.Item2}' ORDER BY dateandtime;";
-                SqlCommand cmd = new SqlCommand(sqlselect, myConn);
-                SqlDataReader dr = cmd.ExecuteReader();
-                if (dr.HasRows)
-                {
-                    for (int j = 0; j < dr.FieldCount; ++j)
-                    {
-                        xlsWorksheet.Cells[i, j + 1] = dr.GetName(j);
-                    }
-                    ++i;
-                }
-
-                while (dr.Read())
-                {
-                    for (int j = 1; j <= dr.FieldCount; ++j)
-                        xlsWorksheet.Cells[i, j] = dr.GetValue(j - 1);
-                    ++i;
-                }
-
-
-                range = xlsWorksheet.get_Range("A2", "I" + (i + 2).ToString());
-                range.Columns.AutoFit();
-
-                xlsWorkbook.SaveAs(fileName, Excel.XlFileFormat.xlWorkbookDefault, misValue, misValue,
-                    misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, Excel.XlSaveConflictResolution.xlLocalSessionChanges,
-                    misValue, misValue, misValue, misValue);
-                xlsWorkbook.Close(true, misValue, misValue);
-                xlsApp.Quit();
-
-                ReleaseObject(xlsWorksheet);
-                ReleaseObject(xlsWorkbook);
-                ReleaseObject(xlsApp);
-
-
-                if (MessageBox.Show("Excel report has been created on your desktop\nWould you like to open it?",
-                    "Created Excel report",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2) ==
-                        DialogResult.Yes)
-                {
-                    Process.Start(fileName);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error creating Excel report: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
-
-
+            ExportToExcel(ds.Tables[0]);
         }
 
-        private void ReleaseObject(object obj)
+
+
+
+        private void ExportToExcel(System.Data.DataTable ds)
         {
+            //엑셀 저장 경로
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" +
+    "ExcelReport" + DateTime.Now.ToString("yyyyMMddHHmm") + ".xlsx";
+
             try
             {
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
-                obj = null;
+                var excelApp = new Excel.Application();
+                excelApp.Workbooks.Add();
+
+                Excel._Worksheet workSheet = (Excel._Worksheet)excelApp.ActiveSheet;
+
+/*
+                for (var i = 0; i < ds.Columns.Count; i++)
+                {
+                    workSheet.Cells[1, i + 1] = ds.Columns[i].ColumnName;
+                }
+
+                for (var i = 0; i < ds.Rows.Count; i++)
+                {
+                    for (var j = 0; j < ds.Columns.Count; j++)
+                    {
+                        workSheet.Cells[i + 2, j + 1] = ds.Rows[i][j];
+                    }
+                }*/
+
+                int rowCount = ds.Rows.Count;
+                int columnCount = ds.Columns.Count;
+
+                Excel.Range range = (Excel.Range)workSheet.Cells[1,1];
+                range.Columns.AutoFit();
+                //range = range.Resize(rowCount, columnCount);
+
+                range.Value(Excel.XlRangeValueDataType.xlRangeValueDefault, ds.Rows);
+
+
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+
+                workSheet.SaveAs(path);
+                excelApp.Quit();
+
             }
             catch (Exception ex)
             {
-                obj = null;
-                MessageBox.Show("Exception occured while releasing object " + ex.ToString());
+                Console.WriteLine(ex.Message);
             }
-            finally
-            {
-                GC.Collect();
-            }
+
+
         }
+
     }
 }

@@ -72,6 +72,8 @@ namespace AdminPage
             set { _conStr = value; }
         }
 
+        public string sqlConString { get; internal set; }
+
         public DbTableHandler()
         {
         }
@@ -223,6 +225,7 @@ namespace AdminPage
                     {
                         tbCreated = Convert.ToInt32(reader.GetValue(0)) == 1;
                     }
+                    reader.Close();
                 }
             }
             catch (System.Exception ex)
@@ -234,6 +237,9 @@ namespace AdminPage
                 if (myConn.State == System.Data.ConnectionState.Open)
                 {
                     myConn.Close();
+                    myConn.Dispose();
+                    tbCheckCmd.Dispose();
+                    tbCreateCmd.Dispose();
                 }
             }
             return tbCreated;
@@ -268,27 +274,35 @@ namespace AdminPage
         private bool CreateTb(string tableName, string sqlCreateTable, SqlConnection myConn)
         {
             bool res = false;
+            if (myConn == null || myConn.ConnectionString == String.Empty)
+            {
+                myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
+            }
 
             SqlCommand createTbCmd = new SqlCommand(sqlCreateTable, myConn);
             try
             {
                 myConn.Open();
                 createTbCmd.ExecuteNonQuery();
-                bool tbCreated = IfTableExists(tableName);
+                /*bool tbCreated = IfTableExists(tableName);
                 if (tbCreated)
                 {
                     res = true;
-                }
+                }*/
+                res = true;
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                res = false;
             }
             finally
             {
                 if (myConn.State == System.Data.ConnectionState.Open)
                 {
                     myConn.Close();
+                    myConn.Dispose();
+                    createTbCmd.Dispose();
                 }
             }
 
@@ -301,22 +315,28 @@ namespace AdminPage
         /// DB가 존재하는지 체크하고 존재하면 true를 반환함.
         /// </summary>
         /// <param name="sql_dbExists"></param>
-        /// <param name="myConn"></param>
+        /// <param name="myConn_master"></param>
         /// <returns></returns>
-        public bool IfDatabaseExists(string dbName, SqlConnection myConn)
+        public bool IfDatabaseExists(string dbName, SqlConnection myConn_master)
         {
             bool result = false;
             string sql_dbExists = $"IF DB_ID('{dbName}') IS NOT NULL SELECT 1";
-            SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn);
+
+            if (myConn_master == null || myConn_master.ConnectionString == String.Empty)
+            {
+                myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True");
+            }
+
+            SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn_master);
             DataSet ds = new DataSet();
             try
             {
 
-                if (myConn.State != ConnectionState.Open)
+                if (myConn_master.State != ConnectionState.Open)
                 {
-                    myConn.Open();
+                    myConn_master.Open();
                 }
-                SqlDataAdapter sqlData = new SqlDataAdapter(sql_dbExists, myConn);
+                SqlDataAdapter sqlData = new SqlDataAdapter(sql_dbExists, myConn_master);
 
                 sqlData.Fill(ds);
                 if (ds.Tables.Count > 0)
@@ -330,6 +350,7 @@ namespace AdminPage
                         res = Convert.ToInt32(reader.GetValue(0)) == 1;
                     }
                 }*/
+                sqlData.Dispose();
             }
             catch (System.Exception ex)
             {
@@ -337,10 +358,12 @@ namespace AdminPage
             }
             finally
             {
-                if (myConn.State == System.Data.ConnectionState.Open)
+                if (myConn_master.State == System.Data.ConnectionState.Open)
                 {
-                    myConn.Close();
+                    myConn_master.Close();
+                    myConn_master.Dispose();
                 }
+                dbExistsCmd.Dispose();
             }
             return result;
         }
@@ -374,6 +397,9 @@ namespace AdminPage
                         res = Convert.ToInt32(reader.GetValue(0)) == 1;
                     }
                 }*/
+
+                sqlData.Dispose();
+                dbExistsCmd.Dispose();
             }
             catch (System.Exception ex)
             {
@@ -384,7 +410,9 @@ namespace AdminPage
                 if (myConn_master.State == System.Data.ConnectionState.Open)
                 {
                     myConn_master.Close();
+                    myConn_master.Dispose();
                 }
+                
             }
             return result;
         }
@@ -401,9 +429,9 @@ namespace AdminPage
         public bool CreateTable(string dbName, string tableName, string sqlCreateTable, SqlConnection myConn)
         {
             bool target = false;
-
+            SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True");
             //dbName = connStr[1];
-            bool dbExists = IfDatabaseExists(dbName, myConn);
+            bool dbExists = IfDatabaseExists(dbName, myConn_master);
             if (dbExists)
             {
                 SqlCommand createTbCmd = new SqlCommand(sqlCreateTable, myConn);
@@ -421,11 +449,14 @@ namespace AdminPage
                             myConn.Open();
                         }
                         createTbCmd.ExecuteNonQuery();
-                        bool tbCreated = IfTableExists(tableName);
+                        target = true;
+                        /*bool tbCreated = IfTableExists(tableName);
                         if (tbCreated)
                         {
                             target = true;
-                        }
+                        }*/
+
+
                     }
 
                 }
@@ -438,7 +469,9 @@ namespace AdminPage
                     if (myConn.State == System.Data.ConnectionState.Open)
                     {
                         myConn.Close();
+                        myConn.Dispose();
                     }
+                    createTbCmd.Dispose();
                 }
 
             }

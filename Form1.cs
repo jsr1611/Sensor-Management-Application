@@ -37,13 +37,13 @@ namespace AdminPage
 
 
 
-        private SqlConnection _myConn;
-        public SqlConnection myConn
-        {
-            get { return _myConn; }
-            set { _myConn = value; }
-        }
+        public SqlConnection myConn{get; set;}
 
+
+        /// <summary>
+        /// SqlConnection.ConnectionString 속성
+        /// </summary>
+        public string sqlConString { get; set; }
 
         private List<int> _IDs;
         public List<int> D_IDs
@@ -140,10 +140,16 @@ namespace AdminPage
             List<List<NumericUpDown>> S_Ranges_p = new List<List<NumericUpDown>>() { pa_Ranges, hPa_Ranges, kPa_Ranges, mmH2O_Ranges, inchH2O_Ranges, mmHg_Ranges, inchHg_Ranges };
 
 
-            myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
-            g_DbTableHandler = new DbTableHandler(new List<string>() { DbServer, DbName, DbUID, DbUID });
+            myConn = new SqlConnection();
+            sqlConString = $@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"; // ; Integrated Security=True ");
+            myConn.ConnectionString = sqlConString;
+    
+            
 
+            g_DbTableHandler = new DbTableHandler(new List<string>() { DbServer, DbName, DbUID, DbUID });
+            
             g_DbTableHandler.MyConn = myConn;
+            g_DbTableHandler.sqlConString = sqlConString;
             g_DbTableHandler.S_DeviceInfoColumns = S_DeviceInfoColumns;
             g_DbTableHandler.S_DeviceTable = this.S_DeviceTable;
             g_DbTableHandler.S_FourRangeColumns = S_FourRangeColumns;
@@ -167,7 +173,7 @@ namespace AdminPage
                     for (int i = 0; i < row.ItemArray.Length; i++)
                     {
                         listViewItem.SubItems.Add(row.ItemArray[i].ToString());
-                        listView1_thp.Columns[i].TextAlign = HorizontalAlignment.Center;
+                        //listView1_thp.Columns[i].TextAlign = HorizontalAlignment.Center;
                     }
                     listView1_thp.Items.Add(listViewItem);
                     num += 1;
@@ -245,6 +251,10 @@ namespace AdminPage
         {
             string IdCheckCmd = $"SELECT {S_DeviceInfoColumns[0]} FROM {DbName}.dbo.{S_DeviceTable} WHERE {S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]}='YES'";
             //Console.WriteLine("Usable sensor IDs:");
+            if (myConn == null || myConn.ConnectionString == String.Empty)
+            {
+                myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
+            }
             SqlCommand sqlCommand = new SqlCommand(IdCheckCmd, myConn);
             try
             {
@@ -259,6 +269,7 @@ namespace AdminPage
                         S_IDs.Add(Convert.ToInt32(sqlDataReader[$"{S_DeviceInfoColumns[0]}"]));
                         //Console.WriteLine(Convert.ToInt32(sqlDataReader["sID"]));
                     }
+                    sqlDataReader.Close();
                 }
             }
             catch (System.Exception ex)
@@ -270,7 +281,9 @@ namespace AdminPage
                 if (myConn.State == ConnectionState.Open)
                 {
                     myConn.Close();
+                    myConn.Dispose();
                 }
+                sqlCommand.Dispose();
             }
             return S_IDs;
         }
@@ -284,7 +297,10 @@ namespace AdminPage
         /// <returns>return true or false </returns>
         private bool GetSensorID(int id)
         {
-
+            if (myConn == null || myConn.ConnectionString == String.Empty)
+            {
+                myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
+            }
             bool idExists = false;
             string sqlStrChecker = $"SELECT {S_DeviceInfoColumns[0]} FROM [{S_DeviceTable}] WHERE {S_DeviceInfoColumns[0]} = {id};";
             using (SqlCommand sqlIdCheckerCmd = new SqlCommand(sqlStrChecker, myConn))
@@ -305,6 +321,7 @@ namespace AdminPage
                                 break;
                             }
                         }
+                        reader.Close();
                     }
                 }
                 catch (System.Exception ex)
@@ -316,7 +333,11 @@ namespace AdminPage
                     if (myConn.State == ConnectionState.Open)
                     {
                         myConn.Close();
+                        myConn.Dispose();
+                        
+                        sqlIdCheckerCmd.Dispose();
                     }
+                    
                 }
 
             }
@@ -335,6 +356,10 @@ namespace AdminPage
         private bool GetSensorID(int id, string tableName)
         {
             bool idExists = false;
+            if (myConn == null || myConn.ConnectionString == String.Empty)
+            {
+                myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
+            }
             string sqlStrChecker = $"SELECT {S_DeviceInfoColumns[0]} FROM {tableName} WHERE {S_DeviceInfoColumns[0]} = {id};";
             using (SqlCommand sqlIdCheckerCmd = new SqlCommand(sqlStrChecker, myConn))
             {
@@ -351,6 +376,7 @@ namespace AdminPage
                             idExists = Convert.ToInt32(reader[$"{S_DeviceInfoColumns[0]}"].ToString()) == id;
                             break;
                         }
+                        reader.Close();
                     }
                 }
                 catch (System.Exception ex)
@@ -362,7 +388,9 @@ namespace AdminPage
                     if (myConn.State == ConnectionState.Open)
                     {
                         myConn.Close();
+                        myConn.Dispose();
                     }
+                    sqlIdCheckerCmd.Dispose();
                 }
             }
             return idExists;
@@ -394,16 +422,45 @@ namespace AdminPage
 
             if (checkDbExists)
             {
+                
                 bool Check_Device_tableExists = g_DbTableHandler.IfTableExists(Devices_tbName);
                 if (Check_Device_tableExists)
                 {
                     string sqlStr = $"SELECT * FROM {Devices_tbName} ORDER BY {S_DeviceInfoColumns[0]}";
-                    using (SqlConnection con = new SqlConnection($@"Data Source = {DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD};Min Pool Size=20"))
-                    { //Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20")) // ; Integrated Security=True
-                      //con.Open();
+                    SqlConnection con = new SqlConnection($@"Data Source = {DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD};Min Pool Size=20");
+                    //Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20")) // ; Integrated Security=True
+                    //con.Open();
+                    try
+                    {
+                        if (con == null || con.ConnectionString == String.Empty)
+                        {
+                            con = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
+                            con.Open();
+                        }
+                        else if (con.State != ConnectionState.Open)
+                        {
+                            con.Open();
+                        }
                         SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlStr, con);
                         sqlDataAdapter.Fill(ds);
+                        sqlDataAdapter.Dispose();
                     }
+                    catch (System.Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        if(con.State == ConnectionState.Open)
+                        {
+                            con.Close();
+                            con.Dispose();
+                        }
+                    }
+                    
+                   
+
+
                 }
                 else
                 {
@@ -618,6 +675,7 @@ namespace AdminPage
         {
             DataSet ds = new DataSet();
             bool idExists = GetSensorID(s_Id);
+            
 
             if (!idExists)
             {
@@ -635,12 +693,14 @@ namespace AdminPage
                         //string sqlStr = $"SELECT * FROM [dbo].[{S_UsageInfo}]; ";
                         try
                         {
-                            if (myConn.State != ConnectionState.Open)
+                            if (myConn == null ||  myConn.ConnectionString == String.Empty || myConn.State != ConnectionState.Open)
                             {
+                                myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20");
                                 myConn.Open();
                             }
                             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlGetRanges, myConn);
                             sqlDataAdapter.Fill(ds);
+                            sqlDataAdapter.Dispose();
                         }
                         catch (System.Exception ex)
                         {
@@ -651,6 +711,7 @@ namespace AdminPage
                             if (myConn.State == ConnectionState.Open)
                             {
                                 myConn.Close();
+                                myConn.Dispose();
                             }
                         }
                     }
@@ -1105,6 +1166,7 @@ namespace AdminPage
                         if (myConn.State == ConnectionState.Open)
                         {
                             myConn.Close();
+                            myConn.Dispose();
                         }
                     }
 
@@ -1163,6 +1225,7 @@ namespace AdminPage
                         if (myConn.State == ConnectionState.Open)
                         {
                             myConn.Close();
+                            myConn.Dispose();
                         }
                     }
                 }
@@ -1195,6 +1258,7 @@ namespace AdminPage
                     if (myConn.State == ConnectionState.Open)
                     {
                         myConn.Close();
+                        myConn.Dispose();
                     }
                 }
             }
@@ -1438,7 +1502,7 @@ namespace AdminPage
             dateTimePicker2.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             string startTime = dateTimePicker1.Value.ToString("yyyy-MM-dd HH:mm:ss");
             string endTime = dateTimePicker2.Value.ToString("yyyy-MM-dd HH:mm:ss");
-            DownToExcel downToExcel = new DownToExcel(tbName: "d_p03Usage", sqlConnection: myConn, (startTime, endTime));
+            DownToExcel downToExcel = new DownToExcel(tbName: "d_p03Usage", sqlConStr: sqlConString, (startTime, endTime));
 
         }
 
