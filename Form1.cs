@@ -1500,9 +1500,13 @@ namespace AdminPage
         {
             dateTimePicker1.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             dateTimePicker2.CustomFormat = "yyyy-MM-dd HH:mm:ss";
+            dateTimePicker2.Value = dateTimePicker2.Value.AddDays(1).AddSeconds(-1);
             string startTime = dateTimePicker1.Value.ToString("yyyy-MM-dd HH:mm:ss");
             string endTime = dateTimePicker2.Value.ToString("yyyy-MM-dd HH:mm:ss");
-            DownToExcel downToExcel = new DownToExcel(tbName: "d_p03Usage", sqlConStr: sqlConString, (startTime, endTime));
+            //DownToExcel downToExcel = new DownToExcel(tbName: "d_p03Usage", sqlConStr: sqlConString, (startTime, endTime));
+
+            List<string> tableNames = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).Select(x=> "d" + x.Substring(1)).ToList();
+            DownToExcel toExcel = new DownToExcel(tbName: tableNames, sqlConString, (startTime, endTime) );
 
         }
 
