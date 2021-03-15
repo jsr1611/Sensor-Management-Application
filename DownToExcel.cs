@@ -127,10 +127,29 @@ namespace AdminPage
                     ws[a].Cells[1, 2].value = tbName[a];
                     ws[a].Cells[1, 3].value = "DateAndTime";
 
-                    ws[a].Range[ws[a].Cells[2, 1], ws[a].Cells[dt.Rows.Count + 1, dt.Columns.Count]].value = data;
-                    
-                
 
+                    if(ws[a].Name.Contains("tUsage") || ws[a].Name.Contains("hUsage"))
+                    {
+                        ws[a].Columns[1].NumberFormat = "0.00";
+                    }
+                    else
+                    {
+                        ws[a].Columns[1].NumberFormat = "#,##0";
+                    }
+                    
+                    ws[a].Columns[2].NumberFormat = "yyyy - MM - dd HH: mm: ss.SSS";
+
+/*                    var rngCelStr1 = (Excel.Range)ws[a].Cells[1];
+                    var rng1 = rngCelStr1.EntireColumn;
+                    rng1.NumberFormat = "0";
+
+                    var rngCelStr2 = (Excel.Range)ws[a].Cells[2];
+                    var rng2 = rngCelStr2.EntireColumn;
+                    rng2.NumberFormat = "yyyy-MM-dd HH:mm:ss.SSS";
+*/                    
+
+
+                    ws[a].Range[ws[a].Cells[2, 1], ws[a].Cells[dt.Rows.Count + 1, dt.Columns.Count]].value = data;
 
                 //ws[a].SaveAs(path);
                 }
