@@ -20,20 +20,8 @@ namespace AdminPage
         public string S_DeviceTable = ""; // Devices
         public string S_UsageTable = ""; // SensorUsage
 
-        private List<string> _deviceInfoColmn;
-        public List<string> S_DeviceInfoColumns
-        {
-            get { return _deviceInfoColmn; }
-            set { _deviceInfoColmn = value; }
-        }
-
-
-        private List<string> _fourRangeColmn;
-        public List<string> S_FourRangeColumns
-        {
-            get { return _fourRangeColmn; }
-            set { _fourRangeColmn = value; }
-        }
+        public List<string> S_DeviceInfoColumns { get; set; }
+        public List<string> S_FourRangeColumns { get; set; }
 
 
 
@@ -44,26 +32,15 @@ namespace AdminPage
         /// SqlConnection.ConnectionString 속성
         /// </summary>
         public string sqlConString { get; set; }
-
-        private List<int> _IDs;
-        public List<int> D_IDs
-        {
-            get { return _IDs; }
-            set { _IDs = value; }
-        }
+        public List<int> D_IDs { get; set; }
 
         public Int64 dataCount { get; set; }
         public DateTime startTime { get; set; }
 
-        private List<TextBox> _SensorDeviceInfo;
         /// <summary>
         /// (온습도 및 파티클 관련함)sName, sLocation, sDescription 들이 들어가 있음.
         /// </summary>
-        public List<TextBox> S_DeviceInfo_txtB
-        {
-            get { return _SensorDeviceInfo; }
-            set { _SensorDeviceInfo = value; }
-        }
+        public List<TextBox> S_DeviceInfo_txtB { get; set; }
 
 
         /// <summary>
@@ -106,6 +83,8 @@ namespace AdminPage
             pTrackerTimer.Start();
             //applicationProcess = GetAppProcess(DataCollectionAppName);
 
+            dateTimePicker1.Value = DateTime.Now;
+            dateTimePicker2.Value = DateTime.Now;
 
 
             S_DeviceInfo_txtB = new List<TextBox>() { sName, sZone, sLocation, sDescription };
@@ -1021,7 +1000,8 @@ namespace AdminPage
         private bool AddToDB(string g_sensorUsage)
         {
 
-            //SqlConnection myConn = new SqlConnection($@"Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD};Min Pool Size=20");
+            SqlConnection myConn = new SqlConnection();
+            myConn.ConnectionString = sqlConString;
             bool result = false;
 
             bool dbExists = g_DbTableHandler.IfDatabaseExists(DbName);
@@ -1101,19 +1081,21 @@ namespace AdminPage
                                 {
                                     if (myConn.State != ConnectionState.Open)
                                     {
+                                        myConn.ConnectionString = sqlConString;
                                         myConn.Open();
                                     }
                                     InsertCmd.ExecuteNonQuery();
 
-                                    using (SqlDataReader reader = sqlUpdateCheck.ExecuteReader())
+                                    /*using (SqlDataReader reader = sqlUpdateCheck.ExecuteReader())
                                     {
                                         while (reader.Read())
-                                        {
-                                            result_for_checked[i] = Convert.ToInt32(reader.GetValue(0)) == 1;
-                                        }
-                                    }
-
+                                        {*/
+                                    result_for_checked[i] = true;
+                                    /*                                  break;
+                                     *                                  }
+                                                                        }*/
                                     break;
+
                                 }
                                 else
                                 {
@@ -1143,17 +1125,18 @@ namespace AdminPage
                             {
                                 if (myConn.State != ConnectionState.Open)
                                 {
+                                    myConn.ConnectionString = sqlConString;
                                     myConn.Open();
                                 }
                                 InsertCmd.ExecuteNonQuery();
 
-                                using (SqlDataReader reader = sqlUpdateCheck.ExecuteReader())
+                                /*using (SqlDataReader reader = sqlUpdateCheck.ExecuteReader())
                                 {
                                     while (reader.Read())
-                                    {
-                                        result_for_checked[i] = Convert.ToInt32(reader.GetValue(0)) == 1;
-                                    }
-                                }
+                                    {*/
+                                result_for_checked[i] = true; //Convert.ToInt32(reader.GetValue(0)) == 1;
+                                    /*}
+                                }*/
                             }
                         }
                     }
@@ -1206,15 +1189,10 @@ namespace AdminPage
                     {
                         if (myConn.State != ConnectionState.Open)
                         {
+                            myConn.ConnectionString = sqlConString;
                             myConn.Open();
                         }
-
-
-
-
                         sqlInsertUsageCmd.ExecuteNonQuery();
-
-
                     }
                     catch (System.Exception ex)
                     {
@@ -1244,6 +1222,7 @@ namespace AdminPage
                 {
                     if (myConn.State != ConnectionState.Open)
                     {
+                        myConn.ConnectionString = sqlConString;
                         myConn.Open();
                     }
                     sqlCommand.ExecuteNonQuery();

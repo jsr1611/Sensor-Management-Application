@@ -14,7 +14,7 @@ namespace AdminPage
     /// </summary>
     public class DbTableHandler
     {
-        public List<CheckBox> UsageCheckers { get => usageCheckers; set => usageCheckers = value; }
+        public List<CheckBox> UsageCheckers { get; set; }
         public string DbServer { get => dbServer; set => dbServer = value; }
         public string DbName { get => dbName; set => dbName = value; }
         public string DbUID { get => dbUID; set => dbUID = value; }
@@ -25,52 +25,17 @@ namespace AdminPage
             DbPWD = dbPWD;
         }
 
-        private string _DeviceTable;
-        public string S_DeviceTable
-        {
-            get { return _DeviceTable; }
-            set { _DeviceTable = value; }
-        }
-        private List<string> _DeviceInfoColmn;
-        public List<string> S_DeviceInfoColumns
-        {
-            get { return _DeviceInfoColmn; }
-            set { _DeviceInfoColmn = value; }
-        }
+        public string S_DeviceTable { get; set; }
+        public List<string> S_DeviceInfoColumns { get; set; }
+        public List<string> S_FourRangeColumns { get; set; }
 
+        public SqlConnection MyConn { get; set; }
 
-
-        private List<string> _fourRangeColmn;
-        public List<string> S_FourRangeColumns
-        {
-            get { return _fourRangeColmn; }
-            set { _fourRangeColmn = value; }
-        }
-
-
-        private SqlConnection _myConn;
-
-        public SqlConnection MyConn
-        {
-            get { return _myConn; }
-            set { _myConn = value; }
-        }
-
-
-        /// <summary>
-        /// (0) dbServer, (1) dbName, (2) dbUID, (3) dbUID
-        /// </summary>
-        private List<string> _conStr;
-        private List<CheckBox> usageCheckers;
         private string dbServer;
         private string dbName;
         private string dbUID;
 
-        public List<string> ConnStr
-        {
-            get { return _conStr; }
-            set { _conStr = value; }
-        }
+        public List<string> ConnStr { get; set; }
 
         public string sqlConString { get; internal set; }
 
@@ -450,13 +415,6 @@ namespace AdminPage
                         }
                         createTbCmd.ExecuteNonQuery();
                         target = true;
-                        /*bool tbCreated = IfTableExists(tableName);
-                        if (tbCreated)
-                        {
-                            target = true;
-                        }*/
-
-
                     }
 
                 }
@@ -511,7 +469,9 @@ namespace AdminPage
                 if (myConn_master.State == System.Data.ConnectionState.Open)
                 {
                     myConn_master.Close();
+                    myConn_master.Dispose();
                 }
+                dbCreateCmd.Dispose();
             }
 
             return res;
@@ -525,7 +485,8 @@ namespace AdminPage
             //string checkBoxName = targetCheckBoxName;
             bool target = false;
             string dbCheckCmdStr;
-            SqlConnection myConn = new SqlConnection($@"Data Source ={ ConnStr[0] }; Initial Catalog = { ConnStr[1] }; User id = { ConnStr[2] }; Password ={ ConnStr[3]}; Min Pool Size = 20");
+            SqlConnection myConn = new SqlConnection();
+            myConn.ConnectionString = sqlConString;
             dbCheckCmdStr = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'{tableName}';";
             SqlCommand tbCheckCmd = new SqlCommand(dbCheckCmdStr, myConn);
 
@@ -557,6 +518,7 @@ namespace AdminPage
                 if (myConn.State == System.Data.ConnectionState.Open)
                 {
                     myConn.Close();
+                    myConn.Dispose();
                 }
             }
             return target;
@@ -568,6 +530,8 @@ namespace AdminPage
         public bool UpdateDeviceInfoTable(SqlConnection myConn, string tableName, int deviceId, int deviceIdNew, List<TextBox> txtB_DeviceInfo, bool sUsage)
         {
             bool updSuccessful = false;
+            myConn = new SqlConnection();
+            myConn.ConnectionString = sqlConString;
             string sensorUsage = sUsage ? "YES" : "NO";
             string sqlUpdStr;
             string sqlCheckStr;
@@ -641,14 +605,19 @@ namespace AdminPage
                 if (myConn.State == ConnectionState.Open)
                 {
                     myConn.Close();
+                    myConn.Dispose();
                 }
             }
             return updSuccessful;
         }
 
 
+
+
         public bool UpdateLimitRangeInfo(int deviceId, int deviceIdNew, CheckBox targetCheckBox, List<NumericUpDown> rangeInfoList, SqlConnection myConn)
         {
+            myConn = new SqlConnection();
+            myConn.ConnectionString = sqlConString;
             bool updSuccessful = false;
             //deviceId = Convert.ToInt32(sID);
             string tableName = targetCheckBox.Name;
@@ -749,6 +718,7 @@ namespace AdminPage
                 if (myConn.State == System.Data.ConnectionState.Open)
                 {
                     myConn.Close();
+                    myConn.Dispose();
                 }
             }
             return updSuccessful;
@@ -761,9 +731,15 @@ namespace AdminPage
             return target;
         }
 
+
+
+
+
         public bool UpdateUsageTable(SqlConnection myConn, string UsageTable, List<string> usageTableColmn, int deviceIdOld, int deviceIdNew, List<string> usageInfo)
         {
             //Check if ID exists
+            myConn = new SqlConnection();
+            myConn.ConnectionString = sqlConString;
             string sqlCheckNoData = "";
             string sqlInsert = "";
             bool dataExists = false;
@@ -872,6 +848,7 @@ namespace AdminPage
                 if (myConn.State == System.Data.ConnectionState.Open)
                 {
                     myConn.Close();
+                    myConn.Dispose();
                 }
             }
             return updSuccessful;

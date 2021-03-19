@@ -72,28 +72,32 @@ namespace AdminPage
             DataSet ds = new DataSet();
             SqlDataAdapter da;
 
+            
 
             for (int k = 0; k < tbName.Count; k++)
             {
                 ws[k] = wb.Worksheets.Add();
                 ws[k].Name = tbName[k];
                 tableName = tbName[k];
-                sqlselect = $"SELECT * FROM {tableName} WHERE dateandtime >= '{startEndTime.Item1}' and dateandtime <= '{startEndTime.Item2}' ORDER BY dateandtime;";
+                sqlselect = $"SELECT TOP 100 * FROM {tableName} WHERE dateandtime >= '{startEndTime.Item1}' and dateandtime <= '{startEndTime.Item2}' ORDER BY dateandtime DESC;";
                 SqlCommand cmd = new SqlCommand(sqlselect, myConn);
                 da = new SqlDataAdapter(cmd);
                 da.Fill(ds, tableName);
             }
+
+/*
+            foreach (Excel.Worksheet sheet in wb.Worksheets)
+            {
+                if (sheet.UsedRange.Count < 2)
+                {
+                    sheet.Delete();
+                }
+            }
+*/
+
+
             try
             {
-               /*
-                
-                for (int k=0; k < tbName.Count; k++)
-                {
-                    ws[k] = wb.Worksheets.Add();
-                    ws[k].Name = tbName[k];
-
-                }*/
-                //wb.Worksheets.Add(ws, ws1, ws1.Length);
                 Console.WriteLine(wb.Sheets.Count);
 
                 if (File.Exists(path))
@@ -101,11 +105,11 @@ namespace AdminPage
                     File.Delete(path);
                 }
 
-                for (int a = 0; a < tbName.Count; a++)
+                for (int index = 0; index < tbName.Count; index++)
                 {
                     
-                    System.Data.DataTable dt = ds.Tables[a];
-                    if(dt.Rows.Count ==0)
+                    System.Data.DataTable dt = ds.Tables[index];
+                    if(dt.Rows.Count == 0)
                     {
                         continue;
                     }
@@ -122,22 +126,22 @@ namespace AdminPage
                         i++;
                     }
 
-
-                    ws[a].Cells[1, 1].value = "ID";
-                    ws[a].Cells[1, 2].value = tbName[a];
-                    ws[a].Cells[1, 3].value = "DateAndTime";
-
-
-                    if(ws[a].Name.Contains("tUsage") || ws[a].Name.Contains("hUsage"))
+                    if (ws[index].Name.Contains("tUsage") || ws[index].Name.Contains("hUsage"))
                     {
-                        ws[a].Columns[1].NumberFormat = "0.00";
+                        ws[index].Columns[1].NumberFormat = "0.00";
                     }
                     else
                     {
-                        ws[a].Columns[1].NumberFormat = "#,##0";
+                        ws[index].Columns[1].NumberFormat = "#,##0.00";
                     }
-                    
-                    ws[a].Columns[2].NumberFormat = "yyyy - MM - dd HH: mm: ss.SSS";
+
+                    //ws[index].Columns[2].NumberFormat = "yyyy - MM - dd HH: mm: ss.SSS";
+
+                    ws[index].Cells[1, 1].value = "ID";
+                    ws[index].Cells[1, 2].value = tbName[index];
+                    ws[index].Cells[1, 3].value = "DateAndTime";
+
+
 
 /*                    var rngCelStr1 = (Excel.Range)ws[a].Cells[1];
                     var rng1 = rngCelStr1.EntireColumn;
@@ -149,9 +153,30 @@ namespace AdminPage
 */                    
 
 
-                    ws[a].Range[ws[a].Cells[2, 1], ws[a].Cells[dt.Rows.Count + 1, dt.Columns.Count]].value = data;
+                    ws[index].Range[ws[index].Cells[2, 1], ws[index].Cells[dt.Rows.Count + 1, dt.Columns.Count]].value = data;
 
-                //ws[a].SaveAs(path);
+
+                    //Excel.Range rangeofVals0 = ws[index].Cells[0];
+                    //rangeofVals0.EntireColumn.NumberFormat = "#0";
+
+                    if (ws[index].Name.Contains("tUsage") || ws[index].Name.Contains("hUsage"))
+                    {
+                        //ws[index].Columns[1].NumberFormat = "0.00";
+                        Excel.Range rangeofVals = ws[index].Cells[1];
+                        rangeofVals.EntireColumn.NumberFormat = "#0";
+                    }
+                    else
+                    {
+                        //ws[index].Columns[1].NumberFormat = "#,##0.00";
+                        Excel.Range rangeofVals2 = ws[index].Cells[1];
+                        rangeofVals2.EntireColumn.NumberFormat = "#,##0";
+                    }
+
+                    Excel.Range rangeofVals3 = ws[index].Cells[2];
+                    rangeofVals3.EntireColumn.NumberFormat = "#,##0";
+                    //ws[index].Columns[2].NumberFormat = "yyyy - MM - dd HH: mm: ss.SSS";
+
+                    //ws[a].SaveAs(path);
                 }
                 excel.Columns.AutoFit();
                 excel.Rows.AutoFit();
@@ -163,7 +188,7 @@ namespace AdminPage
 
                 MessageBox.Show($"Exporting SQL data to Excel was successful.\nElapsed time: {stopwatch.Elapsed}", "Finished", MessageBoxButtons.OK);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
             }
