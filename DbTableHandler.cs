@@ -307,49 +307,31 @@ namespace AdminPage
 
         public bool IfDatabaseExists(string dbName)
         {
-            SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True");
-            //($@"Data Source = {DbServer};Initial Catalog=master;User id={DbUID};Password={DbPWD};Min Pool Size=20");
             bool result = false;
             string sql_dbExists = $"IF DB_ID('{dbName}') IS NOT NULL SELECT 1";
-            SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn_master);
-            DataSet ds = new DataSet();
-            try
-            {
 
+            using (SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True"))
+            {
+                //($@"Data Source = {DbServer};Initial Catalog=master;User id={DbUID};Password={DbPWD};Min Pool Size=20");
                 if (myConn_master.State != ConnectionState.Open)
                 {
                     myConn_master.Open();
                 }
-                SqlDataAdapter sqlData = new SqlDataAdapter(sql_dbExists, myConn_master);
+                using (SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn_master))
+                {
 
-                sqlData.Fill(ds);
-                if (ds.Tables.Count > 0)
-                {
-                    result = true;
-                }
-                /*using (SqlDataReader reader = dbExistsCmd.ExecuteReader())
-                {
-                    while (reader.Read())
+                    using (SqlDataAdapter sqlData = new SqlDataAdapter(sql_dbExists, myConn_master))
                     {
-                        res = Convert.ToInt32(reader.GetValue(0)) == 1;
+                        using (DataSet ds = new DataSet())
+                        {
+                            sqlData.Fill(ds);
+                            if (ds.Tables.Count > 0)
+                            {
+                                result = true;
+                            }
+                        }
                     }
-                }*/
-
-                sqlData.Dispose();
-                dbExistsCmd.Dispose();
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                if (myConn_master.State == System.Data.ConnectionState.Open)
-                {
-                    myConn_master.Close();
-                    myConn_master.Dispose();
                 }
-
             }
             return result;
         }
@@ -363,7 +345,7 @@ namespace AdminPage
         /// <param name="sqlCreateTable">테이블 생성을 위한 SQL쿼리 </param>
         /// <param name="myConn">SqlConnection명</param>
         /// <returns></returns>
-        public bool CreateTable(string dbName, string tableName, string sqlCreateTable, SqlConnection myConn)
+        public bool CreateTable(string dbName, string tableName, string sqlCreateTable)
         {
             bool target = false;
             SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True");
@@ -374,7 +356,7 @@ namespace AdminPage
                 using (SqlConnection con = new SqlConnection())
                 {
                     con.ConnectionString = sqlConString;
-                    if(con.State != ConnectionState.Open)
+                    if (con.State != ConnectionState.Open)
                     {
                         con.Open();
                     }
@@ -406,34 +388,23 @@ namespace AdminPage
 
         public bool CreateDatabase(string dbName, string sqlStr_CreateDb)
         {
-            SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True");
             bool res = false;
-            SqlCommand dbCreateCmd = new SqlCommand(sqlStr_CreateDb, myConn_master);
-            try
+            res = IfDatabaseExists(dbName);
+            if (!res)
             {
-                if (myConn_master.State != ConnectionState.Open)
+                using (SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True"))
                 {
-                    myConn_master.Open();
+                    if (myConn_master.State != ConnectionState.Open)
+                    {
+                        myConn_master.Open();
+                    }
+                    using (SqlCommand dbCreateCmd = new SqlCommand(sqlStr_CreateDb, myConn_master))
+                    {
+                        dbCreateCmd.ExecuteNonQuery();
+                        res = true;
+                    }
                 }
-
-                dbCreateCmd.ExecuteNonQuery();
-
-                res = IfDatabaseExists(dbName, myConn_master);
             }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            finally
-            {
-                if (myConn_master.State == System.Data.ConnectionState.Open)
-                {
-                    myConn_master.Close();
-                    myConn_master.Dispose();
-                }
-                dbCreateCmd.Dispose();
-            }
-
             return res;
 
         }

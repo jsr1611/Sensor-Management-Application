@@ -341,41 +341,32 @@ namespace AdminPage
         private bool GetSensorID(int id, string tableName)
         {
             bool idExists = false;
-            if (myConn == null || myConn.ConnectionString == String.Empty)
-            {
-                myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
-            }
             string sqlStrChecker = $"SELECT {S_DeviceInfoColumns[0]} FROM {tableName} WHERE {S_DeviceInfoColumns[0]} = {id};";
-            using (SqlCommand sqlIdCheckerCmd = new SqlCommand(sqlStrChecker, myConn))
+
+            using (SqlConnection myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"))
             {
-                try
+                if (myConn.State != ConnectionState.Open)
                 {
-                    if (myConn.State != ConnectionState.Open)
+                    myConn.Open();
+                }
+                using (SqlCommand sqlIdCheckerCmd = new SqlCommand(sqlStrChecker, myConn))
+                {
+                    try
                     {
-                        myConn.Open();
-                    }
-                    using (SqlDataReader reader = sqlIdCheckerCmd.ExecuteReader())
-                    {
-                        while (reader.Read())
+                        using (SqlDataReader reader = sqlIdCheckerCmd.ExecuteReader())
                         {
-                            idExists = Convert.ToInt32(reader[$"{S_DeviceInfoColumns[0]}"].ToString()) == id;
-                            break;
+                            while (reader.Read())
+                            {
+                                idExists = Convert.ToInt32(reader[$"{S_DeviceInfoColumns[0]}"].ToString()) == id;
+                                break;
+                            }
+                            reader.Close();
                         }
-                        reader.Close();
                     }
-                }
-                catch (System.Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    if (myConn.State == ConnectionState.Open)
+                    catch (System.Exception ex)
                     {
-                        myConn.Close();
-                        myConn.Dispose();
+                        MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    sqlIdCheckerCmd.Dispose();
                 }
             }
             return idExists;
@@ -403,89 +394,49 @@ namespace AdminPage
             }
             sqlCreateDeviceTb += $",{S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} NVARCHAR(20) NOT NULL, INDEX IX_{S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} NONCLUSTERED({S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]})); ";
 
-
-
             if (checkDbExists)
             {
-
                 bool Check_Device_tableExists = g_DbTableHandler.IfTableExists(Devices_tbName);
                 if (Check_Device_tableExists)
                 {
                     string sqlStr = $"SELECT * FROM {Devices_tbName} ORDER BY {S_DeviceInfoColumns[0]}";
-                    SqlConnection con = new SqlConnection($@"Data Source = {DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD};Min Pool Size=20");
-                    //Data Source={dbServer};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20")) // ; Integrated Security=True
-                    //con.Open();
-                    try
+                    using (SqlConnection con = new SqlConnection($@"Data Source = {DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD};Min Pool Size=20"))
                     {
-                        if (con == null || con.ConnectionString == String.Empty)
+                        try
                         {
-                            con = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
-                            con.Open();
+                            if (con.State != ConnectionState.Open)
+                            {
+                                con.Open();
+                            }
+                            using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlStr, con))
+                            {
+                                sqlDataAdapter.Fill(ds);
+                            }
                         }
-                        else if (con.State != ConnectionState.Open)
+                        catch (System.Exception ex)
                         {
-                            con.Open();
-                        }
-                        SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlStr, con);
-                        sqlDataAdapter.Fill(ds);
-                        sqlDataAdapter.Dispose();
-                    }
-                    catch (System.Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-                        if (con.State == ConnectionState.Open)
-                        {
-                            con.Close();
-                            con.Dispose();
+                            MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-
-
-
-
                 }
                 else
                 {
-                    /*DialogResult createTbOrNot = MessageBox.Show($"센서 정보 테이블을 생성합니다. \nDB명은 {dbName}, \n센서정보 테이블명 = {sensorInfo_tbName}. \n진행하시겠습니까?", "Status Info", MessageBoxButtons.YesNo);
-                    if (createTbOrNot == DialogResult.Yes)
-                    {*/
-
-                    bool Device_tableCreated = g_DbTableHandler.CreateTable(DbName, Devices_tbName, sqlCreateDeviceTb, myConn);
-                    if (Device_tableCreated)
-                    {
-                        //MessageBox.Show($"센서 정보 DB와 테이블이 성공적으로 생성되었습니다!\nDB명 = {dbName}\n센서 정보 테이블명 = {sensorInfo_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
+                    bool Device_tableCreated = g_DbTableHandler.CreateTable(DbName, Devices_tbName, sqlCreateDeviceTb);
+                    if (!Device_tableCreated)
                     {
                         MessageBox.Show($"DB가 생성되었지만, 센서 정보 테이블이 성공적으로 생성되지 않았습니다!\nDB명 = {DbName}\n센서 정보 테이블명 = {Devices_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-                    /*                    }
-                                        else
-                                        {
-                                            MessageBox.Show("센서 정보 테이블이 생성되어 있지 않습니다.", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                        }*/
                 }
             }
             else
             {
-                /*DialogResult createTbOrNot = MessageBox.Show($"관리페이지에 오신 것을 환영합니다. \n센서 정보 DB와 테이블을 생성합니다. \nDB명은 {dbName}, \n센서정보 테이블명 = {sensorInfo_tbName}. \n진행하시겠습니까?", "Status Info", MessageBoxButtons.YesNo);
-                if (createTbOrNot == DialogResult.Yes)
-                {*/
                 string sqlCreateDb = $@"CREATE DATABASE {DbName};";
 
                 bool dataBase_Created = g_DbTableHandler.CreateDatabase(DbName, sqlCreateDb);
                 if (dataBase_Created)
                 {
-
-                    bool Device_tableCreated = g_DbTableHandler.CreateTable(DbName, Devices_tbName, sqlCreateDeviceTb, myConn);
-                    if (Device_tableCreated)
-                    {
-                        //MessageBox.Show($"센서 정보 DB와 테이블이 성공적으로 생성되었습니다!\nDB명 = {dbName}\n센서 정보 테이블명 = {sensorInfo_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
+                    bool Device_tableCreated = g_DbTableHandler.CreateTable(DbName, Devices_tbName, sqlCreateDeviceTb);
+                    if (!Device_tableCreated)
                     {
                         MessageBox.Show($"DB가 생성되었지만, 센서 정보 테이블이 성공적으로 생성되지 않았습니다!\nDB명 = {DbName}\n센서 정보 테이블명 = {Devices_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
@@ -494,11 +445,6 @@ namespace AdminPage
                 {
                     MessageBox.Show($"센서 정보 DB가 성공적으로 생성되지 않았습니다!\nDB명 = {DbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                /*}
-                else
-                {
-                    MessageBox.Show("센서 정보 DB가 생성되어 있지 않습니다.", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }*/
             }
             return ds;
         }
@@ -1064,7 +1010,7 @@ namespace AdminPage
                     using (SqlConnection con = new SqlConnection())
                     {
                         con.ConnectionString = sqlConString;
-                        if(con.State != ConnectionState.Open)
+                        if (con.State != ConnectionState.Open)
                         {
                             con.Open();
                         }
@@ -1077,7 +1023,7 @@ namespace AdminPage
                             }
                             else
                             {                   // table이 존재하지 않는다면 CreateTable를 통해 테이블 생성한 후 Insert함
-                                bool tbCreated = g_DbTableHandler.CreateTable(DbName, sRangeTable, sqlCreateTb, myConn);
+                                bool tbCreated = g_DbTableHandler.CreateTable(DbName, sRangeTable, sqlCreateTb);
 
                                 if (tbCreated)
                                 {
@@ -1105,7 +1051,7 @@ namespace AdminPage
                     }
 
                     sqlCreateUsageTb += " );";
-                    tbExists = g_DbTableHandler.CreateTable(DbName, S_UsageTable, sqlCreateUsageTb, myConn);
+                    tbExists = g_DbTableHandler.CreateTable(DbName, S_UsageTable, sqlCreateUsageTb);
                 }
                 if (tbExists)
                 {
