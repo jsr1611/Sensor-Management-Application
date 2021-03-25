@@ -25,7 +25,7 @@ namespace AdminPage
 
 
 
-        public SqlConnection myConn{get; set;}
+        public SqlConnection myConn { get; set; }
 
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace AdminPage
 
             DbServer = "localhost\\SQLEXPRESS";//"127.0.0.1";    //"10.1.55.174"; 
             //Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;
-            DbName = "SensorDataNewDB";
+            DbName = "SensorData2";
             DbUID = "admin";
             DbPWD = "admin";
 
@@ -93,19 +93,25 @@ namespace AdminPage
             S_FourRangeColumns = new List<string>() { "higherLimit2", "higherLimit1", "lowerLimit1", "lowerLimit2" };
 
 
-            List<CheckBox> S_UsageCheckers = new List<CheckBox>() { c_tUsage, c_hUsage, c_p03Usage, c_p05Usage, c_p10Usage, c_p25Usage, c_p50Usage, c_p100Usage };
+
+            // 온습도 및 파티클 센서 정보
+            List<CheckBox> S_UsageCheckers = new List<CheckBox>() { c_tUsage, c_hUsage, c_p01Usage, c_p03Usage, c_p05Usage, c_p10Usage, c_p30Usage, c_p50Usage, c_p100Usage, c_p250Usage };
+
             List<NumericUpDown> t_Ranges = new List<NumericUpDown>() { s_tHigherLimit2, s_tHigherLimit1, s_tLowerLimit1, s_tLowerLimit2 };
             List<NumericUpDown> h_Ranges = new List<NumericUpDown>() { s_hHigherLimit2, s_hHigherLimit1, s_hLowerLimit1, s_hLowerLimit2 };
+            List<NumericUpDown> p01_Ranges = new List<NumericUpDown>() { s_p01HigherLimit2, s_p01HigherLimit1, s_p01LowerLimit1, s_p01LowerLimit2 };
             List<NumericUpDown> p03_Ranges = new List<NumericUpDown>() { s_p03HigherLimit2, s_p03HigherLimit1, s_p03LowerLimit1, s_p03LowerLimit2 };
             List<NumericUpDown> p05_Ranges = new List<NumericUpDown>() { s_p05HigherLimit2, s_p05HigherLimit1, s_p05LowerLimit1, s_p05LowerLimit2 };
             List<NumericUpDown> p10_Ranges = new List<NumericUpDown>() { s_p10HigherLimit2, s_p10HigherLimit1, s_p10LowerLimit1, s_p10LowerLimit2 };
-            List<NumericUpDown> p25_Ranges = new List<NumericUpDown>() { s_p25HigherLimit2, s_p25HigherLimit1, s_p25LowerLimit1, s_p25LowerLimit2 };
+            List<NumericUpDown> p30_Ranges = new List<NumericUpDown>() { s_p30HigherLimit2, s_p30HigherLimit1, s_p30LowerLimit1, s_p30LowerLimit2 };
             List<NumericUpDown> p50_Ranges = new List<NumericUpDown>() { s_p50HigherLimit2, s_p50HigherLimit1, s_p50LowerLimit1, s_p50LowerLimit2 };
             List<NumericUpDown> p100_Ranges = new List<NumericUpDown>() { s_p100HigherLimit2, s_p100HigherLimit1, s_p100LowerLimit1, s_p100LowerLimit2 };
+            List<NumericUpDown> p250_Ranges = new List<NumericUpDown>() { s_p250HigherLimit2, s_p250HigherLimit1, s_p250LowerLimit1, s_p250LowerLimit2 };
 
-            List<List<NumericUpDown>> S_Ranges = new List<List<NumericUpDown>>() { t_Ranges, h_Ranges, p03_Ranges, p05_Ranges, p10_Ranges, p25_Ranges, p50_Ranges, p100_Ranges };
+            List<List<NumericUpDown>> S_Ranges = new List<List<NumericUpDown>>() { t_Ranges, h_Ranges, p01_Ranges, p03_Ranges, p05_Ranges, p10_Ranges, p30_Ranges, p50_Ranges, p100_Ranges, p250_Ranges };
 
 
+            // 차압 센서 정보
             List<CheckBox> S_UsageCheckers_p = new List<CheckBox>() { c_paUsage, c_hpaUsage, c_kpaUsage, c_mmh2oUsage, c_inchh2oUsage, c_mmhgUsage, c_inchhgUsage };
 
             List<NumericUpDown> pa_Ranges = new List<NumericUpDown>() { s_paHigherLimit2, s_paHigherLimit1, s_paLowerLimit1, s_paLowerLimit2 };
@@ -122,11 +128,11 @@ namespace AdminPage
             myConn = new SqlConnection();
             sqlConString = $@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"; // ; Integrated Security=True ");
             myConn.ConnectionString = sqlConString;
-    
-            
+
+
 
             g_DbTableHandler = new DbTableHandler(new List<string>() { DbServer, DbName, DbUID, DbUID });
-            
+
             g_DbTableHandler.MyConn = myConn;
             g_DbTableHandler.sqlConString = sqlConString;
             g_DbTableHandler.S_DeviceInfoColumns = S_DeviceInfoColumns;
@@ -313,10 +319,10 @@ namespace AdminPage
                     {
                         myConn.Close();
                         myConn.Dispose();
-                        
+
                         sqlIdCheckerCmd.Dispose();
                     }
-                    
+
                 }
 
             }
@@ -401,7 +407,7 @@ namespace AdminPage
 
             if (checkDbExists)
             {
-                
+
                 bool Check_Device_tableExists = g_DbTableHandler.IfTableExists(Devices_tbName);
                 if (Check_Device_tableExists)
                 {
@@ -430,14 +436,14 @@ namespace AdminPage
                     }
                     finally
                     {
-                        if(con.State == ConnectionState.Open)
+                        if (con.State == ConnectionState.Open)
                         {
                             con.Close();
                             con.Dispose();
                         }
                     }
-                    
-                   
+
+
 
 
                 }
@@ -654,7 +660,7 @@ namespace AdminPage
         {
             DataSet ds = new DataSet();
             bool idExists = GetSensorID(s_Id);
-            
+
 
             if (!idExists)
             {
@@ -672,7 +678,7 @@ namespace AdminPage
                         //string sqlStr = $"SELECT * FROM [dbo].[{S_UsageInfo}]; ";
                         try
                         {
-                            if (myConn == null ||  myConn.ConnectionString == String.Empty || myConn.State != ConnectionState.Open)
+                            if (myConn == null || myConn.ConnectionString == String.Empty || myConn.State != ConnectionState.Open)
                             {
                                 myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20");
                                 myConn.Open();
@@ -916,7 +922,7 @@ namespace AdminPage
                 UsageCheckerRangePairs = S_UsageCheckerRangePairs;
 
             }
-            else if(tabControl1.SelectedTab == tabPage2)
+            else if (tabControl1.SelectedTab == tabPage2)
             {
                 sID_txtB = sID_p;
                 sDeviceInfo_txtB = S_DeviceInfo_txtB_p;
@@ -939,8 +945,8 @@ namespace AdminPage
                 MessageBox.Show("DB에 이미 존재하는 센서 장비 ID입니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
-            {   
-                
+            {
+
                 List<CheckBox> S_UsageCheckersChecked = UsageCheckerRangePairs.Keys.AsEnumerable().Where(r => r.Checked).ToList();
 
                 List<CheckBox> S_UsageCheckers = UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
@@ -960,9 +966,9 @@ namespace AdminPage
                     for (int i = 0; i < targetChBoxes.Count; i++)
                     {
                         //List<CheckBox> target = S_UsageCheckerRangePairs.Keys.AsEnumerable().Where(r => r.Name == targetTbNames[i]).ToList();
-                        
+
                         result_UPD = g_DbTableHandler.UpdateLimitRangeInfo(deviceIdOld, deviceIdNew, targetChBoxes[i], UsageCheckerRangePairs[targetChBoxes[i]], myConn);
-                        
+
                         if (!result_UPD)
                         {
                             i = targetChBoxes.Count;
@@ -1023,7 +1029,7 @@ namespace AdminPage
                 List<CheckBox> sRangeTablesAll = UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
                 List<string> sUsageResults = UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Checked ? "YES" : "NO").ToList();
 
-                
+
 
                 bool[] result_for_checked = new bool[sRangeTablesAll.Count];
 
@@ -1046,113 +1052,41 @@ namespace AdminPage
                                 $" CONSTRAINT PK_{sRangeTable}_{S_DeviceInfoColumns[0]} PRIMARY KEY ({S_DeviceInfoColumns[0]}))";
 
 
+                    string sqlUPDorINSERT = $"IF EXISTS ( SELECT * FROM {sRangeTable} WHERE {S_DeviceInfoColumns[0]} = { sensorId}) " +
+                        $" UPDATE {sRangeTable}  " +
+                        $" SET {S_FourRangeColumns[0]} = { sFourRangeTbVals[0]}, {S_FourRangeColumns[1]} = { sFourRangeTbVals[1]}, " +
+                        $" {S_FourRangeColumns[2]} = { sFourRangeTbVals[2]}, {S_FourRangeColumns[3]} = { sFourRangeTbVals[3]} WHERE {S_DeviceInfoColumns[0]} = { sensorId} ELSE ";
 
-                    string sqlStrInsert = $"INSERT INTO [{sRangeTable}] " +
+                    sqlUPDorINSERT += $"INSERT INTO [{sRangeTable}] " +
                                             $"({S_DeviceInfoColumns[0]}, {S_FourRangeColumns[0]}, {S_FourRangeColumns[1]}, {S_FourRangeColumns[2]}, {S_FourRangeColumns[3]}) " +
                                             $"VALUES({sensorId}, {sFourRangeTbVals[0]},{sFourRangeTbVals[1]},{sFourRangeTbVals[2]},{sFourRangeTbVals[3]});";
 
-                    SqlCommand InsertCmd = new SqlCommand(sqlStrInsert, myConn);
-
-
-                    string sqlCheckUpd = $"SELECT 1 " +
-                        $" FROM [{sRangeTable}]  " +
-                        $" WHERE {S_DeviceInfoColumns[0]} = { sensorId} and " +
-                        $" {S_FourRangeColumns[0]} = { sFourRangeTbVals[0]} and " +
-                        $" {S_FourRangeColumns[1]} = { sFourRangeTbVals[1]} and " +
-                        $" {S_FourRangeColumns[2]} = { sFourRangeTbVals[2]} and " +
-                        $" {S_FourRangeColumns[3]} = { sFourRangeTbVals[3]}";
-                    SqlCommand sqlUpdateCheck = new SqlCommand(sqlCheckUpd, myConn);
-
-                    try
+                    using (SqlConnection con = new SqlConnection())
                     {
-                        if (checkRangesTb)      // table이 존재한다면 Insert함
+                        con.ConnectionString = sqlConString;
+                        if(con.State != ConnectionState.Open)
                         {
-                            int errorLimit = 2;
-                            int counter = 0;
-                            while (true)
-                            {
-                                if (errorLimit <= counter)
-                                {
-                                    break;
-                                }
-                                counter += 1;
-                                bool check_sIDduplicate = GetSensorID(sensorId, sRangeTable);
-                                if (!check_sIDduplicate)
-                                {
-                                    if (myConn.State != ConnectionState.Open)
-                                    {
-                                        myConn.ConnectionString = sqlConString;
-                                        myConn.Open();
-                                    }
-                                    InsertCmd.ExecuteNonQuery();
-
-                                    /*using (SqlDataReader reader = sqlUpdateCheck.ExecuteReader())
-                                    {
-                                        while (reader.Read())
-                                        {*/
-                                    result_for_checked[i] = true;
-                                    /*                                  break;
-                                     *                                  }
-                                                                        }*/
-                                    break;
-
-                                }
-                                else
-                                {
-                                    while (true)
-                                    {
-                                        counter += 1;
-                                        int newID = GetUserInput();
-                                        if (sensorId != newID)
-                                        {
-                                            sensorId = newID;
-                                            sID.Text = newID.ToString();
-                                            break;
-                                        }
-                                        if (errorLimit <= counter)
-                                        {
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
+                            con.Open();
                         }
-                        else
-                        {                   // table이 존재하지 않는다면 CreateTable를 통해 테이블 생성한 후 Insert함
-                            bool tbCreated = g_DbTableHandler.CreateTable(DbName, sRangeTable, sqlCreateTb, myConn);
-
-                            if (tbCreated)
+                        using (SqlCommand InsertCmd = new SqlCommand(sqlUPDorINSERT, con))
+                        {
+                            if (checkRangesTb)      // table이 존재한다면 Insert함
                             {
-                                if (myConn.State != ConnectionState.Open)
-                                {
-                                    myConn.ConnectionString = sqlConString;
-                                    myConn.Open();
-                                }
                                 InsertCmd.ExecuteNonQuery();
+                                result_for_checked[i] = true;
+                            }
+                            else
+                            {                   // table이 존재하지 않는다면 CreateTable를 통해 테이블 생성한 후 Insert함
+                                bool tbCreated = g_DbTableHandler.CreateTable(DbName, sRangeTable, sqlCreateTb, myConn);
 
-                                /*using (SqlDataReader reader = sqlUpdateCheck.ExecuteReader())
+                                if (tbCreated)
                                 {
-                                    while (reader.Read())
-                                    {*/
-                                result_for_checked[i] = true; //Convert.ToInt32(reader.GetValue(0)) == 1;
-                                    /*}
-                                }*/
+                                    InsertCmd.ExecuteNonQuery();
+                                    result_for_checked[i] = true; //Convert.ToInt32(reader.GetValue(0)) == 1;
+                                }
                             }
                         }
                     }
-                    catch (System.Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-                        if (myConn.State == ConnectionState.Open)
-                        {
-                            myConn.Close();
-                            myConn.Dispose();
-                        }
-                    }
-
                 }
 
 
@@ -1214,30 +1148,32 @@ namespace AdminPage
                 }
 
                 // 관련 테이블도 같이 업데이트함.
-                string sqlInsert_DevicesTable = $"INSERT INTO {S_DeviceTable} ({S_DeviceInfoColumns[0]}, {S_DeviceInfoColumns[1]}, {S_DeviceInfoColumns[2]}, {S_DeviceInfoColumns[3]}, {S_DeviceInfoColumns[4]}, {S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]}) " +
-                    $"VALUES ('{sensorId}', '{S_DeviceInfo_txtB[0].Text}', '{S_DeviceInfo_txtB[1].Text}', '{S_DeviceInfo_txtB[2].Text}','{S_DeviceInfo_txtB[3].Text}', '{g_sensorUsage}');";
 
-                SqlCommand sqlCommand = new SqlCommand(sqlInsert_DevicesTable, myConn);
-                try
+
+                string DevTblINSRTorUPD = $"IF EXISTS ( SELECT * FROM {S_DeviceTable} WHERE {S_DeviceInfoColumns[0]} = { sensorId}) " +
+                        $" UPDATE {S_DeviceTable}  " +
+                        $" SET {S_DeviceInfoColumns[1]} = '{S_DeviceInfo_txtB[0].Text}', {S_DeviceInfoColumns[2]} = '{S_DeviceInfo_txtB[1].Text}', " +
+                        $"{S_DeviceInfoColumns[3]} = '{S_DeviceInfo_txtB[2].Text}', {S_DeviceInfoColumns[4]} = '{S_DeviceInfo_txtB[3].Text}', " +
+                        $"{S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} = '{g_sensorUsage}' ELSE ";
+
+
+                DevTblINSRTorUPD = $"INSERT INTO {S_DeviceTable} (" +
+                    $"{S_DeviceInfoColumns[0]}, {S_DeviceInfoColumns[1]}, " +
+                    $"{S_DeviceInfoColumns[2]}, {S_DeviceInfoColumns[3]}, " +
+                    $"{S_DeviceInfoColumns[4]}, {S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]}) " +
+                    $"VALUES ('{sensorId}', '{S_DeviceInfo_txtB[0].Text}', '{S_DeviceInfo_txtB[1].Text}', " +
+                    $"'{S_DeviceInfo_txtB[2].Text}','{S_DeviceInfo_txtB[3].Text}', '{g_sensorUsage}');";
+
+                using (SqlConnection con = new SqlConnection())
                 {
-                    if (myConn.State != ConnectionState.Open)
+                    con.ConnectionString = sqlConString;
+                    if (con.State != ConnectionState.Open)
                     {
-                        myConn.ConnectionString = sqlConString;
-                        myConn.Open();
+                        con.Open();
                     }
-                    sqlCommand.ExecuteNonQuery();
-
-                }
-                catch (System.Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    if (myConn.State == ConnectionState.Open)
+                    using (SqlCommand sqlCommand = new SqlCommand(DevTblINSRTorUPD, con))
                     {
-                        myConn.Close();
-                        myConn.Dispose();
+                        sqlCommand.ExecuteNonQuery();
                     }
                 }
             }
@@ -1247,6 +1183,9 @@ namespace AdminPage
             }
             return result;
         }
+
+
+
 
 
 
@@ -1484,8 +1423,8 @@ namespace AdminPage
             string endTime = dateTimePicker2.Value.ToString("yyyy-MM-dd HH:mm:ss");
             //DownToExcel downToExcel = new DownToExcel(tbName: "d_p03Usage", sqlConStr: sqlConString, (startTime, endTime));
 
-            List<string> tableNames = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).Select(x=> "d" + x.Substring(1)).ToList();
-            DownToExcel toExcel = new DownToExcel(tbName: tableNames, sqlConString, (startTime, endTime) );
+            List<string> tableNames = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).Select(x => "d" + x.Substring(1)).ToList();
+            DownToExcel toExcel = new DownToExcel(tbName: tableNames, sqlConString, (startTime, endTime));
 
         }
 
@@ -1589,6 +1528,11 @@ namespace AdminPage
             {
                 clearFields(S_DeviceInfo_txtB_p);
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

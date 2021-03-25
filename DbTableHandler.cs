@@ -286,57 +286,29 @@ namespace AdminPage
         {
             bool result = false;
             string sql_dbExists = $"IF DB_ID('{dbName}') IS NOT NULL SELECT 1";
-
-            if (myConn_master == null || myConn_master.ConnectionString == String.Empty)
-            {
-                myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True");
-            }
-
-            SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn_master);
             DataSet ds = new DataSet();
-            try
+            using (SqlConnection con = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True"))
             {
-
-                if (myConn_master.State != ConnectionState.Open)
+                if (con.State != ConnectionState.Open)
                 {
-                    myConn_master.Open();
+                    con.Open();
                 }
-                SqlDataAdapter sqlData = new SqlDataAdapter(sql_dbExists, myConn_master);
-
-                sqlData.Fill(ds);
-                if (ds.Tables.Count > 0)
+                using (SqlDataAdapter sqlData = new SqlDataAdapter(sql_dbExists, con))
                 {
-                    result = true;
-                }
-                /*using (SqlDataReader reader = dbExistsCmd.ExecuteReader())
-                {
-                    while (reader.Read())
+                    sqlData.Fill(ds);
+                    if (ds.Tables.Count > 0)
                     {
-                        res = Convert.ToInt32(reader.GetValue(0)) == 1;
+                        result = true;
                     }
-                }*/
-                sqlData.Dispose();
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                if (myConn_master.State == System.Data.ConnectionState.Open)
-                {
-                    myConn_master.Close();
-                    myConn_master.Dispose();
                 }
-                dbExistsCmd.Dispose();
             }
             return result;
         }
 
         public bool IfDatabaseExists(string dbName)
         {
-            SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True"); 
-                                                        //($@"Data Source = {DbServer};Initial Catalog=master;User id={DbUID};Password={DbPWD};Min Pool Size=20");
+            SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True");
+            //($@"Data Source = {DbServer};Initial Catalog=master;User id={DbUID};Password={DbPWD};Min Pool Size=20");
             bool result = false;
             string sql_dbExists = $"IF DB_ID('{dbName}') IS NOT NULL SELECT 1";
             SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn_master);
@@ -377,7 +349,7 @@ namespace AdminPage
                     myConn_master.Close();
                     myConn_master.Dispose();
                 }
-                
+
             }
             return result;
         }
@@ -399,39 +371,27 @@ namespace AdminPage
             bool dbExists = IfDatabaseExists(dbName, myConn_master);
             if (dbExists)
             {
-                SqlCommand createTbCmd = new SqlCommand(sqlCreateTable, myConn);
-                try
+                using (SqlConnection con = new SqlConnection())
                 {
-                    bool tbAlreadyExists = IfTableExists(tableName);
-                    if (tbAlreadyExists)
+                    con.ConnectionString = sqlConString;
+                    if(con.State != ConnectionState.Open)
                     {
-                        target = true;
+                        con.Open();
                     }
-                    else
+                    using (SqlCommand createTbCmd = new SqlCommand(sqlCreateTable, con))
                     {
-                        if (myConn.State != ConnectionState.Open)
+                        bool tbAlreadyExists = IfTableExists(tableName);
+                        if (tbAlreadyExists)
                         {
-                            myConn.Open();
+                            target = true;
                         }
-                        createTbCmd.ExecuteNonQuery();
-                        target = true;
+                        else
+                        {
+                            createTbCmd.ExecuteNonQuery();
+                            target = true;
+                        }
                     }
-
                 }
-                catch (System.Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                finally
-                {
-                    if (myConn.State == System.Data.ConnectionState.Open)
-                    {
-                        myConn.Close();
-                        myConn.Dispose();
-                    }
-                    createTbCmd.Dispose();
-                }
-
             }
             else
             {
@@ -485,26 +445,28 @@ namespace AdminPage
             //string checkBoxName = targetCheckBoxName;
             bool target = false;
             string dbCheckCmdStr;
-            SqlConnection myConn = new SqlConnection();
-            myConn.ConnectionString = sqlConString;
             dbCheckCmdStr = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'{tableName}';";
-            SqlCommand tbCheckCmd = new SqlCommand(dbCheckCmdStr, myConn);
-
             try
             {
-                if (myConn.State != ConnectionState.Open)
+                using (SqlConnection con = new SqlConnection())
                 {
-                    myConn.Open();
-                }
-
-                using (SqlDataReader reader = tbCheckCmd.ExecuteReader())
-                {
-                    while (reader.Read())
+                    con.ConnectionString = sqlConString;
+                    if (con.State != ConnectionState.Open)
                     {
-                        if(Convert.ToInt32(reader.GetValue(0)) == 1)
+                        con.Open();
+                    }
+                    using (SqlCommand tbCheckCmd = new SqlCommand(dbCheckCmdStr, con))
+                    {
+                        using (SqlDataReader reader = tbCheckCmd.ExecuteReader())
                         {
-                            target = true;
-                            break;
+                            while (reader.Read())
+                            {
+                                if (Convert.ToInt32(reader.GetValue(0)) == 1)
+                                {
+                                    target = true;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
@@ -513,14 +475,7 @@ namespace AdminPage
             {
                 System.Windows.Forms.MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            finally
-            {
-                if (myConn.State == System.Data.ConnectionState.Open)
-                {
-                    myConn.Close();
-                    myConn.Dispose();
-                }
-            }
+
             return target;
         }
 
@@ -542,7 +497,7 @@ namespace AdminPage
                                             $", {S_DeviceInfoColumns[2]} = '{txtB_DeviceInfo[1].Text}' " +
                                             $", {S_DeviceInfoColumns[3]} = '{txtB_DeviceInfo[2].Text}' " +
                                             $", {S_DeviceInfoColumns[4]} = '{txtB_DeviceInfo[3].Text}' " +
-                                            $", {S_DeviceInfoColumns[S_DeviceInfoColumns.Count-1]} = '{sensorUsage}' " +
+                                            $", {S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} = '{sensorUsage}' " +
                                         $" WHERE {S_DeviceInfoColumns[0]} = {deviceId}; ";
                 sqlCheckStr = $"SELECT 1 FROM {S_DeviceTable} " +
                             $" WHERE {S_DeviceInfoColumns[0]} = {deviceId} " +
@@ -550,7 +505,7 @@ namespace AdminPage
                             $" and {S_DeviceInfoColumns[2]} = '{txtB_DeviceInfo[1].Text}' " +
                            $" and {S_DeviceInfoColumns[3]} = '{txtB_DeviceInfo[2].Text}' " +
                            $" and {S_DeviceInfoColumns[4]} = '{txtB_DeviceInfo[3].Text}' " +
-                           $" and {S_DeviceInfoColumns[S_DeviceInfoColumns.Count-1]} = '{sensorUsage}';";
+                           $" and {S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} = '{sensorUsage}';";
             }
             else
             {
@@ -560,14 +515,14 @@ namespace AdminPage
                                             $", {S_DeviceInfoColumns[2]} = '{txtB_DeviceInfo[1].Text}'" +
                                             $", {S_DeviceInfoColumns[3]} = '{txtB_DeviceInfo[2].Text}'" +
                                             $", {S_DeviceInfoColumns[4]} = '{txtB_DeviceInfo[3].Text}'" +
-                                            $", {S_DeviceInfoColumns[S_DeviceInfoColumns.Count-1]} = '{sensorUsage}' " +
+                                            $", {S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} = '{sensorUsage}' " +
                                         $"WHERE {S_DeviceInfoColumns[0]} = {deviceId}; ";
 
                 sqlCheckStr = $"SELECT 1 FROM {S_DeviceTable} " +
                             $" WHERE {S_DeviceInfoColumns[0]} = {deviceIdNew} ";
-                for(int i=0; i<txtB_DeviceInfo.Count; i++)
+                for (int i = 0; i < txtB_DeviceInfo.Count; i++)
                 {
-                    sqlCheckStr += $"and {S_DeviceInfoColumns[i+1]} = '{txtB_DeviceInfo[i].Text}' ";
+                    sqlCheckStr += $"and {S_DeviceInfoColumns[i + 1]} = '{txtB_DeviceInfo[i].Text}' ";
                 }
                 sqlCheckStr += $" and {S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} = '{sensorUsage}';";
             }

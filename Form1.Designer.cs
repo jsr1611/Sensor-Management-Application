@@ -31,7 +31,6 @@ namespace AdminPage
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,7 +76,6 @@ namespace AdminPage
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label5 = new System.Windows.Forms.Label();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.button1 = new System.Windows.Forms.Button();
@@ -92,10 +90,10 @@ namespace AdminPage
             this.s_p50HigherLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_p50LowerLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_p50LowerLimit1 = new System.Windows.Forms.NumericUpDown();
-            this.s_p25HigherLimit2 = new System.Windows.Forms.NumericUpDown();
-            this.s_p25HigherLimit1 = new System.Windows.Forms.NumericUpDown();
-            this.s_p25LowerLimit2 = new System.Windows.Forms.NumericUpDown();
-            this.s_p25LowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_p30HigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p30HigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_p30LowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p30LowerLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_p10HigherLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_p10HigherLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_p10LowerLimit2 = new System.Windows.Forms.NumericUpDown();
@@ -118,11 +116,11 @@ namespace AdminPage
             this.s_tHigherLimit1 = new System.Windows.Forms.NumericUpDown();
             this.c_p100Usage = new System.Windows.Forms.CheckBox();
             this.c_p50Usage = new System.Windows.Forms.CheckBox();
-            this.c_p25Usage = new System.Windows.Forms.CheckBox();
+            this.c_p30Usage = new System.Windows.Forms.CheckBox();
             this.c_p10Usage = new System.Windows.Forms.CheckBox();
             this.l_p100Usage = new System.Windows.Forms.Label();
             this.l_p5Usage = new System.Windows.Forms.Label();
-            this.l_p25Usage = new System.Windows.Forms.Label();
+            this.l_p30Usage = new System.Windows.Forms.Label();
             this.l_p10Usage = new System.Windows.Forms.Label();
             this.l_p05Usage = new System.Windows.Forms.Label();
             this.c_p05Usage = new System.Windows.Forms.CheckBox();
@@ -215,6 +213,19 @@ namespace AdminPage
             this.sDescription_p = new System.Windows.Forms.TextBox();
             this.sLocation_p = new System.Windows.Forms.TextBox();
             this.sName_p = new System.Windows.Forms.TextBox();
+            this.c_p01Usage = new System.Windows.Forms.CheckBox();
+            this.l_p01 = new System.Windows.Forms.Label();
+            this.s_p01LowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_p01LowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p01HigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_p01HigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p250HigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p250HigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_p250LowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p250LowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.c_p250Usage = new System.Windows.Forms.CheckBox();
+            this.l_p25 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -236,10 +247,10 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.s_p50HigherLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p50LowerLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p50LowerLimit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p25HigherLimit2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p25HigherLimit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p25LowerLimit2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p25LowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p30HigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p30HigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p30LowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p30LowerLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p10HigherLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p10HigherLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p10LowerLimit2)).BeginInit();
@@ -293,12 +304,15 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.s_paLowerLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01LowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01LowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01HigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01HigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250HigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250HigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250LowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250LowerLimit1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
             // 
             // menuStrip1
             // 
@@ -557,6 +571,12 @@ namespace AdminPage
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.s_p250HigherLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p250HigherLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p250LowerLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p250LowerLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.c_p250Usage);
+            this.splitContainer1.Panel2.Controls.Add(this.l_p25);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.dateTimePicker2);
             this.splitContainer1.Panel2.Controls.Add(this.dateTimePicker1);
@@ -572,10 +592,10 @@ namespace AdminPage
             this.splitContainer1.Panel2.Controls.Add(this.s_p50HigherLimit1);
             this.splitContainer1.Panel2.Controls.Add(this.s_p50LowerLimit2);
             this.splitContainer1.Panel2.Controls.Add(this.s_p50LowerLimit1);
-            this.splitContainer1.Panel2.Controls.Add(this.s_p25HigherLimit2);
-            this.splitContainer1.Panel2.Controls.Add(this.s_p25HigherLimit1);
-            this.splitContainer1.Panel2.Controls.Add(this.s_p25LowerLimit2);
-            this.splitContainer1.Panel2.Controls.Add(this.s_p25LowerLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p30HigherLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p30HigherLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p30LowerLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p30LowerLimit1);
             this.splitContainer1.Panel2.Controls.Add(this.s_p10HigherLimit2);
             this.splitContainer1.Panel2.Controls.Add(this.s_p10HigherLimit1);
             this.splitContainer1.Panel2.Controls.Add(this.s_p10LowerLimit2);
@@ -584,9 +604,13 @@ namespace AdminPage
             this.splitContainer1.Panel2.Controls.Add(this.s_p05HigherLimit1);
             this.splitContainer1.Panel2.Controls.Add(this.s_p05LowerLimit2);
             this.splitContainer1.Panel2.Controls.Add(this.s_p05LowerLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p01HigherLimit2);
             this.splitContainer1.Panel2.Controls.Add(this.s_p03HigherLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p01HigherLimit1);
             this.splitContainer1.Panel2.Controls.Add(this.s_p03HigherLimit1);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p01LowerLimit2);
             this.splitContainer1.Panel2.Controls.Add(this.s_p03LowerLimit2);
+            this.splitContainer1.Panel2.Controls.Add(this.s_p01LowerLimit1);
             this.splitContainer1.Panel2.Controls.Add(this.s_p03LowerLimit1);
             this.splitContainer1.Panel2.Controls.Add(this.s_hLowerLimit2);
             this.splitContainer1.Panel2.Controls.Add(this.s_hLowerLimit1);
@@ -598,14 +622,16 @@ namespace AdminPage
             this.splitContainer1.Panel2.Controls.Add(this.s_tHigherLimit1);
             this.splitContainer1.Panel2.Controls.Add(this.c_p100Usage);
             this.splitContainer1.Panel2.Controls.Add(this.c_p50Usage);
-            this.splitContainer1.Panel2.Controls.Add(this.c_p25Usage);
+            this.splitContainer1.Panel2.Controls.Add(this.c_p30Usage);
             this.splitContainer1.Panel2.Controls.Add(this.c_p10Usage);
             this.splitContainer1.Panel2.Controls.Add(this.l_p100Usage);
             this.splitContainer1.Panel2.Controls.Add(this.l_p5Usage);
-            this.splitContainer1.Panel2.Controls.Add(this.l_p25Usage);
+            this.splitContainer1.Panel2.Controls.Add(this.l_p30Usage);
             this.splitContainer1.Panel2.Controls.Add(this.l_p10Usage);
             this.splitContainer1.Panel2.Controls.Add(this.l_p05Usage);
+            this.splitContainer1.Panel2.Controls.Add(this.l_p01);
             this.splitContainer1.Panel2.Controls.Add(this.c_p05Usage);
+            this.splitContainer1.Panel2.Controls.Add(this.c_p01Usage);
             this.splitContainer1.Panel2.Controls.Add(this.l_p03Usage);
             this.splitContainer1.Panel2.Controls.Add(this.c_p03Usage);
             this.splitContainer1.Panel2.Controls.Add(this.l_hUsage);
@@ -672,11 +698,6 @@ namespace AdminPage
             // columnHeader6
             // 
             resources.ApplyResources(this.columnHeader6, "columnHeader6");
-            // 
-            // label5
-            // 
-            resources.ApplyResources(this.label5, "label5");
-            this.label5.Name = "label5";
             // 
             // dateTimePicker2
             // 
@@ -799,45 +820,45 @@ namespace AdminPage
             0});
             this.s_p50LowerLimit1.Name = "s_p50LowerLimit1";
             // 
-            // s_p25HigherLimit2
+            // s_p30HigherLimit2
             // 
-            resources.ApplyResources(this.s_p25HigherLimit2, "s_p25HigherLimit2");
-            this.s_p25HigherLimit2.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p30HigherLimit2, "s_p30HigherLimit2");
+            this.s_p30HigherLimit2.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.s_p25HigherLimit2.Name = "s_p25HigherLimit2";
+            this.s_p30HigherLimit2.Name = "s_p30HigherLimit2";
             // 
-            // s_p25HigherLimit1
+            // s_p30HigherLimit1
             // 
-            resources.ApplyResources(this.s_p25HigherLimit1, "s_p25HigherLimit1");
-            this.s_p25HigherLimit1.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p30HigherLimit1, "s_p30HigherLimit1");
+            this.s_p30HigherLimit1.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.s_p25HigherLimit1.Name = "s_p25HigherLimit1";
+            this.s_p30HigherLimit1.Name = "s_p30HigherLimit1";
             // 
-            // s_p25LowerLimit2
+            // s_p30LowerLimit2
             // 
-            resources.ApplyResources(this.s_p25LowerLimit2, "s_p25LowerLimit2");
-            this.s_p25LowerLimit2.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p30LowerLimit2, "s_p30LowerLimit2");
+            this.s_p30LowerLimit2.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.s_p25LowerLimit2.Name = "s_p25LowerLimit2";
+            this.s_p30LowerLimit2.Name = "s_p30LowerLimit2";
             // 
-            // s_p25LowerLimit1
+            // s_p30LowerLimit1
             // 
-            resources.ApplyResources(this.s_p25LowerLimit1, "s_p25LowerLimit1");
-            this.s_p25LowerLimit1.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.s_p30LowerLimit1, "s_p30LowerLimit1");
+            this.s_p30LowerLimit1.Maximum = new decimal(new int[] {
             500000,
             0,
             0,
             0});
-            this.s_p25LowerLimit1.Name = "s_p25LowerLimit1";
+            this.s_p30LowerLimit1.Name = "s_p30LowerLimit1";
             // 
             // s_p10HigherLimit2
             // 
@@ -1067,12 +1088,12 @@ namespace AdminPage
             this.c_p50Usage.UseVisualStyleBackColor = true;
             this.c_p50Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // c_p25Usage
+            // c_p30Usage
             // 
-            resources.ApplyResources(this.c_p25Usage, "c_p25Usage");
-            this.c_p25Usage.Name = "c_p25Usage";
-            this.c_p25Usage.UseVisualStyleBackColor = true;
-            this.c_p25Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.c_p30Usage, "c_p30Usage");
+            this.c_p30Usage.Name = "c_p30Usage";
+            this.c_p30Usage.UseVisualStyleBackColor = true;
+            this.c_p30Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // c_p10Usage
             // 
@@ -1093,11 +1114,11 @@ namespace AdminPage
             resources.ApplyResources(this.l_p5Usage, "l_p5Usage");
             this.l_p5Usage.Name = "l_p5Usage";
             // 
-            // l_p25Usage
+            // l_p30Usage
             // 
-            this.l_p25Usage.AutoEllipsis = true;
-            resources.ApplyResources(this.l_p25Usage, "l_p25Usage");
-            this.l_p25Usage.Name = "l_p25Usage";
+            this.l_p30Usage.AutoEllipsis = true;
+            resources.ApplyResources(this.l_p30Usage, "l_p30Usage");
+            this.l_p30Usage.Name = "l_p30Usage";
             // 
             // l_p10Usage
             // 
@@ -2136,6 +2157,116 @@ namespace AdminPage
             resources.ApplyResources(this.sName_p, "sName_p");
             this.sName_p.Name = "sName_p";
             // 
+            // c_p01Usage
+            // 
+            resources.ApplyResources(this.c_p01Usage, "c_p01Usage");
+            this.c_p01Usage.Name = "c_p01Usage";
+            this.c_p01Usage.UseVisualStyleBackColor = true;
+            this.c_p01Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            // 
+            // l_p01
+            // 
+            this.l_p01.AutoEllipsis = true;
+            resources.ApplyResources(this.l_p01, "l_p01");
+            this.l_p01.Name = "l_p01";
+            // 
+            // s_p01LowerLimit1
+            // 
+            resources.ApplyResources(this.s_p01LowerLimit1, "s_p01LowerLimit1");
+            this.s_p01LowerLimit1.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p01LowerLimit1.Name = "s_p01LowerLimit1";
+            // 
+            // s_p01LowerLimit2
+            // 
+            resources.ApplyResources(this.s_p01LowerLimit2, "s_p01LowerLimit2");
+            this.s_p01LowerLimit2.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p01LowerLimit2.Name = "s_p01LowerLimit2";
+            // 
+            // s_p01HigherLimit1
+            // 
+            resources.ApplyResources(this.s_p01HigherLimit1, "s_p01HigherLimit1");
+            this.s_p01HigherLimit1.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p01HigherLimit1.Name = "s_p01HigherLimit1";
+            // 
+            // s_p01HigherLimit2
+            // 
+            resources.ApplyResources(this.s_p01HigherLimit2, "s_p01HigherLimit2");
+            this.s_p01HigherLimit2.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p01HigherLimit2.Name = "s_p01HigherLimit2";
+            // 
+            // s_p250HigherLimit2
+            // 
+            resources.ApplyResources(this.s_p250HigherLimit2, "s_p250HigherLimit2");
+            this.s_p250HigherLimit2.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p250HigherLimit2.Name = "s_p250HigherLimit2";
+            // 
+            // s_p250HigherLimit1
+            // 
+            resources.ApplyResources(this.s_p250HigherLimit1, "s_p250HigherLimit1");
+            this.s_p250HigherLimit1.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p250HigherLimit1.Name = "s_p250HigherLimit1";
+            // 
+            // s_p250LowerLimit2
+            // 
+            resources.ApplyResources(this.s_p250LowerLimit2, "s_p250LowerLimit2");
+            this.s_p250LowerLimit2.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p250LowerLimit2.Name = "s_p250LowerLimit2";
+            // 
+            // s_p250LowerLimit1
+            // 
+            resources.ApplyResources(this.s_p250LowerLimit1, "s_p250LowerLimit1");
+            this.s_p250LowerLimit1.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p250LowerLimit1.Name = "s_p250LowerLimit1";
+            // 
+            // c_p250Usage
+            // 
+            resources.ApplyResources(this.c_p250Usage, "c_p250Usage");
+            this.c_p250Usage.Name = "c_p250Usage";
+            this.c_p250Usage.UseVisualStyleBackColor = true;
+            // 
+            // l_p25
+            // 
+            this.l_p25.AutoEllipsis = true;
+            resources.ApplyResources(this.l_p25, "l_p25");
+            this.l_p25.Name = "l_p25";
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
@@ -2144,15 +2275,16 @@ namespace AdminPage
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel_right);
             this.Controls.Add(this.panel_left);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
@@ -2173,10 +2305,10 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.s_p50HigherLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p50LowerLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p50LowerLimit1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p25HigherLimit2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p25HigherLimit1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p25LowerLimit2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p25LowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p30HigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p30HigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p30LowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p30LowerLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p10HigherLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p10HigherLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p10LowerLimit2)).EndInit();
@@ -2231,13 +2363,20 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.s_paLowerLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01LowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01LowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01HigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01HigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250HigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250HigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250LowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250LowerLimit1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
@@ -2290,10 +2429,10 @@ namespace AdminPage
         private System.Windows.Forms.NumericUpDown s_p50HigherLimit1;
         private System.Windows.Forms.NumericUpDown s_p50LowerLimit2;
         private System.Windows.Forms.NumericUpDown s_p50LowerLimit1;
-        private System.Windows.Forms.NumericUpDown s_p25HigherLimit2;
-        private System.Windows.Forms.NumericUpDown s_p25HigherLimit1;
-        private System.Windows.Forms.NumericUpDown s_p25LowerLimit2;
-        private System.Windows.Forms.NumericUpDown s_p25LowerLimit1;
+        private System.Windows.Forms.NumericUpDown s_p30HigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_p30HigherLimit1;
+        private System.Windows.Forms.NumericUpDown s_p30LowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_p30LowerLimit1;
         private System.Windows.Forms.NumericUpDown s_p10HigherLimit2;
         private System.Windows.Forms.NumericUpDown s_p10HigherLimit1;
         private System.Windows.Forms.NumericUpDown s_p10LowerLimit2;
@@ -2316,10 +2455,10 @@ namespace AdminPage
         private System.Windows.Forms.NumericUpDown s_tHigherLimit1;
         private System.Windows.Forms.CheckBox c_p100Usage;
         private System.Windows.Forms.CheckBox c_p50Usage;
-        private System.Windows.Forms.CheckBox c_p25Usage;
+        private System.Windows.Forms.CheckBox c_p30Usage;
         private System.Windows.Forms.CheckBox c_p10Usage;
         private System.Windows.Forms.Label l_p5Usage;
-        private System.Windows.Forms.Label l_p25Usage;
+        private System.Windows.Forms.Label l_p30Usage;
         private System.Windows.Forms.Label l_p10Usage;
         private System.Windows.Forms.Label l_p05Usage;
         private System.Windows.Forms.CheckBox c_p05Usage;
@@ -2413,7 +2552,6 @@ namespace AdminPage
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Button button1;
@@ -2421,6 +2559,19 @@ namespace AdminPage
         private System.Windows.Forms.DateTimePicker dateTimePicker3;
         private System.Windows.Forms.DateTimePicker dateTimePicker4;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.NumericUpDown s_p01HigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_p01HigherLimit1;
+        private System.Windows.Forms.NumericUpDown s_p01LowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_p01LowerLimit1;
+        private System.Windows.Forms.Label l_p01;
+        private System.Windows.Forms.CheckBox c_p01Usage;
+        private System.Windows.Forms.NumericUpDown s_p250HigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_p250HigherLimit1;
+        private System.Windows.Forms.NumericUpDown s_p250LowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_p250LowerLimit1;
+        private System.Windows.Forms.CheckBox c_p250Usage;
+        private System.Windows.Forms.Label l_p25;
+        private System.Windows.Forms.Label label5;
     }
 }
 
