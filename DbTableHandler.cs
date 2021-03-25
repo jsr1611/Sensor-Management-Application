@@ -140,8 +140,6 @@ namespace AdminPage
         {
             //string tbName = targetCheckBox.Name;
             bool tbCreated = false;
-
-
             // Create Table command 
 
             string tbCreateCmdStr = "";
@@ -196,14 +194,6 @@ namespace AdminPage
 
 
 
-
-
-
-
-
-
-
-
         /// <summary>
         /// Table 생성해주는 함수.
         /// </summary>
@@ -211,41 +201,30 @@ namespace AdminPage
         /// <param name="sqlCreateTable">Table생성을 위한 Sql쿼리 </param>
         /// <param name="myConn">SqlConnection명</param>
         /// <returns></returns>
-        private bool CreateTb(string tableName, string sqlCreateTable, SqlConnection myConn)
+        private bool CreateTb(string tableName, string sqlCreateTable)
         {
             bool res = false;
-            if (myConn == null || myConn.ConnectionString == String.Empty)
-            {
-                myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"); // ; Integrated Security=True ");
-            }
 
-            SqlCommand createTbCmd = new SqlCommand(sqlCreateTable, myConn);
-            try
+            using (SqlConnection myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"))
             {
-                myConn.Open();
-                createTbCmd.ExecuteNonQuery();
-                /*bool tbCreated = IfTableExists(tableName);
-                if (tbCreated)
+                try
                 {
-                    res = true;
-                }*/
-                res = true;
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                res = false;
-            }
-            finally
-            {
-                if (myConn.State == System.Data.ConnectionState.Open)
+                    if (myConn.State != ConnectionState.Open)
+                    {
+                        myConn.Open();
+                    }
+                    using (SqlCommand createTbCmd = new SqlCommand(sqlCreateTable, myConn))
+                    {
+                        createTbCmd.ExecuteNonQuery();
+                        res = true;
+                    }
+                }
+                catch (System.Exception ex)
                 {
-                    myConn.Close();
-                    myConn.Dispose();
-                    createTbCmd.Dispose();
+                    MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    res = false;
                 }
             }
-
 
             return res;
         }
@@ -726,80 +705,6 @@ namespace AdminPage
             }
             return updSuccessful;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*
-                private bool CreateTb(CheckBox targetCheckBox)
-                {
-                    string tbName = targetCheckBox.Name;
-                    bool tbCreated = false;
-                    SqlConnection myConn = new SqlConnection($@"Data Source ={ connStr[0] }; Initial Catalog = { connStr[1] }; User id = { connStr[2] }; Password ={ connStr[3]}; Min Pool Size = 20");
-                    // Create Table command 
-                    #region
-                    string tbCreateCmdStr;
-                    tbCreateCmdStr = $"Create TABLE [{connStr[1]}].[dbo].[{tbName}] ( " +
-                                    " sID INT IDENTITY NOT NULL, " +
-                                    " LowerLimit1 float NOT NULL, " +
-                                    " LowerLimit2 float NOT NULL, " +
-                                    " HigherLimit1 float NOT NULL, " +
-                                    " HigherLimit2 float NOT NULL, " +
-                                    " sUsage nvarchar(10) NOT NULL );";
-                    SqlCommand tbCreateCmd = new SqlCommand(tbCreateCmdStr, myConn);
-                    #endregion
-
-                    // Check if table created correctly 
-                    #region 
-                    string tbCheckCmdStr;
-                    tbCheckCmdStr = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'{tbName}';";
-                    SqlCommand tbCheckCmd = new SqlCommand(tbCheckCmdStr, myConn);
-                    #endregion
-
-                    try
-                    {
-                        if(myConn.State != ConnectionState.Open)
-                        {
-                            myConn.Open();
-                        }
-                        tbCreateCmd.ExecuteNonQuery();
-
-                        using (SqlDataReader reader = tbCheckCmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                tbCreated = Convert.ToInt32(reader.GetValue(0)) == 1;
-                            }
-                        }
-                    }
-                    catch (System.Exception ex)
-                    {
-                        System.Windows.Forms.MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    finally
-                    {
-                        if (myConn.State == System.Data.ConnectionState.Open)
-                        {
-                            myConn.Close();
-                        }
-                    }
-                    return tbCreated;
-                }
-
-
-        */
-
 
 
     }
