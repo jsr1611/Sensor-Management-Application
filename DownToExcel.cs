@@ -24,7 +24,6 @@ namespace AdminPage
 
         public string tableName { get; set; }
         public string dbName { get; set; }
-        public SqlConnection myConn { get; set; }
         public (string, string) startEndTime { get; set; }
 
         public DownToExcel()
@@ -33,6 +32,7 @@ namespace AdminPage
         }
         public DownToExcel(List<string> tbName, string sqlConStr, (string, string) StartEndTime)
         {
+            sqlConString = sqlConStr;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -53,16 +53,9 @@ namespace AdminPage
             Excel.Worksheet[] ws = new Excel.Worksheet[tbName.Count];
 
 
-            myConn = new SqlConnection();
-            sqlConString = sqlConStr;
-            myConn.ConnectionString = sqlConStr;
             startEndTime = StartEndTime;
-               
-            if(myConn == null ||  myConn.ConnectionString == String.Empty)
-            {
-                myConn.ConnectionString = sqlConString;
-                myConn.Open();
-            }
+
+            SqlConnection myConn = new SqlConnection(sqlConString);
             else if (myConn.State != System.Data.ConnectionState.Open)
             {
                 myConn.Open();
