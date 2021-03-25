@@ -20,7 +20,16 @@ namespace AdminPage
         public string S_DeviceTable = ""; // Devices
         public string S_UsageTable = ""; // SensorUsage
 
+
+
+        /// <summary>
+        /// [0]:sID, [1]:sName, [2]:sZone, [3]:sLocation, [4]:sDescription, [5]:sUsage 들어가 있음
+        /// </summary>
         public List<string> S_DeviceInfoColumns { get; set; }
+
+        /// <summary>
+        /// [0]: higherLimit2, [1]: higherLimit1, [2]: lowerLimit1, [3]: lowerLimit2
+        /// </summary>
         public List<string> S_FourRangeColumns { get; set; }
 
         /// <summary>
@@ -33,13 +42,13 @@ namespace AdminPage
         public DateTime startTime { get; set; }
 
         /// <summary>
-        /// (온습도 및 파티클 관련함)sName, sLocation, sDescription 들이 들어가 있음.
+        /// (온습도 및 파티클 관련함)[0]: sName, [1]: sZone, [2]: sLocation, [3]: sDescription 들이 들어가 있음.
         /// </summary>
         public List<TextBox> S_DeviceInfo_txtB { get; set; }
 
 
         /// <summary>
-        /// (차압 관련함)sName, sLocation, sDescription 들이 들어가 있음.
+        /// (차압 관련함) [0]: sName, [1]: sZone, [2]: sLocation, [3]: sDescription 들이 들어가 있음.
         /// </summary>
         public List<TextBox> S_DeviceInfo_txtB_p { get; set; }
 
@@ -651,40 +660,45 @@ namespace AdminPage
                 //새 장비 추가하는 부분
                 else
                 {
-                    bool idExists = GetSensorID(Convert.ToInt32(sID.Text));
-                    if (idExists)
+                    int newOrderNumber;
+                    if (listView1_thp.Items.Count > 0)
                     {
-                        MessageBox.Show("DB에 이미 존재하는 센서 장비 ID입니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        newOrderNumber = Convert.ToInt32(listView1_thp.Items[listView1_thp.Items.Count - 1].Text) + 1;
                     }
                     else
                     {
-                        int newOrderNumber;
-                        if (listView1_thp.Items.Count > 0)
+                        newOrderNumber = 1;
+                    }
+                    if(sID.Text.Length > 0)
+                    {
+                        if (S_DeviceInfo_txtB[0].Text.Length > 1 && S_DeviceInfo_txtB[1].Text.Length > 1)
                         {
-                            newOrderNumber = Convert.ToInt32(listView1_thp.Items[listView1_thp.Items.Count - 1].Text) + 1;
+                            //Added should return true if data added to DB.
+                            bool added = AddToDB(sUsage);
+                            if (added)
+                            {
+                                ListViewItem listViewItem = new ListViewItem(newOrderNumber.ToString());
+                                listViewItem.SubItems.Add(sID.Text);
+                                for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
+                                {
+                                    listViewItem.SubItems.Add(S_DeviceInfo_txtB[i].Text);
+                                }
+                                listViewItem.SubItems.Add(sUsage);
+                                listView1_thp.Items.Add(listViewItem);
+                                clearFields(S_DeviceInfo_txtB);
+                                MessageBox.Show("새 센서 장비 정보가 DB에 성공적으로 추가 되었습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
                         else
                         {
-                            newOrderNumber = 1;
-                        }
-
-
-                        //Added should return true if data added to DB.
-                        bool added = AddToDB(sUsage);
-                        if (added)
-                        {
-                            ListViewItem listViewItem = new ListViewItem(newOrderNumber.ToString());
-                            listViewItem.SubItems.Add(sID.Text);
-                            for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
-                            {
-                                listViewItem.SubItems.Add(S_DeviceInfo_txtB[i].Text);
-                            }
-                            listViewItem.SubItems.Add(sUsage);
-                            listView1_thp.Items.Add(listViewItem);
-                            clearFields(S_DeviceInfo_txtB);
-                            MessageBox.Show("새 센서 장비 정보가 DB에 성공적으로 추가 되었습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("센서명 또는 Zone 정보를 입력해 주세요.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Question);
                         }
                     }
+                    else
+                    {
+                        MessageBox.Show("새 센서 장비 정보를 등록하시려면 '센서 추가' 버튼을 눌러주세요.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                    }
+                    
                 }
             }
             else if (tabControl1.SelectedTab == tabPage2)
