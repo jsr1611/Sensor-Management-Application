@@ -29,8 +29,6 @@ namespace AdminPage
         public List<string> S_DeviceInfoColumns { get; set; }
         public List<string> S_FourRangeColumns { get; set; }
 
-        public SqlConnection MyConn { get; set; }
-
         private string dbServer;
         private string dbName;
         private string dbUID;
@@ -90,7 +88,7 @@ namespace AdminPage
             return target;
         }
 
-        public List<string> CheckTablesExistHandler(List<string> usageCheckerNames)
+        public List<string> CheckTablesExist(List<string> usageCheckerNames)
         {
             List<string> target = new List<string>();
             string tbName;
@@ -112,7 +110,7 @@ namespace AdminPage
             return target;
         }
 
-        public string CheckTablesExistHandler(string usageCheckerName)
+        public string CheckTablesExist(string usageCheckerName)
         {
             string tbName;
             tbName = usageCheckerName;
@@ -138,28 +136,14 @@ namespace AdminPage
 
 
 
-
-
-
-
-
         private bool CreateTb(string tableName)
         {
             //string tbName = targetCheckBox.Name;
             bool tbCreated = false;
-            SqlConnection myConn = new SqlConnection($@"Data Source ={ ConnStr[0] }; Initial Catalog = { ConnStr[1] }; User id = { ConnStr[2] }; Password ={ ConnStr[3]}; Min Pool Size = 20");
 
-            /*          tbCreateCmdStr = $"Create TABLE {tableName} ( "+
-                            " sID INT NOT NULL, "+
-                            " LowerLimit1 float NOT NULL, " +
-                            " LowerLimit2 float NOT NULL, " +
-                            " HigherLimit1 float NOT NULL, " +
-                            " HigherLimit2 float NOT NULL, " + 
-                            " sUsage nvarchar(10) NOT NULL );";
 
-*/
             // Create Table command 
-            #region
+
             string tbCreateCmdStr = "";
             tbCreateCmdStr = $"Create TABLE {tableName} ( " +
                         $" {S_DeviceInfoColumns[0]} INT NOT NULL, " +
@@ -169,52 +153,43 @@ namespace AdminPage
                         $" {S_FourRangeColumns[2]} decimal(7,2) NULL, " +
                         $" {S_FourRangeColumns[3]} decimal(7,2) NULL);";
 
-            SqlCommand tbCreateCmd = new SqlCommand(tbCreateCmdStr, myConn);
-            #endregion
-
             // Check if table created correctly 
-            #region 
-            string tbCheckCmdStr;
+            /*string tbCheckCmdStr;
             tbCheckCmdStr = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'{tableName}';";
-            SqlCommand tbCheckCmd = new SqlCommand(tbCheckCmdStr, myConn);
-            #endregion
-
-            try
+*/
+            using (SqlConnection myConn = new SqlConnection(sqlConString))
             {
-                myConn.Open();
-                tbCreateCmd.ExecuteNonQuery();
-
-                using (SqlDataReader reader = tbCheckCmd.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
+                    if (myConn.State != ConnectionState.Open)
                     {
-                        tbCreated = Convert.ToInt32(reader.GetValue(0)) == 1;
+                        myConn.Open();
                     }
-                    reader.Close();
+
+                    using (SqlCommand tbCreateCmd = new SqlCommand(tbCreateCmdStr, myConn))
+                    {
+                        tbCreateCmd.ExecuteNonQuery();
+                        tbCreated = true;
+                    }
+                    /*using (SqlCommand tbCheckCmd = new SqlCommand(tbCheckCmdStr, myConn))
+                    {
+                        using (SqlDataReader reader = tbCheckCmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                tbCreated = Convert.ToInt32(reader.GetValue(0)) == 1;
+                            }
+                            reader.Close();
+                        }
+                    }*/
                 }
-            }
-            catch (System.Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            finally
-            {
-                if (myConn.State == System.Data.ConnectionState.Open)
+                catch (System.Exception ex)
                 {
-                    myConn.Close();
-                    myConn.Dispose();
-                    tbCheckCmd.Dispose();
-                    tbCreateCmd.Dispose();
+                    System.Windows.Forms.MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             return tbCreated;
         }
-
-
-
-
-
-
 
 
 
@@ -282,29 +257,6 @@ namespace AdminPage
         /// <param name="sql_dbExists"></param>
         /// <param name="myConn_master"></param>
         /// <returns></returns>
-        public bool IfDatabaseExists(string dbName, SqlConnection myConn_master)
-        {
-            bool result = false;
-            string sql_dbExists = $"IF DB_ID('{dbName}') IS NOT NULL SELECT 1";
-            DataSet ds = new DataSet();
-            using (SqlConnection con = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True"))
-            {
-                if (con.State != ConnectionState.Open)
-                {
-                    con.Open();
-                }
-                using (SqlDataAdapter sqlData = new SqlDataAdapter(sql_dbExists, con))
-                {
-                    sqlData.Fill(ds);
-                    if (ds.Tables.Count > 0)
-                    {
-                        result = true;
-                    }
-                }
-            }
-            return result;
-        }
-
         public bool IfDatabaseExists(string dbName)
         {
             bool result = false;
@@ -348,9 +300,7 @@ namespace AdminPage
         public bool CreateTable(string dbName, string tableName, string sqlCreateTable)
         {
             bool target = false;
-            SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True");
-            //dbName = connStr[1];
-            bool dbExists = IfDatabaseExists(dbName, myConn_master);
+            bool dbExists = IfDatabaseExists(dbName);
             if (dbExists)
             {
                 using (SqlConnection con = new SqlConnection())
@@ -453,11 +403,10 @@ namespace AdminPage
 
 
 
-        public bool UpdateDeviceInfoTable(SqlConnection myConn, string tableName, int deviceId, int deviceIdNew, List<TextBox> txtB_DeviceInfo, bool sUsage)
+        public bool UpdateDeviceInfoTable(string tableName, int deviceId, int deviceIdNew, List<TextBox> txtB_DeviceInfo, bool sUsage)
         {
             bool updSuccessful = false;
-            myConn = new SqlConnection();
-            myConn.ConnectionString = sqlConString;
+            SqlConnection myConn = new SqlConnection(sqlConString);
             string sensorUsage = sUsage ? "YES" : "NO";
             string sqlUpdStr;
             string sqlCheckStr;
@@ -540,10 +489,8 @@ namespace AdminPage
 
 
 
-        public bool UpdateLimitRangeInfo(int deviceId, int deviceIdNew, CheckBox targetCheckBox, List<NumericUpDown> rangeInfoList, SqlConnection myConn)
+        public bool UpdateLimitRangeInfo(int deviceId, int deviceIdNew, CheckBox targetCheckBox, List<NumericUpDown> rangeInfoList)
         {
-            myConn = new SqlConnection();
-            myConn.ConnectionString = sqlConString;
             bool updSuccessful = false;
             //deviceId = Convert.ToInt32(sID);
             string tableName = targetCheckBox.Name;
@@ -592,6 +539,7 @@ namespace AdminPage
                 sqlUpdCheckStr += ";";
 
             }
+            SqlConnection myConn = new SqlConnection(sqlConString);
             SqlCommand idExistsCmd = new SqlCommand(idCheckStr, myConn);
             SqlCommand updCmd = new SqlCommand(sqlUpdStr, myConn);
             SqlCommand updCheckCmd = new SqlCommand(sqlUpdCheckStr, myConn);
@@ -661,11 +609,10 @@ namespace AdminPage
 
 
 
-        public bool UpdateUsageTable(SqlConnection myConn, string UsageTable, List<string> usageTableColmn, int deviceIdOld, int deviceIdNew, List<string> usageInfo)
+        public bool UpdateUsageTable(string UsageTable, List<string> usageTableColmn, int deviceIdOld, int deviceIdNew, List<string> usageInfo)
         {
             //Check if ID exists
-            myConn = new SqlConnection();
-            myConn.ConnectionString = sqlConString;
+            SqlConnection myConn = new SqlConnection(sqlConString);
             string sqlCheckNoData = "";
             string sqlInsert = "";
             bool dataExists = false;
