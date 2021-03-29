@@ -56,7 +56,7 @@ namespace AdminPage
             startEndTime = StartEndTime;
 
             SqlConnection myConn = new SqlConnection(sqlConString);
-            else if (myConn.State != System.Data.ConnectionState.Open)
+            if (myConn.State != System.Data.ConnectionState.Open)
             {
                 myConn.Open();
             }

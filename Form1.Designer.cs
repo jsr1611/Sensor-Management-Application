@@ -76,6 +76,13 @@ namespace AdminPage
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.s_p250HigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p250HigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_p250LowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p250LowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.c_p250Usage = new System.Windows.Forms.CheckBox();
+            this.l_p25 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.button1 = new System.Windows.Forms.Button();
@@ -102,9 +109,13 @@ namespace AdminPage
             this.s_p05HigherLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_p05LowerLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_p05LowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_p01HigherLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_p03HigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p01HigherLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_p03HigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_p01LowerLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_p03LowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_p01LowerLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_p03LowerLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_hLowerLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_hLowerLimit1 = new System.Windows.Forms.NumericUpDown();
@@ -123,7 +134,9 @@ namespace AdminPage
             this.l_p30Usage = new System.Windows.Forms.Label();
             this.l_p10Usage = new System.Windows.Forms.Label();
             this.l_p05Usage = new System.Windows.Forms.Label();
+            this.l_p01 = new System.Windows.Forms.Label();
             this.c_p05Usage = new System.Windows.Forms.CheckBox();
+            this.c_p01Usage = new System.Windows.Forms.CheckBox();
             this.l_p03Usage = new System.Windows.Forms.Label();
             this.c_p03Usage = new System.Windows.Forms.CheckBox();
             this.l_hUsage = new System.Windows.Forms.Label();
@@ -213,19 +226,12 @@ namespace AdminPage
             this.sDescription_p = new System.Windows.Forms.TextBox();
             this.sLocation_p = new System.Windows.Forms.TextBox();
             this.sName_p = new System.Windows.Forms.TextBox();
-            this.c_p01Usage = new System.Windows.Forms.CheckBox();
-            this.l_p01 = new System.Windows.Forms.Label();
-            this.s_p01LowerLimit1 = new System.Windows.Forms.NumericUpDown();
-            this.s_p01LowerLimit2 = new System.Windows.Forms.NumericUpDown();
-            this.s_p01HigherLimit1 = new System.Windows.Forms.NumericUpDown();
-            this.s_p01HigherLimit2 = new System.Windows.Forms.NumericUpDown();
-            this.s_p250HigherLimit2 = new System.Windows.Forms.NumericUpDown();
-            this.s_p250HigherLimit1 = new System.Windows.Forms.NumericUpDown();
-            this.s_p250LowerLimit2 = new System.Windows.Forms.NumericUpDown();
-            this.s_p250LowerLimit1 = new System.Windows.Forms.NumericUpDown();
-            this.c_p250Usage = new System.Windows.Forms.CheckBox();
-            this.l_p25 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.c_mbarUsage = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.s_mbarHigherLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_mbarHigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_mbarLowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_mbarLowerLimit2 = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -239,6 +245,10 @@ namespace AdminPage
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250HigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250HigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250LowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250LowerLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p100LowerLimit2)).BeginInit();
@@ -259,9 +269,13 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.s_p05HigherLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p05LowerLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p05LowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01HigherLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p03HigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01HigherLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p03HigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01LowerLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p03LowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01LowerLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p03LowerLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_hLowerLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_hLowerLimit1)).BeginInit();
@@ -304,14 +318,10 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.s_paLowerLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p01LowerLimit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p01LowerLimit2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p01HigherLimit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p01HigherLimit2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p250HigherLimit2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p250HigherLimit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p250LowerLimit2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p250LowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarHigherLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarHigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarLowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarLowerLimit2)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -699,6 +709,63 @@ namespace AdminPage
             // 
             resources.ApplyResources(this.columnHeader6, "columnHeader6");
             // 
+            // s_p250HigherLimit2
+            // 
+            resources.ApplyResources(this.s_p250HigherLimit2, "s_p250HigherLimit2");
+            this.s_p250HigherLimit2.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p250HigherLimit2.Name = "s_p250HigherLimit2";
+            // 
+            // s_p250HigherLimit1
+            // 
+            resources.ApplyResources(this.s_p250HigherLimit1, "s_p250HigherLimit1");
+            this.s_p250HigherLimit1.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p250HigherLimit1.Name = "s_p250HigherLimit1";
+            // 
+            // s_p250LowerLimit2
+            // 
+            resources.ApplyResources(this.s_p250LowerLimit2, "s_p250LowerLimit2");
+            this.s_p250LowerLimit2.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p250LowerLimit2.Name = "s_p250LowerLimit2";
+            // 
+            // s_p250LowerLimit1
+            // 
+            resources.ApplyResources(this.s_p250LowerLimit1, "s_p250LowerLimit1");
+            this.s_p250LowerLimit1.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p250LowerLimit1.Name = "s_p250LowerLimit1";
+            // 
+            // c_p250Usage
+            // 
+            resources.ApplyResources(this.c_p250Usage, "c_p250Usage");
+            this.c_p250Usage.Name = "c_p250Usage";
+            this.c_p250Usage.UseVisualStyleBackColor = true;
+            // 
+            // l_p25
+            // 
+            this.l_p25.AutoEllipsis = true;
+            resources.ApplyResources(this.l_p25, "l_p25");
+            this.l_p25.Name = "l_p25";
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            // 
             // dateTimePicker2
             // 
             resources.ApplyResources(this.dateTimePicker2, "dateTimePicker2");
@@ -940,6 +1007,16 @@ namespace AdminPage
             0});
             this.s_p05LowerLimit1.Name = "s_p05LowerLimit1";
             // 
+            // s_p01HigherLimit2
+            // 
+            resources.ApplyResources(this.s_p01HigherLimit2, "s_p01HigherLimit2");
+            this.s_p01HigherLimit2.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p01HigherLimit2.Name = "s_p01HigherLimit2";
+            // 
             // s_p03HigherLimit2
             // 
             resources.ApplyResources(this.s_p03HigherLimit2, "s_p03HigherLimit2");
@@ -949,6 +1026,16 @@ namespace AdminPage
             0,
             0});
             this.s_p03HigherLimit2.Name = "s_p03HigherLimit2";
+            // 
+            // s_p01HigherLimit1
+            // 
+            resources.ApplyResources(this.s_p01HigherLimit1, "s_p01HigherLimit1");
+            this.s_p01HigherLimit1.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p01HigherLimit1.Name = "s_p01HigherLimit1";
             // 
             // s_p03HigherLimit1
             // 
@@ -960,6 +1047,16 @@ namespace AdminPage
             0});
             this.s_p03HigherLimit1.Name = "s_p03HigherLimit1";
             // 
+            // s_p01LowerLimit2
+            // 
+            resources.ApplyResources(this.s_p01LowerLimit2, "s_p01LowerLimit2");
+            this.s_p01LowerLimit2.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p01LowerLimit2.Name = "s_p01LowerLimit2";
+            // 
             // s_p03LowerLimit2
             // 
             resources.ApplyResources(this.s_p03LowerLimit2, "s_p03LowerLimit2");
@@ -969,6 +1066,16 @@ namespace AdminPage
             0,
             0});
             this.s_p03LowerLimit2.Name = "s_p03LowerLimit2";
+            // 
+            // s_p01LowerLimit1
+            // 
+            resources.ApplyResources(this.s_p01LowerLimit1, "s_p01LowerLimit1");
+            this.s_p01LowerLimit1.Maximum = new decimal(new int[] {
+            500000,
+            0,
+            0,
+            0});
+            this.s_p01LowerLimit1.Name = "s_p01LowerLimit1";
             // 
             // s_p03LowerLimit1
             // 
@@ -1132,12 +1239,25 @@ namespace AdminPage
             resources.ApplyResources(this.l_p05Usage, "l_p05Usage");
             this.l_p05Usage.Name = "l_p05Usage";
             // 
+            // l_p01
+            // 
+            this.l_p01.AutoEllipsis = true;
+            resources.ApplyResources(this.l_p01, "l_p01");
+            this.l_p01.Name = "l_p01";
+            // 
             // c_p05Usage
             // 
             resources.ApplyResources(this.c_p05Usage, "c_p05Usage");
             this.c_p05Usage.Name = "c_p05Usage";
             this.c_p05Usage.UseVisualStyleBackColor = true;
             this.c_p05Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            // 
+            // c_p01Usage
+            // 
+            resources.ApplyResources(this.c_p01Usage, "c_p01Usage");
+            this.c_p01Usage.Name = "c_p01Usage";
+            this.c_p01Usage.UseVisualStyleBackColor = true;
+            this.c_p01Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // l_p03Usage
             // 
@@ -1280,8 +1400,12 @@ namespace AdminPage
             this.splitContainer2.Panel2.Controls.Add(this.s_kpaHigherLimit1);
             this.splitContainer2.Panel2.Controls.Add(this.s_kpaLowerLimit2);
             this.splitContainer2.Panel2.Controls.Add(this.s_kpaLowerLimit1);
+            this.splitContainer2.Panel2.Controls.Add(this.s_mbarLowerLimit2);
             this.splitContainer2.Panel2.Controls.Add(this.s_hpaLowerLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_mbarLowerLimit1);
             this.splitContainer2.Panel2.Controls.Add(this.s_hpaLowerLimit1);
+            this.splitContainer2.Panel2.Controls.Add(this.s_mbarHigherLimit2);
+            this.splitContainer2.Panel2.Controls.Add(this.s_mbarHigherLimit1);
             this.splitContainer2.Panel2.Controls.Add(this.s_hpaHigherLimit2);
             this.splitContainer2.Panel2.Controls.Add(this.s_hpaHigherLimit1);
             this.splitContainer2.Panel2.Controls.Add(this.s_paLowerLimit2);
@@ -1292,6 +1416,7 @@ namespace AdminPage
             this.splitContainer2.Panel2.Controls.Add(this.label10);
             this.splitContainer2.Panel2.Controls.Add(this.label11);
             this.splitContainer2.Panel2.Controls.Add(this.label12);
+            this.splitContainer2.Panel2.Controls.Add(this.label1);
             this.splitContainer2.Panel2.Controls.Add(this.label14);
             this.splitContainer2.Panel2.Controls.Add(this.label15);
             this.splitContainer2.Panel2.Controls.Add(this.label16);
@@ -1302,6 +1427,7 @@ namespace AdminPage
             this.splitContainer2.Panel2.Controls.Add(this.c_mmhgUsage);
             this.splitContainer2.Panel2.Controls.Add(this.c_inchh2oUsage);
             this.splitContainer2.Panel2.Controls.Add(this.c_mmh2oUsage);
+            this.splitContainer2.Panel2.Controls.Add(this.c_mbarUsage);
             this.splitContainer2.Panel2.Controls.Add(this.c_kpaUsage);
             this.splitContainer2.Panel2.Controls.Add(this.c_hpaUsage);
             this.splitContainer2.Panel2.Controls.Add(this.c_paUsage);
@@ -2157,115 +2283,105 @@ namespace AdminPage
             resources.ApplyResources(this.sName_p, "sName_p");
             this.sName_p.Name = "sName_p";
             // 
-            // c_p01Usage
+            // c_mbarUsage
             // 
-            resources.ApplyResources(this.c_p01Usage, "c_p01Usage");
-            this.c_p01Usage.Name = "c_p01Usage";
-            this.c_p01Usage.UseVisualStyleBackColor = true;
-            this.c_p01Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.c_mbarUsage, "c_mbarUsage");
+            this.c_mbarUsage.Name = "c_mbarUsage";
+            this.c_mbarUsage.UseVisualStyleBackColor = true;
+            this.c_mbarUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // l_p01
+            // label1
             // 
-            this.l_p01.AutoEllipsis = true;
-            resources.ApplyResources(this.l_p01, "l_p01");
-            this.l_p01.Name = "l_p01";
+            this.label1.AutoEllipsis = true;
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
             // 
-            // s_p01LowerLimit1
+            // s_mbarHigherLimit1
             // 
-            resources.ApplyResources(this.s_p01LowerLimit1, "s_p01LowerLimit1");
-            this.s_p01LowerLimit1.Maximum = new decimal(new int[] {
-            500000,
+            this.s_mbarHigherLimit1.AllowDrop = true;
+            this.s_mbarHigherLimit1.DecimalPlaces = 3;
+            this.s_mbarHigherLimit1.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_mbarHigherLimit1, "s_mbarHigherLimit1");
+            this.s_mbarHigherLimit1.Maximum = new decimal(new int[] {
+            5,
             0,
             0,
             0});
-            this.s_p01LowerLimit1.Name = "s_p01LowerLimit1";
+            this.s_mbarHigherLimit1.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            -2147483648});
+            this.s_mbarHigherLimit1.Name = "s_mbarHigherLimit1";
             // 
-            // s_p01LowerLimit2
+            // s_mbarHigherLimit2
             // 
-            resources.ApplyResources(this.s_p01LowerLimit2, "s_p01LowerLimit2");
-            this.s_p01LowerLimit2.Maximum = new decimal(new int[] {
-            500000,
+            this.s_mbarHigherLimit2.AllowDrop = true;
+            this.s_mbarHigherLimit2.DecimalPlaces = 3;
+            this.s_mbarHigherLimit2.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_mbarHigherLimit2, "s_mbarHigherLimit2");
+            this.s_mbarHigherLimit2.Maximum = new decimal(new int[] {
+            5,
             0,
             0,
             0});
-            this.s_p01LowerLimit2.Name = "s_p01LowerLimit2";
+            this.s_mbarHigherLimit2.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            -2147483648});
+            this.s_mbarHigherLimit2.Name = "s_mbarHigherLimit2";
             // 
-            // s_p01HigherLimit1
+            // s_mbarLowerLimit1
             // 
-            resources.ApplyResources(this.s_p01HigherLimit1, "s_p01HigherLimit1");
-            this.s_p01HigherLimit1.Maximum = new decimal(new int[] {
-            500000,
+            this.s_mbarLowerLimit1.DecimalPlaces = 3;
+            this.s_mbarLowerLimit1.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_mbarLowerLimit1, "s_mbarLowerLimit1");
+            this.s_mbarLowerLimit1.Maximum = new decimal(new int[] {
+            5,
             0,
             0,
             0});
-            this.s_p01HigherLimit1.Name = "s_p01HigherLimit1";
+            this.s_mbarLowerLimit1.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            -2147483648});
+            this.s_mbarLowerLimit1.Name = "s_mbarLowerLimit1";
             // 
-            // s_p01HigherLimit2
+            // s_mbarLowerLimit2
             // 
-            resources.ApplyResources(this.s_p01HigherLimit2, "s_p01HigherLimit2");
-            this.s_p01HigherLimit2.Maximum = new decimal(new int[] {
-            500000,
+            this.s_mbarLowerLimit2.AllowDrop = true;
+            this.s_mbarLowerLimit2.DecimalPlaces = 3;
+            this.s_mbarLowerLimit2.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_mbarLowerLimit2, "s_mbarLowerLimit2");
+            this.s_mbarLowerLimit2.Maximum = new decimal(new int[] {
+            5,
             0,
             0,
             0});
-            this.s_p01HigherLimit2.Name = "s_p01HigherLimit2";
-            // 
-            // s_p250HigherLimit2
-            // 
-            resources.ApplyResources(this.s_p250HigherLimit2, "s_p250HigherLimit2");
-            this.s_p250HigherLimit2.Maximum = new decimal(new int[] {
-            500000,
+            this.s_mbarLowerLimit2.Minimum = new decimal(new int[] {
+            5,
             0,
             0,
-            0});
-            this.s_p250HigherLimit2.Name = "s_p250HigherLimit2";
-            // 
-            // s_p250HigherLimit1
-            // 
-            resources.ApplyResources(this.s_p250HigherLimit1, "s_p250HigherLimit1");
-            this.s_p250HigherLimit1.Maximum = new decimal(new int[] {
-            500000,
-            0,
-            0,
-            0});
-            this.s_p250HigherLimit1.Name = "s_p250HigherLimit1";
-            // 
-            // s_p250LowerLimit2
-            // 
-            resources.ApplyResources(this.s_p250LowerLimit2, "s_p250LowerLimit2");
-            this.s_p250LowerLimit2.Maximum = new decimal(new int[] {
-            500000,
-            0,
-            0,
-            0});
-            this.s_p250LowerLimit2.Name = "s_p250LowerLimit2";
-            // 
-            // s_p250LowerLimit1
-            // 
-            resources.ApplyResources(this.s_p250LowerLimit1, "s_p250LowerLimit1");
-            this.s_p250LowerLimit1.Maximum = new decimal(new int[] {
-            500000,
-            0,
-            0,
-            0});
-            this.s_p250LowerLimit1.Name = "s_p250LowerLimit1";
-            // 
-            // c_p250Usage
-            // 
-            resources.ApplyResources(this.c_p250Usage, "c_p250Usage");
-            this.c_p250Usage.Name = "c_p250Usage";
-            this.c_p250Usage.UseVisualStyleBackColor = true;
-            // 
-            // l_p25
-            // 
-            this.l_p25.AutoEllipsis = true;
-            resources.ApplyResources(this.l_p25, "l_p25");
-            this.l_p25.Name = "l_p25";
-            // 
-            // label5
-            // 
-            resources.ApplyResources(this.label5, "label5");
-            this.label5.Name = "label5";
+            -2147483648});
+            this.s_mbarLowerLimit2.Name = "s_mbarLowerLimit2";
             // 
             // Form1
             // 
@@ -2297,6 +2413,10 @@ namespace AdminPage
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250HigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250HigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250LowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p250LowerLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p100HigherLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p100LowerLimit2)).EndInit();
@@ -2317,9 +2437,13 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.s_p05HigherLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p05LowerLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p05LowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01HigherLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p03HigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01HigherLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p03HigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01LowerLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p03LowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_p01LowerLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_p03LowerLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_hLowerLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_hLowerLimit1)).EndInit();
@@ -2363,14 +2487,10 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.s_paLowerLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p01LowerLimit1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p01LowerLimit2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p01HigherLimit1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p01HigherLimit2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p250HigherLimit2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p250HigherLimit1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p250LowerLimit2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_p250LowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarHigherLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarHigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarLowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarLowerLimit2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2572,6 +2692,12 @@ namespace AdminPage
         private System.Windows.Forms.CheckBox c_p250Usage;
         private System.Windows.Forms.Label l_p25;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown s_mbarLowerLimit2;
+        private System.Windows.Forms.NumericUpDown s_mbarLowerLimit1;
+        private System.Windows.Forms.NumericUpDown s_mbarHigherLimit2;
+        private System.Windows.Forms.NumericUpDown s_mbarHigherLimit1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox c_mbarUsage;
     }
 }
 

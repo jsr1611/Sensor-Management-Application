@@ -282,9 +282,9 @@ namespace AdminPage
             bool dbExists = IfDatabaseExists(dbName);
             if (dbExists)
             {
-                using (SqlConnection con = new SqlConnection())
+                using (SqlConnection con = new SqlConnection(sqlConString))
                 {
-                    con.ConnectionString = sqlConString;
+                    //con.ConnectionString = sqlConString;
                     if (con.State != ConnectionState.Open)
                     {
                         con.Open();
@@ -348,9 +348,9 @@ namespace AdminPage
             dbCheckCmdStr = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'{tableName}';";
             try
             {
-                using (SqlConnection con = new SqlConnection())
+                using (SqlConnection con = new SqlConnection(sqlConString))
                 {
-                    con.ConnectionString = sqlConString;
+                    //con.ConnectionString = sqlConString;
                     if (con.State != ConnectionState.Open)
                     {
                         con.Open();
@@ -382,8 +382,9 @@ namespace AdminPage
 
 
 
-        public bool UpdateDeviceInfoTable(string tableName, int deviceId, int deviceIdNew, List<TextBox> txtB_DeviceInfo, bool sUsage)
+        public bool UpdateDeviceInfoTable(string DeviceTable, int deviceId, int deviceIdNew, List<TextBox> txtB_DeviceInfo, bool sUsage)
         {
+            
             bool updSuccessful = false;
             SqlConnection myConn = new SqlConnection(sqlConString);
             string sensorUsage = sUsage ? "YES" : "NO";
@@ -391,14 +392,14 @@ namespace AdminPage
             string sqlCheckStr;
             if (deviceId == deviceIdNew)
             {
-                sqlUpdStr = $"UPDATE {S_DeviceTable} " +
+                sqlUpdStr = $"UPDATE {DeviceTable} " +
                                         $"SET {S_DeviceInfoColumns[1]} = '{txtB_DeviceInfo[0].Text}' " +
                                             $", {S_DeviceInfoColumns[2]} = '{txtB_DeviceInfo[1].Text}' " +
                                             $", {S_DeviceInfoColumns[3]} = '{txtB_DeviceInfo[2].Text}' " +
                                             $", {S_DeviceInfoColumns[4]} = '{txtB_DeviceInfo[3].Text}' " +
                                             $", {S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} = '{sensorUsage}' " +
                                         $" WHERE {S_DeviceInfoColumns[0]} = {deviceId}; ";
-                sqlCheckStr = $"SELECT 1 FROM {S_DeviceTable} " +
+                sqlCheckStr = $"SELECT 1 FROM {DeviceTable} " +
                             $" WHERE {S_DeviceInfoColumns[0]} = {deviceId} " +
                             $"and {S_DeviceInfoColumns[1]} = '{txtB_DeviceInfo[0].Text}' " +
                             $" and {S_DeviceInfoColumns[2]} = '{txtB_DeviceInfo[1].Text}' " +
@@ -408,7 +409,7 @@ namespace AdminPage
             }
             else
             {
-                sqlUpdStr = $"UPDATE {S_DeviceTable} " +
+                sqlUpdStr = $"UPDATE {DeviceTable} " +
                                         $"SET {S_DeviceInfoColumns[0]} = {deviceIdNew}" +
                                         $", {S_DeviceInfoColumns[1]} = '{txtB_DeviceInfo[0].Text}'" +
                                             $", {S_DeviceInfoColumns[2]} = '{txtB_DeviceInfo[1].Text}'" +
@@ -417,7 +418,7 @@ namespace AdminPage
                                             $", {S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} = '{sensorUsage}' " +
                                         $"WHERE {S_DeviceInfoColumns[0]} = {deviceId}; ";
 
-                sqlCheckStr = $"SELECT 1 FROM {S_DeviceTable} " +
+                sqlCheckStr = $"SELECT 1 FROM {DeviceTable} " +
                             $" WHERE {S_DeviceInfoColumns[0]} = {deviceIdNew} ";
                 for (int i = 0; i < txtB_DeviceInfo.Count; i++)
                 {
@@ -436,7 +437,8 @@ namespace AdminPage
                 }
 
                 sqlUpdCmd.ExecuteNonQuery();
-                using (SqlDataReader reader = sqlCheckCmd.ExecuteReader())
+                updSuccessful = true;
+                /*using (SqlDataReader reader = sqlCheckCmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -447,7 +449,7 @@ namespace AdminPage
                             break;
                         }
                     }
-                }
+                }*/
 
             }
             catch (System.Exception ex)
