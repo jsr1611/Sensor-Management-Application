@@ -20,19 +20,26 @@ namespace AdminPage
         /// <summary>
         /// SqlConnection.ConnectionString property
         /// </summary>
-        public string sqlConString { get; set; }
+        private string sqlConString { get; set; }
 
-        public string tableName { get; set; }
+        private string tableName { get; set; }
+        private List<string> tbName { get; set; }
         public string dbName { get; set; }
-        public (string, string) startEndTime { get; set; }
+        private (string, string) startEndTime { get; set; }
 
         public DownToExcel()
         {
 
         }
-        public DownToExcel(List<string> tbName, string sqlConStr, (string, string) StartEndTime)
+        public DownToExcel(List<string> tbNames, string sqlConStr, (string, string) StartEndTime)
         {
             sqlConString = sqlConStr;
+            startEndTime = StartEndTime;
+            tbName = tbNames;
+
+        }
+        public void StartDownload()
+        {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -53,7 +60,7 @@ namespace AdminPage
             Excel.Worksheet[] ws = new Excel.Worksheet[tbName.Count];
 
 
-            startEndTime = StartEndTime;
+
 
             SqlConnection myConn = new SqlConnection(sqlConString);
             if (myConn.State != System.Data.ConnectionState.Open)
@@ -65,7 +72,7 @@ namespace AdminPage
             DataSet ds = new DataSet();
             SqlDataAdapter da;
 
-            
+
 
             for (int k = 0; k < tbName.Count; k++)
             {
@@ -78,15 +85,15 @@ namespace AdminPage
                 da.Fill(ds, tableName);
             }
 
-/*
-            foreach (Excel.Worksheet sheet in wb.Worksheets)
-            {
-                if (sheet.UsedRange.Count < 2)
-                {
-                    sheet.Delete();
-                }
-            }
-*/
+            /*
+                        foreach (Excel.Worksheet sheet in wb.Worksheets)
+                        {
+                            if (sheet.UsedRange.Count < 2)
+                            {
+                                sheet.Delete();
+                            }
+                        }
+            */
 
 
             try
@@ -100,9 +107,9 @@ namespace AdminPage
 
                 for (int index = 0; index < tbName.Count; index++)
                 {
-                    
+
                     System.Data.DataTable dt = ds.Tables[index];
-                    if(dt.Rows.Count == 0)
+                    if (dt.Rows.Count == 0)
                     {
                         continue;
                     }
@@ -136,14 +143,14 @@ namespace AdminPage
 
 
 
-/*                    var rngCelStr1 = (Excel.Range)ws[a].Cells[1];
-                    var rng1 = rngCelStr1.EntireColumn;
-                    rng1.NumberFormat = "0";
+                    /*                    var rngCelStr1 = (Excel.Range)ws[a].Cells[1];
+                                        var rng1 = rngCelStr1.EntireColumn;
+                                        rng1.NumberFormat = "0";
 
-                    var rngCelStr2 = (Excel.Range)ws[a].Cells[2];
-                    var rng2 = rngCelStr2.EntireColumn;
-                    rng2.NumberFormat = "yyyy-MM-dd HH:mm:ss.SSS";
-*/                    
+                                        var rngCelStr2 = (Excel.Range)ws[a].Cells[2];
+                                        var rng2 = rngCelStr2.EntireColumn;
+                                        rng2.NumberFormat = "yyyy-MM-dd HH:mm:ss.SSS";
+                    */
 
 
                     ws[index].Range[ws[index].Cells[2, 1], ws[index].Cells[dt.Rows.Count + 1, dt.Columns.Count]].value = data;

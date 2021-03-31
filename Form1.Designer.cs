@@ -166,8 +166,8 @@ namespace AdminPage
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label4 = new System.Windows.Forms.Label();
-            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker4 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker2_p = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker1_p = new System.Windows.Forms.DateTimePicker();
             this.button2 = new System.Windows.Forms.Button();
             this.s_inchhgHigherLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_inchhgHigherLimit1 = new System.Windows.Forms.NumericUpDown();
@@ -189,8 +189,12 @@ namespace AdminPage
             this.s_kpaHigherLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_kpaLowerLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_kpaLowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_mbarLowerLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_hpaLowerLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_mbarLowerLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_hpaLowerLimit1 = new System.Windows.Forms.NumericUpDown();
+            this.s_mbarHigherLimit2 = new System.Windows.Forms.NumericUpDown();
+            this.s_mbarHigherLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_hpaHigherLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_hpaHigherLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_paLowerLimit2 = new System.Windows.Forms.NumericUpDown();
@@ -201,6 +205,7 @@ namespace AdminPage
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -211,6 +216,7 @@ namespace AdminPage
             this.c_mmhgUsage = new System.Windows.Forms.CheckBox();
             this.c_inchh2oUsage = new System.Windows.Forms.CheckBox();
             this.c_mmh2oUsage = new System.Windows.Forms.CheckBox();
+            this.c_mbarUsage = new System.Windows.Forms.CheckBox();
             this.c_kpaUsage = new System.Windows.Forms.CheckBox();
             this.c_hpaUsage = new System.Windows.Forms.CheckBox();
             this.c_paUsage = new System.Windows.Forms.CheckBox();
@@ -226,12 +232,6 @@ namespace AdminPage
             this.sDescription_p = new System.Windows.Forms.TextBox();
             this.sLocation_p = new System.Windows.Forms.TextBox();
             this.sName_p = new System.Windows.Forms.TextBox();
-            this.c_mbarUsage = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.s_mbarHigherLimit1 = new System.Windows.Forms.NumericUpDown();
-            this.s_mbarHigherLimit2 = new System.Windows.Forms.NumericUpDown();
-            this.s_mbarLowerLimit1 = new System.Windows.Forms.NumericUpDown();
-            this.s_mbarLowerLimit2 = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -310,18 +310,18 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.s_kpaHigherLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_kpaLowerLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_kpaLowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarLowerLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_hpaLowerLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarLowerLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_hpaLowerLimit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarHigherLimit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarHigherLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_hpaHigherLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_hpaHigherLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paLowerLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paLowerLimit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_mbarHigherLimit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_mbarHigherLimit2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_mbarLowerLimit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_mbarLowerLimit2)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -754,6 +754,7 @@ namespace AdminPage
             resources.ApplyResources(this.c_p250Usage, "c_p250Usage");
             this.c_p250Usage.Name = "c_p250Usage";
             this.c_p250Usage.UseVisualStyleBackColor = true;
+            this.c_p250Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // l_p25
             // 
@@ -773,7 +774,7 @@ namespace AdminPage
             this.dateTimePicker2.MaxDate = new System.DateTime(2200, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker2.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Value = new System.DateTime(2021, 3, 12, 0, 0, 0, 0);
+            this.dateTimePicker2.Value = new System.DateTime(2021, 3, 30, 0, 0, 0, 0);
             // 
             // dateTimePicker1
             // 
@@ -782,7 +783,7 @@ namespace AdminPage
             this.dateTimePicker1.MaxDate = new System.DateTime(2200, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker1.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Value = new System.DateTime(2021, 3, 12, 0, 0, 0, 0);
+            this.dateTimePicker1.Value = new System.DateTime(2021, 3, 30, 0, 0, 0, 0);
             // 
             // button1
             // 
@@ -1377,8 +1378,8 @@ namespace AdminPage
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.label4);
-            this.splitContainer2.Panel2.Controls.Add(this.dateTimePicker3);
-            this.splitContainer2.Panel2.Controls.Add(this.dateTimePicker4);
+            this.splitContainer2.Panel2.Controls.Add(this.dateTimePicker2_p);
+            this.splitContainer2.Panel2.Controls.Add(this.dateTimePicker1_p);
             this.splitContainer2.Panel2.Controls.Add(this.button2);
             this.splitContainer2.Panel2.Controls.Add(this.s_inchhgHigherLimit2);
             this.splitContainer2.Panel2.Controls.Add(this.s_inchhgHigherLimit1);
@@ -1497,23 +1498,23 @@ namespace AdminPage
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
             // 
-            // dateTimePicker3
+            // dateTimePicker2_p
             // 
-            resources.ApplyResources(this.dateTimePicker3, "dateTimePicker3");
-            this.dateTimePicker3.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker3.MaxDate = new System.DateTime(2200, 12, 31, 0, 0, 0, 0);
-            this.dateTimePicker3.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
-            this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.Value = new System.DateTime(2021, 1, 1, 0, 0, 0, 0);
+            resources.ApplyResources(this.dateTimePicker2_p, "dateTimePicker2_p");
+            this.dateTimePicker2_p.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker2_p.MaxDate = new System.DateTime(2200, 12, 31, 0, 0, 0, 0);
+            this.dateTimePicker2_p.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker2_p.Name = "dateTimePicker2_p";
+            this.dateTimePicker2_p.Value = new System.DateTime(2021, 1, 1, 0, 0, 0, 0);
             // 
-            // dateTimePicker4
+            // dateTimePicker1_p
             // 
-            resources.ApplyResources(this.dateTimePicker4, "dateTimePicker4");
-            this.dateTimePicker4.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker4.MaxDate = new System.DateTime(2300, 12, 31, 0, 0, 0, 0);
-            this.dateTimePicker4.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
-            this.dateTimePicker4.Name = "dateTimePicker4";
-            this.dateTimePicker4.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            resources.ApplyResources(this.dateTimePicker1_p, "dateTimePicker1_p");
+            this.dateTimePicker1_p.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker1_p.MaxDate = new System.DateTime(2300, 12, 31, 0, 0, 0, 0);
+            this.dateTimePicker1_p.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker1_p.Name = "dateTimePicker1_p";
+            this.dateTimePicker1_p.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             // 
             // button2
             // 
@@ -1942,6 +1943,28 @@ namespace AdminPage
             -2147418112});
             this.s_kpaLowerLimit1.Name = "s_kpaLowerLimit1";
             // 
+            // s_mbarLowerLimit2
+            // 
+            this.s_mbarLowerLimit2.AllowDrop = true;
+            this.s_mbarLowerLimit2.DecimalPlaces = 3;
+            this.s_mbarLowerLimit2.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_mbarLowerLimit2, "s_mbarLowerLimit2");
+            this.s_mbarLowerLimit2.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.s_mbarLowerLimit2.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            -2147483648});
+            this.s_mbarLowerLimit2.Name = "s_mbarLowerLimit2";
+            // 
             // s_hpaLowerLimit2
             // 
             this.s_hpaLowerLimit2.AllowDrop = true;
@@ -1964,6 +1987,27 @@ namespace AdminPage
             -2147483648});
             this.s_hpaLowerLimit2.Name = "s_hpaLowerLimit2";
             // 
+            // s_mbarLowerLimit1
+            // 
+            this.s_mbarLowerLimit1.DecimalPlaces = 3;
+            this.s_mbarLowerLimit1.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_mbarLowerLimit1, "s_mbarLowerLimit1");
+            this.s_mbarLowerLimit1.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.s_mbarLowerLimit1.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            -2147483648});
+            this.s_mbarLowerLimit1.Name = "s_mbarLowerLimit1";
+            // 
             // s_hpaLowerLimit1
             // 
             this.s_hpaLowerLimit1.DecimalPlaces = 3;
@@ -1984,6 +2028,50 @@ namespace AdminPage
             0,
             -2147483648});
             this.s_hpaLowerLimit1.Name = "s_hpaLowerLimit1";
+            // 
+            // s_mbarHigherLimit2
+            // 
+            this.s_mbarHigherLimit2.AllowDrop = true;
+            this.s_mbarHigherLimit2.DecimalPlaces = 3;
+            this.s_mbarHigherLimit2.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_mbarHigherLimit2, "s_mbarHigherLimit2");
+            this.s_mbarHigherLimit2.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.s_mbarHigherLimit2.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            -2147483648});
+            this.s_mbarHigherLimit2.Name = "s_mbarHigherLimit2";
+            // 
+            // s_mbarHigherLimit1
+            // 
+            this.s_mbarHigherLimit1.AllowDrop = true;
+            this.s_mbarHigherLimit1.DecimalPlaces = 3;
+            this.s_mbarHigherLimit1.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            resources.ApplyResources(this.s_mbarHigherLimit1, "s_mbarHigherLimit1");
+            this.s_mbarHigherLimit1.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.s_mbarHigherLimit1.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            -2147483648});
+            this.s_mbarHigherLimit1.Name = "s_mbarHigherLimit1";
             // 
             // s_hpaHigherLimit2
             // 
@@ -2140,6 +2228,12 @@ namespace AdminPage
             resources.ApplyResources(this.label12, "label12");
             this.label12.Name = "label12";
             // 
+            // label1
+            // 
+            this.label1.AutoEllipsis = true;
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
             // label14
             // 
             this.label14.AutoEllipsis = true;
@@ -2201,6 +2295,13 @@ namespace AdminPage
             this.c_mmh2oUsage.Name = "c_mmh2oUsage";
             this.c_mmh2oUsage.UseVisualStyleBackColor = true;
             this.c_mmh2oUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            // 
+            // c_mbarUsage
+            // 
+            resources.ApplyResources(this.c_mbarUsage, "c_mbarUsage");
+            this.c_mbarUsage.Name = "c_mbarUsage";
+            this.c_mbarUsage.UseVisualStyleBackColor = true;
+            this.c_mbarUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // c_kpaUsage
             // 
@@ -2282,106 +2383,6 @@ namespace AdminPage
             // 
             resources.ApplyResources(this.sName_p, "sName_p");
             this.sName_p.Name = "sName_p";
-            // 
-            // c_mbarUsage
-            // 
-            resources.ApplyResources(this.c_mbarUsage, "c_mbarUsage");
-            this.c_mbarUsage.Name = "c_mbarUsage";
-            this.c_mbarUsage.UseVisualStyleBackColor = true;
-            this.c_mbarUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoEllipsis = true;
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            // 
-            // s_mbarHigherLimit1
-            // 
-            this.s_mbarHigherLimit1.AllowDrop = true;
-            this.s_mbarHigherLimit1.DecimalPlaces = 3;
-            this.s_mbarHigherLimit1.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
-            resources.ApplyResources(this.s_mbarHigherLimit1, "s_mbarHigherLimit1");
-            this.s_mbarHigherLimit1.Maximum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.s_mbarHigherLimit1.Minimum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            -2147483648});
-            this.s_mbarHigherLimit1.Name = "s_mbarHigherLimit1";
-            // 
-            // s_mbarHigherLimit2
-            // 
-            this.s_mbarHigherLimit2.AllowDrop = true;
-            this.s_mbarHigherLimit2.DecimalPlaces = 3;
-            this.s_mbarHigherLimit2.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
-            resources.ApplyResources(this.s_mbarHigherLimit2, "s_mbarHigherLimit2");
-            this.s_mbarHigherLimit2.Maximum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.s_mbarHigherLimit2.Minimum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            -2147483648});
-            this.s_mbarHigherLimit2.Name = "s_mbarHigherLimit2";
-            // 
-            // s_mbarLowerLimit1
-            // 
-            this.s_mbarLowerLimit1.DecimalPlaces = 3;
-            this.s_mbarLowerLimit1.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
-            resources.ApplyResources(this.s_mbarLowerLimit1, "s_mbarLowerLimit1");
-            this.s_mbarLowerLimit1.Maximum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.s_mbarLowerLimit1.Minimum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            -2147483648});
-            this.s_mbarLowerLimit1.Name = "s_mbarLowerLimit1";
-            // 
-            // s_mbarLowerLimit2
-            // 
-            this.s_mbarLowerLimit2.AllowDrop = true;
-            this.s_mbarLowerLimit2.DecimalPlaces = 3;
-            this.s_mbarLowerLimit2.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
-            resources.ApplyResources(this.s_mbarLowerLimit2, "s_mbarLowerLimit2");
-            this.s_mbarLowerLimit2.Maximum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.s_mbarLowerLimit2.Minimum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            -2147483648});
-            this.s_mbarLowerLimit2.Name = "s_mbarLowerLimit2";
             // 
             // Form1
             // 
@@ -2479,18 +2480,18 @@ namespace AdminPage
             ((System.ComponentModel.ISupportInitialize)(this.s_kpaHigherLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_kpaLowerLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_kpaLowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarLowerLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_hpaLowerLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarLowerLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_hpaLowerLimit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarHigherLimit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.s_mbarHigherLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_hpaHigherLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_hpaHigherLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paLowerLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paLowerLimit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.s_paHigherLimit1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_mbarHigherLimit1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_mbarHigherLimit2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_mbarLowerLimit1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.s_mbarLowerLimit2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2676,8 +2677,8 @@ namespace AdminPage
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker4;
+        private System.Windows.Forms.DateTimePicker dateTimePicker2_p;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1_p;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.NumericUpDown s_p01HigherLimit2;
         private System.Windows.Forms.NumericUpDown s_p01HigherLimit1;

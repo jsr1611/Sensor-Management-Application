@@ -91,9 +91,16 @@ namespace AdminPage
             pTrackerTimer.Start();
             //applicationProcess = GetAppProcess(DataCollectionAppName);
 
-            dateTimePicker1.Value = DateTime.Now;
-            dateTimePicker2.Value = DateTime.Now;
 
+            dateTimePicker1.Value = DateTime.Today.AddDays(-1);
+            dateTimePicker1.Visible = true;
+            dateTimePicker2.Value = DateTime.Today;
+            dateTimePicker2.Visible = true;
+
+            dateTimePicker1_p.Value = DateTime.Today.AddDays(-1);
+            dateTimePicker1_p.Visible = true;
+            dateTimePicker2_p.Value = DateTime.Today;
+            dateTimePicker2_p.Visible = true;
 
             S_DeviceInfo_txtB = new List<TextBox>() { sName, sZone, sLocation, sDescription };
             S_DeviceInfo_txtB_p = new List<TextBox>() { sName_p, sZone_p, sLocation_p, sDescription_p };
@@ -527,11 +534,19 @@ namespace AdminPage
                     DialogResult dialog = MessageBox.Show("데이터 수집 프로그램을 중지하시겠습니까?", "Application status", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (dialog == DialogResult.Yes)
                     {
-                        applicationProcess = GetAppProcess(DataCollectionAppName);
-                        applicationProcess.Kill();
-                        b_dataCollection_status.Image = Resources.light_off_26;
-                        appAlreadyRunning = false;
-                        applicationProcess.Dispose();
+                        try
+                        {
+                            applicationProcess = GetAppProcess(DataCollectionAppName);
+                            applicationProcess.Kill();
+                            b_dataCollection_status.Image = Resources.light_off_26;
+                            appAlreadyRunning = false;
+                            applicationProcess.Dispose();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Application status", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        
                     }
                 }
                 else
@@ -675,20 +690,27 @@ namespace AdminPage
 
                     int deviceId = Convert.ToInt32(listView1_thp.SelectedItems[0].SubItems[1].Text);
                     //Console.WriteLine("ID:" + listView1.SelectedItems[0].Text);
-                    bool updated = UpdateDB(deviceId);
-                    if (updated)
+                    if (S_DeviceInfo_txtB[0].Text.Length > 1 && S_DeviceInfo_txtB[1].Text.Length > 1)
                     {
-                        foreach (ListViewItem item in listView1_thp.SelectedItems)
+                        bool updated = UpdateDB(deviceId);
+                        if (updated)
                         {
-                            item.SubItems[1].Text = sID.Text;
-                            for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
+                            foreach (ListViewItem item in listView1_thp.SelectedItems)
                             {
-                                item.SubItems[i + 2].Text = S_DeviceInfo_txtB[i].Text;
+                                item.SubItems[1].Text = sID.Text;
+                                for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
+                                {
+                                    item.SubItems[i + 2].Text = S_DeviceInfo_txtB[i].Text;
+                                }
+                                item.SubItems[item.SubItems.Count - 1].Text = sUsage;
                             }
-                            item.SubItems[item.SubItems.Count - 1].Text = sUsage;
+                            clearFields(S_DeviceInfo_txtB);
+                            MessageBox.Show("센서 정보 DB 업데이트가 성공적으로 이루어졌습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
-                        clearFields(S_DeviceInfo_txtB);
-                        MessageBox.Show("센서 정보 DB 업데이트가 성공적으로 이루어졌습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("센서명 및 Zone 정보를 꼭 입력해 주세요.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Question);
                     }
                 }
 
@@ -726,7 +748,7 @@ namespace AdminPage
                         }
                         else
                         {
-                            MessageBox.Show("센서명 또는 Zone 정보를 입력해 주세요.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                            MessageBox.Show("센서명 및 Zone 정보를 꼭 입력해 주세요.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Question);
                         }
                     }
                     else
@@ -746,20 +768,27 @@ namespace AdminPage
                 {
                     int deviceId = Convert.ToInt32(listView2_pressure.SelectedItems[0].SubItems[1].Text);
                     //Console.WriteLine("ID:" + listView1.SelectedItems[0].Text);
-                    bool updated = UpdateDB(deviceId);          // FIX UpdateDB 부문 
-                    if (updated)
+                    if (S_DeviceInfo_txtB_p[0].Text.Length > 1 && S_DeviceInfo_txtB_p[1].Text.Length > 1)
                     {
-                        foreach (ListViewItem item in listView2_pressure.SelectedItems)
+                        bool updated = UpdateDB(deviceId);          // FIX UpdateDB 부문 
+                        if (updated)
                         {
-                            item.SubItems[1].Text = sID_p.Text;
-                            for (int i = 0; i < S_DeviceInfo_txtB_p.Count; i++)
+                            foreach (ListViewItem item in listView2_pressure.SelectedItems)
                             {
-                                item.SubItems[i + 2].Text = S_DeviceInfo_txtB_p[i].Text;
+                                item.SubItems[1].Text = sID_p.Text;
+                                for (int i = 0; i < S_DeviceInfo_txtB_p.Count; i++)
+                                {
+                                    item.SubItems[i + 2].Text = S_DeviceInfo_txtB_p[i].Text;
+                                }
+                                item.SubItems[item.SubItems.Count - 1].Text = sUsage;
                             }
-                            item.SubItems[item.SubItems.Count - 1].Text = sUsage;
+                            clearFields(S_DeviceInfo_txtB_p);
+                            MessageBox.Show("센서 정보 DB 업데이트가 성공적으로 이루어졌습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
-                        clearFields(S_DeviceInfo_txtB_p);
-                        MessageBox.Show("센서 정보 DB 업데이트가 성공적으로 이루어졌습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("센서명 및 Zone 정보를 꼭 입력해 주세요.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Question);
                     }
                 }
 
@@ -783,22 +812,37 @@ namespace AdminPage
                         newOrderNumber = 1;
                     }
 
-                    //Added should return true if data added to DB.
-                    bool added = AddToDB(sUsage);               /// FIX AddToDB 부문
-                    if (added)
+                    if (sID_p.Text.Length > 0)
                     {
-                        ListViewItem listViewItem = new ListViewItem(newOrderNumber.ToString());
-                        listViewItem.SubItems.Add(sID_p.Text);
-                        for (int i = 0; i < S_DeviceInfo_txtB_p.Count; i++)
+                        if (S_DeviceInfo_txtB_p[0].Text.Length > 1 && S_DeviceInfo_txtB_p[1].Text.Length > 1)
                         {
-                            listViewItem.SubItems.Add(S_DeviceInfo_txtB_p[i].Text);
+
+                            //Added should return true if data added to DB.
+                            bool added = AddToDB(sUsage);               /// FIX AddToDB 부문
+                            if (added)
+                            {
+                                ListViewItem listViewItem = new ListViewItem(newOrderNumber.ToString());
+                                listViewItem.SubItems.Add(sID_p.Text);
+                                for (int i = 0; i < S_DeviceInfo_txtB_p.Count; i++)
+                                {
+                                    listViewItem.SubItems.Add(S_DeviceInfo_txtB_p[i].Text);
+                                }
+                                listViewItem.SubItems.Add(sUsage);
+                                listView2_pressure.Items.Add(listViewItem);
+                                clearFields(S_DeviceInfo_txtB_p);
+                                MessageBox.Show("새 센서 장비 정보가 DB에 성공적으로 추가 되었습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            //}
                         }
-                        listViewItem.SubItems.Add(sUsage);
-                        listView2_pressure.Items.Add(listViewItem);
-                        clearFields(S_DeviceInfo_txtB_p);
-                        MessageBox.Show("새 센서 장비 정보가 DB에 성공적으로 추가 되었습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        else
+                        {
+                            MessageBox.Show("센서명 및 Zone 정보를 꼭 입력해 주세요.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                        }
                     }
-                    //}
+                    else
+                    {
+                        MessageBox.Show("새 센서 장비 정보를 등록하시려면 '센서 추가' 버튼을 눌러주세요.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                    }
                 }
             }
             else
@@ -809,6 +853,9 @@ namespace AdminPage
 
         private void clearFields(List<TextBox> textBoxes)
         {
+            string deviceTable = "";
+            int defaultID = 0;
+            TextBox sID_ref = new TextBox();
             for (int i = 0; i < textBoxes.Count; i++)
             {
                 textBoxes[i].Text = "";
@@ -821,13 +868,19 @@ namespace AdminPage
 
                 isCheked = S_UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
                 listNumbers = S_UsageCheckerRangePairs.Values.AsEnumerable().ToList();
+                deviceTable = S_DeviceTable;
+                defaultID = 1;
+                sID_ref = sID;
 
             }
             else if (tabControl1.SelectedTab == tabPage2)
             {
+
                 isCheked = S_UsageCheckerRangePairs_p.Keys.AsEnumerable().ToList();
                 listNumbers = S_UsageCheckerRangePairs_p.Values.AsEnumerable().ToList();
-
+                defaultID = 51;
+                deviceTable = S_DeviceTable_p;
+                sID_ref = sID_p;
             }
             else
             {
@@ -843,6 +896,11 @@ namespace AdminPage
                     listNumbers[i][j].Enabled = false;
                 }
             }
+            string getMaxId = $"SELECT MAX({S_DeviceInfoColumns[0]}) AS {S_DeviceInfoColumns[0]} FROM {deviceTable};";
+            DataSet ds = GetDataSet(getMaxId);
+            int sensorId = ds.Tables.Count > 0 ? ds.Tables[0].Rows[0].Field<int>(S_DeviceInfoColumns[0]) + 1 : defaultID;
+            sID_ref.Text = sensorId.ToString();
+
         }
 
 
@@ -866,7 +924,7 @@ namespace AdminPage
             {
                 sID_txtB = sID;
                 DeviceTable = S_DeviceTable;
-                UsageTable = S_UsageTable_p;
+                UsageTable = S_UsageTable;
                 sDeviceInfo_txtB = S_DeviceInfo_txtB;
                 deviceIdNew = Convert.ToInt32(this.sID.Text);
                 UsageCheckerRangePairs = S_UsageCheckerRangePairs;
@@ -974,7 +1032,7 @@ namespace AdminPage
                     DeviceInfo_txt = S_DeviceInfo_txtB;
                     UsageCheckerRangePairs = S_UsageCheckerRangePairs;
                 }
-                else if(tabControl1.SelectedTab == tabPage2)
+                else if (tabControl1.SelectedTab == tabPage2)
                 {
                     sensorId = Convert.ToInt32(sID_p.Text);
                     DeviceTable = S_DeviceTable_p;
@@ -1199,7 +1257,7 @@ namespace AdminPage
                 {
                     string getMaxID = $"SELECT MAX(sID) AS {S_DeviceInfoColumns[0]} FROM {DeviceTable};";
                     DataSet ds = GetDataSet(getMaxID);
-                    sID.Text = ds.Tables.Count > 0 ? (Convert.ToInt32(ds.Tables[0].Rows[0].Field<int>(S_DeviceInfoColumns[0]))+1).ToString() : sensorId;
+                    sID.Text = ds.Tables.Count > 0 ? (Convert.ToInt32(ds.Tables[0].Rows[0].Field<int>(S_DeviceInfoColumns[0])) + 1).ToString() : sensorId;
                 }
                 else
                 {
@@ -1404,7 +1462,8 @@ namespace AdminPage
         private bool CheckAppRunning(string dataCollectionAppName)
         {
             bool res = false;
-            if (Process.GetProcessesByName(dataCollectionAppName).Length > 0)
+            Process[] processes = Process.GetProcessesByName(dataCollectionAppName);
+            if (processes.Length > 0)
             {
                 res = true;
             }
@@ -1420,8 +1479,27 @@ namespace AdminPage
             string endTime = dateTimePicker2.Value.ToString("yyyy-MM-dd HH:mm:ss");
             //DownToExcel downToExcel = new DownToExcel(tbName: "d_p03Usage", sqlConStr: sqlConString, (startTime, endTime));
 
-            List<string> tableNames = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).Select(x => "d" + x.Substring(1)).ToList();
-            DownToExcel toExcel = new DownToExcel(tbName: tableNames, sqlConString, (startTime, endTime));
+            List<string> tableNames = new List<string>();
+
+            if (tabControl1.SelectedTab == tabPage1)
+            {
+                startTime = dateTimePicker1.Value.ToString("yyyy-MM-dd HH:mm:ss");
+                endTime = dateTimePicker2.Value.ToString("yyyy-MM-dd HH:mm:ss");
+                tableNames = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).Select(x => "d" + x.Substring(1)).ToList();
+            }
+            else if (tabControl1.SelectedTab == tabPage2)
+            {
+                startTime = dateTimePicker1_p.Value.ToString("yyyy-MM-dd HH:mm:ss");
+                endTime = dateTimePicker2_p.Value.ToString("yyyy-MM-dd HH:mm:ss");
+                tableNames = S_UsageCheckerRangePairs_p.Keys.AsEnumerable().Select(x => x.Name).Select(x => "d" + x.Substring(1)).ToList();
+            }
+            else
+            {
+                // space for new category of devices
+            }
+            DownToExcel toExcel = new DownToExcel(tableNames, sqlConString, (startTime, endTime));
+            System.Threading.Thread downloaderThread = new System.Threading.Thread(toExcel.StartDownload);
+            downloaderThread.Start();
 
         }
 
@@ -1464,8 +1542,6 @@ namespace AdminPage
                 }
 
             }
-
-
 
         }
 
