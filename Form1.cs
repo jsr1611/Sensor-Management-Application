@@ -143,7 +143,6 @@ namespace AdminPage
 
             sqlConString = $@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"; // ; Integrated Security=True ");
 
-
             g_DbTableHandler = new DbTableHandler(new List<string>() { DbServer, DbName, DbUID, DbUID });
 
             g_DbTableHandler.sqlConString = sqlConString;
@@ -404,6 +403,7 @@ namespace AdminPage
             bool checkDbExists = g_DbTableHandler.IfDatabaseExists(sensorData_dbName);
 
             string sqlCreateDeviceTb = $"CREATE TABLE {Devices_tbName} ({S_DeviceInfoColumns[0]} INT NOT NULL, CONSTRAINT PK_{Devices_tbName}_{S_DeviceInfoColumns[0]} PRIMARY KEY ({S_DeviceInfoColumns[0]}) ";
+
             //  S_DeviceInfo_txtB 크기만큼은 loop를 통해 스트링에 추가
             for (int i = 1; i < S_DeviceInfoColumns.Count - 1; i++)
             {
@@ -417,24 +417,40 @@ namespace AdminPage
                 if (Check_Device_tableExists)
                 {
                     string sqlStr = $"SELECT * FROM {Devices_tbName} ORDER BY {S_DeviceInfoColumns[0]}";
-                    using (SqlConnection con = new SqlConnection(sqlConString))
+                    try
                     {
-                        try
+                        using (SqlConnection con = new SqlConnection(sqlConString))
                         {
-                            if (con.State != ConnectionState.Open)
-                            {
-                                con.Open();
-                            }
+                            con.Open();
                             using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlStr, con))
                             {
                                 sqlDataAdapter.Fill(ds);
                             }
                         }
-                        catch (System.Exception ex)
-                        {
-                            MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
                     }
+                    catch (System.Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        sqlConString = $@"Data Source={DbServer};Initial Catalog={DbName};Integrated Security=True";
+                        g_DbTableHandler.sqlConString = sqlConString;
+                        try
+                        {
+                            using (SqlConnection con = new SqlConnection(sqlConString))
+                            {
+                                con.Open();
+                                using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlStr, con))
+                                {
+                                    sqlDataAdapter.Fill(ds);
+                                }
+                            }
+                        }
+                        catch (System.Exception ex_1)
+                        {
+                            MessageBox.Show(ex_1.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+
+                    }
+
                 }
                 else
                 {
@@ -448,6 +464,7 @@ namespace AdminPage
             else
             {
                 string sqlCreateDb = $@"CREATE DATABASE {DbName};";
+
 
                 bool dataBase_Created = g_DbTableHandler.CreateDatabase(DbName, sqlCreateDb);
                 if (dataBase_Created)
@@ -546,7 +563,7 @@ namespace AdminPage
                         {
                             MessageBox.Show(ex.Message, "Application status", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                        
+
                     }
                 }
                 else
@@ -898,7 +915,7 @@ namespace AdminPage
             }
             string getMaxId = $"SELECT MAX({S_DeviceInfoColumns[0]}) AS {S_DeviceInfoColumns[0]} FROM {deviceTable};";
             DataSet ds = GetDataSet(getMaxId);
-            int sensorId = ds.Tables.Count > 0 ? ds.Tables[0].Rows[0].Field<int>(S_DeviceInfoColumns[0]) + 1 : defaultID;
+            int sensorId = (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0][0].ToString() != "") ? (Convert.ToInt32(ds.Tables[0].Rows[0][0]) + 1) : defaultID;
             sID_ref.Text = sensorId.ToString();
 
         }

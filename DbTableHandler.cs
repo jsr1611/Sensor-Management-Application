@@ -33,7 +33,7 @@ namespace AdminPage
         private string dbName;
         private string dbUID;
 
-        public List<string> ConnStr { get; set; }
+        public List<string> dbAccessParameters { get; set; }
 
         public string sqlConString { get; internal set; }
 
@@ -46,11 +46,11 @@ namespace AdminPage
         }
         public DbTableHandler(List<string> _connStr)
         {
-            ConnStr = _connStr;
-            DbServer = ConnStr[0];
-            DbName = ConnStr[1];
-            DbUID = ConnStr[2];
-            DbPWD = ConnStr[3];
+            dbAccessParameters = _connStr;
+            DbServer = dbAccessParameters[0];
+            DbName = dbAccessParameters[1];
+            DbUID = dbAccessParameters[2];
+            DbPWD = dbAccessParameters[3];
 
         }
 
@@ -244,10 +244,8 @@ namespace AdminPage
             using (SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True"))
             {
                 //($@"Data Source = {DbServer};Initial Catalog=master;User id={DbUID};Password={DbPWD};Min Pool Size=20");
-                if (myConn_master.State != ConnectionState.Open)
-                {
-                    myConn_master.Open();
-                }
+                myConn_master.Open();
+
                 using (SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn_master))
                 {
 
@@ -321,18 +319,29 @@ namespace AdminPage
             res = IfDatabaseExists(dbName);
             if (!res)
             {
+
+
+                 sqlStr_CreateDb += $@" ALTER DATABASE {DbName} SET SINGLE_USER WITH ROLLBACK IMMEDIATE; 
+                                                    ALTER DATABASE {DbName} SET READ_COMMITTED_SNAPSHOT ON; 
+                                                    ALTER DATABASE {DbName} SET MULTI_USER;";
+
                 using (SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True"))
                 {
-                    if (myConn_master.State != ConnectionState.Open)
-                    {
-                        myConn_master.Open();
-                    }
+                    myConn_master.Open();
                     using (SqlCommand dbCreateCmd = new SqlCommand(sqlStr_CreateDb, myConn_master))
                     {
                         dbCreateCmd.ExecuteNonQuery();
                         res = true;
                     }
                 }
+                /*using (SqlConnection con = new SqlConnection(sqlConString))
+                {
+                    con.Open();
+                    using (SqlCommand enableRdCmtdSnpsht = new SqlCommand(ENABLE_READ_COMMITTED_SNAPSHOT, con))
+                    {
+                        enableRdCmtdSnpsht.ExecuteNonQuery();
+                    }
+                }*/
             }
             return res;
 
@@ -350,11 +359,7 @@ namespace AdminPage
             {
                 using (SqlConnection con = new SqlConnection(sqlConString))
                 {
-                    //con.ConnectionString = sqlConString;
-                    if (con.State != ConnectionState.Open)
-                    {
-                        con.Open();
-                    }
+                    con.Open();
                     using (SqlCommand tbCheckCmd = new SqlCommand(dbCheckCmdStr, con))
                     {
                         using (SqlDataReader reader = tbCheckCmd.ExecuteReader())
@@ -384,7 +389,7 @@ namespace AdminPage
 
         public bool UpdateDeviceInfoTable(string DeviceTable, int deviceId, int deviceIdNew, List<TextBox> txtB_DeviceInfo, bool sUsage)
         {
-            
+
             bool updSuccessful = false;
             SqlConnection myConn = new SqlConnection(sqlConString);
             string sensorUsage = sUsage ? "YES" : "NO";
