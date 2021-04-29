@@ -62,7 +62,7 @@ namespace AdminPage
 
         public DbTableHandler g_DbTableHandler;
 
-        public string appAddress = @"C:\Program Files (x86)\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
+        public string appAddress = ""; //@"C:\Program Files (x86)\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
 
 
         public string DataCollectionAppName { get; set; }
@@ -102,8 +102,10 @@ namespace AdminPage
             string R_RangeLow2 = ini["RangeLimitTable"]["RangeLow2"].ToString();
 
 
-            string A_APPNAME1 = ini["DataCollectionAppSettings"]["APPNAME1"].ToString();
-            string A_APPNAME2 = ini["DataCollectionAppSettings"]["APPNAME2"].ToString();
+            string A_NAME1 = ini["DataCollectionAppSettings"]["APPNAME1"].ToString();
+            string A_NAME2 = ini["DataCollectionAppSettings"]["APPNAME2"].ToString();
+            string A_ADDRESS = ini["DataCollectionAppSettings"]["ADDRESS"].ToString();
+            //C:\Program Files (x86)\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
 
 
 
@@ -128,8 +130,8 @@ namespace AdminPage
             S_UsageTable_p = D_USAGETABLENAME_P; // S_UsageTable + "_p";
             connectionTimeout = D_CONNECTIONTIMEOUT; // "180";
 
-            DataCollectionAppName = A_APPNAME1; //"SensorData Collection Application";
-            DataCollectionAppName2 = A_APPNAME2; //"Pressure Data Collection App";
+            DataCollectionAppName = A_NAME1; //"SensorData Collection Application";
+            DataCollectionAppName2 = A_NAME2; //"Pressure Data Collection App";
 
 
             applicationProcess = new Process();
