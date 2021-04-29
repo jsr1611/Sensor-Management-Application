@@ -1467,6 +1467,9 @@ namespace AdminPage
                 }
                 b_dataCollection_status.Image = Resources.light_on_26_color;
             }
+
+
+
         }
 
 
@@ -1547,9 +1550,11 @@ namespace AdminPage
                 clearFields(S_DeviceInfo_txtB_p);
                 // Further FIX is Needed after Pressure sensor data collection is added
 
-                if (appAlreadyRunning && "온습도" == "차압")
+                pTrackerTimer.Enabled = false;
+                if (CheckSensorRunning())
                 {
                     b_dataCollection_status.Image = Resources.light_on_26_color;
+
                 }
                 else
                 {
@@ -1622,6 +1627,65 @@ namespace AdminPage
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private bool CheckSensorRunning()
+        {
+            bool res = false;
+            List<string> sensorNames = S_UsageCheckerRangePairs_p.Keys.AsEnumerable().Select(x => x.Name).ToList();
+            SqlTransaction transaction_p;
+            string tbName = "";
+            for (int i = 0; i < sensorNames.Count; i++)
+            {
+                tbName = "d"+ sensorNames[i].Substring(1);
+                string pressureSensorSql = $"SELECT COUNT(*) as COUNT FROM {tbName} WHERE DateAndTime > DATEADD(SS, -15, GETDATE())";
+                using (SqlConnection con = new SqlConnection(sqlConString))
+                {
+                    con.Open();
+                    transaction_p = con.BeginTransaction();
+                    using (SqlCommand cmd = new SqlCommand(pressureSensorSql, con))
+                    {
+                        cmd.Transaction = transaction_p;
+                        using (SqlDataReader r = cmd.ExecuteReader())
+                        {
+                            try
+                            {
+                                while (r.Read())
+                                {
+                                    res = Convert.ToInt32(r.GetValue(0)) > 0;
+                                    if (res)
+                                    {
+                                        r.Close();
+                                        transaction_p.Commit();
+                                        return res;
+                                    }
+                                }
+                            }
+                            catch (System.Exception ex)
+                            {
+                                Console.WriteLine($"Error Message: {ex.Message}");
+                                try
+                                {
+                                    transaction_p.Rollback();
+                                }
+                                catch (Exception ex2)
+                                {
+                                    // This catch block will handle any errors that may have occurred
+                                    // on the server that would cause the rollback to fail, such as
+                                    // a closed connection.
+                                    Console.WriteLine($"\nRollback Exception Type: {ex2.GetType()}");
+                                    Console.WriteLine($"\nError Message: {ex2.Message}");
+                                }
+                            }
+                        }
+
+                    }
+                    transaction_p.Dispose();
+
+                }
+            }
+            return res;
 
         }
     }
