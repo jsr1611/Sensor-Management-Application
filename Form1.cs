@@ -63,12 +63,14 @@ namespace AdminPage
         public DbTableHandler g_DbTableHandler;
 
         public string appAddress = ""; //@"C:\Program Files (x86)\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
-
+        public string appAddress2 = "";
 
         public string DataCollectionAppName { get; set; }
         public string DataCollectionAppName2 { get; set; }
         public bool appAlreadyRunning { get; set; }
+        public bool appAlreadyRunning2 { get; set; }
         public Process applicationProcess { get; set; }
+        public Process applicationProcess2 { get; set; }
 
 
         public Form1()
@@ -104,7 +106,8 @@ namespace AdminPage
 
             string A_NAME1 = ini["DataCollectionAppSettings"]["APPNAME1"].ToString();
             string A_NAME2 = ini["DataCollectionAppSettings"]["APPNAME2"].ToString();
-            string A_ADDRESS = ini["DataCollectionAppSettings"]["ADDRESS"].ToString();
+            string A_ADDRESS1 = ini["DataCollectionAppSettings"]["ADDRESS1"].ToString();
+            string A_ADDRESS2 = ini["DataCollectionAppSettings"]["ADDRESS2"].ToString();
             //C:\Program Files (x86)\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
 
 
@@ -122,7 +125,7 @@ namespace AdminPage
             //Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;
             dbName = D_NAME; // "SensorData2";
             dbUID = D_ID; // "admin";
-            dbPWD = D_IP; // "admin";
+            dbPWD = D_PW; // "admin";
 
             S_DeviceTable = D_TABLENAME; // "SENSOR_INFO";
             S_DeviceTable_p = D_TABLENAME_P; // S_DeviceTable + "_p";
@@ -132,6 +135,8 @@ namespace AdminPage
 
             DataCollectionAppName = A_NAME1; //"SensorData Collection Application";
             DataCollectionAppName2 = A_NAME2; //"Pressure Data Collection App";
+            appAddress = A_ADDRESS1;
+            appAddress2 = A_ADDRESS2;
 
 
             applicationProcess = new Process();
@@ -327,9 +332,8 @@ namespace AdminPage
                 }
                 else
                 {
-                    dataCollectionAppName = Microsoft.VisualBasic.Interaction.InputBox("찾으신 어플리케이션의 정확한 이름을 찾아서 입력해 주세요!", "Application Status", ".exe를 제외한 Application명만 입력", -1, -1);
                     myCounter += 1;
-                    //MessageBox.Show("찾으신 어플리케이션의 정확한 이름을 찾아서 입력해 주세요!", "Application Status", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                    MessageBox.Show("찾으신 어플리케이션의 정확한 이름을 찾아서 입력해 주세요!", "Application Status", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                 }
             }
             return applicationProcess;
@@ -601,7 +605,41 @@ namespace AdminPage
             }
             else if (tabControl1.SelectedTab == tabPage2)
             {
-                MessageBox.Show("차압 센서 데이터 수집 프로그램은 아직 구현이 안되어 있어요!", "Application status", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (!appAlreadyRunning2)
+                {
+
+                    /*dataCollectionApp = FlaUI.Core.Application.Launch(appAddress);
+                    using (var automation = new UIA3Automation())
+                    {
+                        var window = dataCollectionApp.GetMainWindow(automation);
+                        //MessageBox.Show("Hello, " + window.Title, window.Title);
+
+                    }*/
+                    try
+                    {
+                        Process.Start(appAddress2);
+                        b_dataCollection_status.Image = Resources.light_on_26_color;
+                        applicationProcess2 = GetAppProcess(DataCollectionAppName2);
+                        appAlreadyRunning2 = true;
+                    }
+                    catch (System.Exception)
+                    {
+                        MessageBox.Show("데이터 수집 프로그램이 컴퓨터에 설치되어 있는지 확인후 다시 실행해 주세요.", "Application Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        /*                    appAddress = @"C:\Program Files\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
+                                            Process.Start(appAddress);*/
+                        //string[] filePaths = System.IO.Directory.GetFiles(@"C:\Program Files\DLIT Inc\", "SensorData Collection Application.exe", SearchOption.TopDirectoryOnly);
+                        /*appAddress = @"C:\Users\" + System.Security.Principal.WindowsIdentity.GetCurrent().Name.Split('\\')[1] + @"\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\DLIT Inc\Sensor Data Collection App";
+                        Process.Start(appAddress);
+                        b_dataCollection_status.Image = Resources.light_on_26_color;
+                        applicationProcess = GetAppProcess(DataCollectionAppName);
+                        appAlreadyRunning = true;*/
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("차압 센서 데이터 수집 프로그램은 아직 구현이 안되어 있어요!", "Application status", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
             }
         }
 
@@ -644,7 +682,30 @@ namespace AdminPage
             }
             else if (tabControl1.SelectedTab == tabPage2)
             {
-                MessageBox.Show("차압 센서 데이터 수집 프로그램은 아직 구현이 안되어 있어요!", "Application status", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (appAlreadyRunning2)
+                {
+                    DialogResult dialog = MessageBox.Show("데이터 수집 프로그램을 중지하시겠습니까?", "Application status", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dialog == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            applicationProcess2 = GetAppProcess(DataCollectionAppName2);
+                            applicationProcess2.Kill();
+                            b_dataCollection_status.Image = Resources.light_off_26;
+                            appAlreadyRunning2 = false;
+                            applicationProcess2.Dispose();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Application status", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("차압 센서 데이터 수집 프로그램은 아직 구현이 안되어 있어요!", "Application status", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
 
@@ -652,7 +713,6 @@ namespace AdminPage
         {
             System.Windows.Forms.Application.Exit();
         }
-
 
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -1483,19 +1543,41 @@ namespace AdminPage
         /// <param name="e"></param>
         private void pTrackerTimer_Tick(object sender, EventArgs e)
         {
-            appAlreadyRunning = CheckAppRunning(DataCollectionAppName);
-            if (!appAlreadyRunning)
+            if (tabControl1.SelectedTab == tabPage1)
             {
-                b_dataCollection_status.Image = Resources.light_off_26;
-            }
-            else
-            {
-                if (applicationProcess == null)
+                appAlreadyRunning = CheckAppRunning(DataCollectionAppName);
+                if (!appAlreadyRunning)
                 {
-                    applicationProcess = GetAppProcess(DataCollectionAppName);
+                    b_dataCollection_status.Image = Resources.light_off_26;
                 }
-                b_dataCollection_status.Image = Resources.light_on_26_color;
+                else
+                {
+                    if (applicationProcess == null)
+                    {
+                        applicationProcess = GetAppProcess(DataCollectionAppName);
+                    }
+                    b_dataCollection_status.Image = Resources.light_on_26_color;
+                }
+
             }
+            else if (tabControl1.SelectedTab == tabPage2)
+            {
+                appAlreadyRunning2 = CheckAppRunning(DataCollectionAppName2);
+                if (!appAlreadyRunning2)
+                {
+                    b_dataCollection_status.Image = Resources.light_off_26;
+                }
+                else
+                {
+                    if (applicationProcess2 == null)
+                    {
+                        applicationProcess2 = GetAppProcess(DataCollectionAppName2);
+                    }
+                    b_dataCollection_status.Image = Resources.light_on_26_color;
+                }
+
+            }
+
 
 
 
@@ -1667,7 +1749,7 @@ namespace AdminPage
             string tbName = "";
             for (int i = 0; i < sensorNames.Count; i++)
             {
-                tbName = "d"+ sensorNames[i].Substring(1);
+                tbName = "d" + sensorNames[i].Substring(1);
                 string pressureSensorSql = $"SELECT COUNT(*) as COUNT FROM {tbName} WHERE DateAndTime > DATEADD(SS, -15, GETDATE())";
                 using (SqlConnection con = new SqlConnection(sqlConString))
                 {

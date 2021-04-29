@@ -64,7 +64,6 @@ namespace AdminPage
             this.label2 = new System.Windows.Forms.Label();
             this.panel_left = new System.Windows.Forms.Panel();
             this.panel_right = new System.Windows.Forms.Panel();
-            this.pTrackerTimer = new System.Windows.Forms.Timer(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -232,6 +231,7 @@ namespace AdminPage
             this.sDescription_p = new System.Windows.Forms.TextBox();
             this.sLocation_p = new System.Windows.Forms.TextBox();
             this.sName_p = new System.Windows.Forms.TextBox();
+            this.pTrackerTimer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -548,11 +548,6 @@ namespace AdminPage
             // 
             resources.ApplyResources(this.panel_right, "panel_right");
             this.panel_right.Name = "panel_right";
-            // 
-            // pTrackerTimer
-            // 
-            this.pTrackerTimer.Interval = 1000;
-            this.pTrackerTimer.Tick += new System.EventHandler(this.pTrackerTimer_Tick);
             // 
             // tabControl1
             // 
@@ -2384,6 +2379,11 @@ namespace AdminPage
             resources.ApplyResources(this.sName_p, "sName_p");
             this.sName_p.Name = "sName_p";
             // 
+            // pTrackerTimer
+            // 
+            this.pTrackerTimer.Interval = 1000;
+            this.pTrackerTimer.Tick += new System.EventHandler(this.pTrackerTimer_Tick);
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
@@ -2531,7 +2531,6 @@ namespace AdminPage
         private System.Windows.Forms.Splitter splitter2;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Label label2;
-        public System.Windows.Forms.Timer pTrackerTimer;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.SplitContainer splitContainer1;
@@ -2699,6 +2698,7 @@ namespace AdminPage
         private System.Windows.Forms.NumericUpDown s_mbarHigherLimit1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox c_mbarUsage;
+        public System.Windows.Forms.Timer pTrackerTimer;
     }
 }
 
