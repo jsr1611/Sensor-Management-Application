@@ -315,9 +315,11 @@ namespace AdminPage
         /// Application Process를 반환함
         /// </summary>
         /// <param name="dataCollectionAppName"></param>
+        /// <param name="SomeAppAlreadyRunning"></param>
         /// <returns></returns>
-        public Process GetAppProcess(string dataCollectionAppName)
+        public Process GetAppProcess(string dataCollectionAppName, bool SomeAppAlreadyRunning)
         {
+            Process SomeAppProcess = null;
             int myCounter = 0;
             while (myCounter < 2)
             {
@@ -325,18 +327,18 @@ namespace AdminPage
                 Process[] processes = Process.GetProcessesByName(dataCollectionAppName);
                 if (processes.Length != 0)
                 {
-                    appAlreadyRunning = true;
+                    SomeAppAlreadyRunning = true;
                     b_dataCollection_status.Image = Resources.light_on_26_color;
-                    applicationProcess = processes[0];
+                    SomeAppProcess = processes[0];
                     break;
                 }
                 else
                 {
                     myCounter += 1;
-                    MessageBox.Show("찾으신 어플리케이션의 정확한 이름을 찾아서 입력해 주세요!", "Application Status", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                    //MessageBox.Show("찾으신 어플리케이션의 정확한 이름을 찾아서 입력해 주세요!", "Application Status", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                 }
             }
-            return applicationProcess;
+            return SomeAppProcess;
         }
 
 
@@ -582,7 +584,7 @@ namespace AdminPage
                     {
                         Process.Start(appAddress);
                         b_dataCollection_status.Image = Resources.light_on_26_color;
-                        applicationProcess = GetAppProcess(DataCollectionAppName);
+                        applicationProcess = GetAppProcess(DataCollectionAppName, appAlreadyRunning);
                         appAlreadyRunning = true;
                     }
                     catch (System.Exception)
@@ -619,7 +621,7 @@ namespace AdminPage
                     {
                         Process.Start(appAddress2);
                         b_dataCollection_status.Image = Resources.light_on_26_color;
-                        applicationProcess2 = GetAppProcess(DataCollectionAppName2);
+                        applicationProcess2 = GetAppProcess(DataCollectionAppName2, appAlreadyRunning2);
                         appAlreadyRunning2 = true;
                     }
                     catch (System.Exception)
@@ -662,7 +664,7 @@ namespace AdminPage
                     {
                         try
                         {
-                            applicationProcess = GetAppProcess(DataCollectionAppName);
+                            applicationProcess = GetAppProcess(DataCollectionAppName, appAlreadyRunning);
                             applicationProcess.Kill();
                             b_dataCollection_status.Image = Resources.light_off_26;
                             appAlreadyRunning = false;
@@ -689,7 +691,7 @@ namespace AdminPage
                     {
                         try
                         {
-                            applicationProcess2 = GetAppProcess(DataCollectionAppName2);
+                            applicationProcess2 = GetAppProcess(DataCollectionAppName2, appAlreadyRunning2);
                             applicationProcess2.Kill();
                             b_dataCollection_status.Image = Resources.light_off_26;
                             appAlreadyRunning2 = false;
@@ -1554,7 +1556,7 @@ namespace AdminPage
                 {
                     if (applicationProcess == null)
                     {
-                        applicationProcess = GetAppProcess(DataCollectionAppName);
+                        applicationProcess = GetAppProcess(DataCollectionAppName, appAlreadyRunning);
                     }
                     b_dataCollection_status.Image = Resources.light_on_26_color;
                 }
@@ -1571,7 +1573,7 @@ namespace AdminPage
                 {
                     if (applicationProcess2 == null)
                     {
-                        applicationProcess2 = GetAppProcess(DataCollectionAppName2);
+                        applicationProcess2 = GetAppProcess(DataCollectionAppName2, appAlreadyRunning2);
                     }
                     b_dataCollection_status.Image = Resources.light_on_26_color;
                 }
@@ -1661,8 +1663,9 @@ namespace AdminPage
                 clearFields(S_DeviceInfo_txtB_p);
                 // Further FIX is Needed after Pressure sensor data collection is added
 
-                pTrackerTimer.Enabled = false;
-                if (CheckSensorRunning())
+                //pTrackerTimer.Enabled = false;
+                CheckAppRunning(DataCollectionAppName2);
+                if(appAlreadyRunning2)
                 {
                     b_dataCollection_status.Image = Resources.light_on_26_color;
 
@@ -1670,8 +1673,6 @@ namespace AdminPage
                 else
                 {
                     b_dataCollection_status.Image = Resources.light_off_26;
-                    pTrackerTimer.Stop();
-                    pTrackerTimer.Enabled = false;
                 }
 
             }
