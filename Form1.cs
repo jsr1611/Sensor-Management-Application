@@ -7,15 +7,17 @@ using System.Windows.Forms;
 using AdminPage.Properties;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace AdminPage
 {
     public partial class Form1 : Form
     {
-        public string DbServer = "";// 127.0.0.1
-        public string DbName = ""; // SensorDataDB
-        public string DbUID = ""; //dlitdb01
-        public string DbPWD = ""; // dlitdb01
+        public string dbServerAddress = "";// 127.0.0.1
+        public string dbName = ""; // SensorDataDB
+        public string dbUID = ""; //dlitdb01
+        public string dbPWD = ""; // dlitdb01
         public string connectionTimeout = ""; // 180
         public string S_DeviceTable = ""; // Devices
         public string S_DeviceTable_p = ""; // Devices_p
@@ -64,6 +66,7 @@ namespace AdminPage
 
 
         public string DataCollectionAppName { get; set; }
+        public string DataCollectionAppName2 { get; set; }
         public bool appAlreadyRunning { get; set; }
         public Process applicationProcess { get; set; }
 
@@ -72,19 +75,62 @@ namespace AdminPage
         {
             InitializeComponent();
 
-            DbServer = "localhost\\SQLEXPRESS";//"127.0.0.1";    //"10.1.55.174"; 
+
+
+            ////////////////////////////////////////////////////////
+
+
+            // ini 읽기 //////
+            IniFile ini = new IniFile();
+
+            ini.Load(AppInfo.StartupPath + "\\" + "Setting.ini");
+
+            string D_IP = ini["DBSetting"]["IP"].ToString();
+            string D_SERVERNAME = ini["DBSetting"]["SERVERNAME"].ToString();
+            string D_NAME = ini["DBSetting"]["DBNAME"].ToString();
+            string D_TABLENAME = ini["DBSetting"]["DEVICETABLE"].ToString();
+            string D_TABLENAME_P = ini["DBSetting"]["DEVICETABLE_P"].ToString();
+            string D_USAGETABLENAME = ini["DBSetting"]["USAGETABLE"].ToString();
+            string D_USAGETABLENAME_P = ini["DBSetting"]["USAGETABLE_P"].ToString();
+            string D_ID = ini["DBSetting"]["ID"].ToString();
+            string D_PW = ini["DBSetting"]["PW"].ToString();
+            string D_CONNECTIONTIMEOUT = ini["DBSetting"]["ConnectionTimeOut"].ToString();
+
+            string R_RangeHigh2 = ini["RangeLimitTable"]["RangeHigh2"].ToString();
+            string R_RangeHigh1 = ini["RangeLimitTable"]["RangeHigh1"].ToString();
+            string R_RangeLow1 = ini["RangeLimitTable"]["RangeLow1"].ToString();
+            string R_RangeLow2 = ini["RangeLimitTable"]["RangeLow2"].ToString();
+
+
+            string A_APPNAME1 = ini["DataCollectionAppSettings"]["APPNAME1"].ToString();
+            string A_APPNAME2 = ini["DataCollectionAppSettings"]["APPNAME2"].ToString();
+
+
+
+            ////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+            dbServerAddress = D_SERVERNAME; // "localhost\\SQLEXPRESS";//"127.0.0.1";    //"10.1.55.174"; 
             //Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;
-            DbName = "SensorData2";
-            DbUID = "admin";
-            DbPWD = "admin";
+            dbName = D_NAME; // "SensorData2";
+            dbUID = D_ID; // "admin";
+            dbPWD = D_IP; // "admin";
 
-            S_DeviceTable = "SENSOR_INFO";
-            S_DeviceTable_p = S_DeviceTable + "_p";
-            S_UsageTable = "SensorUsage";
-            S_UsageTable_p = S_UsageTable + "_p";
-            connectionTimeout = "180";
+            S_DeviceTable = D_TABLENAME; // "SENSOR_INFO";
+            S_DeviceTable_p = D_TABLENAME_P; // S_DeviceTable + "_p";
+            S_UsageTable = D_USAGETABLENAME; // "SensorUsage";
+            S_UsageTable_p = D_USAGETABLENAME_P; // S_UsageTable + "_p";
+            connectionTimeout = D_CONNECTIONTIMEOUT; // "180";
 
-            DataCollectionAppName = "SensorData Collection Application";
+            DataCollectionAppName = A_APPNAME1; //"SensorData Collection Application";
+            DataCollectionAppName2 = A_APPNAME2; //"Pressure Data Collection App";
+
 
             applicationProcess = new Process();
             pTrackerTimer.Enabled = true;
@@ -105,7 +151,7 @@ namespace AdminPage
             S_DeviceInfo_txtB = new List<TextBox>() { sName, sZone, sLocation, sDescription };
             S_DeviceInfo_txtB_p = new List<TextBox>() { sName_p, sZone_p, sLocation_p, sDescription_p };
             S_DeviceInfoColumns = new List<string>() { sID.Name, S_DeviceInfo_txtB[0].Name, S_DeviceInfo_txtB[1].Name, S_DeviceInfo_txtB[2].Name, S_DeviceInfo_txtB[3].Name, "sUsage" };
-            S_FourRangeColumns = new List<string>() { "higherLimit2", "higherLimit1", "lowerLimit1", "lowerLimit2" };
+            S_FourRangeColumns = new List<string>() { R_RangeHigh2, R_RangeHigh1, R_RangeLow1, R_RangeLow2 };
 
 
 
@@ -141,23 +187,46 @@ namespace AdminPage
             List<List<NumericUpDown>> S_Ranges_p = new List<List<NumericUpDown>>() { pa_Ranges, mbar_Ranges, kPa_Ranges, hPa_Ranges, mmH2O_Ranges, inchH2O_Ranges, mmHg_Ranges, inchHg_Ranges };
 
 
-            sqlConString = $@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"; // ; Integrated Security=True ");
+            sqlConString = $@"Data Source={dbServerAddress};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20"; // ; Integrated Security=True ");
+            SqlConnection myConn = new SqlConnection(sqlConString);
 
-            g_DbTableHandler = new DbTableHandler(new List<string>() { DbServer, DbName, DbUID, DbUID });
+
+            try
+            {
+                myConn.Open();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while SQL connection: {ex.Message}. {ex.StackTrace}");
+                dbServerAddress = D_IP;
+                sqlConString = $@"Data Source={dbServerAddress};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20";
+                myConn = new SqlConnection(sqlConString);
+                try
+                {
+                    myConn.Open();
+                    Console.WriteLine("Connection Successful!");
+                }
+                catch (Exception ex2)
+                {
+                    Console.WriteLine($"Error while SQL connection 2: {ex2.Message}. {ex2.StackTrace}");
+                }
+            }
+
+
+
+
+            g_DbTableHandler = new DbTableHandler(new List<string>() { dbServerAddress, dbName, dbUID, dbUID });
 
             g_DbTableHandler.sqlConString = sqlConString;
             g_DbTableHandler.S_DeviceInfoColumns = S_DeviceInfoColumns;
             g_DbTableHandler.S_DeviceTable = this.S_DeviceTable;
             g_DbTableHandler.S_FourRangeColumns = S_FourRangeColumns;
 
-            DataSet DeviceTable = GetDeviceInfo(DbName, S_DeviceTable);
-            DataSet DeviceTable_p = GetDeviceInfo(DbName, S_DeviceTable_p);
+            DataSet DeviceTable = GetDeviceInfo(dbName, S_DeviceTable);
+            DataSet DeviceTable_p = GetDeviceInfo(dbName, S_DeviceTable_p);
             if (DeviceTable.Tables.Count > 0)
             {
                 D_IDs = new List<int>(DeviceTable.Tables[0].AsEnumerable().Where(r => r.Field<string>(S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]) == "YES").Select(r => r.Field<int>(S_DeviceInfoColumns[0])).ToList());
-
-                //ModBus and myConnection initialization
-                //ConnectionSettings(true);
 
                 string[] rows = new string[DeviceTable.Tables[0].Columns.Count];
 
@@ -274,7 +343,7 @@ namespace AdminPage
         private List<int> GetSensorIDs(List<int> S_IDs)
         {
             string DeviceTable = tabControl1.SelectedTab == tabPage1 ? S_DeviceTable : S_DeviceTable_p;
-            string IdCheckCmd = $"SELECT {S_DeviceInfoColumns[0]} FROM {DbName}.dbo.{DeviceTable} WHERE {S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]}='YES'";
+            string IdCheckCmd = $"SELECT {S_DeviceInfoColumns[0]} FROM {dbName}.dbo.{DeviceTable} WHERE {S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]}='YES'";
             //Console.WriteLine("Usable sensor IDs:");
             using (SqlConnection myConn = new SqlConnection(sqlConString))
             {
@@ -360,7 +429,7 @@ namespace AdminPage
             bool idExists = false;
             string sqlStrChecker = $"SELECT {S_DeviceInfoColumns[0]} FROM {tableName} WHERE {S_DeviceInfoColumns[0]} = {id};";
 
-            using (SqlConnection myConn = new SqlConnection($@"Data Source={DbServer};Initial Catalog={DbName};User id={DbUID};Password={DbPWD}; Min Pool Size=20"))
+            using (SqlConnection myConn = new SqlConnection($@"Data Source={dbServerAddress};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20"))
             {
                 if (myConn.State != ConnectionState.Open)
                 {
@@ -431,7 +500,7 @@ namespace AdminPage
                     catch (System.Exception ex)
                     {
                         MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        sqlConString = $@"Data Source={DbServer};Initial Catalog={DbName};Integrated Security=True";
+                        sqlConString = $@"Data Source={dbServerAddress};Initial Catalog={dbName};Integrated Security=True";
                         g_DbTableHandler.sqlConString = sqlConString;
                         try
                         {
@@ -454,30 +523,30 @@ namespace AdminPage
                 }
                 else
                 {
-                    bool Device_tableCreated = g_DbTableHandler.CreateTable(DbName, Devices_tbName, sqlCreateDeviceTb);
+                    bool Device_tableCreated = g_DbTableHandler.CreateTable(dbName, Devices_tbName, sqlCreateDeviceTb);
                     if (!Device_tableCreated)
                     {
-                        MessageBox.Show($"DB가 생성되었지만, 센서 정보 테이블이 성공적으로 생성되지 않았습니다!\nDB명 = {DbName}\n센서 정보 테이블명 = {Devices_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show($"DB가 생성되었지만, 센서 정보 테이블이 성공적으로 생성되지 않았습니다!\nDB명 = {dbName}\n센서 정보 테이블명 = {Devices_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
             else
             {
-                string sqlCreateDb = $@"CREATE DATABASE {DbName};";
+                string sqlCreateDb = $@"CREATE DATABASE {dbName};";
 
 
-                bool dataBase_Created = g_DbTableHandler.CreateDatabase(DbName, sqlCreateDb);
+                bool dataBase_Created = g_DbTableHandler.CreateDatabase(dbName, sqlCreateDb);
                 if (dataBase_Created)
                 {
-                    bool Device_tableCreated = g_DbTableHandler.CreateTable(DbName, Devices_tbName, sqlCreateDeviceTb);
+                    bool Device_tableCreated = g_DbTableHandler.CreateTable(dbName, Devices_tbName, sqlCreateDeviceTb);
                     if (!Device_tableCreated)
                     {
-                        MessageBox.Show($"DB가 생성되었지만, 센서 정보 테이블이 성공적으로 생성되지 않았습니다!\nDB명 = {DbName}\n센서 정보 테이블명 = {Devices_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show($"DB가 생성되었지만, 센서 정보 테이블이 성공적으로 생성되지 않았습니다!\nDB명 = {dbName}\n센서 정보 테이블명 = {Devices_tbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 else
                 {
-                    MessageBox.Show($"센서 정보 DB가 성공적으로 생성되지 않았습니다!\nDB명 = {DbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show($"센서 정보 DB가 성공적으로 생성되지 않았습니다!\nDB명 = {dbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             return ds;
@@ -1033,7 +1102,7 @@ namespace AdminPage
         private bool AddToDB(string g_sensorUsage)
         {
             bool result = false;
-            bool dbExists = g_DbTableHandler.IfDatabaseExists(DbName);
+            bool dbExists = g_DbTableHandler.IfDatabaseExists(dbName);
             if (dbExists)
             {
                 int sensorId = 0; // = Convert.ToInt32(sID.Text);
@@ -1114,7 +1183,7 @@ namespace AdminPage
                             }
                             else
                             {                   // table이 존재하지 않는다면 CreateTable를 통해 테이블 생성한 후 Insert함
-                                bool tbCreated = g_DbTableHandler.CreateTable(DbName, sRangeTable, sqlCreateTb);
+                                bool tbCreated = g_DbTableHandler.CreateTable(dbName, sRangeTable, sqlCreateTb);
 
                                 if (tbCreated)
                                 {
@@ -1146,7 +1215,7 @@ namespace AdminPage
                     }
 
                     sqlCreateUsageTb += " );";
-                    tbExists = g_DbTableHandler.CreateTable(DbName, UsageTable, sqlCreateUsageTb);
+                    tbExists = g_DbTableHandler.CreateTable(dbName, UsageTable, sqlCreateUsageTb);
                 }
                 if (tbExists)
                 {
@@ -1220,29 +1289,6 @@ namespace AdminPage
         }
 
 
-
-
-
-
-        private int GetUserInput()
-        {
-            int sensorId;
-            //MessageBox.Show("추가하시려는 센서는 이미 DB에서 존재합니다. 기존에 있는 센서 정보를 수정하시고나 센서 ID를 바꿔 보세요. \n센서ID를 수정하시려면 'Y' 버튼을 누르세요.", "Status Info", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-            //react to dialogResults, yes, no, cancel
-            // title, message, textBox enter info, etc. #Fix needed
-            string newSensorId = Microsoft.VisualBasic.Interaction.InputBox("같은 ID의 센서 정보가 존재합니다. 다른 ID번호를 입력해 주세요", "새 ID를 입력", "숫자만 입력해 주세요", -1, -1);
-            try
-            {
-                sensorId = Convert.ToInt32(newSensorId);
-            }
-            catch
-            {
-                MessageBox.Show("숫자만 입력 가능합니다. 새로운 센서 장비 ID번호를 다시 입력해 주세요.", "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                sensorId = 0;
-            }
-
-            return sensorId;
-        }
 
 
 
@@ -1392,25 +1438,6 @@ namespace AdminPage
             }
         }
 
-
-
-        /// <summary>
-        /// "사용안함"이 선텍되거나 어느 하나 센서의 모든 범위 설정이 0으로 되어있을 때 사용됨.
-        /// </summary>
-        /// <param name="x_Ranges"></param>
-        /// <returns></returns>
-        private bool NullOrNotChecker(List<NumericUpDown> x_Ranges)
-        {
-            bool res = false;
-            foreach (var item in x_Ranges)
-            {
-                if (item.Value != 0)
-                {
-                    res = true;
-                }
-            }
-            return res;
-        }
 
 
 
@@ -1688,5 +1715,26 @@ namespace AdminPage
             return res;
 
         }
+
+
+
+        public class AppInfo
+        {
+            [DllImport("kernel32.dll", CharSet = CharSet.Auto, ExactSpelling = false)]
+            private static extern int GetModuleFileName(HandleRef hModule, StringBuilder buffer, int length);
+            private static HandleRef NullHandleRef = new HandleRef(null, IntPtr.Zero);
+            public static string StartupPath
+            {
+                get
+                {
+                    StringBuilder stringBuilder = new StringBuilder(260);
+                    GetModuleFileName(NullHandleRef, stringBuilder, stringBuilder.Capacity);
+                    return Path.GetDirectoryName(stringBuilder.ToString());
+                }
+            }
+        }
+
+
+
     }
 }
