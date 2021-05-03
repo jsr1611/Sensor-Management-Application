@@ -1819,7 +1819,9 @@ namespace AdminPage
             }
         }
 
-
-
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.ExitThread();
+        }
     }
 }
