@@ -35,7 +35,7 @@ namespace AdminPage
 
         public List<string> dbAccessParameters { get; set; }
 
-        public string sqlConString { get; internal set; }
+        public string sqlConString { get; set; }
 
         public DbTableHandler()
         {
@@ -241,10 +241,28 @@ namespace AdminPage
             bool result = false;
             string sql_dbExists = $"IF DB_ID('{dbName}') IS NOT NULL SELECT 1";
 
-            using (SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True"))
+            string sqlConStr = $@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True";
+
+            using (SqlConnection myConn_master = new SqlConnection(sqlConStr))
             {
                 //($@"Data Source = {DbServer};Initial Catalog=master;User id={DbUID};Password={DbPWD};Min Pool Size=20");
-                myConn_master.Open();
+                try
+                {
+                    myConn_master.Open();
+                }
+                catch (Exception)
+                {
+                    myConn_master.ConnectionString = sqlConString;
+                    try
+                    {
+                        myConn_master.Open();
+                    }
+                    catch (Exception)
+                    {
+                        
+                    }
+                }
+                
 
                 using (SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn_master))
                 {
