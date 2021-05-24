@@ -232,6 +232,10 @@ namespace AdminPage
             this.sLocation_p = new System.Windows.Forms.TextBox();
             this.sName_p = new System.Windows.Forms.TextBox();
             this.pTrackerTimer = new System.Windows.Forms.Timer(this.components);
+            this.l_ipAddress = new System.Windows.Forms.Label();
+            this.sIPAddress = new System.Windows.Forms.TextBox();
+            this.sPortNumber = new System.Windows.Forms.TextBox();
+            this.l_port = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -576,6 +580,10 @@ namespace AdminPage
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.sPortNumber);
+            this.splitContainer1.Panel2.Controls.Add(this.l_port);
+            this.splitContainer1.Panel2.Controls.Add(this.sIPAddress);
+            this.splitContainer1.Panel2.Controls.Add(this.l_ipAddress);
             this.splitContainer1.Panel2.Controls.Add(this.s_p250HigherLimit2);
             this.splitContainer1.Panel2.Controls.Add(this.s_p250HigherLimit1);
             this.splitContainer1.Panel2.Controls.Add(this.s_p250LowerLimit2);
@@ -2384,6 +2392,26 @@ namespace AdminPage
             this.pTrackerTimer.Interval = 1000;
             this.pTrackerTimer.Tick += new System.EventHandler(this.pTrackerTimer_Tick);
             // 
+            // l_ipAddress
+            // 
+            resources.ApplyResources(this.l_ipAddress, "l_ipAddress");
+            this.l_ipAddress.Name = "l_ipAddress";
+            // 
+            // sIPAddress
+            // 
+            resources.ApplyResources(this.sIPAddress, "sIPAddress");
+            this.sIPAddress.Name = "sIPAddress";
+            // 
+            // sPortNumber
+            // 
+            resources.ApplyResources(this.sPortNumber, "sPortNumber");
+            this.sPortNumber.Name = "sPortNumber";
+            // 
+            // l_port
+            // 
+            resources.ApplyResources(this.l_port, "l_port");
+            this.l_port.Name = "l_port";
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
@@ -2700,6 +2728,10 @@ namespace AdminPage
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox c_mbarUsage;
         public System.Windows.Forms.Timer pTrackerTimer;
+        private System.Windows.Forms.TextBox sPortNumber;
+        private System.Windows.Forms.Label l_port;
+        private System.Windows.Forms.TextBox sIPAddress;
+        private System.Windows.Forms.Label l_ipAddress;
     }
 }
 

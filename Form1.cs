@@ -14,15 +14,15 @@ namespace AdminPage
 {
     public partial class Form1 : Form
     {
-        public string dbServerAddress = "";// 127.0.0.1
-        public string dbName = ""; // SensorDataDB
-        public string dbUID = ""; //dlitdb01
-        public string dbPWD = ""; // dlitdb01
-        public string connectionTimeout = ""; // 180
-        public string S_DeviceTable = ""; // Devices
-        public string S_DeviceTable_p = ""; // Devices_p
-        public string S_UsageTable = ""; // SensorUsage
-        public string S_UsageTable_p = ""; //SensorUsage_p
+        public string dbServerAddress = string.Empty;// 127.0.0.1
+        public string dbName = string.Empty; // SensorDataDB
+        public string dbUID = string.Empty; //dlitdb01
+        public string dbPWD = string.Empty; // dlitdb01
+        public string connectionTimeout = string.Empty; // 180
+        public string S_DeviceTable = string.Empty; // Devices
+        public string S_DeviceTable_p = string.Empty; // Devices_p
+        public string S_UsageTable = string.Empty; // SensorUsage
+        public string S_UsageTable_p = string.Empty; //SensorUsage_p
 
 
 
@@ -46,15 +46,15 @@ namespace AdminPage
         public DateTime startTime { get; set; }
 
         /// <summary>
-        /// (온습도 및 파티클 관련함)[0]: sName, [1]: sZone, [2]: sLocation, [3]: sDescription 들이 들어가 있음.
+        /// (온습도 및 파티클 관련함)[0]: sName, [1]: sZone, [2]: sLocation, [3]: sDescription, [4]: sIPAddress, [5]: sPortNumber 정보가 들어가 있음.
         /// </summary>
-        public List<TextBox> S_DeviceInfo_txtB { get; set; }
+        public List<TextBox> S_DeviceInfo { get; set; }
 
 
         /// <summary>
         /// (차압 관련함) [0]: sName, [1]: sZone, [2]: sLocation, [3]: sDescription 들이 들어가 있음.
         /// </summary>
-        public List<TextBox> S_DeviceInfo_txtB_p { get; set; }
+        public List<TextBox> S_DeviceInfo_p { get; set; }
 
         public Dictionary<CheckBox, List<NumericUpDown>> S_UsageCheckerRangePairs { get; set; }
 
@@ -62,8 +62,8 @@ namespace AdminPage
 
         public DbTableHandler g_DbTableHandler;
 
-        public string appAddress = ""; //@"C:\Program Files (x86)\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
-        public string appAddress2 = "";
+        public string appAddress = string.Empty; //@"C:\Program Files (x86)\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
+        public string appAddress2 = string.Empty;
 
         public string DataCollectionAppName { get; set; }
         public string DataCollectionAppName2 { get; set; }
@@ -71,6 +71,10 @@ namespace AdminPage
         public bool appAlreadyRunning2 { get; set; }
         public Process applicationProcess { get; set; }
         public Process applicationProcess2 { get; set; }
+        public int S_UsageCheckInterval { get; set; }
+
+        public string[] tableNamesKo = null;
+        public string[] tableNamesKo_p = null;
 
 
         public Form1()
@@ -97,6 +101,7 @@ namespace AdminPage
             string D_ID = ini["DBSetting"]["ID"].ToString();
             string D_PW = ini["DBSetting"]["PW"].ToString();
             string D_CONNECTIONTIMEOUT = ini["DBSetting"]["ConnectionTimeOut"].ToString();
+            string D_UsageCheckInterVal = ini["DBSetting"]["UsageCheckInterval"].ToString();
 
             string R_RangeHigh2 = ini["RangeLimitTable"]["RangeHigh2"].ToString();
             string R_RangeHigh1 = ini["RangeLimitTable"]["RangeHigh1"].ToString();
@@ -132,7 +137,7 @@ namespace AdminPage
             S_UsageTable = D_USAGETABLENAME; // "SensorUsage";
             S_UsageTable_p = D_USAGETABLENAME_P; // S_UsageTable + "_p";
             connectionTimeout = D_CONNECTIONTIMEOUT; // "180";
-
+            S_UsageCheckInterval = Convert.ToInt32(D_UsageCheckInterVal);
             DataCollectionAppName = A_NAME1; //"SensorData Collection Application";
             DataCollectionAppName2 = A_NAME2; //"Pressure Data Collection App";
             appAddress = A_ADDRESS1;
@@ -155,10 +160,11 @@ namespace AdminPage
             dateTimePicker2_p.Value = DateTime.Today;
             dateTimePicker2_p.Visible = true;
 
-            S_DeviceInfo_txtB = new List<TextBox>() { sName, sZone, sLocation, sDescription };
-            S_DeviceInfo_txtB_p = new List<TextBox>() { sName_p, sZone_p, sLocation_p, sDescription_p };
-            S_DeviceInfoColumns = new List<string>() { sID.Name, S_DeviceInfo_txtB[0].Name, S_DeviceInfo_txtB[1].Name, S_DeviceInfo_txtB[2].Name, S_DeviceInfo_txtB[3].Name, "sUsage" };
+            S_DeviceInfo = new List<TextBox>() { sName, sZone, sLocation, sDescription, sIPAddress, sPortNumber };
+            S_DeviceInfo_p = new List<TextBox>() { sName_p, sZone_p, sLocation_p, sDescription_p };
+            S_DeviceInfoColumns = new List<string>() { sID.Name, S_DeviceInfo[0].Name, S_DeviceInfo[1].Name, S_DeviceInfo[2].Name, S_DeviceInfo[3].Name, S_DeviceInfo[4].Name, S_DeviceInfo[5].Name, "sUsage" };
             S_FourRangeColumns = new List<string>() { R_RangeHigh2, R_RangeHigh1, R_RangeLow1, R_RangeLow2 };
+            tableNamesKo = new string[] { "온도(°C)", "습도(%)", "파티클(0.1μm)", "파티클(0.3μm)", "파티클(0.5μm)", "파티클(1.0μm)", "파티클(3.0μm)", "파티클(5.0μm)", "파티클(10.0μm)", "파티클(25.0μm)" };
 
 
 
@@ -197,37 +203,52 @@ namespace AdminPage
             sqlConString = $@"Data Source={dbServerAddress};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20"; // ; Integrated Security=True ");
             SqlConnection myConn = new SqlConnection(sqlConString);
 
-
-            try
-            {
-                myConn.Open();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error while SQL connection: {ex.Message}. {ex.StackTrace}");
-                dbServerAddress = D_IP;
-                sqlConString = $@"Data Source={dbServerAddress};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20";
-                myConn = new SqlConnection(sqlConString);
-                try
-                {
-                    myConn.Open();
-                    Console.WriteLine("Connection Successful!");
-                }
-                catch (Exception ex2)
-                {
-                    Console.WriteLine($"Error while SQL connection 2: {ex2.Message}. {ex2.StackTrace}");
-                }
-            }
-
-
-
-
             g_DbTableHandler = new DbTableHandler(new List<string>() { dbServerAddress, dbName, dbUID, dbUID });
 
             g_DbTableHandler.sqlConString = sqlConString;
             g_DbTableHandler.S_DeviceInfoColumns = S_DeviceInfoColumns;
             g_DbTableHandler.S_DeviceTable = this.S_DeviceTable;
             g_DbTableHandler.S_FourRangeColumns = S_FourRangeColumns;
+
+
+
+
+            // DB존재 여부 확인
+            bool checkDbExists = g_DbTableHandler.IfDatabaseExists(dbName);
+            if (!checkDbExists)
+            {
+                string sqlCreateDb = $@"CREATE DATABASE {dbName};";
+                checkDbExists = g_DbTableHandler.CreateDatabase(dbName, sqlCreateDb);
+            }
+
+
+            if (checkDbExists)
+            {
+                try
+                {
+                    myConn.Open();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error while SQL connection: {ex.Message}. {ex.StackTrace}");
+                    dbServerAddress = D_IP;
+                    sqlConString = $@"Data Source={dbServerAddress};Initial Catalog={dbName};User id={dbUID};Password={dbPWD}; Min Pool Size=20";
+                    myConn = new SqlConnection(sqlConString);
+                    try
+                    {
+                        myConn.Open();
+                        Console.WriteLine("Connection Successful!");
+                    }
+                    catch (Exception ex2)
+                    {
+                        Console.WriteLine($"Error while SQL connection 2: {ex2.Message}. {ex2.StackTrace}");
+                    }
+                }
+
+            }
+
+            g_DbTableHandler.sqlConString = sqlConString;
+
 
             DataSet DeviceTable = GetDeviceInfo(dbName, S_DeviceTable);
             DataSet DeviceTable_p = GetDeviceInfo(dbName, S_DeviceTable_p);
@@ -305,8 +326,8 @@ namespace AdminPage
 
             startTime = DateTime.Now;
 
-            clearFields(S_DeviceInfo_txtB);
-            clearFields(S_DeviceInfo_txtB_p);
+            clearFields(S_DeviceInfo);
+            clearFields(S_DeviceInfo_p);
 
         }
 
@@ -479,6 +500,7 @@ namespace AdminPage
             DataSet ds = new DataSet();
             bool checkDbExists = g_DbTableHandler.IfDatabaseExists(sensorData_dbName);
 
+
             string sqlCreateDeviceTb = $"CREATE TABLE {Devices_tbName} ({S_DeviceInfoColumns[0]} INT NOT NULL, CONSTRAINT PK_{Devices_tbName}_{S_DeviceInfoColumns[0]} PRIMARY KEY ({S_DeviceInfoColumns[0]}) ";
 
             //  S_DeviceInfo_txtB 크기만큼은 loop를 통해 스트링에 추가
@@ -557,6 +579,48 @@ namespace AdminPage
                     MessageBox.Show($"센서 정보 DB가 성공적으로 생성되지 않았습니다!\nDB명 = {dbName}", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
+            return ds;
+        }
+
+
+        /// <summary>
+        /// SENSOR_INFO테이블에 있는 특정 센서 장비 정보를 DataSet형태로 불러오는 함수
+        /// </summary>
+        /// <param name="sensorData_dbName">DB명</param>
+        /// <param name="Devices_tbName">Table명</param>
+        /// <param name="sensorId">센서장비 ID번호</param>
+        /// <returns>DataSet형태의 반환값</returns>
+        private DataSet GetDeviceInfo(string sensorData_dbName, string Devices_tbName, int sensorId)
+        {
+            DataSet ds = new DataSet();
+            bool checkDbExists = g_DbTableHandler.IfDatabaseExists(sensorData_dbName);
+
+            if (checkDbExists)
+            {
+                bool CheckDeviceTableExists = g_DbTableHandler.IfTableExists(Devices_tbName);
+                if (CheckDeviceTableExists)
+                {
+                    string sqlStr = $"SELECT * FROM {Devices_tbName} WHERE {S_DeviceInfoColumns[0]} = '{sensorId}';";
+                    try
+                    {
+                        using (SqlConnection con = new SqlConnection(sqlConString))
+                        {
+                            con.Open();
+                            using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlStr, con))
+                            {
+                                sqlDataAdapter.Fill(ds);
+                            }
+                        }
+                    }
+                    catch (System.Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
+                }
+
+            }
+
             return ds;
         }
 
@@ -724,54 +788,71 @@ namespace AdminPage
                 foreach (ListViewItem item in listView1_thp.SelectedItems)
                 {
                     int sensorId = Convert.ToInt32(item.SubItems[1].Text);
+                    DataSet SensorDeviceInfo = GetDeviceInfo(dbName, S_DeviceTable, sensorId);
+
                     sID.Text = sensorId.ToString();
-                    for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
+
+                    if (SensorDeviceInfo.Tables.Count > 0 && SensorDeviceInfo.Tables[0].Rows.Count > 0)
                     {
-                        S_DeviceInfo_txtB[i].Text = item.SubItems[i + 2].Text;
-                        //S_DeviceInfo_txtB[i].TextAlign = HorizontalAlignment.Center;
-                    }
-                    List<CheckBox> sUsageRangesCh = S_UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
-                    List<string> sUsageRangesTables = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).ToList();
-
-                    for (int i = 0; i < sUsageRangesTables.Count; i++)
-                    {
-
-                        DataSet rangesWithUsage = GetRangesWithUsage(sensorId, sUsageRangesTables[i]);
-
-                        // first time use
-                        if (rangesWithUsage.Tables.Count == 0 || rangesWithUsage.Tables[0].Rows.Count == 0)
+                        DataRow row = SensorDeviceInfo.Tables[0].Rows[0];
+                        List<string> SensorDevInfo = new List<string>();
+                        foreach (var column in row.ItemArray)
                         {
-                            S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Checked = false);
-                            S_UsageCheckerRangePairs.Values.AsEnumerable().Select(list => list.Select(x => x.Enabled = false));
+                            SensorDevInfo.Add(column.ToString());
                         }
-                        else
+
+                        for (int i = 1; i < SensorDevInfo.Count - 1; i++)
                         {
-                            List<decimal> dataFromDB = new List<decimal>();
-                            for (int j = 0; j < S_FourRangeColumns.Count; j++)
-                            {
-                                dataFromDB.Add(Convert.ToDecimal(rangesWithUsage.Tables[0].Rows[0][S_FourRangeColumns[j]]));
-                            }
-
-                            bool sUsage = rangesWithUsage.Tables[0].Rows[0][sUsageRangesTables[i]].ToString() == "YES";
-
-                            List<NumericUpDown> checkers = S_UsageCheckerRangePairs[sUsageRangesCh[i]];
-
-                            for (int j = 0; j < checkers.Count; j++)
-                            {
-                                //checkers[i].Value = dataFromDB[i];
-                                S_UsageCheckerRangePairs[sUsageRangesCh[i]][j].Value = dataFromDB[j];
-
-                            }
-                            CheckBox currentCheckBox = S_UsageCheckerRangePairs.Keys.Where(x => x.Name == sUsageRangesTables[i]).FirstOrDefault();
-                            currentCheckBox.Checked = sUsage;
-
+                            S_DeviceInfo[i - 1].Text = SensorDevInfo[i];
+                            //S_DeviceInfo_txtB[i].TextAlign = HorizontalAlignment.Center;
                         }
+
+                        List<CheckBox> sUsageRangesCh = S_UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
+                        List<string> sUsageRangesTables = S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).ToList();
+
+                        for (int i = 0; i < sUsageRangesTables.Count; i++)
+                        {
+
+                            DataSet rangesWithUsage = GetRangesWithUsage(sensorId, sUsageRangesTables[i]);
+
+                            // first time use
+                            if (rangesWithUsage.Tables.Count == 0 || rangesWithUsage.Tables[0].Rows.Count == 0)
+                            {
+                                S_UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Checked = false);
+                                S_UsageCheckerRangePairs.Values.AsEnumerable().Select(list => list.Select(x => x.Enabled = false));
+                            }
+                            else
+                            {
+                                List<decimal> dataFromDB = new List<decimal>();
+                                for (int j = 0; j < S_FourRangeColumns.Count; j++)
+                                {
+                                    dataFromDB.Add(Convert.ToDecimal(rangesWithUsage.Tables[0].Rows[0][S_FourRangeColumns[j]]));
+                                }
+
+                                bool sUsage = rangesWithUsage.Tables[0].Rows[0][sUsageRangesTables[i]].ToString() == "YES";
+
+                                List<NumericUpDown> checkers = S_UsageCheckerRangePairs[sUsageRangesCh[i]];
+
+                                for (int j = 0; j < checkers.Count; j++)
+                                {
+                                    //checkers[i].Value = dataFromDB[i];
+                                    S_UsageCheckerRangePairs[sUsageRangesCh[i]][j].Value = dataFromDB[j];
+
+                                }
+                                CheckBox currentCheckBox = S_UsageCheckerRangePairs.Keys.Where(x => x.Name == sUsageRangesTables[i]).FirstOrDefault();
+                                currentCheckBox.Checked = sUsage;
+
+                            }
+                        }
+
                     }
+
+
                 }
             }
             else
             {
-                clearFields(S_DeviceInfo_txtB);
+                clearFields(S_DeviceInfo);
             }
         }
 
@@ -840,7 +921,7 @@ namespace AdminPage
 
                     int deviceId = Convert.ToInt32(listView1_thp.SelectedItems[0].SubItems[1].Text);
                     //Console.WriteLine("ID:" + listView1.SelectedItems[0].Text);
-                    if (S_DeviceInfo_txtB[0].Text.Length > 1 && S_DeviceInfo_txtB[1].Text.Length > 1)
+                    if (S_DeviceInfo[0].Text.Length > 1 && S_DeviceInfo[1].Text.Length > 1)
                     {
                         bool updated = UpdateDB(deviceId);
                         if (updated)
@@ -848,13 +929,13 @@ namespace AdminPage
                             foreach (ListViewItem item in listView1_thp.SelectedItems)
                             {
                                 item.SubItems[1].Text = sID.Text;
-                                for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
+                                for (int i = 0; i < S_DeviceInfo.Count; i++)
                                 {
-                                    item.SubItems[i + 2].Text = S_DeviceInfo_txtB[i].Text;
+                                    item.SubItems[i + 2].Text = S_DeviceInfo[i].Text;
                                 }
                                 item.SubItems[item.SubItems.Count - 1].Text = sUsage;
                             }
-                            clearFields(S_DeviceInfo_txtB);
+                            clearFields(S_DeviceInfo);
                             MessageBox.Show("센서 정보 DB 업데이트가 성공적으로 이루어졌습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
@@ -878,7 +959,7 @@ namespace AdminPage
                     }
                     if (sID.Text.Length > 0)
                     {
-                        if (S_DeviceInfo_txtB[0].Text.Length > 1 && S_DeviceInfo_txtB[1].Text.Length > 1)
+                        if (S_DeviceInfo[0].Text.Length > 1 && S_DeviceInfo[1].Text.Length > 1)
                         {
                             //Added should return true if data added to DB.
                             bool added = AddToDB(sUsage);
@@ -886,13 +967,13 @@ namespace AdminPage
                             {
                                 ListViewItem listViewItem = new ListViewItem(newOrderNumber.ToString());
                                 listViewItem.SubItems.Add(sID.Text);
-                                for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
+                                for (int i = 0; i < S_DeviceInfo.Count - 2; i++)
                                 {
-                                    listViewItem.SubItems.Add(S_DeviceInfo_txtB[i].Text);
+                                    listViewItem.SubItems.Add(S_DeviceInfo[i].Text);
                                 }
                                 listViewItem.SubItems.Add(sUsage);
                                 listView1_thp.Items.Add(listViewItem);
-                                clearFields(S_DeviceInfo_txtB);
+                                clearFields(S_DeviceInfo);
                                 MessageBox.Show("새 센서 장비 정보가 DB에 성공적으로 추가 되었습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                         }
@@ -918,7 +999,7 @@ namespace AdminPage
                 {
                     int deviceId = Convert.ToInt32(listView2_pressure.SelectedItems[0].SubItems[1].Text);
                     //Console.WriteLine("ID:" + listView1.SelectedItems[0].Text);
-                    if (S_DeviceInfo_txtB_p[0].Text.Length > 1 && S_DeviceInfo_txtB_p[1].Text.Length > 1)
+                    if (S_DeviceInfo_p[0].Text.Length > 1 && S_DeviceInfo_p[1].Text.Length > 1)
                     {
                         bool updated = UpdateDB(deviceId);          // FIX UpdateDB 부문 
                         if (updated)
@@ -926,13 +1007,13 @@ namespace AdminPage
                             foreach (ListViewItem item in listView2_pressure.SelectedItems)
                             {
                                 item.SubItems[1].Text = sID_p.Text;
-                                for (int i = 0; i < S_DeviceInfo_txtB_p.Count; i++)
+                                for (int i = 0; i < S_DeviceInfo_p.Count; i++)
                                 {
-                                    item.SubItems[i + 2].Text = S_DeviceInfo_txtB_p[i].Text;
+                                    item.SubItems[i + 2].Text = S_DeviceInfo_p[i].Text;
                                 }
                                 item.SubItems[item.SubItems.Count - 1].Text = sUsage;
                             }
-                            clearFields(S_DeviceInfo_txtB_p);
+                            clearFields(S_DeviceInfo_p);
                             MessageBox.Show("센서 정보 DB 업데이트가 성공적으로 이루어졌습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
@@ -964,7 +1045,7 @@ namespace AdminPage
 
                     if (sID_p.Text.Length > 0)
                     {
-                        if (S_DeviceInfo_txtB_p[0].Text.Length > 1 && S_DeviceInfo_txtB_p[1].Text.Length > 1)
+                        if (S_DeviceInfo_p[0].Text.Length > 1 && S_DeviceInfo_p[1].Text.Length > 1)
                         {
 
                             //Added should return true if data added to DB.
@@ -973,13 +1054,13 @@ namespace AdminPage
                             {
                                 ListViewItem listViewItem = new ListViewItem(newOrderNumber.ToString());
                                 listViewItem.SubItems.Add(sID_p.Text);
-                                for (int i = 0; i < S_DeviceInfo_txtB_p.Count; i++)
+                                for (int i = 0; i < S_DeviceInfo_p.Count; i++)
                                 {
-                                    listViewItem.SubItems.Add(S_DeviceInfo_txtB_p[i].Text);
+                                    listViewItem.SubItems.Add(S_DeviceInfo_p[i].Text);
                                 }
                                 listViewItem.SubItems.Add(sUsage);
                                 listView2_pressure.Items.Add(listViewItem);
-                                clearFields(S_DeviceInfo_txtB_p);
+                                clearFields(S_DeviceInfo_p);
                                 MessageBox.Show("새 센서 장비 정보가 DB에 성공적으로 추가 되었습니다.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                             //}
@@ -1003,12 +1084,12 @@ namespace AdminPage
 
         private void clearFields(List<TextBox> textBoxes)
         {
-            string deviceTable = "";
+            string deviceTable = string.Empty;
             int defaultID = 0;
             TextBox sID_ref = new TextBox();
             for (int i = 0; i < textBoxes.Count; i++)
             {
-                textBoxes[i].Text = "";
+                textBoxes[i].Text = string.Empty;
             }
             List<CheckBox> isCheked;
             List<List<NumericUpDown>> listNumbers;
@@ -1065,7 +1146,7 @@ namespace AdminPage
             bool result_UPD = false;
             TextBox sID_txtB;
             List<TextBox> sDeviceInfo_txtB;
-            string DeviceTable = "", UsageTable = "";
+            string DeviceTable = string.Empty, UsageTable = string.Empty;
             bool sUsage = false;
             int deviceIdNew = 0;
             Dictionary<CheckBox, List<NumericUpDown>> UsageCheckerRangePairs;  //   One reference for all (S_UsageCheckerRangePairs or S_UsageCheckerRangePairs_p, etc...)
@@ -1075,7 +1156,7 @@ namespace AdminPage
                 sID_txtB = sID;
                 DeviceTable = S_DeviceTable;
                 UsageTable = S_UsageTable;
-                sDeviceInfo_txtB = S_DeviceInfo_txtB;
+                sDeviceInfo_txtB = S_DeviceInfo;
                 deviceIdNew = Convert.ToInt32(this.sID.Text);
                 UsageCheckerRangePairs = S_UsageCheckerRangePairs;
 
@@ -1083,7 +1164,7 @@ namespace AdminPage
             else if (tabControl1.SelectedTab == tabPage2)
             {
                 sID_txtB = sID_p;
-                sDeviceInfo_txtB = S_DeviceInfo_txtB_p;
+                sDeviceInfo_txtB = S_DeviceInfo_p;
                 DeviceTable = S_DeviceTable_p;
                 UsageTable = S_UsageTable_p;
                 deviceIdNew = Convert.ToInt32(sID_p.Text);
@@ -1170,8 +1251,8 @@ namespace AdminPage
             if (dbExists)
             {
                 int sensorId = 0; // = Convert.ToInt32(sID.Text);
-                string DeviceTable = "";
-                string UsageTable = "";
+                string DeviceTable = string.Empty;
+                string UsageTable = string.Empty;
                 Dictionary<CheckBox, List<NumericUpDown>> UsageCheckerRangePairs;       // generic reference for more than one type: UsageCheckerRangePairs, UsageCheckerRangePairs_p, etc.
                 List<TextBox> DeviceInfo_txt;
                 if (tabControl1.SelectedTab == tabPage1)
@@ -1179,7 +1260,7 @@ namespace AdminPage
                     sensorId = Convert.ToInt32(sID.Text);
                     DeviceTable = S_DeviceTable;
                     UsageTable = S_UsageTable;
-                    DeviceInfo_txt = S_DeviceInfo_txtB;
+                    DeviceInfo_txt = S_DeviceInfo;
                     UsageCheckerRangePairs = S_UsageCheckerRangePairs;
                 }
                 else if (tabControl1.SelectedTab == tabPage2)
@@ -1187,7 +1268,7 @@ namespace AdminPage
                     sensorId = Convert.ToInt32(sID_p.Text);
                     DeviceTable = S_DeviceTable_p;
                     UsageTable = S_UsageTable_p;
-                    DeviceInfo_txt = S_DeviceInfo_txtB_p;
+                    DeviceInfo_txt = S_DeviceInfo_p;
                     UsageCheckerRangePairs = S_UsageCheckerRangePairs_p;
                 }
                 else
@@ -1270,6 +1351,8 @@ namespace AdminPage
                 bool tbExists = g_DbTableHandler.IfTableExists(UsageTable);
                 if (!tbExists)
                 {
+                    /// #bookmark Table Name Creation 
+
                     List<string> sRangesTbNames = UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).ToList();
                     string sqlCreateUsageTb = $"CREATE TABLE {UsageTable}(" +
                         $" {S_DeviceInfoColumns[0]} INT NOT NULL, CONSTRAINT PK_{UsageTable}_{S_DeviceInfoColumns[0]} PRIMARY KEY ({S_DeviceInfoColumns[0]})  ";
@@ -1323,14 +1406,29 @@ namespace AdminPage
 
 
                 string DevTblINSRTorUPD = $"IF EXISTS ( SELECT * FROM {DeviceTable} WHERE {S_DeviceInfoColumns[0]} = { sensorId}) " +
-                        $" UPDATE {DeviceTable}  " +
-                        $" SET {S_DeviceInfoColumns[1]} = '{DeviceInfo_txt[0].Text}', {S_DeviceInfoColumns[2]} = '{DeviceInfo_txt[1].Text}', " +
-                        $"{S_DeviceInfoColumns[3]} = '{DeviceInfo_txt[2].Text}', {S_DeviceInfoColumns[4]} = '{DeviceInfo_txt[3].Text}', " +
-                        $"{S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} = '{g_sensorUsage}' ELSE ";
+                        $" UPDATE {DeviceTable} SET ";
+                int index2 = 0;
+                for (int i = 1; i < S_DeviceInfoColumns.Count - 1; i++)
+                {
+                    DevTblINSRTorUPD += $" {S_DeviceInfoColumns[i]} = '{DeviceInfo_txt[index2].Text}', ";
+                    index2 += 1;
+                }
+                DevTblINSRTorUPD += $"{S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} = '{g_sensorUsage}' ELSE ";
+                /*                DevTblINSRTorUPD += $" SET {S_DeviceInfoColumns[1]} = '{DeviceInfo_txt[0].Text}', {S_DeviceInfoColumns[2]} = '{DeviceInfo_txt[1].Text}', " +
+                                        $"{S_DeviceInfoColumns[3]} = '{DeviceInfo_txt[2].Text}', {S_DeviceInfoColumns[4]} = '{DeviceInfo_txt[3].Text}', " +
+                                        $"{S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} = '{g_sensorUsage}' ELSE ";*/
 
-                DevTblINSRTorUPD = $"INSERT INTO {DeviceTable} " +
-                    $"VALUES ('{sensorId}', '{DeviceInfo_txt[0].Text}', '{DeviceInfo_txt[1].Text}', " +
-                    $"'{DeviceInfo_txt[2].Text}','{DeviceInfo_txt[3].Text}', '{g_sensorUsage}');";
+                DevTblINSRTorUPD += $"INSERT INTO {DeviceTable} " +
+                    $"VALUES ('{sensorId}', ";
+                for (int i = 0; i < DeviceInfo_txt.Count; i++)
+                {
+                    DevTblINSRTorUPD += $"'{DeviceInfo_txt[i].Text}', ";
+                }
+                DevTblINSRTorUPD += $" '{g_sensorUsage}');";
+                //DevTblINSRTorUPD += $"'{DeviceInfo_txt[2].Text}','{DeviceInfo_txt[3].Text}', '{g_sensorUsage}');";
+
+
+                /////////////////////////////////////////////////////////////////////bookmark
 
                 using (SqlConnection myConn = new SqlConnection(sqlConString))
                 {
@@ -1358,8 +1456,8 @@ namespace AdminPage
 
         private void b_add_Click(object sender, EventArgs e)
         {
-            string DeviceTable = "";
-            string sensorId = "";
+            string DeviceTable = string.Empty;
+            string sensorId = string.Empty;
             if (tabControl1.SelectedTab == tabPage1)
             {
                 sensorId = "1";
@@ -1371,12 +1469,12 @@ namespace AdminPage
 
                 }
                 //S_DeviceInfo_txtB[0].Text = "PSU650";
-                S_DeviceInfo_txtB[1].Text = "ZONE";
+                S_DeviceInfo[1].Text = "ZONE";
 
-                for (int i = 2; i < S_DeviceInfo_txtB.Count; i++)
+                for (int i = 2; i < S_DeviceInfo.Count; i++)
                 {
                     //textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
-                    S_DeviceInfo_txtB[i].Text = "";
+                    S_DeviceInfo[i].Text = string.Empty;
                 }
 
 
@@ -1392,7 +1490,7 @@ namespace AdminPage
                 }
 
                 RangeSetNew();
-                S_DeviceInfo_txtB[0].Focus();
+                S_DeviceInfo[0].Focus();
             }
             else if (tabControl1.SelectedTab == tabPage2)
             {
@@ -1405,12 +1503,12 @@ namespace AdminPage
 
                 }
                 //S_DeviceInfo_txtB[0].Text = "PSU650";
-                S_DeviceInfo_txtB_p[1].Text = "ZONE";
+                S_DeviceInfo_p[1].Text = "ZONE";
 
-                for (int i = 2; i < S_DeviceInfo_txtB_p.Count; i++)
+                for (int i = 2; i < S_DeviceInfo_p.Count; i++)
                 {
                     //textBoxes_UpdSensorInfo[i].TextAlign = HorizontalAlignment.Center;
-                    S_DeviceInfo_txtB_p[i].Text = "";
+                    S_DeviceInfo_p[i].Text = string.Empty;
                 }
 
 
@@ -1426,7 +1524,7 @@ namespace AdminPage
                 }
 
                 RangeSetNew();
-                S_DeviceInfo_txtB_p[0].Focus();
+                S_DeviceInfo_p[0].Focus();
             }
         }
 
@@ -1607,7 +1705,7 @@ namespace AdminPage
         {
             dateTimePicker1.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             dateTimePicker2.CustomFormat = "yyyy-MM-dd HH:mm:ss";
-            dateTimePicker2.Value = dateTimePicker2.Value.AddDays(1).AddSeconds(-1);
+            dateTimePicker2.Value = dateTimePicker2.Value.AddSeconds(-1);
             string startTime = dateTimePicker1.Value.ToString("yyyy-MM-dd HH:mm:ss");
             string endTime = dateTimePicker2.Value.ToString("yyyy-MM-dd HH:mm:ss");
             //DownToExcel downToExcel = new DownToExcel(tbName: "d_p03Usage", sqlConStr: sqlConString, (startTime, endTime));
@@ -1641,7 +1739,7 @@ namespace AdminPage
         {
             if (tabControl1.SelectedTab == tabPage1)
             {
-                clearFields(S_DeviceInfo_txtB);
+                clearFields(S_DeviceInfo);
                 if (pTrackerTimer.Enabled == false)
                 {
                     pTrackerTimer.Enabled = true;
@@ -1660,12 +1758,12 @@ namespace AdminPage
             }
             else if (tabControl1.SelectedTab == tabPage2)
             {
-                clearFields(S_DeviceInfo_txtB_p);
+                clearFields(S_DeviceInfo_p);
                 // Further FIX is Needed after Pressure sensor data collection is added
 
                 //pTrackerTimer.Enabled = false;
                 CheckAppRunning(DataCollectionAppName2);
-                if(appAlreadyRunning2)
+                if (appAlreadyRunning2)
                 {
                     b_dataCollection_status.Image = Resources.light_on_26_color;
 
@@ -1687,9 +1785,9 @@ namespace AdminPage
                 {
                     int sensorId = Convert.ToInt32(item.SubItems[1].Text);
                     sID_p.Text = sensorId.ToString();
-                    for (int i = 0; i < S_DeviceInfo_txtB.Count; i++)
+                    for (int i = 0; i < S_DeviceInfo.Count; i++)
                     {
-                        S_DeviceInfo_txtB_p[i].Text = item.SubItems[i + 2].Text;
+                        S_DeviceInfo_p[i].Text = item.SubItems[i + 2].Text;
                         //S_DeviceInfo_txtB[i].TextAlign = HorizontalAlignment.Center;
                     }
                     List<CheckBox> sUsageRangesCh_p = S_UsageCheckerRangePairs_p.Keys.AsEnumerable().ToList();
@@ -1733,7 +1831,7 @@ namespace AdminPage
             }
             else
             {
-                clearFields(S_DeviceInfo_txtB_p);
+                clearFields(S_DeviceInfo_p);
             }
         }
 
@@ -1747,11 +1845,11 @@ namespace AdminPage
             bool res = false;
             List<string> sensorNames = S_UsageCheckerRangePairs_p.Keys.AsEnumerable().Select(x => x.Name).ToList();
             SqlTransaction transaction_p;
-            string tbName = "";
+            string tbName = string.Empty;
             for (int i = 0; i < sensorNames.Count; i++)
             {
                 tbName = "d" + sensorNames[i].Substring(1);
-                string pressureSensorSql = $"SELECT COUNT(*) as COUNT FROM {tbName} WHERE DateAndTime > DATEADD(SS, -15, GETDATE())";
+                string pressureSensorSql = $"SELECT COUNT(*) as COUNT FROM {tbName} WHERE DateAndTime > DATEADD(SS, -{S_UsageCheckInterval}, GETDATE())";
                 using (SqlConnection con = new SqlConnection(sqlConString))
                 {
                     con.Open();
@@ -1823,5 +1921,6 @@ namespace AdminPage
         {
             System.Windows.Forms.Application.ExitThread();
         }
+
     }
 }

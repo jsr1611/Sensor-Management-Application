@@ -142,7 +142,7 @@ namespace AdminPage
             bool tbCreated = false;
             // Create Table command 
 
-            string tbCreateCmdStr = "";
+            string tbCreateCmdStr = string.Empty;
             tbCreateCmdStr = $"Create TABLE {tableName} ( " +
                         $" {S_DeviceInfoColumns[0]} INT NOT NULL, " +
                         $" CONSTRAINT PK_{tableName}_{S_DeviceInfoColumns[0]} PRIMARY KEY ({S_DeviceInfoColumns[0]}), " +
@@ -334,15 +334,15 @@ namespace AdminPage
         public bool CreateDatabase(string dbName, string sqlStr_CreateDb)
         {
             bool res = false;
-            res = IfDatabaseExists(dbName);
+            res = false; // IfDatabaseExists(dbName);
+            string IfNotExists = $"IF NOT EXISTS(SELECT * FROM sys.databases WHERE name='{dbName}') BEGIN ";
             if (!res)
             {
-
-
                  sqlStr_CreateDb += $@" ALTER DATABASE {DbName} SET SINGLE_USER WITH ROLLBACK IMMEDIATE; 
                                                     ALTER DATABASE {DbName} SET READ_COMMITTED_SNAPSHOT ON; 
-                                                    ALTER DATABASE {DbName} SET MULTI_USER;";
+                                                    ALTER DATABASE {DbName} SET MULTI_USER; ";
 
+                sqlStr_CreateDb = IfNotExists + sqlStr_CreateDb + " END;";
                 using (SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True"))
                 {
                     myConn_master.Open();
@@ -352,14 +352,6 @@ namespace AdminPage
                         res = true;
                     }
                 }
-                /*using (SqlConnection con = new SqlConnection(sqlConString))
-                {
-                    con.Open();
-                    using (SqlCommand enableRdCmtdSnpsht = new SqlCommand(ENABLE_READ_COMMITTED_SNAPSHOT, con))
-                    {
-                        enableRdCmtdSnpsht.ExecuteNonQuery();
-                    }
-                }*/
             }
             return res;
 
@@ -617,13 +609,13 @@ namespace AdminPage
         {
             //Check if ID exists
             SqlConnection myConn = new SqlConnection(sqlConString);
-            string sqlCheckNoData = "";
-            string sqlInsert = "";
+            string sqlCheckNoData = string.Empty;
+            string sqlInsert = string.Empty;
             bool dataExists = false;
 
             bool updSuccessful = false;
-            string sqlUpd = "";
-            string sqlUpdCheck = "";
+            string sqlUpd = string.Empty;
+            string sqlUpdCheck = string.Empty;
 
             if (deviceIdNew == deviceIdOld)
             {

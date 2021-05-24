@@ -71,7 +71,11 @@ namespace AdminPage
             string sqlselect;
             DataSet ds = new DataSet();
             SqlDataAdapter da;
-
+            string[] sheetNames = new string[tbName.Count];
+            for (int n=0; n<sheetNames.Length; n++)
+            {
+                sheetNames[n] = tbName[n].Substring(2);
+            }
 
 
             for (int k = 0; k < tbName.Count; k++)
@@ -79,7 +83,7 @@ namespace AdminPage
                 ws[k] = wb.Worksheets.Add();
                 ws[k].Name = tbName[k];
                 tableName = tbName[k];
-                sqlselect = $"SELECT TOP 100 * FROM {tableName} WHERE dateandtime >= '{startEndTime.Item1}' and dateandtime <= '{startEndTime.Item2}' ORDER BY dateandtime DESC;";
+                sqlselect = $"SELECT * FROM {tableName} WHERE dateandtime >= '{startEndTime.Item1}' and dateandtime <= '{startEndTime.Item2}' ORDER BY dateandtime ASC;";
                 SqlCommand cmd = new SqlCommand(sqlselect, myConn);
                 da = new SqlDataAdapter(cmd);
                 da.Fill(ds, tableName);
