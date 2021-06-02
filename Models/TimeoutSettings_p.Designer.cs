@@ -34,6 +34,8 @@ namespace AdminPage.Models
             this.RetryCount = new System.Windows.Forms.Label();
             this.DelayTime1 = new System.Windows.Forms.NumericUpDown();
             this.DelayTime = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.RetryCount1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DelayTime1)).BeginInit();
             this.SuspendLayout();
@@ -60,7 +62,7 @@ namespace AdminPage.Models
             this.RetryCount1.Size = new System.Drawing.Size(92, 21);
             this.RetryCount1.TabIndex = 144;
             this.RetryCount1.Value = new decimal(new int[] {
-            118,
+            30,
             0,
             0,
             0});
@@ -102,11 +104,33 @@ namespace AdminPage.Models
             this.DelayTime.TabIndex = 141;
             this.DelayTime.Text = "지연 시간";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label1.Location = new System.Drawing.Point(257, 52);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(17, 12);
+            this.label1.TabIndex = 148;
+            this.label1.Text = "초";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label2.Location = new System.Drawing.Point(257, 100);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(17, 12);
+            this.label2.TabIndex = 149;
+            this.label2.Text = "배";
+            // 
             // TimeoutSettings_p
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(348, 268);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.RetryCount1);
             this.Controls.Add(this.RetryCount);
@@ -128,5 +152,7 @@ namespace AdminPage.Models
         private System.Windows.Forms.Label RetryCount;
         private System.Windows.Forms.NumericUpDown DelayTime1;
         private System.Windows.Forms.Label DelayTime;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
