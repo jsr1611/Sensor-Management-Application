@@ -259,10 +259,10 @@ namespace AdminPage
                     }
                     catch (Exception)
                     {
-                        
+
                     }
                 }
-                
+
 
                 using (SqlCommand dbExistsCmd = new SqlCommand(sql_dbExists, myConn_master))
                 {
@@ -295,35 +295,35 @@ namespace AdminPage
         public bool CreateTable(string dbName, string tableName, string sqlCreateTable)
         {
             bool target = false;
-            bool dbExists = IfDatabaseExists(dbName);
-            if (dbExists)
+            //bool dbExists = IfDatabaseExists(dbName);
+            //if (true)
+            //{
+            using (SqlConnection con = new SqlConnection(sqlConString))
             {
-                using (SqlConnection con = new SqlConnection(sqlConString))
+                //con.ConnectionString = sqlConString;
+                if (con.State != ConnectionState.Open)
                 {
-                    //con.ConnectionString = sqlConString;
-                    if (con.State != ConnectionState.Open)
+                    con.Open();
+                }
+                using (SqlCommand createTbCmd = new SqlCommand(sqlCreateTable, con))
+                {
+                    /*bool tbAlreadyExists = IfTableExists(tableName);
+                    if (tbAlreadyExists)
                     {
-                        con.Open();
+                        target = true;
                     }
-                    using (SqlCommand createTbCmd = new SqlCommand(sqlCreateTable, con))
-                    {
-                        bool tbAlreadyExists = IfTableExists(tableName);
-                        if (tbAlreadyExists)
-                        {
-                            target = true;
-                        }
-                        else
-                        {
-                            createTbCmd.ExecuteNonQuery();
-                            target = true;
-                        }
-                    }
+                    else
+                    {*/
+                    createTbCmd.ExecuteNonQuery();
+                    target = true;
+                    //}
                 }
             }
+            /*}
             else
             {
                 DialogResult createDbCheck = MessageBox.Show($"DB를 찾을 수 없습니다.\nDB명은 {dbName}", "Status Info", MessageBoxButtons.OK);
-            }
+            }*/
 
             return target;
         }
@@ -338,7 +338,7 @@ namespace AdminPage
             string IfNotExists = $"IF NOT EXISTS(SELECT * FROM sys.databases WHERE name='{dbName}') BEGIN ";
             if (!res)
             {
-                 sqlStr_CreateDb += $@" ALTER DATABASE {DbName} SET SINGLE_USER WITH ROLLBACK IMMEDIATE; 
+                sqlStr_CreateDb += $@" ALTER DATABASE {DbName} SET SINGLE_USER WITH ROLLBACK IMMEDIATE; 
                                                     ALTER DATABASE {DbName} SET READ_COMMITTED_SNAPSHOT ON; 
                                                     ALTER DATABASE {DbName} SET MULTI_USER; ";
 
@@ -401,6 +401,9 @@ namespace AdminPage
         {
 
             bool updSuccessful = false;
+
+
+
             SqlConnection myConn = new SqlConnection(sqlConString);
             string sensorUsage = sUsage ? "YES" : "NO";
             string sqlUpdStr;

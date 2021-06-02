@@ -75,11 +75,15 @@ namespace AdminPage
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.sPortNumber = new System.Windows.Forms.TextBox();
+            this.l_port = new System.Windows.Forms.Label();
+            this.sIPAddress = new System.Windows.Forms.TextBox();
+            this.l_ipAddress = new System.Windows.Forms.Label();
             this.s_p250HigherLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_p250HigherLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_p250LowerLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_p250LowerLimit1 = new System.Windows.Forms.NumericUpDown();
-            this.c_p250Usage = new System.Windows.Forms.CheckBox();
+            this.particle250 = new System.Windows.Forms.CheckBox();
             this.l_p25 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
@@ -124,24 +128,24 @@ namespace AdminPage
             this.s_tLowerLimit1 = new System.Windows.Forms.NumericUpDown();
             this.s_tHigherLimit2 = new System.Windows.Forms.NumericUpDown();
             this.s_tHigherLimit1 = new System.Windows.Forms.NumericUpDown();
-            this.c_p100Usage = new System.Windows.Forms.CheckBox();
-            this.c_p50Usage = new System.Windows.Forms.CheckBox();
-            this.c_p30Usage = new System.Windows.Forms.CheckBox();
-            this.c_p10Usage = new System.Windows.Forms.CheckBox();
+            this.particle100 = new System.Windows.Forms.CheckBox();
+            this.particle50 = new System.Windows.Forms.CheckBox();
+            this.particle30 = new System.Windows.Forms.CheckBox();
+            this.particle10 = new System.Windows.Forms.CheckBox();
             this.l_p100Usage = new System.Windows.Forms.Label();
             this.l_p5Usage = new System.Windows.Forms.Label();
             this.l_p30Usage = new System.Windows.Forms.Label();
             this.l_p10Usage = new System.Windows.Forms.Label();
             this.l_p05Usage = new System.Windows.Forms.Label();
             this.l_p01 = new System.Windows.Forms.Label();
-            this.c_p05Usage = new System.Windows.Forms.CheckBox();
-            this.c_p01Usage = new System.Windows.Forms.CheckBox();
+            this.particle05 = new System.Windows.Forms.CheckBox();
+            this.particle01 = new System.Windows.Forms.CheckBox();
             this.l_p03Usage = new System.Windows.Forms.Label();
-            this.c_p03Usage = new System.Windows.Forms.CheckBox();
+            this.particle03 = new System.Windows.Forms.CheckBox();
             this.l_hUsage = new System.Windows.Forms.Label();
-            this.c_hUsage = new System.Windows.Forms.CheckBox();
+            this.humidity = new System.Windows.Forms.CheckBox();
             this.l_tUsage = new System.Windows.Forms.Label();
-            this.c_tUsage = new System.Windows.Forms.CheckBox();
+            this.temperature = new System.Windows.Forms.CheckBox();
             this.l_sHigherLimit2 = new System.Windows.Forms.Label();
             this.l_sHigherLimit1 = new System.Windows.Forms.Label();
             this.l_sLowerLimit2 = new System.Windows.Forms.Label();
@@ -211,14 +215,14 @@ namespace AdminPage
             this.sID_p = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.sZone_p = new System.Windows.Forms.TextBox();
-            this.c_inchhgUsage = new System.Windows.Forms.CheckBox();
-            this.c_mmhgUsage = new System.Windows.Forms.CheckBox();
-            this.c_inchh2oUsage = new System.Windows.Forms.CheckBox();
-            this.c_mmh2oUsage = new System.Windows.Forms.CheckBox();
-            this.c_mbarUsage = new System.Windows.Forms.CheckBox();
-            this.c_kpaUsage = new System.Windows.Forms.CheckBox();
-            this.c_hpaUsage = new System.Windows.Forms.CheckBox();
-            this.c_paUsage = new System.Windows.Forms.CheckBox();
+            this.inchhg = new System.Windows.Forms.CheckBox();
+            this.mmhg = new System.Windows.Forms.CheckBox();
+            this.inchh2o = new System.Windows.Forms.CheckBox();
+            this.mmh2o = new System.Windows.Forms.CheckBox();
+            this.mbar = new System.Windows.Forms.CheckBox();
+            this.kpa = new System.Windows.Forms.CheckBox();
+            this.hpa = new System.Windows.Forms.CheckBox();
+            this.pa = new System.Windows.Forms.CheckBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
@@ -232,10 +236,6 @@ namespace AdminPage
             this.sLocation_p = new System.Windows.Forms.TextBox();
             this.sName_p = new System.Windows.Forms.TextBox();
             this.pTrackerTimer = new System.Windows.Forms.Timer(this.components);
-            this.l_ipAddress = new System.Windows.Forms.Label();
-            this.sIPAddress = new System.Windows.Forms.TextBox();
-            this.sPortNumber = new System.Windows.Forms.TextBox();
-            this.l_port = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -588,7 +588,7 @@ namespace AdminPage
             this.splitContainer1.Panel2.Controls.Add(this.s_p250HigherLimit1);
             this.splitContainer1.Panel2.Controls.Add(this.s_p250LowerLimit2);
             this.splitContainer1.Panel2.Controls.Add(this.s_p250LowerLimit1);
-            this.splitContainer1.Panel2.Controls.Add(this.c_p250Usage);
+            this.splitContainer1.Panel2.Controls.Add(this.particle250);
             this.splitContainer1.Panel2.Controls.Add(this.l_p25);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.dateTimePicker2);
@@ -633,24 +633,24 @@ namespace AdminPage
             this.splitContainer1.Panel2.Controls.Add(this.s_tLowerLimit1);
             this.splitContainer1.Panel2.Controls.Add(this.s_tHigherLimit2);
             this.splitContainer1.Panel2.Controls.Add(this.s_tHigherLimit1);
-            this.splitContainer1.Panel2.Controls.Add(this.c_p100Usage);
-            this.splitContainer1.Panel2.Controls.Add(this.c_p50Usage);
-            this.splitContainer1.Panel2.Controls.Add(this.c_p30Usage);
-            this.splitContainer1.Panel2.Controls.Add(this.c_p10Usage);
+            this.splitContainer1.Panel2.Controls.Add(this.particle100);
+            this.splitContainer1.Panel2.Controls.Add(this.particle50);
+            this.splitContainer1.Panel2.Controls.Add(this.particle30);
+            this.splitContainer1.Panel2.Controls.Add(this.particle10);
             this.splitContainer1.Panel2.Controls.Add(this.l_p100Usage);
             this.splitContainer1.Panel2.Controls.Add(this.l_p5Usage);
             this.splitContainer1.Panel2.Controls.Add(this.l_p30Usage);
             this.splitContainer1.Panel2.Controls.Add(this.l_p10Usage);
             this.splitContainer1.Panel2.Controls.Add(this.l_p05Usage);
             this.splitContainer1.Panel2.Controls.Add(this.l_p01);
-            this.splitContainer1.Panel2.Controls.Add(this.c_p05Usage);
-            this.splitContainer1.Panel2.Controls.Add(this.c_p01Usage);
+            this.splitContainer1.Panel2.Controls.Add(this.particle05);
+            this.splitContainer1.Panel2.Controls.Add(this.particle01);
             this.splitContainer1.Panel2.Controls.Add(this.l_p03Usage);
-            this.splitContainer1.Panel2.Controls.Add(this.c_p03Usage);
+            this.splitContainer1.Panel2.Controls.Add(this.particle03);
             this.splitContainer1.Panel2.Controls.Add(this.l_hUsage);
-            this.splitContainer1.Panel2.Controls.Add(this.c_hUsage);
+            this.splitContainer1.Panel2.Controls.Add(this.humidity);
             this.splitContainer1.Panel2.Controls.Add(this.l_tUsage);
-            this.splitContainer1.Panel2.Controls.Add(this.c_tUsage);
+            this.splitContainer1.Panel2.Controls.Add(this.temperature);
             this.splitContainer1.Panel2.Controls.Add(this.l_sHigherLimit2);
             this.splitContainer1.Panel2.Controls.Add(this.l_sHigherLimit1);
             this.splitContainer1.Panel2.Controls.Add(this.l_sLowerLimit2);
@@ -712,6 +712,26 @@ namespace AdminPage
             // 
             resources.ApplyResources(this.columnHeader6, "columnHeader6");
             // 
+            // sPortNumber
+            // 
+            resources.ApplyResources(this.sPortNumber, "sPortNumber");
+            this.sPortNumber.Name = "sPortNumber";
+            // 
+            // l_port
+            // 
+            resources.ApplyResources(this.l_port, "l_port");
+            this.l_port.Name = "l_port";
+            // 
+            // sIPAddress
+            // 
+            resources.ApplyResources(this.sIPAddress, "sIPAddress");
+            this.sIPAddress.Name = "sIPAddress";
+            // 
+            // l_ipAddress
+            // 
+            resources.ApplyResources(this.l_ipAddress, "l_ipAddress");
+            this.l_ipAddress.Name = "l_ipAddress";
+            // 
             // s_p250HigherLimit2
             // 
             resources.ApplyResources(this.s_p250HigherLimit2, "s_p250HigherLimit2");
@@ -752,12 +772,12 @@ namespace AdminPage
             0});
             this.s_p250LowerLimit1.Name = "s_p250LowerLimit1";
             // 
-            // c_p250Usage
+            // particle250
             // 
-            resources.ApplyResources(this.c_p250Usage, "c_p250Usage");
-            this.c_p250Usage.Name = "c_p250Usage";
-            this.c_p250Usage.UseVisualStyleBackColor = true;
-            this.c_p250Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.particle250, "particle250");
+            this.particle250.Name = "particle250";
+            this.particle250.UseVisualStyleBackColor = true;
+            this.particle250.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // l_p25
             // 
@@ -1185,33 +1205,33 @@ namespace AdminPage
             -2147483648});
             this.s_tHigherLimit1.Name = "s_tHigherLimit1";
             // 
-            // c_p100Usage
+            // particle100
             // 
-            resources.ApplyResources(this.c_p100Usage, "c_p100Usage");
-            this.c_p100Usage.Name = "c_p100Usage";
-            this.c_p100Usage.UseVisualStyleBackColor = true;
-            this.c_p100Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.particle100, "particle100");
+            this.particle100.Name = "particle100";
+            this.particle100.UseVisualStyleBackColor = true;
+            this.particle100.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // c_p50Usage
+            // particle50
             // 
-            resources.ApplyResources(this.c_p50Usage, "c_p50Usage");
-            this.c_p50Usage.Name = "c_p50Usage";
-            this.c_p50Usage.UseVisualStyleBackColor = true;
-            this.c_p50Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.particle50, "particle50");
+            this.particle50.Name = "particle50";
+            this.particle50.UseVisualStyleBackColor = true;
+            this.particle50.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // c_p30Usage
+            // particle30
             // 
-            resources.ApplyResources(this.c_p30Usage, "c_p30Usage");
-            this.c_p30Usage.Name = "c_p30Usage";
-            this.c_p30Usage.UseVisualStyleBackColor = true;
-            this.c_p30Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.particle30, "particle30");
+            this.particle30.Name = "particle30";
+            this.particle30.UseVisualStyleBackColor = true;
+            this.particle30.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // c_p10Usage
+            // particle10
             // 
-            resources.ApplyResources(this.c_p10Usage, "c_p10Usage");
-            this.c_p10Usage.Name = "c_p10Usage";
-            this.c_p10Usage.UseVisualStyleBackColor = true;
-            this.c_p10Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.particle10, "particle10");
+            this.particle10.Name = "particle10";
+            this.particle10.UseVisualStyleBackColor = true;
+            this.particle10.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // l_p100Usage
             // 
@@ -1249,19 +1269,19 @@ namespace AdminPage
             resources.ApplyResources(this.l_p01, "l_p01");
             this.l_p01.Name = "l_p01";
             // 
-            // c_p05Usage
+            // particle05
             // 
-            resources.ApplyResources(this.c_p05Usage, "c_p05Usage");
-            this.c_p05Usage.Name = "c_p05Usage";
-            this.c_p05Usage.UseVisualStyleBackColor = true;
-            this.c_p05Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.particle05, "particle05");
+            this.particle05.Name = "particle05";
+            this.particle05.UseVisualStyleBackColor = true;
+            this.particle05.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // c_p01Usage
+            // particle01
             // 
-            resources.ApplyResources(this.c_p01Usage, "c_p01Usage");
-            this.c_p01Usage.Name = "c_p01Usage";
-            this.c_p01Usage.UseVisualStyleBackColor = true;
-            this.c_p01Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.particle01, "particle01");
+            this.particle01.Name = "particle01";
+            this.particle01.UseVisualStyleBackColor = true;
+            this.particle01.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // l_p03Usage
             // 
@@ -1269,12 +1289,12 @@ namespace AdminPage
             resources.ApplyResources(this.l_p03Usage, "l_p03Usage");
             this.l_p03Usage.Name = "l_p03Usage";
             // 
-            // c_p03Usage
+            // particle03
             // 
-            resources.ApplyResources(this.c_p03Usage, "c_p03Usage");
-            this.c_p03Usage.Name = "c_p03Usage";
-            this.c_p03Usage.UseVisualStyleBackColor = true;
-            this.c_p03Usage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.particle03, "particle03");
+            this.particle03.Name = "particle03";
+            this.particle03.UseVisualStyleBackColor = true;
+            this.particle03.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // l_hUsage
             // 
@@ -1282,12 +1302,12 @@ namespace AdminPage
             resources.ApplyResources(this.l_hUsage, "l_hUsage");
             this.l_hUsage.Name = "l_hUsage";
             // 
-            // c_hUsage
+            // humidity
             // 
-            resources.ApplyResources(this.c_hUsage, "c_hUsage");
-            this.c_hUsage.Name = "c_hUsage";
-            this.c_hUsage.UseVisualStyleBackColor = true;
-            this.c_hUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.humidity, "humidity");
+            this.humidity.Name = "humidity";
+            this.humidity.UseVisualStyleBackColor = true;
+            this.humidity.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // l_tUsage
             // 
@@ -1295,12 +1315,12 @@ namespace AdminPage
             resources.ApplyResources(this.l_tUsage, "l_tUsage");
             this.l_tUsage.Name = "l_tUsage";
             // 
-            // c_tUsage
+            // temperature
             // 
-            resources.ApplyResources(this.c_tUsage, "c_tUsage");
-            this.c_tUsage.Name = "c_tUsage";
-            this.c_tUsage.UseVisualStyleBackColor = true;
-            this.c_tUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.temperature, "temperature");
+            this.temperature.Name = "temperature";
+            this.temperature.UseVisualStyleBackColor = true;
+            this.temperature.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // l_sHigherLimit2
             // 
@@ -1427,14 +1447,14 @@ namespace AdminPage
             this.splitContainer2.Panel2.Controls.Add(this.sID_p);
             this.splitContainer2.Panel2.Controls.Add(this.label8);
             this.splitContainer2.Panel2.Controls.Add(this.sZone_p);
-            this.splitContainer2.Panel2.Controls.Add(this.c_inchhgUsage);
-            this.splitContainer2.Panel2.Controls.Add(this.c_mmhgUsage);
-            this.splitContainer2.Panel2.Controls.Add(this.c_inchh2oUsage);
-            this.splitContainer2.Panel2.Controls.Add(this.c_mmh2oUsage);
-            this.splitContainer2.Panel2.Controls.Add(this.c_mbarUsage);
-            this.splitContainer2.Panel2.Controls.Add(this.c_kpaUsage);
-            this.splitContainer2.Panel2.Controls.Add(this.c_hpaUsage);
-            this.splitContainer2.Panel2.Controls.Add(this.c_paUsage);
+            this.splitContainer2.Panel2.Controls.Add(this.inchhg);
+            this.splitContainer2.Panel2.Controls.Add(this.mmhg);
+            this.splitContainer2.Panel2.Controls.Add(this.inchh2o);
+            this.splitContainer2.Panel2.Controls.Add(this.mmh2o);
+            this.splitContainer2.Panel2.Controls.Add(this.mbar);
+            this.splitContainer2.Panel2.Controls.Add(this.kpa);
+            this.splitContainer2.Panel2.Controls.Add(this.hpa);
+            this.splitContainer2.Panel2.Controls.Add(this.pa);
             this.splitContainer2.Panel2.Controls.Add(this.label18);
             this.splitContainer2.Panel2.Controls.Add(this.label19);
             this.splitContainer2.Panel2.Controls.Add(this.label20);
@@ -2271,61 +2291,61 @@ namespace AdminPage
             resources.ApplyResources(this.sZone_p, "sZone_p");
             this.sZone_p.Name = "sZone_p";
             // 
-            // c_inchhgUsage
+            // inchhg
             // 
-            resources.ApplyResources(this.c_inchhgUsage, "c_inchhgUsage");
-            this.c_inchhgUsage.Name = "c_inchhgUsage";
-            this.c_inchhgUsage.UseVisualStyleBackColor = true;
-            this.c_inchhgUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.inchhg, "inchhg");
+            this.inchhg.Name = "inchhg";
+            this.inchhg.UseVisualStyleBackColor = true;
+            this.inchhg.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // c_mmhgUsage
+            // mmhg
             // 
-            resources.ApplyResources(this.c_mmhgUsage, "c_mmhgUsage");
-            this.c_mmhgUsage.Name = "c_mmhgUsage";
-            this.c_mmhgUsage.UseVisualStyleBackColor = true;
-            this.c_mmhgUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.mmhg, "mmhg");
+            this.mmhg.Name = "mmhg";
+            this.mmhg.UseVisualStyleBackColor = true;
+            this.mmhg.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // c_inchh2oUsage
+            // inchh2o
             // 
-            resources.ApplyResources(this.c_inchh2oUsage, "c_inchh2oUsage");
-            this.c_inchh2oUsage.Name = "c_inchh2oUsage";
-            this.c_inchh2oUsage.UseVisualStyleBackColor = true;
-            this.c_inchh2oUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.inchh2o, "inchh2o");
+            this.inchh2o.Name = "inchh2o";
+            this.inchh2o.UseVisualStyleBackColor = true;
+            this.inchh2o.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // c_mmh2oUsage
+            // mmh2o
             // 
-            resources.ApplyResources(this.c_mmh2oUsage, "c_mmh2oUsage");
-            this.c_mmh2oUsage.Name = "c_mmh2oUsage";
-            this.c_mmh2oUsage.UseVisualStyleBackColor = true;
-            this.c_mmh2oUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.mmh2o, "mmh2o");
+            this.mmh2o.Name = "mmh2o";
+            this.mmh2o.UseVisualStyleBackColor = true;
+            this.mmh2o.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // c_mbarUsage
+            // mbar
             // 
-            resources.ApplyResources(this.c_mbarUsage, "c_mbarUsage");
-            this.c_mbarUsage.Name = "c_mbarUsage";
-            this.c_mbarUsage.UseVisualStyleBackColor = true;
-            this.c_mbarUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.mbar, "mbar");
+            this.mbar.Name = "mbar";
+            this.mbar.UseVisualStyleBackColor = true;
+            this.mbar.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // c_kpaUsage
+            // kpa
             // 
-            resources.ApplyResources(this.c_kpaUsage, "c_kpaUsage");
-            this.c_kpaUsage.Name = "c_kpaUsage";
-            this.c_kpaUsage.UseVisualStyleBackColor = true;
-            this.c_kpaUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.kpa, "kpa");
+            this.kpa.Name = "kpa";
+            this.kpa.UseVisualStyleBackColor = true;
+            this.kpa.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // c_hpaUsage
+            // hpa
             // 
-            resources.ApplyResources(this.c_hpaUsage, "c_hpaUsage");
-            this.c_hpaUsage.Name = "c_hpaUsage";
-            this.c_hpaUsage.UseVisualStyleBackColor = true;
-            this.c_hpaUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.hpa, "hpa");
+            this.hpa.Name = "hpa";
+            this.hpa.UseVisualStyleBackColor = true;
+            this.hpa.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
-            // c_paUsage
+            // pa
             // 
-            resources.ApplyResources(this.c_paUsage, "c_paUsage");
-            this.c_paUsage.Name = "c_paUsage";
-            this.c_paUsage.UseVisualStyleBackColor = true;
-            this.c_paUsage.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
+            resources.ApplyResources(this.pa, "pa");
+            this.pa.Name = "pa";
+            this.pa.UseVisualStyleBackColor = true;
+            this.pa.CheckedChanged += new System.EventHandler(this.xCheckedChanged);
             // 
             // label18
             // 
@@ -2391,26 +2411,6 @@ namespace AdminPage
             // 
             this.pTrackerTimer.Interval = 1000;
             this.pTrackerTimer.Tick += new System.EventHandler(this.pTrackerTimer_Tick);
-            // 
-            // l_ipAddress
-            // 
-            resources.ApplyResources(this.l_ipAddress, "l_ipAddress");
-            this.l_ipAddress.Name = "l_ipAddress";
-            // 
-            // sIPAddress
-            // 
-            resources.ApplyResources(this.sIPAddress, "sIPAddress");
-            this.sIPAddress.Name = "sIPAddress";
-            // 
-            // sPortNumber
-            // 
-            resources.ApplyResources(this.sPortNumber, "sPortNumber");
-            this.sPortNumber.Name = "sPortNumber";
-            // 
-            // l_port
-            // 
-            resources.ApplyResources(this.l_port, "l_port");
-            this.l_port.Name = "l_port";
             // 
             // Form1
             // 
@@ -2602,21 +2602,21 @@ namespace AdminPage
         private System.Windows.Forms.NumericUpDown s_tLowerLimit1;
         private System.Windows.Forms.NumericUpDown s_tHigherLimit2;
         private System.Windows.Forms.NumericUpDown s_tHigherLimit1;
-        private System.Windows.Forms.CheckBox c_p100Usage;
-        private System.Windows.Forms.CheckBox c_p50Usage;
-        private System.Windows.Forms.CheckBox c_p30Usage;
-        private System.Windows.Forms.CheckBox c_p10Usage;
+        private System.Windows.Forms.CheckBox particle100;
+        private System.Windows.Forms.CheckBox particle50;
+        private System.Windows.Forms.CheckBox particle30;
+        private System.Windows.Forms.CheckBox particle10;
         private System.Windows.Forms.Label l_p5Usage;
         private System.Windows.Forms.Label l_p30Usage;
         private System.Windows.Forms.Label l_p10Usage;
         private System.Windows.Forms.Label l_p05Usage;
-        private System.Windows.Forms.CheckBox c_p05Usage;
+        private System.Windows.Forms.CheckBox particle05;
         private System.Windows.Forms.Label l_p03Usage;
-        private System.Windows.Forms.CheckBox c_p03Usage;
+        private System.Windows.Forms.CheckBox particle03;
         private System.Windows.Forms.Label l_hUsage;
-        private System.Windows.Forms.CheckBox c_hUsage;
+        private System.Windows.Forms.CheckBox humidity;
         private System.Windows.Forms.Label l_tUsage;
-        private System.Windows.Forms.CheckBox c_tUsage;
+        private System.Windows.Forms.CheckBox temperature;
         private System.Windows.Forms.Label l_sHigherLimit2;
         private System.Windows.Forms.Label l_sHigherLimit1;
         private System.Windows.Forms.Label l_sLowerLimit2;
@@ -2642,13 +2642,13 @@ namespace AdminPage
         private System.Windows.Forms.TextBox sID_p;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox sZone_p;
-        private System.Windows.Forms.CheckBox c_inchhgUsage;
-        private System.Windows.Forms.CheckBox c_mmhgUsage;
-        private System.Windows.Forms.CheckBox c_inchh2oUsage;
-        private System.Windows.Forms.CheckBox c_mmh2oUsage;
-        private System.Windows.Forms.CheckBox c_kpaUsage;
-        private System.Windows.Forms.CheckBox c_hpaUsage;
-        private System.Windows.Forms.CheckBox c_paUsage;
+        private System.Windows.Forms.CheckBox inchhg;
+        private System.Windows.Forms.CheckBox mmhg;
+        private System.Windows.Forms.CheckBox inchh2o;
+        private System.Windows.Forms.CheckBox mmh2o;
+        private System.Windows.Forms.CheckBox kpa;
+        private System.Windows.Forms.CheckBox hpa;
+        private System.Windows.Forms.CheckBox pa;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
@@ -2713,12 +2713,12 @@ namespace AdminPage
         private System.Windows.Forms.NumericUpDown s_p01LowerLimit2;
         private System.Windows.Forms.NumericUpDown s_p01LowerLimit1;
         private System.Windows.Forms.Label l_p01;
-        private System.Windows.Forms.CheckBox c_p01Usage;
+        private System.Windows.Forms.CheckBox particle01;
         private System.Windows.Forms.NumericUpDown s_p250HigherLimit2;
         private System.Windows.Forms.NumericUpDown s_p250HigherLimit1;
         private System.Windows.Forms.NumericUpDown s_p250LowerLimit2;
         private System.Windows.Forms.NumericUpDown s_p250LowerLimit1;
-        private System.Windows.Forms.CheckBox c_p250Usage;
+        private System.Windows.Forms.CheckBox particle250;
         private System.Windows.Forms.Label l_p25;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown s_mbarLowerLimit2;
@@ -2726,7 +2726,7 @@ namespace AdminPage
         private System.Windows.Forms.NumericUpDown s_mbarHigherLimit2;
         private System.Windows.Forms.NumericUpDown s_mbarHigherLimit1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox c_mbarUsage;
+        private System.Windows.Forms.CheckBox mbar;
         public System.Windows.Forms.Timer pTrackerTimer;
         private System.Windows.Forms.TextBox sPortNumber;
         private System.Windows.Forms.Label l_port;

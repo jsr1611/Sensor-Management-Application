@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AdminPage
 {
@@ -18,16 +19,22 @@ namespace AdminPage
         public string dbName = string.Empty; // SensorDataDB
         public string dbUID = string.Empty; //dlitdb01
         public string dbPWD = string.Empty; // dlitdb01
-        public string connectionTimeout = string.Empty; // 180
         public string S_DeviceTable = string.Empty; // Devices
         public string S_DeviceTable_p = string.Empty; // Devices_p
         public string S_UsageTable = string.Empty; // SensorUsage
         public string S_UsageTable_p = string.Empty; //SensorUsage_p
 
 
+        /// <summary>
+        /// [0]: RetryLimit time, [1]: RetryTotal limit time, [2]: SharpOnTime (yes/no)
+        /// </summary>
+        public ValueTuple<int, int, int> S_TimeoutSettings { get; set; }
+        public ValueTuple<string, bool> S_TimeoutTable { get; set; }
+
+
 
         /// <summary>
-        /// [0]:sID, [1]:sName, [2]:sZone, [3]:sLocation, [4]:sDescription, [5]:sUsage 들어가 있음
+        /// [0]:sID, [1]:sName, [2]:sZone, [3]:sLocation, [4]:sDescription, [4]: sIPAddress, [5]: sPortNumber, [6]:sUsage 들어가 있음
         /// </summary>
         public List<string> S_DeviceInfoColumns { get; set; }
 
@@ -77,36 +84,34 @@ namespace AdminPage
         public string[] tableNamesKo_p = null;
 
 
+
+
         public Form1()
         {
             InitializeComponent();
 
 
 
-            ////////////////////////////////////////////////////////
 
 
             // ini 읽기 //////
             IniFile ini = new IniFile();
+            try
+            {
+                ini.Load(AppInfo.StartupPath + "\\" + "Setting.ini");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error reading ini file. {ex.Message}. {ex.StackTrace}");
+            }
 
-            ini.Load(AppInfo.StartupPath + "\\" + "Setting.ini");
 
             string D_IP = ini["DBSetting"]["IP"].ToString();
             string D_SERVERNAME = ini["DBSetting"]["SERVERNAME"].ToString();
             string D_NAME = ini["DBSetting"]["DBNAME"].ToString();
-            string D_TABLENAME = ini["DBSetting"]["DEVICETABLE"].ToString();
-            string D_TABLENAME_P = ini["DBSetting"]["DEVICETABLE_P"].ToString();
-            string D_USAGETABLENAME = ini["DBSetting"]["USAGETABLE"].ToString();
-            string D_USAGETABLENAME_P = ini["DBSetting"]["USAGETABLE_P"].ToString();
             string D_ID = ini["DBSetting"]["ID"].ToString();
             string D_PW = ini["DBSetting"]["PW"].ToString();
-            string D_CONNECTIONTIMEOUT = ini["DBSetting"]["ConnectionTimeOut"].ToString();
             string D_UsageCheckInterVal = ini["DBSetting"]["UsageCheckInterval"].ToString();
-
-            string R_RangeHigh2 = ini["RangeLimitTable"]["RangeHigh2"].ToString();
-            string R_RangeHigh1 = ini["RangeLimitTable"]["RangeHigh1"].ToString();
-            string R_RangeLow1 = ini["RangeLimitTable"]["RangeLow1"].ToString();
-            string R_RangeLow2 = ini["RangeLimitTable"]["RangeLow2"].ToString();
 
 
             string A_NAME1 = ini["DataCollectionAppSettings"]["APPNAME1"].ToString();
@@ -115,12 +120,7 @@ namespace AdminPage
             string A_ADDRESS2 = ini["DataCollectionAppSettings"]["ADDRESS2"].ToString();
             //C:\Program Files (x86)\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
 
-
-
             ////////////////////////////////////////////////////////
-
-
-
 
 
 
@@ -132,12 +132,14 @@ namespace AdminPage
             dbUID = D_ID; // "admin";
             dbPWD = D_PW; // "admin";
 
-            S_DeviceTable = D_TABLENAME; // "SENSOR_INFO";
-            S_DeviceTable_p = D_TABLENAME_P; // S_DeviceTable + "_p";
-            S_UsageTable = D_USAGETABLENAME; // "SensorUsage";
-            S_UsageTable_p = D_USAGETABLENAME_P; // S_UsageTable + "_p";
-            connectionTimeout = D_CONNECTIONTIMEOUT; // "180";
-            S_UsageCheckInterval = Convert.ToInt32(D_UsageCheckInterVal);
+            S_DeviceTable = dbName + "_DEVICES";
+            S_DeviceTable_p = S_DeviceTable + "_p";
+            S_UsageTable = dbName + "_Usage";  // D_USAGETABLENAME; // "SensorUsage";
+            S_UsageTable_p = S_UsageTable + "_p";
+
+            int usageCHeck = 0;
+            int.TryParse(D_UsageCheckInterVal, out usageCHeck);
+            S_UsageCheckInterval = usageCHeck > 0 ? usageCHeck : 120;
             DataCollectionAppName = A_NAME1; //"SensorData Collection Application";
             DataCollectionAppName2 = A_NAME2; //"Pressure Data Collection App";
             appAddress = A_ADDRESS1;
@@ -163,13 +165,13 @@ namespace AdminPage
             S_DeviceInfo = new List<TextBox>() { sName, sZone, sLocation, sDescription, sIPAddress, sPortNumber };
             S_DeviceInfo_p = new List<TextBox>() { sName_p, sZone_p, sLocation_p, sDescription_p };
             S_DeviceInfoColumns = new List<string>() { sID.Name, S_DeviceInfo[0].Name, S_DeviceInfo[1].Name, S_DeviceInfo[2].Name, S_DeviceInfo[3].Name, S_DeviceInfo[4].Name, S_DeviceInfo[5].Name, "sUsage" };
-            S_FourRangeColumns = new List<string>() { R_RangeHigh2, R_RangeHigh1, R_RangeLow1, R_RangeLow2 };
+            //S_FourRangeColumns = new List<string>() { R_RangeHigh2, R_RangeHigh1, R_RangeLow1, R_RangeLow2 };
             tableNamesKo = new string[] { "온도(°C)", "습도(%)", "파티클(0.1μm)", "파티클(0.3μm)", "파티클(0.5μm)", "파티클(1.0μm)", "파티클(3.0μm)", "파티클(5.0μm)", "파티클(10.0μm)", "파티클(25.0μm)" };
 
 
 
             // 온습도 및 파티클 센서 정보
-            List<CheckBox> S_UsageCheckers = new List<CheckBox>() { c_tUsage, c_hUsage, c_p01Usage, c_p03Usage, c_p05Usage, c_p10Usage, c_p30Usage, c_p50Usage, c_p100Usage, c_p250Usage };
+            List<CheckBox> S_UsageCheckers = new List<CheckBox>() { temperature, humidity, particle01, particle03, particle05, particle10, particle30, particle50, particle100, particle250 };
 
             List<NumericUpDown> t_Ranges = new List<NumericUpDown>() { s_tHigherLimit2, s_tHigherLimit1, s_tLowerLimit1, s_tLowerLimit2 };
             List<NumericUpDown> h_Ranges = new List<NumericUpDown>() { s_hHigherLimit2, s_hHigherLimit1, s_hLowerLimit1, s_hLowerLimit2 };
@@ -186,7 +188,7 @@ namespace AdminPage
 
 
             // 차압 센서 정보
-            List<CheckBox> S_UsageCheckers_p = new List<CheckBox>() { c_paUsage, c_mbarUsage, c_kpaUsage, c_hpaUsage, c_mmh2oUsage, c_inchh2oUsage, c_mmhgUsage, c_inchhgUsage };
+            List<CheckBox> S_UsageCheckers_p = new List<CheckBox>() { pa, mbar, kpa, hpa, mmh2o, inchh2o, mmhg, inchhg };
 
             List<NumericUpDown> pa_Ranges = new List<NumericUpDown>() { s_paHigherLimit2, s_paHigherLimit1, s_paLowerLimit1, s_paLowerLimit2 };
             List<NumericUpDown> mbar_Ranges = new List<NumericUpDown>() { s_mbarHigherLimit2, s_mbarHigherLimit1, s_mbarLowerLimit1, s_mbarLowerLimit2 };
@@ -208,9 +210,6 @@ namespace AdminPage
             g_DbTableHandler.sqlConString = sqlConString;
             g_DbTableHandler.S_DeviceInfoColumns = S_DeviceInfoColumns;
             g_DbTableHandler.S_DeviceTable = this.S_DeviceTable;
-            g_DbTableHandler.S_FourRangeColumns = S_FourRangeColumns;
-
-
 
 
             // DB존재 여부 확인
@@ -245,90 +244,305 @@ namespace AdminPage
                     }
                 }
 
-            }
-
-            g_DbTableHandler.sqlConString = sqlConString;
 
 
-            DataSet DeviceTable = GetDeviceInfo(dbName, S_DeviceTable);
-            DataSet DeviceTable_p = GetDeviceInfo(dbName, S_DeviceTable_p);
-            if (DeviceTable.Tables.Count > 0)
-            {
-                D_IDs = new List<int>(DeviceTable.Tables[0].AsEnumerable().Where(r => r.Field<string>(S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]) == "YES").Select(r => r.Field<int>(S_DeviceInfoColumns[0])).ToList());
 
-                string[] rows = new string[DeviceTable.Tables[0].Columns.Count];
 
-                int num = 1;
-                foreach (DataRow row in DeviceTable.Tables[0].Rows)
+                //S_FourRangeColumns = new List<string>() { R_RangeHigh2, R_RangeHigh1, R_RangeLow1, R_RangeLow2 };
+                S_FourRangeColumns = CheckFourRangeNamesTable();
+                string S_DataTable = CheckDataTableName();
+                string S_DataTable_p = CheckDataTableName_p();
+                S_TimeoutTable = ChechTimeoutTable();
+                DataSet DeviceTable = GetDeviceInfo(dbName, S_DeviceTable);
+                DataSet DeviceTable_p = GetDeviceInfo(dbName, S_DeviceTable_p);
+
+                g_DbTableHandler.S_FourRangeColumns = S_FourRangeColumns;
+                g_DbTableHandler.sqlConString = sqlConString;
+
+
+
+                if (DeviceTable.Tables.Count > 0)
                 {
-                    ListViewItem listViewItem = new ListViewItem(num.ToString());
-                    for (int i = 0; i < row.ItemArray.Length; i++)
+                    D_IDs = new List<int>(DeviceTable.Tables[0].AsEnumerable().Where(r => r.Field<string>(S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]) == "YES").Select(r => r.Field<int>(S_DeviceInfoColumns[0])).ToList());
+
+                    string[] rows = new string[DeviceTable.Tables[0].Columns.Count];
+
+                    int num = 1;
+                    foreach (DataRow row in DeviceTable.Tables[0].Rows)
                     {
-                        listViewItem.SubItems.Add(row.ItemArray[i].ToString());
-                        //listView1_thp.Columns[i].TextAlign = HorizontalAlignment.Center;
+                        ListViewItem listViewItem = new ListViewItem(num.ToString());
+                        for (int i = 0; i < row.ItemArray.Length; i++)
+                        {
+                            if (i < 5 || i > 6)
+                                listViewItem.SubItems.Add(row.ItemArray[i].ToString());
+                            //listView1_thp.Columns[i].TextAlign = HorizontalAlignment.Center;
+                        }
+                        listView1_thp.Items.Add(listViewItem);
+                        num += 1;
                     }
-                    listView1_thp.Items.Add(listViewItem);
-                    num += 1;
+                    listView1_thp.Scrollable = true;
+                    listView1_thp.Sort();
+
                 }
-                listView1_thp.Scrollable = true;
-                listView1_thp.Sort();
-
-            }
-            else
-            {
-                //MessageBox.Show("프로그램 다시 실행해 주세요!", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                // if User selects not to create  new DB
-            }
-
-            if (DeviceTable_p.Tables.Count > 0)
-            {
-                D_IDs_p = new List<int>(DeviceTable_p.Tables[0].AsEnumerable().Where(r => r.Field<string>(S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]) == "YES").Select(r => r.Field<int>(S_DeviceInfoColumns[0])).ToList());
-
-                //ModBus and myConnection initialization
-                //ConnectionSettings(true);
-
-
-                string[] rows = new string[DeviceTable_p.Tables[0].Columns.Count];
-
-                int num = 1;
-                foreach (DataRow row in DeviceTable_p.Tables[0].Rows)
+                else
                 {
-                    ListViewItem listViewItem = new ListViewItem(num.ToString());
-                    for (int i = 0; i < row.ItemArray.Length; i++)
-                    {
-                        listViewItem.SubItems.Add(row.ItemArray[i].ToString());
-                        //listView1_thp.Columns[i].TextAlign = HorizontalAlignment.Center;
-                    }
-                    listView2_pressure.Items.Add(listViewItem);
-                    num += 1;
+                    //MessageBox.Show("프로그램 다시 실행해 주세요!", "Status Info", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    // if User selects not to create  new DB
                 }
-                listView2_pressure.Scrollable = true;
-                listView2_pressure.Sort();
+
+                if (DeviceTable_p.Tables.Count > 0)
+                {
+                    D_IDs_p = new List<int>(DeviceTable_p.Tables[0].AsEnumerable().Where(r => r.Field<string>(S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]) == "YES").Select(r => r.Field<int>(S_DeviceInfoColumns[0])).ToList());
+
+                    //ModBus and myConnection initialization
+                    //ConnectionSettings(true);
+
+
+                    string[] rows = new string[DeviceTable_p.Tables[0].Columns.Count];
+
+                    int num = 1;
+                    foreach (DataRow row in DeviceTable_p.Tables[0].Rows)
+                    {
+                        ListViewItem listViewItem = new ListViewItem(num.ToString());
+                        for (int i = 0; i < row.ItemArray.Length; i++)
+                        {
+                            listViewItem.SubItems.Add(row.ItemArray[i].ToString());
+                            //listView1_thp.Columns[i].TextAlign = HorizontalAlignment.Center;
+                        }
+                        listView2_pressure.Items.Add(listViewItem);
+                        num += 1;
+                    }
+                    listView2_pressure.Scrollable = true;
+                    listView2_pressure.Sort();
+                }
+                else { }
+
+
+
+                S_UsageCheckerRangePairs = new Dictionary<CheckBox, List<NumericUpDown>>();
+
+                for (int i = 0; i < S_UsageCheckers.Count; i++)
+                {
+                    S_UsageCheckerRangePairs.Add(S_UsageCheckers[i], S_Ranges[i]);
+                }
+
+                S_UsageCheckerRangePairs_p = new Dictionary<CheckBox, List<NumericUpDown>>();
+
+                for (int i = 0; i < S_UsageCheckers_p.Count; i++)
+                {
+                    S_UsageCheckerRangePairs_p.Add(S_UsageCheckers_p[i], S_Ranges_p[i]);
+                }
+
+
+                startTime = DateTime.Now;
+
+                clearFields(S_DeviceInfo);
+                clearFields(S_DeviceInfo_p);
             }
-            else { }
 
+        }
 
-
-            S_UsageCheckerRangePairs = new Dictionary<CheckBox, List<NumericUpDown>>();
-
-            for (int i = 0; i < S_UsageCheckers.Count; i++)
+        private string CheckDataTableName_p()
+        {
+            List<string> S_DTColumns = new List<string>() { "DateAndTime", "sID", "sCode", "sDataValue", "Remarks" };
+            string tbName = S_DeviceTable[0] + "_DATATABLE_p";
+            string sqlCreateTb = $"IF NOT EXISTS ( SELECT * FROM sysobjects " +
+                                                $" WHERE name = '{tbName}' AND xtype = 'U') " +
+                                                $"CREATE TABLE {tbName}( " +
+                                                    $" {S_DTColumns[0]} NVARCHAR(25) NOT NULL" +
+                                                    $", {S_DTColumns[1]} INT NOT NULL" +
+                                                    $", {S_DTColumns[2]} NVARCHAR(25) NOT NULL" +
+                                                    $", {S_DTColumns[3]} NVARCHAR(25) NOT NULL" +
+                                                    $", {S_DTColumns[4]} NVARCHAR(255) NULL" +
+                                                    $", INDEX IX_{S_DTColumns[0]} NONCLUSTERED({S_DTColumns[0]})" +
+                                                    $", INDEX IX_{S_DTColumns[1]} NONCLUSTERED({S_DTColumns[2]})" +
+                                                    $", INDEX IX_{S_DTColumns[2]} NONCLUSTERED({S_DTColumns[3]}))";
+            try
             {
-                S_UsageCheckerRangePairs.Add(S_UsageCheckers[i], S_Ranges[i]);
+                using (SqlConnection con = new SqlConnection(sqlConString))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand(sqlCreateTb, con))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
             }
-
-            S_UsageCheckerRangePairs_p = new Dictionary<CheckBox, List<NumericUpDown>>();
-
-            for (int i = 0; i < S_UsageCheckers_p.Count; i++)
+            catch (Exception ex)
             {
-                S_UsageCheckerRangePairs_p.Add(S_UsageCheckers_p[i], S_Ranges_p[i]);
+                Console.WriteLine($"Error while creating a table: {tbName} {ex.Message} {ex.StackTrace}");
             }
 
+            return tbName;
+        }
 
-            startTime = DateTime.Now;
+        private (string, bool) ChechTimeoutTable()
+        {
+            string tbName = S_DeviceTable[0] + "_TimeoutSettings";
+            bool dataExists = false;
+            string sqlString = string.Empty;
 
-            clearFields(S_DeviceInfo);
-            clearFields(S_DeviceInfo_p);
+            try
+            {
 
+                bool tbExists = g_DbTableHandler.IfTableExists(tbName);
+                if (!tbExists)
+                {
+                    List<string> TimeoutTableColumns = new List<string>() { "RetryLimit", "RetryTotalLimit", "SharpOnTime", "Remarks" };
+
+                    sqlString = $"IF NOT EXISTS ( SELECT * FROM sysobjects " +
+                                                        $" WHERE name = '{tbName}' AND xtype = 'U') " +
+                                                        $"CREATE TABLE {tbName}( " +
+                                                        $" {TimeoutTableColumns[0]} int NOT NULL" +
+                                                        $", {TimeoutTableColumns[1]} int NOT NULL" +
+                                                        $", {TimeoutTableColumns[2]} BIT NOT NULL" +
+                                                        $", {TimeoutTableColumns[3]} NVARCHAR(50) NULL);";
+
+
+                    using (SqlConnection con = new SqlConnection(sqlConString))
+                    {
+                        con.Open();
+                        using (SqlCommand cmd = new SqlCommand(sqlString, con))
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                }
+                else
+                {
+                    sqlString = $"SELECT COUNT(*) FROM {tbName};";
+                    using (SqlConnection con = new SqlConnection(sqlConString))
+                    {
+                        con.Open();
+                        using (SqlCommand cmd = new SqlCommand(sqlString, con))
+                        {
+                            using (SqlDataReader r = cmd.ExecuteReader())
+                            {
+                                while (r.Read())
+                                {
+                                    if (Convert.ToInt32(r.GetValue(0)) > 0)
+                                    {
+                                        dataExists = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while creating a table: {tbName} {ex.Message} {ex.StackTrace}");
+            }
+
+            return (tbName, dataExists);
+        }
+
+
+
+        /// <summary>
+        /// 데이터 저장용 테이블 생성 및 테이블명 반환
+        /// </summary>
+        /// <returns>데이터가 저장이 되는 테이블명</returns>
+        private string CheckDataTableName()
+        {
+            List<string> S_DTColumns = new List<string>() { "DateAndTime", "sDateTime", "sID", "sCode", "sDataValue", "Remarks" };
+            string tbName = S_DeviceTable[0] + "_DATATABLE";
+            string sqlCreateTb = $"IF NOT EXISTS ( SELECT * FROM sysobjects " +
+                                                $" WHERE name = '{tbName}' AND xtype = 'U') " +
+                                                $"CREATE TABLE {tbName}( " +
+                                                    $" {S_DTColumns[0]} NVARCHAR(25) NOT NULL" +
+                                                    $", {S_DTColumns[1]} NVARCHAR(25) NOT NULL" +
+                                                    $", {S_DTColumns[2]} INT NOT NULL" +
+                                                    $", {S_DTColumns[3]} NVARCHAR(25) NOT NULL" +
+                                                    $", {S_DTColumns[4]} NVARCHAR(25) NOT NULL" +
+                                                    $", {S_DTColumns[5]} NVARCHAR(255) NULL" +
+                                                    $", INDEX IX_{S_DTColumns[0]} NONCLUSTERED({S_DTColumns[0]})" +
+                                                    $", INDEX IX_{S_DTColumns[2]} NONCLUSTERED({S_DTColumns[2]})" +
+                                                    $", INDEX IX_{S_DTColumns[3]} NONCLUSTERED({S_DTColumns[3]}))";
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConString))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand(sqlCreateTb, con))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while creating a table: {tbName} {ex.Message} {ex.StackTrace}");
+            }
+
+            return tbName;
+        }
+
+        private List<string> CheckFourRangeNamesTable()
+        {
+            string tbName = S_DeviceTable[0] + "_FOUR_RANGES";
+            List<string> fourRanges = new List<string>();
+            string sqlCreateIfNotExists = $"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='{tbName}' and xtype='U')" +
+                                                $"CREATE TABLE {tbName}(" +
+                                                $" higherlimit2 NVARCHAR(50) NOT NULL" +
+                                                $", higherlimit1 NVARCHAR(50) NOT NULL" +
+                                                $", lowerlimit1 NVARCHAR(50) NOT NULL" +
+                                                $", lowerlimit2 NVARCHAR(50) NOT NULL) " +
+                                            $" ELSE " +
+                                                $" BEGIN SELECT * FROM {tbName} END;";
+            try
+            {
+
+                using (SqlConnection con = new SqlConnection(sqlConString))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand(sqlCreateIfNotExists, con))
+                    {
+                        using (SqlDataReader r = cmd.ExecuteReader())
+                        {
+                            while (r.Read())
+                            {
+                                if (r.HasRows && r.FieldCount == 4)
+                                {
+                                    fourRanges.Add(r.GetValue(0).ToString());
+                                    fourRanges.Add(r.GetValue(1).ToString());
+                                    fourRanges.Add(r.GetValue(2).ToString());
+                                    fourRanges.Add(r.GetValue(3).ToString());
+                                    break;
+                                }
+                            }
+                        }
+                        if (fourRanges.Count == 0)
+                        {
+                            sqlCreateIfNotExists = $"INSERT INTO {tbName} VALUES ('higherLimit2', 'higherLimit1', 'lowerLimit1', 'lowerLimit2'); SELECT * FROM {tbName};";
+                            cmd.CommandText = sqlCreateIfNotExists;
+                            using (SqlDataReader r = cmd.ExecuteReader())
+                            {
+                                while (r.Read())
+                                {
+                                    if (r.HasRows && r.FieldCount == 4)
+                                    {
+                                        fourRanges.Add(r.GetValue(0).ToString());
+                                        fourRanges.Add(r.GetValue(1).ToString());
+                                        fourRanges.Add(r.GetValue(2).ToString());
+                                        fourRanges.Add(r.GetValue(3).ToString());
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while getting FourRangesColumnNames: {ex.Message} {ex.StackTrace}");
+            }
+
+            return fourRanges;
         }
 
 
@@ -342,22 +556,31 @@ namespace AdminPage
         {
             Process SomeAppProcess = null;
             int myCounter = 0;
-            while (myCounter < 2)
+            try
             {
-                //dataCollectionAppName = "SensorData Collection Application";
-                Process[] processes = Process.GetProcessesByName(dataCollectionAppName);
-                if (processes.Length != 0)
+
+                while (myCounter < 2)
                 {
-                    SomeAppAlreadyRunning = true;
-                    b_dataCollection_status.Image = Resources.light_on_26_color;
-                    SomeAppProcess = processes[0];
-                    break;
+                    //dataCollectionAppName = "SensorData Collection Application";
+                    Process[] processes = Process.GetProcessesByName(dataCollectionAppName);
+                    if (processes.Length != 0)
+                    {
+                        SomeAppAlreadyRunning = true;
+                        b_dataCollection_status.Image = Resources.light_on_26_color;
+                        SomeAppProcess = processes[0];
+                        break;
+                    }
+                    else
+                    {
+                        myCounter += 1;
+                        //MessageBox.Show("찾으신 어플리케이션의 정확한 이름을 찾아서 입력해 주세요!", "Application Status", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                    }
                 }
-                else
-                {
-                    myCounter += 1;
-                    //MessageBox.Show("찾으신 어플리케이션의 정확한 이름을 찾아서 입력해 주세요!", "Application Status", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetAppProcess Function Error. {ex.Message}. {ex.StackTrace}");
             }
             return SomeAppProcess;
         }
@@ -397,7 +620,7 @@ namespace AdminPage
                 }
                 catch (System.Exception ex)
                 {
-                    MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message + ex.StackTrace, "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             return S_IDs;
@@ -439,7 +662,7 @@ namespace AdminPage
                 }
                 catch (System.Exception ex)
                 {
-                    MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message + ex.StackTrace, "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             return idExists;
@@ -480,7 +703,7 @@ namespace AdminPage
                     }
                     catch (System.Exception ex)
                     {
-                        MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(ex.Message + ex.StackTrace, "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -501,12 +724,19 @@ namespace AdminPage
             bool checkDbExists = g_DbTableHandler.IfDatabaseExists(sensorData_dbName);
 
 
-            string sqlCreateDeviceTb = $"CREATE TABLE {Devices_tbName} ({S_DeviceInfoColumns[0]} INT NOT NULL, CONSTRAINT PK_{Devices_tbName}_{S_DeviceInfoColumns[0]} PRIMARY KEY ({S_DeviceInfoColumns[0]}) ";
+            string sqlCreateDeviceTb = $"IF NOT EXISTS ( SELECT * FROM sysobjects " +
+                                                        $"WHERE name = '{Devices_tbName}' and xtype = 'U' ) " +
+                                                            $"CREATE TABLE {Devices_tbName} (" +
+                                                            $"{S_DeviceInfoColumns[0]} INT NOT NULL" +
+                                                            $", CONSTRAINT PK_{Devices_tbName}_{S_DeviceInfoColumns[0]} PRIMARY KEY ({S_DeviceInfoColumns[0]}) ";
 
             //  S_DeviceInfo_txtB 크기만큼은 loop를 통해 스트링에 추가
             for (int i = 1; i < S_DeviceInfoColumns.Count - 1; i++)
             {
-                sqlCreateDeviceTb += $", {S_DeviceInfoColumns[i]} NVARCHAR(250) NULL ";
+                if (Devices_tbName.Contains("_p") && (i < 5 || i > 6))
+                    sqlCreateDeviceTb += $", {S_DeviceInfoColumns[i]} NVARCHAR(250) NULL ";
+                else if (!Devices_tbName.Contains("_p"))
+                    sqlCreateDeviceTb += $", {S_DeviceInfoColumns[i]} NVARCHAR(250) NULL ";
             }
             sqlCreateDeviceTb += $",{S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} NVARCHAR(20) NOT NULL, INDEX IX_{S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} NONCLUSTERED({S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]})); ";
 
@@ -529,7 +759,7 @@ namespace AdminPage
                     }
                     catch (System.Exception ex)
                     {
-                        MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(ex.Message + ex.StackTrace, "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         sqlConString = $@"Data Source={dbServerAddress};Initial Catalog={dbName};Integrated Security=True";
                         g_DbTableHandler.sqlConString = sqlConString;
                         try
@@ -545,7 +775,7 @@ namespace AdminPage
                         }
                         catch (System.Exception ex_1)
                         {
-                            MessageBox.Show(ex_1.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(ex_1.Message + ex_1.StackTrace, "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
                     }
@@ -614,7 +844,7 @@ namespace AdminPage
                     }
                     catch (System.Exception ex)
                     {
-                        MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(ex.Message + ex.StackTrace, "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
 
                 }
@@ -653,7 +883,7 @@ namespace AdminPage
                     }
                     catch (System.Exception)
                     {
-                        MessageBox.Show("데이터 수집 프로그램이 컴퓨터에 설치되어 있는지 확인후 다시 실행해 주세요.", "Application Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("데이터 수집 프로그램이 컴퓨터에 설치되어 있는지 확인 후 다시 실행해 주세요.", "Application Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         /*                    appAddress = @"C:\Program Files\DLIT Inc\Sensor Data Collection App\SensorData Collection Application.exe";
                                             Process.Start(appAddress);*/
                         //string[] filePaths = System.IO.Directory.GetFiles(@"C:\Program Files\DLIT Inc\", "SensorData Collection Application.exe", SearchOption.TopDirectoryOnly);
@@ -736,7 +966,7 @@ namespace AdminPage
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message, "Application status", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(ex.Message + ex.StackTrace, "Application status", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
                     }
@@ -763,7 +993,7 @@ namespace AdminPage
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message, "Application status", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(ex.Message + ex.StackTrace, "Application status", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
                     }
@@ -847,7 +1077,6 @@ namespace AdminPage
 
                     }
 
-
                 }
             }
             else
@@ -892,7 +1121,7 @@ namespace AdminPage
                             }
                             catch (System.Exception ex)
                             {
-                                MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(ex.Message + ex.StackTrace, "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                     }
@@ -919,9 +1148,16 @@ namespace AdminPage
                 if (listView1_thp.SelectedItems.Count > 0)
                 {
 
+                    String input = S_DeviceInfo[4].Text; //@"var product_pic_fn=;var firmware_ver='20.02.024';var wan_ip='92.75.120.206';if (parent.location.href != window.location.href)";
+                    Regex ip = new Regex(@"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b");
+                    MatchCollection ipIsValid = ip.Matches(input);
+                    int value;
+                    bool portIsValid = int.TryParse(S_DeviceInfo[5].Text, out value);
+
+
                     int deviceId = Convert.ToInt32(listView1_thp.SelectedItems[0].SubItems[1].Text);
                     //Console.WriteLine("ID:" + listView1.SelectedItems[0].Text);
-                    if (S_DeviceInfo[0].Text.Length > 1 && S_DeviceInfo[1].Text.Length > 1)
+                    if (S_DeviceInfo[0].Text.Length > 1 && S_DeviceInfo[1].Text.Length > 1 && portIsValid)
                     {
                         bool updated = UpdateDB(deviceId);
                         if (updated)
@@ -931,7 +1167,8 @@ namespace AdminPage
                                 item.SubItems[1].Text = sID.Text;
                                 for (int i = 0; i < S_DeviceInfo.Count; i++)
                                 {
-                                    item.SubItems[i + 2].Text = S_DeviceInfo[i].Text;
+                                    if (i < 4 || i > 5)
+                                        item.SubItems[i + 2].Text = S_DeviceInfo[i].Text;
                                 }
                                 item.SubItems[item.SubItems.Count - 1].Text = sUsage;
                             }
@@ -959,7 +1196,7 @@ namespace AdminPage
                     }
                     if (sID.Text.Length > 0)
                     {
-                        if (S_DeviceInfo[0].Text.Length > 1 && S_DeviceInfo[1].Text.Length > 1)
+                        if (S_DeviceInfo[0].Text.Length > 1 && S_DeviceInfo[1].Text.Length > 1 && S_DeviceInfo[4].Text.Length > 1 && S_DeviceInfo[5].Text.Length > 1)
                         {
                             //Added should return true if data added to DB.
                             bool added = AddToDB(sUsage);
@@ -969,7 +1206,8 @@ namespace AdminPage
                                 listViewItem.SubItems.Add(sID.Text);
                                 for (int i = 0; i < S_DeviceInfo.Count - 2; i++)
                                 {
-                                    listViewItem.SubItems.Add(S_DeviceInfo[i].Text);
+                                    if (i < 4 || i > 5)
+                                        listViewItem.SubItems.Add(S_DeviceInfo[i].Text);
                                 }
                                 listViewItem.SubItems.Add(sUsage);
                                 listView1_thp.Items.Add(listViewItem);
@@ -979,7 +1217,7 @@ namespace AdminPage
                         }
                         else
                         {
-                            MessageBox.Show("센서명 및 Zone 정보를 꼭 입력해 주세요.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                            MessageBox.Show(" (*)라고 표시된 항목의 정보를 꼭 입력해 주세요.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Question);
                         }
                     }
                     else
@@ -988,6 +1226,21 @@ namespace AdminPage
                     }
 
                 }
+
+                S_TimeoutTable = ChechTimeoutTable();
+                if (!S_TimeoutTable.Item2)
+                {
+                    TimeoutSettings timeoutSettings = new TimeoutSettings();
+                    timeoutSettings.sqlConString = sqlConString;
+                    timeoutSettings.S_TimeoutSettings = S_TimeoutSettings;
+                    timeoutSettings.S_TimeoutTable = S_TimeoutTable.Item1;
+                    timeoutSettings.Show();
+
+
+                    //timeoutSettings.UpdateTimeoutTable();
+                }
+
+
             }
             else if (tabControl1.SelectedTab == tabPage2)
             {
@@ -1253,8 +1506,10 @@ namespace AdminPage
                 int sensorId = 0; // = Convert.ToInt32(sID.Text);
                 string DeviceTable = string.Empty;
                 string UsageTable = string.Empty;
-                Dictionary<CheckBox, List<NumericUpDown>> UsageCheckerRangePairs;       // generic reference for more than one type: UsageCheckerRangePairs, UsageCheckerRangePairs_p, etc.
-                List<TextBox> DeviceInfo_txt;
+                List<string> DeviceInfoColumns = new List<string>();
+                Dictionary<CheckBox, List<NumericUpDown>> UsageCheckerRangePairs = new Dictionary<CheckBox, List<NumericUpDown>>();
+                // generic reference for more than one type: UsageCheckerRangePairs, UsageCheckerRangePairs_p, etc.
+                List<TextBox> DeviceInfo_txt = new List<TextBox>();
                 if (tabControl1.SelectedTab == tabPage1)
                 {
                     sensorId = Convert.ToInt32(sID.Text);
@@ -1262,6 +1517,7 @@ namespace AdminPage
                     UsageTable = S_UsageTable;
                     DeviceInfo_txt = S_DeviceInfo;
                     UsageCheckerRangePairs = S_UsageCheckerRangePairs;
+                    DeviceInfoColumns = S_DeviceInfoColumns;
                 }
                 else if (tabControl1.SelectedTab == tabPage2)
                 {
@@ -1270,12 +1526,14 @@ namespace AdminPage
                     UsageTable = S_UsageTable_p;
                     DeviceInfo_txt = S_DeviceInfo_p;
                     UsageCheckerRangePairs = S_UsageCheckerRangePairs_p;
+
+                    for (int q = 0; q < S_DeviceInfoColumns.Count; q++)
+                    {
+                        if (q < 5 || q > 6)
+                            DeviceInfoColumns.Add(S_DeviceInfoColumns[q]);
+                    }
                 }
-                else
-                {
-                    DeviceInfo_txt = new List<TextBox>();
-                    UsageCheckerRangePairs = new Dictionary<CheckBox, List<NumericUpDown>>();
-                }
+
 
                 List<CheckBox> sRangeTablesAll = UsageCheckerRangePairs.Keys.AsEnumerable().ToList();
                 List<string> sUsageResults = UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Checked ? "YES" : "NO").ToList();
@@ -1354,7 +1612,9 @@ namespace AdminPage
                     /// #bookmark Table Name Creation 
 
                     List<string> sRangesTbNames = UsageCheckerRangePairs.Keys.AsEnumerable().Select(x => x.Name).ToList();
-                    string sqlCreateUsageTb = $"CREATE TABLE {UsageTable}(" +
+                    string sqlCreateUsageTb = $"IF NOT EXISTS ( SELECT * FROM sysobjects " +
+                                                        $"WHERE name = '{UsageTable}' and xtype = 'U' ) " +
+                                                        $" CREATE TABLE {UsageTable}(" +
                         $" {S_DeviceInfoColumns[0]} INT NOT NULL, CONSTRAINT PK_{UsageTable}_{S_DeviceInfoColumns[0]} PRIMARY KEY ({S_DeviceInfoColumns[0]})  ";
                     foreach (var item in sRangesTbNames)
                     {
@@ -1391,7 +1651,7 @@ namespace AdminPage
                         }
                         catch (System.Exception ex)
                         {
-                            MessageBox.Show(ex.ToString(), "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(ex.Message + ex.StackTrace, "에러 매시지", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
                     }
@@ -1408,9 +1668,9 @@ namespace AdminPage
                 string DevTblINSRTorUPD = $"IF EXISTS ( SELECT * FROM {DeviceTable} WHERE {S_DeviceInfoColumns[0]} = { sensorId}) " +
                         $" UPDATE {DeviceTable} SET ";
                 int index2 = 0;
-                for (int i = 1; i < S_DeviceInfoColumns.Count - 1; i++)
+                for (int i = 1; i < DeviceInfoColumns.Count - 1; i++)
                 {
-                    DevTblINSRTorUPD += $" {S_DeviceInfoColumns[i]} = '{DeviceInfo_txt[index2].Text}', ";
+                    DevTblINSRTorUPD += $" {DeviceInfoColumns[i]} = '{DeviceInfo_txt[index2].Text}', ";
                     index2 += 1;
                 }
                 DevTblINSRTorUPD += $"{S_DeviceInfoColumns[S_DeviceInfoColumns.Count - 1]} = '{g_sensorUsage}' ELSE ";
@@ -1785,9 +2045,9 @@ namespace AdminPage
                 {
                     int sensorId = Convert.ToInt32(item.SubItems[1].Text);
                     sID_p.Text = sensorId.ToString();
-                    for (int i = 0; i < S_DeviceInfo.Count; i++)
+                    for (int i = 0; i < S_DeviceInfo_p.Count; i++)
                     {
-                        S_DeviceInfo_p[i].Text = item.SubItems[i + 2].Text;
+                        S_DeviceInfo_p[i].Text = item.SubItems[i+2].Text;
                         //S_DeviceInfo_txtB[i].TextAlign = HorizontalAlignment.Center;
                     }
                     List<CheckBox> sUsageRangesCh_p = S_UsageCheckerRangePairs_p.Keys.AsEnumerable().ToList();
@@ -1874,7 +2134,7 @@ namespace AdminPage
                             }
                             catch (System.Exception ex)
                             {
-                                Console.WriteLine($"Error Message: {ex.Message}");
+                                Console.WriteLine($"Error Message: {ex.Message}. {ex.StackTrace}");
                                 try
                                 {
                                     transaction_p.Rollback();
@@ -1885,7 +2145,7 @@ namespace AdminPage
                                     // on the server that would cause the rollback to fail, such as
                                     // a closed connection.
                                     Console.WriteLine($"\nRollback Exception Type: {ex2.GetType()}");
-                                    Console.WriteLine($"\nError Message: {ex2.Message}");
+                                    Console.WriteLine($"\nError Message: {ex2.Message}. {ex2.StackTrace}");
                                 }
                             }
                         }
