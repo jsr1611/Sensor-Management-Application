@@ -10,6 +10,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using AdminPage.Models;
 
 namespace AdminPage
 {
@@ -29,7 +30,9 @@ namespace AdminPage
         /// [0]: RetryLimit time, [1]: RetryTotal limit time, [2]: SharpOnTime (yes/no)
         /// </summary>
         public ValueTuple<int, int, int> S_TimeoutSettings { get; set; }
+        public ValueTuple<int, int> S_TimeoutSettings_p { get; set; }
         public ValueTuple<string, bool> S_TimeoutTable { get; set; }
+        public ValueTuple<string, bool> S_TimeoutTable_p { get; set; }
 
 
 
@@ -252,7 +255,8 @@ namespace AdminPage
                 S_FourRangeColumns = CheckFourRangeNamesTable();
                 string S_DataTable = CheckDataTableName();
                 string S_DataTable_p = CheckDataTableName_p();
-                S_TimeoutTable = ChechTimeoutTable();
+                S_TimeoutTable = CheckTimeoutTable();
+                S_TimeoutTable_p = CheckTimeoutTable_p();
                 DataSet DeviceTable = GetDeviceInfo(dbName, S_DeviceTable);
                 DataSet DeviceTable_p = GetDeviceInfo(dbName, S_DeviceTable_p);
 
@@ -376,7 +380,7 @@ namespace AdminPage
             return tbName;
         }
 
-        private (string, bool) ChechTimeoutTable()
+        private (string, bool) CheckTimeoutTable()
         {
             string tbName = S_DeviceTable[0] + "_TimeoutSettings";
             bool dataExists = false;
@@ -441,6 +445,69 @@ namespace AdminPage
         }
 
 
+
+        private (string, bool) CheckTimeoutTable_p()
+        {
+            string tbName = S_DeviceTable_p[0] + "_TimeoutSettings_p";
+            bool dataExists = false;
+            string sqlString = string.Empty;
+
+            try
+            {
+
+                bool tbExists = g_DbTableHandler.IfTableExists(tbName);
+                if (!tbExists)
+                {
+                    List<string> TimeoutTableColumns = new List<string>() { "DelayTime", "RetryCount", "Remarks" };
+
+                    sqlString = $"IF NOT EXISTS ( SELECT * FROM sysobjects " +
+                                                        $" WHERE name = '{tbName}' AND xtype = 'U') " +
+                                                        $"CREATE TABLE {tbName}( " +
+                                                        $" {TimeoutTableColumns[0]} int NOT NULL" +
+                                                        $", {TimeoutTableColumns[1]} int NOT NULL" +
+                                                        $", {TimeoutTableColumns[2]} NVARCHAR(50) NULL);";
+
+
+                    using (SqlConnection con = new SqlConnection(sqlConString))
+                    {
+                        con.Open();
+                        using (SqlCommand cmd = new SqlCommand(sqlString, con))
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                }
+                else
+                {
+                    sqlString = $"SELECT COUNT(*) FROM {tbName};";
+                    using (SqlConnection con = new SqlConnection(sqlConString))
+                    {
+                        con.Open();
+                        using (SqlCommand cmd = new SqlCommand(sqlString, con))
+                        {
+                            using (SqlDataReader r = cmd.ExecuteReader())
+                            {
+                                while (r.Read())
+                                {
+                                    if (Convert.ToInt32(r.GetValue(0)) > 0)
+                                    {
+                                        dataExists = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while creating a table: {tbName} {ex.Message} {ex.StackTrace}");
+            }
+
+            return (tbName, dataExists);
+        }
 
         /// <summary>
         /// 데이터 저장용 테이블 생성 및 테이블명 반환
@@ -1007,7 +1074,8 @@ namespace AdminPage
 
         private void F_Exit_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Application.Exit();
+            //System.Windows.Forms.Application.Exit();
+            System.Windows.Forms.Application.ExitThread();
         }
 
 
@@ -1227,12 +1295,11 @@ namespace AdminPage
 
                 }
 
-                S_TimeoutTable = ChechTimeoutTable();
+                S_TimeoutTable = CheckTimeoutTable();
                 if (!S_TimeoutTable.Item2)
                 {
                     TimeoutSettings timeoutSettings = new TimeoutSettings();
                     timeoutSettings.sqlConString = sqlConString;
-                    timeoutSettings.S_TimeoutSettings = S_TimeoutSettings;
                     timeoutSettings.S_TimeoutTable = S_TimeoutTable.Item1;
                     timeoutSettings.Show();
 
@@ -1328,6 +1395,22 @@ namespace AdminPage
                         MessageBox.Show("새 센서 장비 정보를 등록하시려면 '센서 추가' 버튼을 눌러주세요.", "Status info", MessageBoxButtons.OK, MessageBoxIcon.Question);
                     }
                 }
+
+                S_TimeoutTable_p = CheckTimeoutTable_p();
+                if (!S_TimeoutTable_p.Item2)
+                {
+                    TimeoutSettings_p timeoutSettings = new TimeoutSettings_p();
+                    timeoutSettings.sqlConString = sqlConString;
+                    timeoutSettings.S_TimeoutTable_p = S_TimeoutTable_p.Item1;
+                    timeoutSettings.Show();
+                    
+
+
+                    //timeoutSettings.UpdateTimeoutTable();
+                }
+
+
+
             }
             else
             {
@@ -2047,7 +2130,7 @@ namespace AdminPage
                     sID_p.Text = sensorId.ToString();
                     for (int i = 0; i < S_DeviceInfo_p.Count; i++)
                     {
-                        S_DeviceInfo_p[i].Text = item.SubItems[i+2].Text;
+                        S_DeviceInfo_p[i].Text = item.SubItems[i + 2].Text;
                         //S_DeviceInfo_txtB[i].TextAlign = HorizontalAlignment.Center;
                     }
                     List<CheckBox> sUsageRangesCh_p = S_UsageCheckerRangePairs_p.Keys.AsEnumerable().ToList();
@@ -2182,5 +2265,24 @@ namespace AdminPage
             System.Windows.Forms.Application.ExitThread();
         }
 
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab == tabPage1)
+            {
+                TimeoutSettings timeoutSettings = new TimeoutSettings();
+                timeoutSettings.sqlConString = sqlConString;
+                timeoutSettings.S_TimeoutTable = S_TimeoutTable.Item1;
+                timeoutSettings.Show();
+
+            }
+            else if (tabControl1.SelectedTab == tabPage2)
+            {
+                TimeoutSettings_p timeoutSettings = new TimeoutSettings_p();
+                timeoutSettings.sqlConString = sqlConString;
+                timeoutSettings.S_TimeoutTable_p = S_TimeoutTable_p.Item1;
+                timeoutSettings.Show();
+            }
+
+        }
     }
 }

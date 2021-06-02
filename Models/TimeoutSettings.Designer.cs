@@ -72,7 +72,7 @@ namespace AdminPage
             this.RetryTotal1.Size = new System.Drawing.Size(92, 21);
             this.RetryTotal1.TabIndex = 137;
             this.RetryTotal1.Value = new decimal(new int[] {
-            120,
+            118,
             0,
             0,
             0});

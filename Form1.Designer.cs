@@ -236,6 +236,7 @@ namespace AdminPage
             this.sLocation_p = new System.Windows.Forms.TextBox();
             this.sName_p = new System.Windows.Forms.TextBox();
             this.pTrackerTimer = new System.Windows.Forms.Timer(this.components);
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -381,7 +382,8 @@ namespace AdminPage
             this.S_Start,
             this.S_Stop,
             this.S_AddNewSensor,
-            this.S_Save});
+            this.S_Save,
+            this.settingsToolStripMenuItem});
             this.sensorToolStripMenuItem.Name = "sensorToolStripMenuItem";
             resources.ApplyResources(this.sensorToolStripMenuItem, "sensorToolStripMenuItem");
             // 
@@ -2412,6 +2414,12 @@ namespace AdminPage
             this.pTrackerTimer.Interval = 1000;
             this.pTrackerTimer.Tick += new System.EventHandler(this.pTrackerTimer_Tick);
             // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
@@ -2732,6 +2740,7 @@ namespace AdminPage
         private System.Windows.Forms.Label l_port;
         private System.Windows.Forms.TextBox sIPAddress;
         private System.Windows.Forms.Label l_ipAddress;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
     }
 }
 
