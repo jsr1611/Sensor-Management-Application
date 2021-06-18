@@ -359,6 +359,41 @@ namespace AdminPage
 
 
 
+        /// <summary>
+        /// 주어진 테이블의 모든 Column명들을 List형태로 반환함.
+        /// </summary>
+        /// <param name="tableName">테이블명</param>
+        /// <returns></returns>
+        public List<string> GetTableColumnNames(string tableName)
+        {
+            List<string> tbColNames = new List<string>();
+
+            try
+            {
+                string[] restrictions = new string[4] { null, null, $"{tableName}", null };
+                using (SqlConnection myConn = new SqlConnection(sqlConString))
+                {
+                    myConn.Open();
+                    DataTable dt = myConn.GetSchema("Columns", restrictions);
+                    var dv = dt.DefaultView;
+                    dv.Sort = "ORDINAL_POSITION ASC";
+                    dt = dv.ToTable();
+                    tbColNames = dt.AsEnumerable().Select(x => x.Field<string>("COLUMN_NAME")).ToList();
+                }
+            }
+
+            catch (System.Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return tbColNames;
+        }
+
+
+
+
+
         public bool IfTableExists(string tableName)
         {
             //string checkBoxName = targetCheckBoxName;
