@@ -72,7 +72,7 @@ namespace AdminPage
             DataSet ds = new DataSet();
             SqlDataAdapter da;
             string[] sheetNames = new string[tbName.Count];
-            for (int n=0; n<sheetNames.Length; n++)
+            for (int n = 0; n < sheetNames.Length; n++)
             {
                 sheetNames[n] = tbName[n].Substring(2);
             }
@@ -129,21 +129,27 @@ namespace AdminPage
                         }
                         i++;
                     }
-
-                    if (ws[index].Name.Contains("tUsage") || ws[index].Name.Contains("hUsage"))
-                    {
-                        ws[index].Columns[1].NumberFormat = "0.00";
-                    }
-                    else
-                    {
-                        ws[index].Columns[1].NumberFormat = "#,##0.00";
-                    }
+                    /*
+                                        if (ws[index].Name.Contains("temperature") || ws[index].Name.Contains("humidity"))
+                                        {
+                                            ws[index].Columns[1].NumberFormat = "0.00";
+                                        }
+                                        else
+                                        {*/
+                    ws[index].Columns[1].NumberFormat = "#,##0.00";
+                    //}
 
                     //ws[index].Columns[2].NumberFormat = "yyyy - MM - dd HH: mm: ss.SSS";
-
-                    ws[index].Cells[1, 1].value = "ID";
-                    ws[index].Cells[1, 2].value = tbName[index];
-                    ws[index].Cells[1, 3].value = "DateAndTime";
+                    for (int k = 0; k < ds.Tables[0].Columns.Count; k++)
+                    {
+                        ws[index].Cells[1, k + 1].value = ds.Tables[0].Columns[k].ColumnName;
+                    }
+                    /*
+                    ws[index].Cells[1, 2].value = ds.Tables[0].Columns[1].ColumnName;
+                    ws[index].Cells[1, 3].value = ds.Tables[0].Columns[2].ColumnName;
+                    ws[index].Cells[1, 4].value = ds.Tables[0].Columns[2].ColumnName;
+                    ws[index].Cells[1, 5].value = ds.Tables[0].Columns[2].ColumnName;
+                    ws[index].Cells[1, 6].value = ds.Tables[0].Columns[2].ColumnName;*/
 
 
 
@@ -163,18 +169,18 @@ namespace AdminPage
                     //Excel.Range rangeofVals0 = ws[index].Cells[0];
                     //rangeofVals0.EntireColumn.NumberFormat = "#0";
 
-                    if (ws[index].Name.Contains("tUsage") || ws[index].Name.Contains("hUsage"))
-                    {
-                        //ws[index].Columns[1].NumberFormat = "0.00";
-                        Excel.Range rangeofVals = ws[index].Cells[1];
-                        rangeofVals.EntireColumn.NumberFormat = "#0";
-                    }
-                    else
-                    {
-                        //ws[index].Columns[1].NumberFormat = "#,##0.00";
-                        Excel.Range rangeofVals2 = ws[index].Cells[1];
-                        rangeofVals2.EntireColumn.NumberFormat = "#,##0";
-                    }
+                    /* if (ws[index].Name.Contains("tUsage") || ws[index].Name.Contains("hUsage"))
+                     {
+                         //ws[index].Columns[1].NumberFormat = "0.00";
+                         Excel.Range rangeofVals = ws[index].Cells[1];
+                         rangeofVals.EntireColumn.NumberFormat = "#0";
+                     }
+                     else
+                     {*/
+                    //ws[index].Columns[1].NumberFormat = "#,##0.00";
+                    Excel.Range rangeofVals2 = ws[index].Cells[1];
+                    rangeofVals2.EntireColumn.NumberFormat = "#,##0";
+                    //}
 
                     Excel.Range rangeofVals3 = ws[index].Cells[2];
                     rangeofVals3.EntireColumn.NumberFormat = "#,##0";

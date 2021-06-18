@@ -2047,7 +2047,7 @@ namespace AdminPage
         {
             dateTimePicker1.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             dateTimePicker2.CustomFormat = "yyyy-MM-dd HH:mm:ss";
-            dateTimePicker2.Value = dateTimePicker2.Value.AddSeconds(-1);
+            dateTimePicker2.Value = dateTimePicker2.Value.AddSeconds(-1).AddDays(1);
             string startTime = dateTimePicker1.Value.ToString("yyyy-MM-dd HH:mm:ss");
             string endTime = dateTimePicker2.Value.ToString("yyyy-MM-dd HH:mm:ss");
             //DownToExcel downToExcel = new DownToExcel(tbName: "d_p03Usage", sqlConStr: sqlConString, (startTime, endTime));
