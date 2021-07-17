@@ -16,14 +16,14 @@ namespace AdminPage
 {
     public partial class Form1 : Form
     {
-        public string dbServerAddress = string.Empty;// 127.0.0.1
-        public string dbName = string.Empty; // SensorDataDB
-        public string dbUID = string.Empty; //dlitdb01
-        public string dbPWD = string.Empty; // dlitdb01
-        public string S_DeviceTable = string.Empty; // Devices
-        public string S_DeviceTable_p = string.Empty; // Devices_p
-        public string S_UsageTable = string.Empty; // SensorUsage
-        public string S_UsageTable_p = string.Empty; //SensorUsage_p
+        public string dbServerAddress = string.Empty;
+        public string dbName = string.Empty; 
+        public string dbUID = string.Empty; 
+        public string dbPWD = string.Empty; 
+        public string S_DeviceTable = string.Empty; 
+        public string S_DeviceTable_p = string.Empty; 
+        public string S_UsageTable = string.Empty; 
+        public string S_UsageTable_p = string.Empty;
         public string S_DataTable { get; set; }
         public string S_DataTable_p { get; set; }
 
@@ -153,9 +153,9 @@ namespace AdminPage
                                                     , "Remarks"
                                     });
 
-            S_DeviceTable = dbName + "_DEVICES";
+            S_DeviceTable = dbName[0] + "_DEVICES";
             S_DeviceTable_p = S_DeviceTable + "_p";
-            S_UsageTable = dbName + "_Usage";  // D_USAGETABLENAME; // "SensorUsage";
+            S_UsageTable = dbName[0] + "_Usage";  // D_USAGETABLENAME; // "SensorUsage";
             S_UsageTable_p = S_UsageTable + "_p";
 
             int usageCHeck = 0;
@@ -479,12 +479,13 @@ namespace AdminPage
                                                 $" WHERE name = '{tbName}' AND xtype = 'U') " +
                                                 $"CREATE TABLE {tbName}( " +
                                                     $" {S_DTColumns[0]} NVARCHAR(25) NOT NULL" +
-                                                    $", {S_DTColumns[1]} NVARCHAR(25) NOT NULL" +
+                                                    $", {S_DTColumns[1]} NVARCHAR(25) NULL" +
                                                     $", {S_DTColumns[2]} INT NOT NULL" +
                                                     $", {S_DTColumns[3]} NVARCHAR(25) NOT NULL" +
                                                     $", {S_DTColumns[4]} NVARCHAR(25) NOT NULL" +
                                                     $", {S_DTColumns[5]} NVARCHAR(255) NULL" +
                                                     $", INDEX IX_{S_DTColumns[0]} NONCLUSTERED({S_DTColumns[0]})" +
+                                                    $", INDEX IX_{S_DTColumns[1]} NONCLUSTERED({S_DTColumns[1]})" +
                                                     $", INDEX IX_{S_DTColumns[2]} NONCLUSTERED({S_DTColumns[2]})" +
                                                     $", INDEX IX_{S_DTColumns[3]} NONCLUSTERED({S_DTColumns[3]}))";
             try

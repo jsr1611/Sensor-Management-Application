@@ -340,7 +340,9 @@ namespace AdminPage
             {
                 sqlStr_CreateDb += $@" ALTER DATABASE {DbName} SET SINGLE_USER WITH ROLLBACK IMMEDIATE; 
                                                     ALTER DATABASE {DbName} SET READ_COMMITTED_SNAPSHOT ON; 
-                                                    ALTER DATABASE {DbName} SET MULTI_USER; ";
+                                                    ALTER DATABASE {DbName} SET MULTI_USER; 
+                                                    Use {DbName}
+                                                    CREATE USER [{DbUID}] FOR LOGIN [{DbUID}]";
 
                 sqlStr_CreateDb = IfNotExists + sqlStr_CreateDb + " END;";
                 using (SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True"))
