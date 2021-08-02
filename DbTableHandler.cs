@@ -335,16 +335,14 @@ namespace AdminPage
         {
             bool res = false;
             res = false; // IfDatabaseExists(dbName);
-            string IfNotExists = $"IF NOT EXISTS(SELECT * FROM sys.databases WHERE name='{dbName}') BEGIN ";
+            string IfNotExists = $"IF NOT EXISTS(SELECT * FROM sys.databases WHERE name='{dbName}')  ";
             if (!res)
             {
                 sqlStr_CreateDb += $@" ALTER DATABASE {DbName} SET SINGLE_USER WITH ROLLBACK IMMEDIATE; 
                                                     ALTER DATABASE {DbName} SET READ_COMMITTED_SNAPSHOT ON; 
-                                                    ALTER DATABASE {DbName} SET MULTI_USER; 
-                                                    Use {DbName}
-                                                    CREATE USER [{DbUID}] FOR LOGIN [{DbUID}]";
+                                                    ALTER DATABASE {DbName} SET MULTI_USER; ";
 
-                sqlStr_CreateDb = IfNotExists + sqlStr_CreateDb + " END;";
+                sqlStr_CreateDb = IfNotExists + sqlStr_CreateDb + "";
                 using (SqlConnection myConn_master = new SqlConnection($@"Data Source = {DbServer};Initial Catalog=master;Trusted_Connection=True"))
                 {
                     myConn_master.Open();
